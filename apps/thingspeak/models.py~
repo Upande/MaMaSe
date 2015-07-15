@@ -1,8 +1,0 @@
-from django.db import models
-from jsonfield imporrt JSONField
-# Create your models here.
-
-class LoggerData(models.Model):
-    raw_data = JSONField()
-    added = models.DateTimeField(auto_add_now=True)
-    active = models.BooleanField(default=True)
