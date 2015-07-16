@@ -5,7 +5,7 @@ def callURL(url):
     return r
 
 def parseJSON():
-    url = "http://api.thingspeak.com/channels/16153/field/1.json"
+    url = "https://thingspeak.com/channels/28006/feed.json"
     js = callURL(url)
     
 

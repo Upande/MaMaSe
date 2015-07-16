@@ -14,19 +14,26 @@
    $.ajax({
         type: 'GET',
         //url: "http://192.168.3.5/api/v1/data/3?format=jsonp",
-        url : "http://api.thingspeak.com/channels/16153/field/1.json?callback=",
+        url : "http://api.thingspeak.com/channels/28006/feed.json?callback=",
         dataType: "jsonp",
         success: function(data) {
             feeds = data.feeds
+            channel = data.channel
             var created = ['created']
-            var reading = ['reading']
+            var field1 = [channel.field1]
+            var field2 = [channel.field3]
+            var field3 = [channel.field4]
             for (var i = 0; i < feeds.length; i++) {
                 n = feeds[i].created_at;
-                a = feeds[i].field1;
+                f1 = feeds[i].field1;
+                f2 = feeds[i].field3;
+                f3 = feeds[i].field4;
                 created.push(n.replace('T',' ').replace('Z',''));
-                reading.push(a);
+                field1.push(f1);
+                field2.push(f2);
+                field3.push(f3);
             }
-            console.log(created);
+            console.log(field1);
             var chart = c3.generate({
                 bindto: '#chart2',
                 data: {
@@ -34,14 +41,16 @@
                     xFormat: '%Y-%m-%d %H:%M:%S',
                     columns: [
                         created,
-                        reading,
+                        field1,
+                        field2,
+                        field3,
                     ],
                 },
 axis: {
         x: {
             type: 'timeseries',
             tick: {
-                format: '%Y-%m-%d %H:%M:%S'
+                format: '%Y-%m-%d %H:%M'
             }
         }
     }
