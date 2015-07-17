@@ -13,16 +13,6 @@ class Channel(models.Model):
     description = models.TextField()
     latitide  = models.FloatField()
     longitude  = models.FloatField()
-    field1 = models.TextField(default="")
-    field2 = models.TextField(default="")
-    field3 = models.TextField(default="")
-    field4 = models.TextField(default="")
-    field5 = models.TextField(default="")
-    field6 = models.TextField(default="")
-    field7 = models.TextField(default="")
-    field8 = models.TextField(default="")
-    field9 = models.TextField(default="")
-    field10 = models.TextField(default="")
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     elevation = models.TextField()
@@ -31,20 +21,25 @@ class Channel(models.Model):
     def __unicode__(self):
         return self.name
 
+class ChannelField(models.Model):
+    tag = models.TextField()
+    field = models.TextField()
+    added = models.DateTimeField(auto_now_add=True)
+    channel = models.ForeignKey(Channel)
+
+    def __unicode__(self):
+        return self.field
+
 class Feed(models.Model):
     channel = models.ForeignKey(Channel)
     entry_id = models.IntegerField(unique=True)
     created_at = models.DateTimeField()
-    field1 = models.TextField(default="")
-    field2 = models.TextField(default="")
-    field3 = models.TextField(default="")
-    field4 = models.TextField(default="")
-    field5 = models.TextField(default="")
-    field6 = models.TextField(default="")
-    field7 = models.TextField(default="")
-    field8 = models.TextField(default="")
-    field9 = models.TextField(default="")
-    field10 = models.TextField(default="")
 
     def __unicode__(self):
         return str(self.entry_id)
+
+class FeedField(models.Model):
+    reading = models.TextField(default="")
+    channelField = models.ForeignKey(ChannelField)
+    feed = models.ForeignKey(Feed)
+    added = models.DateTimeField(auto_now_add=True)
