@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,render_to_response
 from django.http import JsonResponse
 
 from . import getJSONData as gjd
@@ -52,3 +52,14 @@ def logData(request):
         )
     
     return JsonResponse(results)
+
+
+def home(request):
+    args = {}
+    args['isLoggedIn'] = False
+    return render_to_response("index.html", args)
+
+def chart(request):
+    args = {}
+    args['isLoggedIn'] = False
+    return render_to_response("chart.html", args)
