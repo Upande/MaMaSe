@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 
 from . import getJSONData as gjd
-from .models import LoggerData,Channel,Feed
+from .models import LoggerData,Channel,ChannelField,Feed
 
 import json
 
