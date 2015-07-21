@@ -9,11 +9,13 @@ from wagtail.wagtailcore import urls as wagtail_urls
 
 urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
-
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-
     url(r'^search/$', 'search.views.search', name='search'),
+    url(r'^home/$', 'apps.thingspeak.views.home', name='home'),
+    url(r'^chart/$', 'apps.thingspeak.views.chart', name='chart'),
+    url(r'^ts/', include('apps.thingspeak.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'', include(wagtail_urls)),
 ]
