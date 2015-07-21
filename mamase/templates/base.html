@@ -8,8 +8,8 @@
 <head>
     {% block title%}
     <!-- Basic -->
-    <title> {{ section.title }} </title>
-    {% endblock %}
+    <title>Upande | {{ section.title }} </title>
+    {% endblock title%}
     <!-- Define Charset -->
     <meta charset="utf-8">
 
@@ -17,8 +17,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!-- Page Description and Author -->
-    <meta name="description" content="Margo - Responsive HTML5 Template">
-    <meta name="author" content="iThemesLab">
+    <meta name="description" content="Mau Mara Serengeri Sustainable Water Initiative">
+    <meta name="author" content="Upande">
 
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="{% static 'margo/asset/css/bootstrap.min.css' %}" type="text/css" media="screen">
@@ -72,7 +72,7 @@
     <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
 </head>
-{% endblock %}
+{% endblock head %}
 <body class="{% block body_class %}{% endblock %}">
 
     {% wagtailuserbar %}
@@ -81,8 +81,7 @@
 
     <!-- Full Body Container -->
     <div id="container">
-        
-        
+                
         <!-- Start Header Section --> 
         <div class="hidden-header"></div>
         <header class="clearfix">
@@ -282,6 +281,72 @@
             <!-- /carousel -->
         </section>
         <!-- End Home Page Slider -->
+
+	<!-- Start Services Section -->
+        <div class="section service">
+          <div class="container">
+            <div class="row">
+              <!-- Start Big Heading -->
+                <div class="big-title text-center" data-animation="fadeInDown" data-animation-delay="01">
+                    <h1>This is Our <strong>Vision</strong></h1>
+                </div>
+                <!-- End Big Heading -->
+
+	      
+              <!-- Start Service Icon 2 -->
+              <div class="col-md-3 col-sm-6 service-box service-center" data-animation="fadeIn" data-animation-delay="02">
+                <div class="service-icon">
+                  <i class="fa fa-desktop icon-large"></i>
+                </div>
+                <div class="service-content">
+                  <h4>Capable Institutions</h4>
+                  <p>Capable government institutions develop effective river basin management strategies for inclusive green growth through participatory processes. Water resources are regulated for the benefit of people and ecosystems. </p>
+                </div>
+              </div>
+              <!-- End Service Icon 2 -->
+	      
+              <!-- Start Service Icon 3 -->
+              <div class="col-md-3 col-sm-6 service-box service-center" data-animation="fadeIn" data-animation-delay="03">
+                <div class="service-icon">
+                  <i class="fa fa-eye icon-large"></i>
+                </div>
+                <div class="service-content">
+                  <h4>Resident Empowerment</h4>
+                  <p>Basin residents prosper from economic activities that are financially profitable, environmentally sustainable, and well aligned with the basin water management strategy. Innovative agricultural practices and sustainable tourism facilities are promoted.</p>
+                </div>
+              </div>
+              <!-- End Service Icon 3 -->
+	      
+              <!-- Start Service Icon 4 -->
+              <div class="col-md-3 col-sm-6 service-box service-center" data-animation="fadeIn" data-animation-delay="04">
+                <div class="service-icon">
+                  <i class="fa fa-code icon-large"></i>
+                </div>
+                <div class="service-content">
+                  <h4>Protected Ecosystem</h4>
+                  <p>Key forest and savannah ecosystems are protected or restored and wildlife has access to habitats and water resources needed at different times of the year and especially during drought years.</p>
+                </div>
+              </div>
+              <!-- End Service Icon 4 -->
+	      
+              <!-- Start Service Icon 5 -->
+              <div class="col-md-3 col-sm-6 service-box service-center" data-animation="fadeIn" data-animation-delay="05">
+                <div class="service-icon">
+                  <i class="fa fa-rocket icon-large"></i>
+                </div>
+                <div class="service-content">
+                  <h4>Sustainability</h4>
+                  <p>These interconnected public, private, and environmental elements of the basin serve as a model of sustainability for surrounding basins, with transferrable tools and approaches.</p>
+                </div>
+              </div>
+              <!-- End Service Icon 5 -->
+	      
+	      
+            </div><!-- .row -->
+          </div><!-- .container -->
+        </div>
+        <!-- End Services Section -->
+
 
 {% endblock %}
 
