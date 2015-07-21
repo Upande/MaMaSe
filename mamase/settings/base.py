@@ -49,6 +49,7 @@ INSTALLED_APPS = (
 
     'search',
     'home',
+    'apps.blog',
     'apps.thingspeak',
     'jsonfield',
 
