@@ -1,14 +1,183 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags %}
+{% load static %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
 
 {% block body_class %}templage-blogpage{% endblock %}
 
 {% block content %}
-    <h1>{{ self.title }}</h1>
-    <p class="meta">{{ self.date }}</p>
+    <h1></h1>
+    <p class="meta"></p>
 
-    <div class="intro">{{ self.intro }}</div>
 
-    {{ self.body|richtext }}
+    <div class="intro"></div>
+
+
+
+<!-- Start Content -->
+<div id="content">
+  <div class="container">
+    <div class="row blog-page">
+      
+      <!-- Start Blog Posts -->
+      <div class="col-md-9 blog-box">
+	
+	<!-- Start Post -->
+	<div class="blog-post image-post">
+	  <!-- Post Thumb -->
+	  <div class="post-head">
+	    {% if self.main_image %}
+	    <a class="lightbox" title="This is an image title" href="images/blog-01.jpg">
+	      <div class="thumb-overlay"><i class="fa fa-arrows-alt"></i></div>
+	      {% image self.main_image width-400 %}
+	      </a>
+	    {% endif %}
+	    
+	    </div>
+	  <!-- Post Content -->
+	  <div class="post-content">
+	    <div class="post-type"><i class="fa fa-picture-o"></i></div>
+	    <h2><a href="#">{{ self.title }}</a></h2>
+	    <ul class="post-meta">
+	      <li>By <a href="#">Magondu</a></li>
+	      <li>{{ self.date }}</li>
+	      <li><a href="#">GIS</a>, <a href="#">Concervation</a></li>
+	      <li><a href="#">4 Comments</a></li>
+	      </ul>
+	    <div class="blog-post quote-post">
+	  <!-- Post Content -->
+	  <div class="post-content">
+	    <div class="post-type"><i class="fa fa-quote-left"></i></div>
+	    <div class="qoute-box">
+	      <a href="#">
+		<h2>{{ self.intro }}</h2>
+		<div class="qoute-author">Magondu</div>
+		</a>
+	      </div>
+	    </div>
+	  </div>
+	    
+	    <p> {{ self.body|richtext }}</p>
+
+	    <a class="main-button" href="#">Read More <i class="fa fa-angle-right"></i></a>
+	    </div>
+	  </div>
+	<!-- End Post -->
+	<!-- Start Pagination -->
+	<div id="pagination">
+	  <span class="all-pages">Page 1 of 3</span>
+	  <span class="current page-num">1</span>
+	  <a class="page-num" href="#">2</a>
+	  <a class="page-num" href="#">3</a>
+	  <a class="next-page" href="#">Next</a>
+	  </div>
+	<!-- End Pagination -->
+
+	</div>
+      <!-- End Blog Posts -->
+      
+      
+      <!--Sidebar-->
+      <div class="col-md-3 sidebar right-sidebar">
+	
+	<!-- Search Widget -->
+	<div class="widget widget-search">
+	  <form action="#">
+	    <input type="search" placeholder="Enter Keywords..." />
+	    <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+	    </form>
+	  </div>
+
+	<!-- Categories Widget -->
+	<div class="widget widget-categories">
+	  <h4>Categories <span class="head-line"></span></h4>
+	  <ul>
+	    <li>
+	      <a href="#">Mau</a>
+	      </li>
+	    <li>
+	      <a href="#">Serengeri</a>
+	      </li>
+	    <li>
+	      <a href="#">Mara</a>
+	      </li>
+	    <li>
+	      <a href="#">All</a>
+	      </li>
+	    </ul>
+	  </div>
+
+	<!-- Popular Posts widget -->
+	<div class="widget widget-popular-posts">
+	  <h4>Popular Post <span class="head-line"></span></h4>
+	  <ul>
+	    <li>
+	      <div class="widget-thumb">
+		<a href="#"><img src="{% static "margo/images/blog-mini-01.jpg" %}" alt="" /></a>
+		</div>
+	      <div class="widget-content">
+		<h5><a href="#">GIS Project in the Mara</a></h5>
+		<span>Jul 29 2013</span>
+		</div>
+	      <div class="clearfix"></div>
+	      </li>
+	    <li>
+	      <div class="widget-thumb">
+		<a href="#"><img src="{% static "margo/images/blog-mini-02.jpg" %}" alt="" /></a>
+		</div>
+	      <div class="widget-content">
+		<h5><a href="#">GIS Project in the Mau</a></h5>
+		<span>Jul 29 2013</span>
+		</div>
+	      <div class="clearfix"></div>
+	      </li>
+	    <li>
+	      <div class="widget-thumb">
+		<a href="#"><img src="{% static "margo/images/blog-mini-03.jpg" %}" alt="" /></a>
+		</div>
+	      <div class="widget-content">
+		<h5><a href="#">GIS Project in the Serengeri</a></h5>
+		<span>Jul 29 2013</span>
+		</div>
+	      <div class="clearfix"></div>
+	      </li>
+	    </ul>
+	  </div>
+	
+	<!-- Video Widget -->
+	<div class="widget">
+	  <h4>Video <span class="head-line"></span></h4>
+	  <div>
+	    <iframe src="http://player.vimeo.com/video/63322694?byline=0&amp;portrait=0&amp;badge=0" width="800" height="450"></iframe>
+	    </div>
+	  </div>
+	
+	<!-- Tags Widget -->
+	<div class="widget widget-tags">
+	  <h4>Tags <span class="head-line"></span></h4>
+	  <div class="tagcloud">
+	    <a href="#">Portfolio</a>
+	    <a href="#">Theme</a>
+	    <a href="#">Mobile</a>
+	    <a href="#">Design</a>
+	    <a href="#">Wordpress</a>
+	    <a href="#">Jquery</a>
+	    <a href="#">CSS</a>
+	    <a href="#">Modern</a>
+	    <a href="#">Theme</a>
+	    <a href="#">Icons</a>
+	    <a href="#">Google</a>
+	    </div>
+	  </div>
+
+	</div>
+      <!--End sidebar-->
+      
+      
+      </div>
+    </div>
+  </div>
+<!-- End Content -->
+
 {% endblock %}
