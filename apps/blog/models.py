@@ -9,7 +9,15 @@ from wagtail.wagtailadmin.edit_handlers import (FieldPanel,
                                                 PageChooserPanel)
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
+
+from taggit.models import Tag, TaggedItemBase
+
+from django.shortcuts import render
+
+class BlogPageTag(TaggedItemBase):
+    content_object = ParentalKey('blog.BlogPage', related_name='tagged_items')
 
 class BlogPage(Page):
     main_image = models.ForeignKey(
@@ -22,6 +30,7 @@ class BlogPage(Page):
     date = models.DateField("Post date")
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
+    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
@@ -35,6 +44,9 @@ class BlogPage(Page):
         FieldPanel('body', classname="full")
     ]
 
+BlogPage.promote_panels = [
+    FieldPanel('tags'),
+]
 
 class LinkFields(models.Model):
     link_external = models.URLField("External link", blank=True)
@@ -77,7 +89,6 @@ class RelatedLink(LinkFields):
 class BlogIndexRelatedLink(Orderable, RelatedLink):
     page = ParentalKey('BlogIndexPage', related_name='related_links')
 
-
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
 
@@ -85,6 +96,7 @@ class BlogIndexPage(Page):
         FieldPanel('intro', classname="full"),
         InlinePanel('related_links', label="Related links"),
     ]
+<<<<<<< HEAD
 
 class Gallery(Page):
     image1 = models.ForeignKey(
@@ -140,3 +152,34 @@ class Gallery(Page):
        ImageChooserPanel('image6'),
        
     ]
+=======
+    
+    @property
+    def blogs(self):
+        # Get list of live blog pages that are descendants of this page
+        #This returns null. Not sure why. Will need to fix
+        blogs = BlogPage.objects.live()#.descendant_of(self) #Commented out this part since no descendants were being found
+        # Order by most recent date first
+        blogs = blogs.order_by('-date')
+
+        return blogs
+        
+
+    def serve(self, request):
+        # Get blogs
+        blogs = self.blogs
+        
+        # Filter by tag
+        tag = request.GET.get('tag')
+        if tag:
+            blogs = blogs.filter(tags__name=tag)
+            print blogs
+            return render(request, self.template, {
+                'self': self,
+                'blogs': blogs,
+            })
+            
+        else:
+            # Display event page as usual
+            return super(BlogIndexPage, self).serve(request)
+>>>>>>> c4d6755bce858bf8f4052074eba959b1ecd42796
