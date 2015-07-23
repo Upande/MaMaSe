@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags %}
+
+
+{% block content %}
+
+<style type="text/css">
+table { 
+color: #333;
+font-family: Helvetica, Arial, sans-serif;
+width: 30%; 
+border-collapse: separate; 
+border-spacing: 0 2em; 
+}
+
+td, th { 
+border: 5px solid black; /* No more visible border */
+height: 30px; 
+transition: all 0.3s;  /* Simple transition for hover effect */
+}
+
+th {
+background: #DFDFDF;  /* Darken header a bit */
+
+}
+
+td {
+background: #FAFAFA;
+text-align: center;
+border-radius: 20px;
+-moz-border-radius: 20px;
+}
+
+/* Cells in even rows (2,4,6...) are one color */ 
+tr:nth-child(even) td { background: #DE9A00; }   
+
+/* Cells in odd rows (1,3,5...) are another (excludes header cells)  */ 
+tr:nth-child(odd) td { background: #925F36; }  
+
+tr td:hover { background: #34A8DF; color: #FFF; } /* Hover cell effect! */
+
+tr {line-height: 100px;}
+
+body {
+	min-height: 100%;
+	overflow: hidden;
+
+}
+a {
+	color:#333;
+}
+</style>
+<body>
+	<div class = "container">
+		</br></br></br>
+		<div class = "row">
+			<div class = "col-md-3 col-md-offset-3">
+				<table style="width:100%">
+				  <tr>
+				    <td><a href="">News</a></td>
+				  </tr>
+				  <tr>
+				    <td><a href="">Videos</a></td>
+				  </tr>
+				</table>
+			</div>
+			<div class = "col-md-3">
+				<table style="width:100%">
+				  <tr>
+				    <td><a href="">Images</a></td>
+				  </tr>
+				  <tr>
+				    <td><a href="">Calendar</a></td>
+				  </tr>
+				</table>
+			</div>
+		</div>
+		</br></br></br></br></br>
+	</div>
+</body>
+
+{% endblock %}

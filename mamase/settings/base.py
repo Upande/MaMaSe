@@ -77,6 +77,7 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(PROJECT_DIR, 'templates'),
             os.path.join(BASE_DIR, 'templates'),
+            os.path.join(PROJECT_DIR, 'templates', 'site_pages'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {

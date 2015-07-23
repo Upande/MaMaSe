@@ -48,7 +48,6 @@
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/sky-blue.css' %}" title="sky-blue" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/yellow.css' %}" title="yellow" media="screen" />
 
-
     <!-- Margo JS  -->
     <script type="text/javascript" src="{% static 'margo/js/jquery-2.1.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'margo/js/jquery.migrate.js' %}"></script>
@@ -73,7 +72,7 @@
 
 </head>
 {% endblock head %}
-<body class="{% block body_class %}{% endblock %}">
+<body class="{% block body_class %}{% endblock %}" style="font-weight: bold;">
   
   {% wagtailuserbar %}
   
@@ -116,7 +115,7 @@
                 </li>
                 <!--li>
                     <a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
-</li-->
+                </li-->
                 <li>
                   <a class="skype itl-tooltip" data-placement="bottom" title="Skype" href="#"><i class="fa fa-skype"></i></a>
                 </li>
@@ -154,41 +153,52 @@
             </div>
             <!-- End Search -->
             <!-- Start Navigation List -->
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" >
               <li>
-                <a class="active" href="#">Home</a>
+                <a class="active" href="/" style = "font-weight:bold;">Home</a>
                 <ul class="dropdown">
                 </ul>
               </li>
               <li>
-                <a href="#">Visualization</a>
-                <ul class="dropdown">
-                  
-                </ul>
-              </li>
-              <li>
-                <a href="#">Communication</a>
+                <a href="#" style = "font-weight:bold;">Visualization</a>
                 <ul class="dropdown">
                   
                 </ul>
               </li>
               <li>
-                <a href="#">GIS Platform</a>
+                <a href="{% url 'communications' %}" style = "font-weight:bold;">Communication</a>
+                <ul class="dropdown">
+                  <li>
+                    <a href = "#">News</a>
+                  </li>
+                  <li>
+                    <a href = "#">Videos</a>
+                  </li>
+                  <li>
+                    <a href = "#">Images</a>
+                  </li>
+                  <li>
+                    <a href = "#">Calendar</a>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="#" style = "font-weight:bold;">GIS Platform</a>
                 <ul class="dropdown">
                   
                 </ul>
               </li>
               <li>
-                <a href="#">Tools</a>
+                <a href="#" style = "font-weight:bold;">Tools</a>
                 <ul class="dropdown">
                 </ul>
               </li>
               <li>
-                <a href="#">Knowledge Platform</a>
+                <a href="#" style = "font-weight:bold;">Knowledge Platform</a>
                 <ul class="dropdown">
                 </ul>
               </li>
-              <li><a href="#">Contact Us</a>
+              <li><a href="#" style = "font-weight:bold;">Contact Us</a>
               </li>
             </ul>
             <!-- End Navigation List -->
