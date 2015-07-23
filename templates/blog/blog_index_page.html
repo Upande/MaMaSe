@@ -15,7 +15,7 @@
       
       <!-- Page Content -->
       <div class="col-md-9 page-content">	
-
+	
 	<!-- Divider -->
 	<div class="hr1" style="margin-bottom:30px;"></div>
 	
@@ -33,21 +33,27 @@
 	      <div class="col-md-6">
 		<div class="post-row">
 		  <div class="left-meta-post">
-		    <div class="post-date"><span class="day">{{ item.link_page.blogpage.date.day }}</span><span class="month">{{ item.link_page.blogpage.date| date:"F"  }}</span></div>
+		    <div class="post-date">
+		      <span class="day">{{ item.link_page.blogpage.date.day }}</span>
+		      <span class="month">{{ item.link_page.blogpage.date| date:"F"  }}</span>
+		    </div>
 		    <div class="post-type"><i class="fa fa-picture-o"></i></div>
 		  </div>
-		  <h3 class="post-title"><a href="{{ item.link }}">{{item.title| title}}</a></h3>
+		  <h3 class="post-title">
+		    <a href="{{ item.link }}">{{item.title| title}}</a>
+		  </h3>
 		  <div class="post-content">
 		    {{item.link_page.}}
 		    <p>{{ item.link_page.blogpage.body|richtext |truncatechars:255}} <a class="read-more" href="{{ item.link }}">Read More...</a></p>
 		  </div>
 		</div>
 	      </div>
-	      {% endfor %}
-	      {% endif %}	      
 	    </div>
-	  </div>      
-	</div>
+	    {% endfor %}
+	    {% endif %}	      
+	  </div>
+	</div>      
+      </div>
     <!-- End Page Content-->
     
     
@@ -122,7 +128,7 @@
       <div class="widget">
 	<h4>Video <span class="head-line"></span></h4>
 	<div>
-	  <iframe src="http://player.vimeo.com/video/63322694?byline=0&amp;portrait=0&amp;badge=0" width="800" height="450"></iframe>
+	  <iframe width="560" height="315" src="https://www.youtube.com/embed/Lmi9IBP209s" frameborder="0" allowfullscreen></iframe>
 	</div>
       </div>
       
@@ -130,6 +136,9 @@
       <div class="widget widget-tags">
 	<h4>Tags <span class="head-line"></span></h4>
 	<div class="tagcloud">
+	  {% for tag in self.tags.all %}
+	  <a href="{% pageurl self.blog_index %}?tag={{ tag }}">{{ tag }}</a>
+	  {% endfor %}
 	  <a href="#">Portfolio</a>
 	  <a href="#">Theme</a>
 	  <a href="#">Mobile</a>
