@@ -96,7 +96,36 @@ class BlogIndexPage(Page):
         FieldPanel('intro', classname="full"),
         InlinePanel('related_links', label="Related links"),
     ]
-<<<<<<< HEAD
+
+    
+    @property
+    def blogs(self):
+        # Get list of live blog pages that are descendants of this page
+        #This returns null. Not sure why. Will need to fix
+        blogs = BlogPage.objects.live()#.descendant_of(self) #Commented out this part since no descendants were being found
+        # Order by most recent date first
+        blogs = blogs.order_by('-date')
+
+        return blogs
+        
+
+    def serve(self, request):
+        # Get blogs
+        blogs = self.blogs
+        
+        # Filter by tag
+        tag = request.GET.get('tag')
+        if tag:
+            blogs = blogs.filter(tags__name=tag)
+            print blogs
+            return render(request, self.template, {
+                'self': self,
+                'blogs': blogs,
+            })
+            
+        else:
+            # Display event page as usual
+            return super(BlogIndexPage, self).serve(request)
 
 class Gallery(Page):
     image1 = models.ForeignKey(
@@ -152,34 +181,3 @@ class Gallery(Page):
        ImageChooserPanel('image6'),
        
     ]
-=======
-    
-    @property
-    def blogs(self):
-        # Get list of live blog pages that are descendants of this page
-        #This returns null. Not sure why. Will need to fix
-        blogs = BlogPage.objects.live()#.descendant_of(self) #Commented out this part since no descendants were being found
-        # Order by most recent date first
-        blogs = blogs.order_by('-date')
-
-        return blogs
-        
-
-    def serve(self, request):
-        # Get blogs
-        blogs = self.blogs
-        
-        # Filter by tag
-        tag = request.GET.get('tag')
-        if tag:
-            blogs = blogs.filter(tags__name=tag)
-            print blogs
-            return render(request, self.template, {
-                'self': self,
-                'blogs': blogs,
-            })
-            
-        else:
-            # Display event page as usual
-            return super(BlogIndexPage, self).serve(request)
->>>>>>> c4d6755bce858bf8f4052074eba959b1ecd42796

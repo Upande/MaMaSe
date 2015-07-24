@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('taggit', '0001_initial'),
-        ('blog', '0003_blogindexpage_blogindexrelatedlink'),
+        ('blog', '0003_blogpage'),
     ]
 
     operations = [
