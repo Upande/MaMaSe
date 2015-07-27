@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 
-{% load static %}
-
 {% load wagtailcore_tags wagtailimages_tags %}
+{% load disqus_tags %}
+{% load static %}
 
 {% block body_class %}template-blogpage{% endblock %}
 
 {% block content %}
-
 
 <!-- Start Content -->
 <div id="content">
@@ -25,10 +24,10 @@
 	    <a class="lightbox" title="This is an image title" href="images/blog-01.jpg">
 	      <div class="thumb-overlay"><i class="fa fa-arrows-alt"></i></div>
 	      {% image self.main_image width-400 %}
-	      </a>
+	    </a>
 	    {% endif %}
 	    
-	    </div>
+	  </div>
 	  <!-- Post Content -->
 	  <div class="post-content">
 	    <div class="post-type"><i class="fa fa-picture-o"></i></div>
@@ -36,39 +35,45 @@
 	    <ul class="post-meta">
 	      <li>By <a href="#">Magondu</a></li>
 	      <li>{{ self.date }}</li>
-	      <li><a href="#">GIS</a>, <a href="#">Concervation</a></li>
-	      <li><a href="#">4 Comments</a></li>
-	      </ul>
+	      <li>
+		{% for tag in self.tags.all %}
+		<a href="#?tag={{tag}}"> {{tag}} </a> 
+		{% endfor %}
+	      </li>
+	      <li><a href="#">{% disqus_num_replies %}</a></li>
+	    </ul>
 	    <div class="blog-post quote-post">
-	  <!-- Post Content -->
-	  <div class="post-content">
-	    <div class="post-type"><i class="fa fa-quote-left"></i></div>
-	    <div class="qoute-box">
-	      <a href="#">
-		<h2>{{ self.intro }}</h2>
-		<div class="qoute-author">Magondu</div>
-		</a>
+	      <!-- Post Content -->
+	      <div class="post-content">
+		<div class="post-type"><i class="fa fa-quote-left"></i></div>
+		<div class="qoute-box">
+		  <a href="#">
+		    <h2>{{ self.intro }}</h2>
+		    <div class="qoute-author">Magondu</div>
+		  </a>
+		</div>
 	      </div>
 	    </div>
-	  </div>
 	    
-	    <p> {{ self.body|richtext }}</p>
-
-	    <a class="main-button" href="#">Read More <i class="fa fa-angle-right"></i></a>
+	    <p> {{ self.body|richtext }}</p>	
+	    
+	  </div>
+	<!-- Start comments section-->
+	<div>
+	  <div class="blog-post ">
+	    <div class="widget widget-categories">                                                                                                                                             
+              <h4>Comments <span class="head-line"></span></h4>	      
 	    </div>
+	    {% disqus_show_comments %}
+	    {% disqus_recent_comments shortname 5 50 0 24 %}
 	  </div>
-	<!-- End Post -->
-	<!-- Start Pagination -->
-	<div id="pagination">
-	  <span class="all-pages">Page 1 of 3</span>
-	  <span class="current page-num">1</span>
-	  <a class="page-num" href="#">2</a>
-	  <a class="page-num" href="#">3</a>
-	  <a class="next-page" href="#">Next</a>
-	  </div>
-	<!-- End Pagination -->
+	</div>
+      </div
+
+      <!-- End comments section -->
 
 	</div>
+	<!-- End Post -->
       <!-- End Blog Posts -->
       
       

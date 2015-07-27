@@ -25,6 +25,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 INSTALLED_APPS = (
     'django.contrib.admin',
+    'django.contrib.sites',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -47,11 +48,13 @@ INSTALLED_APPS = (
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
 
+    'jsonfield',
     'search',
     'home',
+    'disqus',
+
     'apps.blog',
     'apps.thingspeak',
-    'jsonfield',
 
 )
 
@@ -155,3 +158,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+DISQUS_API_KEY = 'xhv95xoheLTkiaS7PKaZmxe9NpTObz4LDUsNmC2e1XNgW2SKIO0bLSqfwIRWrzz4'
+DISQUS_WEBSITE_SHORTNAME = 'Upande'
+
+SITE_ID = 1
