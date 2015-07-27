@@ -16,11 +16,10 @@ urlpatterns = [
     url(r'^home/$', 'apps.thingspeak.views.home', name='home'),
     url(r'^chart/$', 'apps.thingspeak.views.chart', name='chart'),
     url(r'^ts/', include('apps.thingspeak.urls')),
-    url(r'^communications/', CommView.as_view(), name="communications"),
+    url(r'^communications/$', CommView.as_view(), name="communications"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'', include(wagtail_urls)),
-
     
 ]
 

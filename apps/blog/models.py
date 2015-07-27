@@ -44,7 +44,7 @@ class BlogPage(Page):
         FieldPanel('body', classname="full")
     ]
 
-BlogPage.promote_panels = [
+BlogPage.promote_panels = Page.promote_panels +[
     FieldPanel('tags'),
 ]
 
@@ -102,7 +102,7 @@ class BlogIndexPage(Page):
     def blogs(self):
         # Get list of live blog pages that are descendants of this page
         #This returns null. Not sure why. Will need to fix
-        blogs = BlogPage.objects.live()#.descendant_of(self) #Commented out this part since no descendants were being found
+        blogs = BlogPage.objects.live().descendant_of(self) 
         # Order by most recent date first
         blogs = blogs.order_by('-date')
 
@@ -115,12 +115,14 @@ class BlogIndexPage(Page):
         
         # Filter by tag
         tag = request.GET.get('tag')
+        print tag
         if tag:
-            blogs = blogs.filter(tags__name=tag)
-            print blogs
+            blogtags = blogs.filter(tags__name=tag)
+            print "Hellops"
+            print blogtags
             return render(request, self.template, {
                 'self': self,
-                'blogs': blogs,
+                'blogs': blogtags,
             })
             
         else:

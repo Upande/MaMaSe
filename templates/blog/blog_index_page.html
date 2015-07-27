@@ -48,12 +48,12 @@
 		  </div>
 		</div>
 	      </div>
+	      {% endfor %}
+	      {% endif %}	      
 	    </div>
-	    {% endfor %}
-	    {% endif %}	      
-	  </div>
-	</div>      
-      </div>
+	  </div>      
+	</div>
+      </div>      
     <!-- End Page Content-->
     
     
@@ -136,8 +136,10 @@
       <div class="widget widget-tags">
 	<h4>Tags <span class="head-line"></span></h4>
 	<div class="tagcloud">
+	  {% for self in self.blogs %}
 	  {% for tag in self.tags.all %}
-	  <a href="{% pageurl self.blog_index %}?tag={{ tag }}">{{ tag }}</a>
+	  <a href="#">{{ tag }}</a>
+	  {% endfor %}
 	  {% endfor %}
 	  <a href="#">Portfolio</a>
 	  <a href="#">Theme</a>
