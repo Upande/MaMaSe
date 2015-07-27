@@ -19,6 +19,20 @@ from django.shortcuts import render
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey('blog.BlogPage', related_name='tagged_items')
 
+class CategoryPage(Page):
+    name = models.CharField(max_length=200)
+    description = RichTextField(blank=True)
+
+    search_fields = Page.search_fields + (
+        index.SearchField('name'),
+        index.SearchField('description'),
+    )
+
+    content_panels = Page.content_panels + [
+        FieldPanel('name'),
+        FieldPanel('description', classname="full"),
+    ]
+
 class BlogPage(Page):
     main_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -31,6 +45,9 @@ class BlogPage(Page):
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
+    
+    category = models.ForeignKey('blog.CategoryPage', null=True, blank=True ,related_name='+',on_delete=models.SET_NULL )
+    #category = models.ForeignKey('blog.Category',related_name = 'category')
 
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
@@ -40,6 +57,7 @@ class BlogPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         ImageChooserPanel('main_image'),
+        PageChooserPanel('category'),
         FieldPanel('intro'),
         FieldPanel('body', classname="full")
     ]
@@ -183,3 +201,5 @@ class Gallery(Page):
        ImageChooserPanel('image6'),
        
     ]
+
+
