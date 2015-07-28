@@ -109,43 +109,59 @@ class BlogIndexRelatedLink(Orderable, RelatedLink):
 
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
-
+    
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full"),
         InlinePanel('related_links', label="Related links"),
     ]
 
+    @property
+    def categories(self):
+        # Get list of live blog pages that are descendants of this page
+        categories = CategoryPage.objects.live() 
+        
+        return categories
+        
     
     @property
     def blogs(self):
         # Get list of live blog pages that are descendants of this page
-        #This returns null. Not sure why. Will need to fix
         blogs = BlogPage.objects.live().descendant_of(self) 
         # Order by most recent date first
         blogs = blogs.order_by('-date')
 
         return blogs
-        
 
     def serve(self, request):
         # Get blogs
         blogs = self.blogs
-        
+        categories = self.categories
+        related_links = self.related_links
+
         # Filter by tag
         tag = request.GET.get('tag')
-        print tag
+        category = request.GET.get('category')
         if tag:
-            blogtags = blogs.filter(tags__name=tag)
-            print "Hellops"
-            print blogtags
+            blogs = blogs.filter(tags__name=tag).live().descendant_of(self)
             return render(request, self.template, {
                 'self': self,
-                'blogs': blogtags,
+                'blogs': blohs,
+            })
+            
+        elif category:
+            blogs = BlogPage.objects.filter(category__name=category).live().descendant_of(self)
+            return render(request, self.template, {
+                'self': self,
+                'blogs': blogs,
             })
             
         else:
-            # Display event page as usual
-            return super(BlogIndexPage, self).serve(request)
+            blogs = blogs.live().descendant_of(self)
+            return render(request, self.template, {
+                'self': self,
+                'blogs': blogs,
+            })
+#            return super(BlogIndexPage, self).serve(request)
 
 class Gallery(Page):
     image1 = models.ForeignKey(
