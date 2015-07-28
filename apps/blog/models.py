@@ -1,3 +1,5 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
 from django.db import models
 
 from wagtail.wagtailsearch import index
@@ -14,7 +16,6 @@ from modelcluster.fields import ParentalKey
 
 from taggit.models import Tag, TaggedItemBase
 
-from django.shortcuts import render
 
 class BlogPageTag(TaggedItemBase):
     content_object = ParentalKey('blog.BlogPage', related_name='tagged_items')
@@ -42,7 +43,7 @@ class BlogPage(Page):
         related_name='+'
     )
     date = models.DateField("Post date")
-    intro = models.CharField(max_length=250)
+    intro = RichTextField()
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     
@@ -58,7 +59,7 @@ class BlogPage(Page):
         FieldPanel('date'),
         ImageChooserPanel('main_image'),
         PageChooserPanel('category'),
-        FieldPanel('intro'),
+        FieldPanel('intro',classname="full" ),
         FieldPanel('body', classname="full")
     ]
 
@@ -132,6 +133,37 @@ class BlogIndexPage(Page):
 
         return blogs
 
+    def get_context(self, request):
+        # Get blogs
+        blogs = self.blogs
+
+        # Filter by tag
+        tag = request.GET.get('tag')
+        category = request.GET.get('category')
+
+        if tag:
+            blogs = blogs.filter(tags__name=tag).live().descendant_of(self)
+            #blogs = blogs.filter(tags__name=tag)
+
+        if category:
+            blogs = BlogPage.objects.filter(category__name=category).live().descendant_of(self)
+            #blogs = blogs.filter(tags__name=tag).live().descendant_of(self)
+
+        # Pagination
+        page = request.GET.get('page')
+        paginator = Paginator(blogs, 10)  # Show 10 blogs per page
+        try:
+            blogs = paginator.page(page)
+        except PageNotAnInteger:
+            blogs = paginator.page(1)
+        except EmptyPage:
+            blogs = paginator.page(paginator.num_pages)
+
+        # Update template context
+        context = super(BlogIndexPage, self).get_context(request)
+        context['blogs'] = blogs
+        return context
+'''
     def serve(self, request):
         # Get blogs
         blogs = self.blogs
@@ -162,6 +194,7 @@ class BlogIndexPage(Page):
                 'blogs': blogs,
             })
 #            return super(BlogIndexPage, self).serve(request)
+'''
 
 class Gallery(Page):
     image1 = models.ForeignKey(

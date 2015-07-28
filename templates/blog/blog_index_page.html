@@ -34,8 +34,8 @@
 		<div class="post-row">
 		  <div class="left-meta-post">
 		    <div class="post-date">
-		      <span class="day">{{ item.link_page.blogpage.date.day }}</span>
-		      <span class="month">{{ item.link_page.blogpage.date| date:"F"  }}</span>
+		      <span class="day">{{ item.date.day }}</span>
+		      <span class="month">{{ item.date| date:"F"  }}</span>
 		    </div>
 		    <div class="post-type"><i class="fa fa-picture-o"></i></div>
 		  </div>
@@ -44,7 +44,7 @@
 		  </h3>
 		  <div class="post-content">
 		    {{item.link_page.}}
-		    <p>{{ item.link_page.blogpage.intro }} <a class="read-more" href="{{ item.link }}">Read More...</a></p>
+		    <p>{{ item.intro }} <a class="read-more" href="{{ item.url }}">Read More...</a></p>
 		  </div>
 		</div>
 	      </div>
@@ -55,14 +55,11 @@
 	</div>
 	<!-- Start Pagination -->
 	<div id="pagination" class="pagination">
-	  <span class="all-pages">Page {{ self.blogs.number }} of {{ self.blogs.paginator.num_pages }}</span>
-	      {% if self.blogs.has_previous %}
+	  <span class="all-pages">Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}</span>
+	      {% if blogs.has_previous %}
 	      <a class="next-page" href="#">Previous</a>
 	       {% endif %}
-
-	      <span class="current page-num">1</span>
-	      <a class="page-num" href="#">2</a>
-	      <a class="page-num" href="#">3</a>
+	      <span class="current page-num">{{blogs.number}}</span>
 	      {% if self.blogs.has_next %}
 	      <a class="next-page" href="#">Next</a>
 	       {% endif %}
@@ -99,36 +96,18 @@
       <div class="widget widget-popular-posts">
 	<h4>Popular Post <span class="head-line"></span></h4>
 	<ul>
+	  {% for blog in blogs %}
 	  <li>
 	    <div class="widget-thumb">
-	      <a href="#"><img src="images/blog-mini-01.jpg" alt="" /></a>
+	      <a href="{{blog.url}}"><img src="{{blog.main_image.file.url}}" alt="{{blog.main_image.title}}" /></a>
 	    </div>
 	    <div class="widget-content">
-	      <h5><a href="#">How To Download The Google Fonts Catalog</a></h5>
-	      <span>Jul 29 2013</span>
+	      <h5><a href="{{blog.url}}">{{blog.title}}</a></h5>
+	      <span>{{blog.date}}</span>
 	    </div>
 	    <div class="clearfix"></div>
 	  </li>
-	  <li>
-	    <div class="widget-thumb">
-	      <a href="#"><img src="images/blog-mini-02.jpg" alt="" /></a>
-	    </div>
-	    <div class="widget-content">
-	      <h5><a href="#">How To Download The Google Fonts Catalog</a></h5>
-	      <span>Jul 29 2013</span>
-	    </div>
-	    <div class="clearfix"></div>
-	  </li>
-	  <li>
-	    <div class="widget-thumb">
-	      <a href="#"><img src="images/blog-mini-03.jpg" alt="" /></a>
-	    </div>
-	    <div class="widget-content">
-	      <h5><a href="#">How To Download The Google Fonts Catalog</a></h5>
-	      <span>Jul 29 2013</span>
-	    </div>
-	    <div class="clearfix"></div>
-	  </li>
+	  {% endfor %}
 	</ul>
       </div>
       
@@ -149,17 +128,6 @@
 	  <a href="#">{{ tag }}</a>
 	  {% endfor %}
 	  {% endfor %}
-	  <a href="#">Portfolio</a>
-	  <a href="#">Theme</a>
-	  <a href="#">Mobile</a>
-	  <a href="#">Design</a>
-	  <a href="#">Wordpress</a>
-	  <a href="#">Jquery</a>
-	  <a href="#">CSS</a>
-	  <a href="#">Modern</a>
-	  <a href="#">Theme</a>
-	  <a href="#">Icons</a>
-	  <a href="#">Google</a>
 	</div>
       </div>
       
