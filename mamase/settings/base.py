@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'wagtail.wagtailforms',
 
     'jsonfield',
+    'elasticsearch',
     'search',
     'home',
     'disqus',
@@ -163,3 +164,12 @@ DISQUS_API_KEY = 'xhv95xoheLTkiaS7PKaZmxe9NpTObz4LDUsNmC2e1XNgW2SKIO0bLSqfwIRWrz
 DISQUS_WEBSITE_SHORTNAME = 'Upande'
 
 SITE_ID = 1
+
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',
+        'URLS': ['http://localhost:9200'],
+        'INDEX': 'wagtail',
+        'TIMEOUT': 5,
+    }
+}

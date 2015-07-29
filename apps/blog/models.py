@@ -43,7 +43,7 @@ class BlogPage(Page):
         related_name='+'
     )
     date = models.DateField("Post date")
-    intro = RichTextField()
+    intro = RichTextField(max_length=200)
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     
@@ -113,6 +113,7 @@ class BlogIndexPage(Page):
     
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full"),
+        FieldPanel('search_description'),
         InlinePanel('related_links', label="Related links"),
     ]
 
@@ -163,38 +164,6 @@ class BlogIndexPage(Page):
         context = super(BlogIndexPage, self).get_context(request)
         context['blogs'] = blogs
         return context
-'''
-    def serve(self, request):
-        # Get blogs
-        blogs = self.blogs
-        categories = self.categories
-        related_links = self.related_links
-
-        # Filter by tag
-        tag = request.GET.get('tag')
-        category = request.GET.get('category')
-        if tag:
-            blogs = blogs.filter(tags__name=tag).live().descendant_of(self)
-            return render(request, self.template, {
-                'self': self,
-                'blogs': blohs,
-            })
-            
-        elif category:
-            blogs = BlogPage.objects.filter(category__name=category).live().descendant_of(self)
-            return render(request, self.template, {
-                'self': self,
-                'blogs': blogs,
-            })
-            
-        else:
-            blogs = blogs.live().descendant_of(self)
-            return render(request, self.template, {
-                'self': self,
-                'blogs': blogs,
-            })
-#            return super(BlogIndexPage, self).serve(request)
-'''
 
 class Gallery(Page):
     image1 = models.ForeignKey(

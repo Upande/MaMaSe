@@ -1,0 +1,8 @@
+<!-- Search Widget -->
+<div class="widget widget-search">
+  <form action="{% url 'search' %}" method="get">
+    <input type="search" name="query" placeholder="Enter Keywords..." value="{{search_query}}" />
+    <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+  </form>
+</div>
+

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load wagtailcore_tags %}
+
+{% block title %}<title>Upande | Search{% if search_results %} results{% endif %} </title>{% endblock %}
+
+{% block content %}
+
+<div id="content">
+  <div class="container">
+    <div class="row sidebar-page">
+      
+      <!-- Page Content -->
+      <div class="col-md-9 page-content">
+	
+	{% if search_results %}
+        <ul>
+          {% for result in search_results %}
+          <li>
+            <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
+            {% if result.search_description %}
+            {{ result.search_description|safe }}
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+	{% elif search_query %}
+        No results found
+	{% else %}
+        Please type something into the search box
+	{% endif %}
+      </div>
+      <!--Sidebar-->
+      <div class="col-md-3 sidebar right-sidebar">	
+	{% block search_box %}
+	{% include "search/search_box.html" only %}
+	{% endblock search_box %}
+	
+      </div>
+    </div>
+  </div>
+</div>
+  
+{% endblock %}
