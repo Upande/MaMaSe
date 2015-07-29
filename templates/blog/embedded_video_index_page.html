@@ -24,19 +24,17 @@
 	  <div class="col-md-12">
 	    
 	    <!-- Classic Heading -->
-	    <h4 class="classic-title"><span>Latest Posts</span></h4>
+	    <h4 class="classic-title"><span>Latest Videos</span></h4>
 	    
 	    <div class="latest-posts-classic">
 	      
-	      {% if blogs %}	      
+	      {% if videos %}	      
 	      <!-- Post 1 -->
-	      {% for item in blogs %}
+	      {% for item in videos %}
 	      <div class="col-md-6">
 		<div class="post-row">
 		  <div class="left-meta-post">
 		    <div class="post-date">
-		      <span class="day">{{ item.date.day }}</span>
-		      <span class="month">{{ item.date| date:"F"  }}</span>
 		    </div>
 		    <div class="post-type"><i class="fa fa-picture-o"></i></div>
 		  </div>
@@ -45,7 +43,7 @@
 		  </h3>
 		  <div class="post-content">
 		    {{item.link_page.}}
-		    <p>{{ item.intro }} <a class="read-more" href="{{ item.url }}">Read More...</a></p>
+		    <p>{{ item.description|safe }} <a class="read-more" href="{{ item.url }}">Watch Video....</a></p>
 		  </div>
 		</div>
 	      </div>
@@ -56,12 +54,12 @@
 	</div>
 	<!-- Start Pagination -->
 	<div id="pagination" class="pagination">
-	  <span class="all-pages">Page {{ blogs.number }} of {{ blogs.paginator.num_pages }}</span>
-	  {% if blogs.has_previous %}
+	  <span class="all-pages">Page {{ videos.number }} of {{ videos.paginator.num_pages }}</span>
+	  {% if videos.has_previous %}
 	      <a class="next-page" href="#">Previous</a>
 	      {% endif %}
-	      <span class="current page-num">{{blogs.number}}</span>
-	      {% if blogs.has_next %}
+	      <span class="current page-num">{{videos.number}}</span>
+	      {% if videos.has_next %}
 	      <a class="next-page" href="#">Next</a>
 	      {% endif %}
 	</div>
@@ -92,14 +90,14 @@
 	<div class="widget widget-popular-posts">
 	  <h4>Popular Post <span class="head-line"></span></h4>
 	  <ul>
-	    {% for blog in blogs %}
+	    {% for item in videos %}
 	    <li>
 	      <div class="widget-thumb">
-		<a href="{{blog.url}}"><img src="{{blog.main_image.file.url}}" alt="{{blog.main_image.title}}" /></a>
+		<a href="{{item.url}}"><img src="{{item.main_image.file.url}}" alt="{{blog.main_image.title}}" /></a>
 	      </div>
 	      <div class="widget-content">
-		<h5><a href="{{blog.url}}">{{blog.title}}</a></h5>
-		<span>{{blog.date}}</span>
+		<h5><a href="{{item.url}}">{{item.title}}</a></h5>
+		<span>{{item.date}}</span>
 	      </div>
 	      <div class="clearfix"></div>
 	    </li>
