@@ -54,9 +54,10 @@ INSTALLED_APPS = (
     'home',
     'disqus',
 
-    'apps.blog',
     'apps.thingspeak',
-
+    'apps.gallery',
+    'apps.video',
+    'apps.news',
 )
 
 MIDDLEWARE_CLASSES = (

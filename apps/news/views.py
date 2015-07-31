@@ -9,6 +9,16 @@ from django.views.generic import TemplateView
 
 class CommView(TemplateView):
     template_name = "communications.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super(CommView, self).get_context_data(**kwargs)
+
+        context["news_url"] = '/news/'
+        context["video_url"] = '/videos/'
+        context["gallery_url"] = '/gallery/'
+        context["calender_url"] = '/calender/' 
+
+        return context
 
 def search(request):
     # Search

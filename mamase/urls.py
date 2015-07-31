@@ -6,7 +6,7 @@ from wagtail.wagtailadmin import urls as wagtailadmin_urls
 from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
-from apps.blog.views import CommView
+from apps.news.views import CommView
 
 urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
@@ -20,9 +20,7 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'', include(wagtail_urls)),
-    
 ]
-
 
 if settings.DEBUG:
     from django.conf.urls.static import static
