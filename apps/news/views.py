@@ -16,7 +16,7 @@ class CommView(TemplateView):
         context["news_url"] = '/news/'
         context["video_url"] = '/videos/'
         context["gallery_url"] = '/gallery/'
-        context["calender_url"] = '/calender/' 
+        context["events_url"] = '/events/' 
 
         return context
 

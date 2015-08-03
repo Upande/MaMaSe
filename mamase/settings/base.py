@@ -57,6 +57,7 @@ INSTALLED_APPS = (
     'apps.thingspeak',
     'apps.gallery',
     'apps.video',
+    'apps.event',
     'apps.news',
 )
 
