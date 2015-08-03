@@ -11,6 +11,9 @@
 {% image self.image1 max-1440x500 as tmp_image1 %}
 {% image self.image2 max-1440x500 as tmp_image2 %}
 {% image self.image3 max-1440x500 as tmp_image3 %}
+{% image self.image4 max-1440x500 as tmp_image4 %}
+{% image self.image5 max-1440x500 as tmp_image5 %}
+{% image self.image6 max-1440x500 as tmp_image6 %}
 
 <div id="main-slide" class="carousel slide" data-ride="carousel">
 	
@@ -31,10 +34,11 @@
           	
             <img class="img-responsive" src="{{ tmp_image1.url }}" alt="slider">
             <div class="slider-content">
-              <div class="col-md-12 text-center">
-                <h2 class="animated2">
+              <div class="carousel-caption">
+                <h3 class="animated2">
+                  Text
                   <!--span>Welcome to <strong>Margo</strong></span-->
-                </h2>
+                </h3>
                 <h3 class="animated3">
                   <!--span>The ultimate aim of your business</span-->
                 </h3>
@@ -77,6 +81,54 @@
             </div>
           </div>
           <!--/ Carousel item end -->
+          <div class="item">
+            <img class="img-responsive" src="{{ tmp_image4.url }}" alt="slider">
+            <div class="slider-content">
+              <div class="col-md-12 text-center">
+                <h2 class="animated4">
+                  <!--span><strong>Margo</strong> for the highest</span-->
+                </h2>
+                <h3 class="animated5">
+                  <!--span>The Key of your Success</span-->
+                </h3>   
+                <p class="animated6"><!--a href="#" class="slider btn btn-system btn-large">Buy Now</a-->
+                </p>
+              </div>
+            </div>
+          </div>
+          <!-- Carousek item end -->
+          <div class="item">
+            <img class="img-responsive" src="{{ tmp_image5.url }}" alt="slider">
+            <div class="slider-content">
+              <div class="col-md-12 text-center">
+                <h2 class="animated4">
+                  <!--span><strong>Margo</strong> for the highest</span-->
+                </h2>
+                <h3 class="animated5">
+                  <!--span>The Key of your Success</span-->
+                </h3>   
+                <p class="animated6"><!--a href="#" class="slider btn btn-system btn-large">Buy Now</a-->
+                </p>
+              </div>
+            </div>
+          </div>
+          <!--Carousel item end -->
+          <div class="item">
+            <img class="img-responsive" src="{{ tmp_image6.url }}" alt="slider">
+            <div class="slider-content">
+              <div class="col-md-12 text-center">
+                <h2 class="animated4">
+                  <!--span><strong>Margo</strong> for the highest</span-->
+                </h2>
+                <h3 class="animated5">
+                  <!--span>The Key of your Success</span-->
+                </h3>   
+                <p class="animated6"><!--a href="#" class="slider btn btn-system btn-large">Buy Now</a-->
+                </p>
+              </div>
+            </div>
+          </div>
+          <!--Carousel item end -->
         </div>
         <!-- Carousel inner end-->
 	
