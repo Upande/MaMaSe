@@ -1,84 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load staticfiles %}
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block js%} 
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="{% static 'js/c3.js' %}"></script>
+<script>
+$(document).ready(function() {
+   $.ajax({
+        type: 'GET',
+        url : "http://api.thingspeak.com/channels/15792/feed.json?callback=",
+        dataType: "jsonp",
+        success: function(data) {
+            feeds = data.feeds
+            channel = data.channel
+            var created = ['created']
+            var field1 = [channel.field1]
+            var field2 = [channel.field2]
+            var field3 = [channel.field3]
+            for (var i = 0; i < feeds.length; i++) {
+                n = feeds[i].created_at;
+                f1 = feeds[i].field1;
+                f2 = feeds[i].field2;
+                f3 = feeds[i].field3;
+                created.push(n.replace('T',' ').replace('Z',''));
+                field1.push(f1);
+                field2.push(f2);
+                field3.push(f3);
+            }
+            var chart = c3.generate({
+                bindto: '#chartone',
+                data: {
+				x: 'created',
+                    xFormat: '%Y-%m-%d %H:%M:%S',
+                    columns: [
+                        created,
+                        field1,
+                        field2,
+                        field3,
+                    ],
+                },
+axis: {
+        x: {
+            type: 'timeseries',
+            tick: {
+                format: '%Y-%m-%d %H:%M'
+            }
+        }
+    }
+            });
+        },
+    });
+});
+				</script>
+{% endblock js %}
+
+{% block body_class %}visual-index{% endblock %}
+
+{% block content %}
+<!-- Container -->
+<div id="container">
   
-  <head>
-    
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-
-    <title>Testing D3 with ONA</title>
-
-    <!-- Bootstrap Core CSS -->
-<!--    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">-->
-
-    <!-- Custom CSS -->
-    <link href="{% static 'css/chart.css' %}" rel="stylesheet">
-
-    <!-- Fonts -->
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Josefin+Slab:100,300,400,600,700,100italic,300italic,400italic,600italic,700italic" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>                                                                                                                                                                          
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>                                                                                                      
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>                                                                                                    
-    <![endif]-->
-    {% block extra_head %}{% endblock extra_head %}
-</head>
-<body>
-  <h1 class="charts--headline">How does this look to you?<br>Let Magondu know</h1>
-  <div class="charts--container">
-    <ul>
-      <li class="chart">
-	<h3 class="chart--subHeadline">Chart 1</h3>
-	<h2 class="chart--headline">Pie Question Would Go Here</h2>
-	<div id="pieChart">
-          <svg id="pieChartSVG">
-            <defs>
-              <filter id='pieChartInsetShadow'>
-		<feOffset dx='0' dy='0'/>
-		<feGaussianBlur stdDeviation='3' result='offset-blur' />
-		<feComposite operator='out' in='SourceGraphic' in2='offset-blur' result='inverse' />
-		<feFlood flood-color='black' flood-opacity='1' result='color' />
-		<feComposite operator='in' in='color' in2='inverse' result='shadow' />
-		<feComposite operator='over' in='shadow' in2='SourceGraphic' />
-              </filter>
-              <filter id="pieChartDropShadow">
-		<feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur" />
-		<feOffset in="blur" dx="0" dy="3" result="offsetBlur" />
-		<feMerge>
-                  <feMergeNode />
-                  <feMergeNode in="SourceGraphic" />
-		</feMerge>
-              </filter>
-            </defs>
-          </svg>
+  <!-- Start Page Banner -->
+  <div class="page-banner no-subtitle">
+    <div class="container">
+      <div class="row">
+	<div class="col-md-6">
+	  <h2>Charts</h2>
 	</div>
-      </li>
-      <li class="chart">
-	<h3 class="chart--subHeadline">Chart 2</h3>
-	<h2 class="chart--headline">Area Label Would Go Here</h2>
-	<div id="lineChart">
-          <svg id="lineChartSVG" class="lineChart--svg">
-            <defs>
-              <linearGradient id="lineChart--gradientBackgroundArea" x1="0" x2="0" y1="0" y2="1">
-		<stop class="lineChart--gradientBackgroundArea--top" offset="0%" />
-		<stop class="lineChart--gradientBackgroundArea--bottom" offset="100%" />
-              </linearGradient>
-            </defs>
-          </svg>
+	<div class="col-md-6">
+	  <ul class="breadcrumbs">
+	    <li><a href="{{base_url}}">Home</a></li>
+	    <li>Visualization</li>
+	  </ul>
 	</div>
-      </li>
-    </ul>
+      </div>
+    </div>
   </div>
-  <script src="{% static 'js/chart.js' %}"></script>  
-  <!-- <script src="{% static 'js/d3.js' %}"></script>  -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
-</body>
+  <!-- End Page Banner -->  
+  
+  <!-- Start Chart Section -->
+  <div class="pricing-section" style="padding-top:60px; padding-bottom:60px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+	  
+          <!-- Text -->
+          <p class="text-center" style="margin-bottom:20px;">MaMasa data shown as charts will look amazing here. Check it out and enjoy.</p>
+        </div>
+      </div>
+      
+      <div class="row pricing-tables">
+        
+        <div class="col-md-12 col-sm-12">
+	  <div id="chartone"></div>
+	</div>		
+      </div>
+    </div>
+  </div>
+  <!-- End Chart Section -->
+   
+  
+</div>
+<!-- End Container -->
+{% endblock content %}
 

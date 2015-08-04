@@ -54,7 +54,7 @@ INSTALLED_APPS = (
     'home',
     'disqus',
 
-    'apps.thingspeak',
+    'apps.visualization',
     'apps.gallery',
     'apps.video',
     'apps.event',
