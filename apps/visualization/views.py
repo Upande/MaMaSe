@@ -62,3 +62,14 @@ def chart(request):
     args = {}
     args['isLoggedIn'] = False
     return render_to_response("chart.html", args)
+
+def page_not_found_view(request):
+    args = {}
+    args['url'] = '/'
+    return render_to_response("404.html", args)
+    
+def page_not_found_view(request):
+    args = {}
+    args['url'] = '/'
+    return render_to_response("500.html", args)
+    
