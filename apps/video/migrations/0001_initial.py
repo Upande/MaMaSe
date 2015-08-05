@@ -2,19 +2,16 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import wagtail.wagtailcore.fields
 import django.db.models.deletion
 import modelcluster.fields
-import wagtail.wagtailcore.fields
-import modelcluster.contrib.taggit
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('taggit', '0001_initial'),
-        ('wagtailimages', '0006_add_verbose_names'),
         ('wagtailcore', '0001_squashed_0016_change_page_url_path_to_text_field'),
-        ('news', '0002_auto_20150730_0952'),
+        ('news', '0001_initial'),
     ]
 
     operations = [

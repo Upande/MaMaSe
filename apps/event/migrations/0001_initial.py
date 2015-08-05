@@ -2,18 +2,14 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import django.db.models.deletion
-import modelcluster.fields
 import wagtail.wagtailcore.fields
-import modelcluster.contrib.taggit
+import modelcluster.fields
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
         ('taggit', '0001_initial'),
-        ('news', '0002_auto_20150730_0952'),
-        ('wagtailimages', '0006_add_verbose_names'),
         ('wagtailcore', '0001_squashed_0016_change_page_url_path_to_text_field'),
     ]
 
@@ -52,8 +48,6 @@ class Migration(migrations.Migration):
                 ('location', wagtail.wagtailcore.fields.RichTextField(max_length=200)),
                 ('maps_url', models.URLField(verbose_name=b'Map Link', blank=True)),
                 ('cost', models.IntegerField(default=0)),
-                ('category', models.ForeignKey(related_name='+', on_delete=django.db.models.deletion.SET_NULL, blank=True, to='news.CategoryPage', null=True)),
-                ('main_image', models.ForeignKey(related_name='+', on_delete=django.db.models.deletion.SET_NULL, blank=True, to='wagtailimages.Image', null=True)),
             ],
             options={
                 'abstract': False,
@@ -70,20 +64,5 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
-        ),
-        migrations.AddField(
-            model_name='eventpage',
-            name='tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(to='taggit.Tag', through='event.EventPageTag', blank=True, help_text='A comma-separated list of tags.', verbose_name='Tags'),
-        ),
-        migrations.AddField(
-            model_name='eventindexrelatedlink',
-            name='link_page',
-            field=models.ForeignKey(related_name='+', blank=True, to='wagtailcore.Page', null=True),
-        ),
-        migrations.AddField(
-            model_name='eventindexrelatedlink',
-            name='page',
-            field=modelcluster.fields.ParentalKey(related_name='related_links', to='event.EventIndexPage'),
         ),
     ]

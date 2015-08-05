@@ -18,8 +18,10 @@ urlpatterns = [
     url(r'^ts/', include('apps.thingspeak.urls')),
     url(r'^communications/$', CommView.as_view(), name="communications"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^q/', include('apps.quiz.urls')),
 
     url(r'', include(wagtail_urls)),
+
 ]
 
 if settings.DEBUG:

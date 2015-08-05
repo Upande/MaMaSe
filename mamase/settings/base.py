@@ -23,6 +23,8 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 # Application definition
 
+AUTH_USER_MODEL = 'auth.User'
+
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.sites',
@@ -59,6 +61,10 @@ INSTALLED_APPS = (
     'apps.video',
     'apps.event',
     'apps.news',
+    'apps.quiz',
+    'apps.true_false',
+    'apps.multichoice',
+    'apps.essay',
 )
 
 MIDDLEWARE_CLASSES = (
