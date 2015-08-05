@@ -1,16 +1,16 @@
 import requests
 
-def callURL(url):
+def getAPIData(url):
     r = requests.get(url)
     return r
 
-def parseJSON():
+def parseAPIContent():
     url = "https://thingspeak.com/channels/28006/feed.json"
-    js = callURL(url)
+    js = getAPIData(url)
     
 
     if js.status_code == 200:
-        #Success
+        # means the request was successful
         print js.text
     else:
         js.status_code

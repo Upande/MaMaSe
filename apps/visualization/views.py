@@ -1,13 +1,13 @@
 from django.shortcuts import render,render_to_response
 from django.http import JsonResponse
 
-from . import getJSONData as gjd
+from . import thingspeak 
 from .models import LoggerData,Channel,ChannelField,Feed
 
 import json
 
-def logData(request):
-    data = gjd.parseJSON()
+def logThingspeakData(request):
+    data = thingspeak.parseAPIContent()
     
     
     l = LoggerData(raw_data = data)
@@ -33,7 +33,6 @@ def logData(request):
     l.save()
     
     #Need to find a scalable way to do this
-    
     if not c:
         return
 
@@ -54,7 +53,7 @@ def logData(request):
     return JsonResponse(results)
 
 
-def home(request):
+def index(request):
     args = {}
     args['isLoggedIn'] = False
     return render_to_response("index.html", args)
