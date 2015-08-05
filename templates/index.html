@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% load static %}
-
+{% block title %} <title> Upande | Visualization </title> {% endblock title %}
+{% block css %} <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> {% endblock css %}
 {% block js%} 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="{% static 'js/c3.js' %}"></script>
@@ -29,14 +30,13 @@ $(document).ready(function() {
                 field3.push(f3);
             }
             var chart = c3.generate({
-                bindto: '#chartone',
+                bindto: '#chart',
                 data: {
-				x: 'created',
+		    x: 'created',
                     xFormat: '%Y-%m-%d %H:%M:%S',
                     columns: [
                         created,
                         field1,
-                        field2,
                         field3,
                     ],
                 },
@@ -86,14 +86,27 @@ axis: {
         <div class="col-md-12">
 	  
           <!-- Text -->
-          <p class="text-center" style="margin-bottom:20px;">MaMasa data shown as charts will look amazing here. Check it out and enjoy.</p>
+          <p class="text-center" style="margin-bottom:20px;">MaMasa data shown as charts will look amazing here. Check it out and enjoy. This one is from the <a href="http://thingspeak API http://api.thingspeak.com/channels/15792/feed.json?callback="> thingspeak </a> </p>
         </div>
       </div>
       
       <div class="row pricing-tables">
         
         <div class="col-md-12 col-sm-12">
-	  <div id="chartone"></div>
+	  <div id="chart"></div>
+	</div>		
+      </div>		
+      
+      <div class="row pricing-tables">
+        
+        <div class="col-md-12 col-sm-12">
+	  <div class="col-md-12">
+            <!-- Text -->
+            <p class="text-center" style="margin-bottom:20px;">MaMasa Geonode data is rendered here </p>
+          </div>
+          <div class="col-md-12 col-sm-12">
+	    <div id="mamase"></div>
+	  </div>		
 	</div>		
       </div>
     </div>

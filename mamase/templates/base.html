@@ -73,8 +73,6 @@
     <script type="text/javascript" src="{% static 'margo/js/mediaelement-and-player.js' %}"></script>
     <script type="text/javascript" src="{% static 'margo/js/script.js' %}"></script>
 
-    <!-- Additional js not needed globally -->
-    {% block js %}{% endblock %}
 
     <!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -493,5 +491,7 @@
   </div>
   
 </body>
+    <!-- Additional js not needed globally -->
+    {% block js %}{% endblock %}
 
 </html>
