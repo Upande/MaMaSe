@@ -3,7 +3,20 @@
 {% block body_class %}template-404{% endblock %}
 
 {% block content %}
-    <h1>Page not found</h1>
+<!-- Start Content -->
+<div id="content">
+  <div class="container">
+    <div class="page-content">
+      <div class="error-page">
+	<h1>404</h1>
+	<h3>File not Found</h3>
+	<p>We're sorry, but the page you were looking for doesn't exist.</p>
+	<div class="text-center"><a href="{% url home %}" class="btn-system btn-small">Back To Home</a></div>
+	</div>
+      
 
-    <h2>Sorry, this page could not be found.</h2>
+      </div>
+    </div>
+  </div>
+<!-- End Content -->
 {% endblock %}

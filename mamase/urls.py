@@ -8,6 +8,10 @@ from wagtail.wagtailcore import urls as wagtail_urls
 
 from apps.news.views import CommView
 
+
+handler404 = 'apps.visualization.views.page_not_found_view'
+handler500 = 'apps.visualization.views.error_view'
+
 urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/', include(wagtailadmin_urls)),
