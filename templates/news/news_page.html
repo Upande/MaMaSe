@@ -37,7 +37,7 @@
 	      <li>{{ self.date }}</li>
 	      <li>
 		{% for tag in self.tags.all %}
-		<a href="#?tag={{tag}}"> {{tag}} </a> 
+		<a href="{% slugurl 'news' %}?tag={{tag}}"> {{tag}} </a> 
 		{% endfor %}
 	      </li>
 	      <li><a href="#">{% disqus_num_replies %}</a></li>
@@ -92,98 +92,42 @@
 	<div class="widget widget-categories">
 	  <h4>Categories <span class="head-line"></span></h4>
 	  <ul>
-	    <li>
-	      <a href="#">Mau</a>
-	      </li>
-	    <li>
-	      <a href="#">Serengeri</a>
-	      </li>
-	    <li>
-	      <a href="#">Mara</a>
-	      </li>
-	    <li>
-	      <a href="#">All</a>
-	      </li>
-	    </ul>
-	  </div>
+	    {% for categ in self.categories %}
+            <li>
+              <a href="{% slugurl 'news' %}?category={{categ.name}}">{{categ.name}}</a>
+            </li>
+            {% endfor %}
+	  </ul>
+	</div>
 
 	<!-- Popular Posts widget -->
 	<div class="widget widget-popular-posts">
 	  <h4>Other Exciting posts <span class="head-line"></span></h4>
-	  {% if self.related_links.all %}
 	  <ul>
-            {% for item in self.related_links.all %}
-	    <li>
-	      <div class="widget-thumb">
-		<a href="#"><img src="{% static "margo/images/blog-mini-01.jpg" %}" alt="" /></a>
-	      </div>
-	      <div class="widget-content">
-		<h5><a href="{{ item.link }}">{{ item.title }}</a></h5>
-		<span>{{item.post_date}}</span>
-	      </div>
-	      <div class="clearfix"></div>
-	    </li>
-              {% endfor %}
-            </ul>
-	    {% endif %}
+	    {% for news in self.news_items %}
+            <li>
+              <div class="widget-thumb">
+                <a href="{{news.url}}"><img src="{{news.main_image.file.url}}" alt="{{news.main_image.title}}" /></a>
+              </div>
+              <div class="widget-content">
+                <h5><a href="{{news.url}}">{{news.title}}</a></h5>
+                <span>{{news.date}}</span>
+              </div>
+              <div class="clearfix"></div>
+            </li>
+            {% endfor %}
 
-	    <li>
-	      <div class="widget-thumb">
-		<a href="#"><img src="{% static "margo/images/blog-mini-01.jpg" %}" alt="" /></a>
-	      </div>
-	      <div class="widget-content">
-		<h5><a href="#">GIS Project in the Mara</a></h5>
-		<span>Jul 29 2013</span>
-	      </div>
-	      <div class="clearfix"></div>
-	    </li>
-	    <li>
-	      <div class="widget-thumb">
-		<a href="#"><img src="{% static "margo/images/blog-mini-02.jpg" %}" alt="" /></a>
-	      </div>
-	      <div class="widget-content">
-		<h5><a href="#">GIS Project in the Mau</a></h5>
-		<span>Jul 29 2013</span>
-	      </div>
-	      <div class="clearfix"></div>
-	      </li>
-	    <li>
-	      <div class="widget-thumb">
-		<a href="#"><img src="{% static "margo/images/blog-mini-03.jpg" %}" alt="" /></a>
-	      </div>
-	      <div class="widget-content">
-		<h5><a href="#">GIS Project in the Serengeri</a></h5>
-		<span>Jul 29 2013</span>
-		</div>
-	      <div class="clearfix"></div>
-	      </li>
-	    </ul>
-	  </div>
-	
-	<!-- Video Widget -->
-	<div class="widget">
-	  <h4>Video <span class="head-line"></span></h4>
-	  <div>
-	    <iframe src="http://player.vimeo.com/video/63322694?byline=0&amp;portrait=0&amp;badge=0" width="800" height="450"></iframe>
-	    </div>
-	  </div>
+	  </ul>
+	</div>
 	
 	<!-- Tags Widget -->
 	<div class="widget widget-tags">
 	  <h4>Tags <span class="head-line"></span></h4>
 	  <div class="tagcloud">
-	    <a href="#">Portfolio</a>
-	    <a href="#">Theme</a>
-	    <a href="#">Mobile</a>
-	    <a href="#">Design</a>
-	    <a href="#">Wordpress</a>
-	    <a href="#">Jquery</a>
-	    <a href="#">CSS</a>
-	    <a href="#">Modern</a>
-	    <a href="#">Theme</a>
-	    <a href="#">Icons</a>
-	    <a href="#">Google</a>
-	    </div>
+	    {% for tag in self.news_tags %}
+            <a href="{% slugurl 'news' %}?tag={{tag}}">{{ tag }}</a>
+            {% endfor %}
+	  </div>
 	  </div>
 
 	</div>

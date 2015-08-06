@@ -49,6 +49,28 @@ class NewsPage(Page):
     
     category = models.ForeignKey('news.CategoryPage', null=True, blank=True ,related_name='+',on_delete=models.SET_NULL )
 
+    @property
+    def categories(self):
+        # Get list of live news pages that are descendants of this page
+        categories = CategoryPage.objects.live() 
+        
+        return categories        
+    
+    @property
+    def news_items(self):
+        # Get list of live news pages that are descendants of this page
+        news_items = NewsPage.objects.live().descendant_of(self.get_parent()) 
+        # Order by most recent date first. Limit to 5 for the sidebar
+        news_items = news_items.order_by('-date')[:5]
+
+        return news_items
+
+    @property
+    def news_tags(self):
+        #Get all unique tags that belong to the children
+        news_tags = NewsPage.objects.live().descendant_of(self.get_parent()).order_by('tags__name').distinct('tags__name').values_list('tags__name',flat=True)
+        return news_tags
+        
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
         index.SearchField('body'),
