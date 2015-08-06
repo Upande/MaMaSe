@@ -107,22 +107,12 @@
 	  </ul>
 	</div>
 	
-      <!-- Video Widget -->
-      <div class="widget">
-	<h4>Video <span class="head-line"></span></h4>
-	<div>
-	  <iframe width="560" height="315" src="https://www.youtube.com/embed/Lmi9IBP209s" frameborder="0" allowfullscreen></iframe>
-	</div>
-      </div>
-      
       <!-- Tags Widget -->
       <div class="widget widget-tags">
 	<h4>Tags <span class="head-line"></span></h4>
 	<div class="tagcloud">
-	  {% for self in self.blogs %}
-	  {% for tag in self.tags.all %}
-	  <a href="#">{{ tag }}</a>
-	  {% endfor %}
+	  {% for tag in tags %}
+	  <a href="{{request.path}}?tag={{tag}}">{{ tag }}</a>
 	  {% endfor %}
 	</div>
       </div>
