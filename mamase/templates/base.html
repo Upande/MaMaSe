@@ -10,7 +10,7 @@
 <head>
     {% block title%}
     <!-- Basic -->
-    <title>Upande | {{ self.title }} </title>
+    <title>MaMaSe | {{ self.title }} </title>
     {% endblock title%}
     <!-- Define Charset -->
     <meta charset="utf-8">
@@ -19,8 +19,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <!-- Page Description and Author -->
-    <meta name="description" content="Mau Mara Serengeri Sustainable Water Initiative">
+    <meta name="description" content="Mau Mara Serengeti Sustainable Water Initiative">
     <meta name="author" content="Upande">
+    <!-- Mamase favicon -->
+    <link rel="icon" type="image/png" href="{% static "margo/images/favicon.ico" %}" />
 
     <!-- Bootstrap CSS  -->
     <link rel="stylesheet" href="{% static 'margo/asset/css/bootstrap.min.css' %}" type="text/css" media="screen">
@@ -290,10 +292,33 @@
     {% block footer %}     
     
     <!-- Start Footer Section -->
-    <footer>
-      <div class="container">
-        <p>&copy; 2015 Upande Limited </p>
-      </div>
+    <footer style="padding-top:20px">
+      <div class="container" style="background-color:#222222;">
+        <div class="row">
+          <div class = "col-md-4">
+            <h4 style="color:white">&nbsp;&nbsp;&nbsp;<u>Contacts</u></h4>
+            <ul>
+                &nbsp;
+                <li style="color:white"><span>&nbsp;- <b>Phone Number:</b></span></li>
+                <li style="color:white"><span>&nbsp;- <b>Email:</b></span></li>
+                <li style="color:white"><span>&nbsp;- <b>Location:</b></span> Nairobi/Kenya</li>
+            </ul>
+          </div>
+          <div class = "col-md-4">
+          </div>
+          <div class = "col-md-4">
+            <h4 style="color:white">&nbsp;&nbsp;&nbsp;<u>Social Sites</u></h4>
+              </br>
+                &nbsp;&nbsp;&nbsp;
+                <a class="facebook" href="https://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="twitter" href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="google" href="https://plus.google.com" target="_blank"><i class="fa fa-google-plus"></i></a>
+          </div>
+          </div>
+            <a href="http://upande.com" class ="copyright-section col-sm-12" style="color:#34A8DF; font-weight:bold; text-align:center;">&copy; 2015 Upande Limited</a>
+         </div> 
     </footer>
     <!-- End Footer Section -->
     
