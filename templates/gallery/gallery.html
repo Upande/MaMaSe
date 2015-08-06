@@ -9,17 +9,16 @@
 {% block content %}
 <style type="text/css">
   .carousel-inner > .item > img, .carousel-inner > .item > a > img {
-  height:456px; width:100%;
+  height:321px; width:100%;
 }
 
 .carousel-caption {
-      max-width: 300px;
-      margin-top: 200px;
       line-height: 20px;
-      text-align: left;
+      text-align: center;
       font-weight: bold;
       font-style: italic;
       color:#FFFFFF;
+      padding: 0 0 50px 0
 }
 </style>
 
@@ -30,7 +29,7 @@
 {% image self.image5 max-1440x500 as tmp_image5 %}
 {% image self.image6 max-1440x500 as tmp_image6 %}
 
-<div id="main-slide" class="carousel slide" data-ride="carousel">
+<div id="main-slide" class="carousel slide" data-ride="carousel" style="max-width:70%; margin:auto; ">
 	
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -44,7 +43,7 @@
         <!--/ Indicators end-->
 	
         <!-- Carousel inner -->
-        <div class="carousel-inner" style="overflow-x:hidden;">
+        <div class="carousel-inner">
           <div class="item active">
           	
             <img class="img-responsive" src="{{ tmp_image1.url }}" alt="slider">
