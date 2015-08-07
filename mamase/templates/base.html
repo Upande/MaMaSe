@@ -22,6 +22,7 @@
     <!-- Page Description and Author -->
     <meta name="description" content="Mau Mara Serengeti Sustainable Water Initiative">
     <meta name="author" content="Upande">
+
     <!-- Mamase favicon -->
     <link rel="icon" type="image/png" href="{% static "margo/images/favicon.ico" %}" />
 
@@ -40,6 +41,7 @@
     <!-- Css3 Transitions Styles  -->
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/animate.css' %}" media="screen">
     
+
     <!-- Using Lato Font to standarize with existing MaMaSe apps-->
 <!--    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
 
@@ -55,7 +57,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/purple.css' %}" title="purple" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/sky-blue.css' %}" title="sky-blue" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/yellow.css' %}" title="yellow" media="screen" />
-    
+        
     <!-- Additional css not needed globally -->
     {% block css %}{% endblock %}
 
@@ -78,6 +80,8 @@
     <script type="text/javascript" src="{% static 'margo/js/mediaelement-and-player.js' %}"></script>
     <script type="text/javascript" src="{% static 'margo/js/script.js' %}"></script>
 
+    <!-- Custom upande CSS. Added by Magondu -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/upande.css' %}" />
 
     <!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
@@ -231,58 +235,77 @@
           <!-- End Big Heading -->
 	  
 	  
-          <!-- Start Service Icon 2 -->
-          <div class="col-md-3 col-sm-6 service-box service-center" data-animation="fadeIn" data-animation-delay="02">
-            <div class="service-icon">
-              <i class="fa fa-reorder icon-large"></i>
-            </div>
-            <div class="service-content">
+          <!-- Start News Icon -->
+          <div class="col-md-3 col-sm-6">
+            <div class="widget-upande" style="background-color: green;">
               <h4>News</h4>
-              <p>Get updated with the latest news about the MaMaSe project. Our team managers are always on the group working to bring you the latest developments from the field.</p>
-	      <div class="button-side" style="margin-top:4px;"><a href="{% slugurl 'news' %}" class="btn-system btn-large">See latest News</a></div>
+	      <ul class="icons-list-upande">
+		<li><i class="fa fa-circle"></i> Team updates</li>
+		<li><i class="fa fa-circle"></i> Upcoming milestones</li>
+		<li><i class="fa fa-circle"></i> Newsletters</li>
+	      </ul>
+	      <div class="upande-fa-button"> 
+		<a href="{% slugurl 'news' %}">
+		  <i class="fa fa-arrow-circle-o-right fa-3x"></i>
+		</a>
+	      </div>
             </div>
           </div>
-          <!-- End Service Icon 2 -->
+          <!-- End News Icon -->
 	      
-          <!-- Start Service Icon 3 -->
-          <div class="col-md-3 col-sm-6 service-box service-center" data-animation="fadeIn" data-animation-delay="03">
-            <div class="service-icon">
-              <i class="fa fa-image icon-large"></i>
-            </div>
-            <div class="service-content">
-              <h4>Images</h4>
-              <p>Get a look at our amazing photos taken by some of the worlds greates photographers. We want to capture those breathtaking moments and bring them to your desktop</p>
-	      <div class="button-side" style="margin-top:4px;"><a href="{% slugurl 'images' %}" class="btn-system btn-large">See latest Images</a></div>
+          <!-- Start Images Icon -->
+          <div class="col-md-3 col-sm-6">
+            <div class="widget-upande" style="background-color: blueviolet;">
+              <h4>News</h4>
+	      <ul class="icons-list-upande">
+		<li><i class="fa fa-circle"></i> Panoramic views</li>
+		<li><i class="fa fa-circle"></i> Up-close photos</li>
+		<li><i class="fa fa-circle"></i> Custom images</li>
+	      </ul>
+	      <div class="upande-fa-button"> 
+		<a href="{% slugurl 'images' %}">
+		  <i class="fa fa-arrow-circle-o-right fa-3x"></i>
+		</a>
+	      </div>
             </div>
           </div>
-          <!-- End Service Icon 3 -->
-	      
-          <!-- Start Service Icon 4 -->
-          <div class="col-md-3 col-sm-6 service-box service-center" data-animation="fadeIn" data-animation-delay="04">
-            <div class="service-icon">
-              <i class="fa fa-video-camera icon-large"></i>
-            </div>
-            <div class="service-content">
+          <!-- End Images Icon -->
+
+          <!-- Start Videos Icon -->
+          <div class="col-md-3 col-sm-6">
+            <div class="widget-upande" style="background-color: peru;">
               <h4>Videos</h4>
-              <p>We sit down with some of the formost experst on the mamase project while at the same time keep track of events that will keep you fixated on your replay button.</p>
-	      <div class="button-side" style="margin-top:4px;"><a href="{% slugurl 'videos' %}" class="btn-system btn-large">See latest Videos</a></div>
+	      <ul class="icons-list-upande">
+		<li><i class="fa fa-circle"></i> Documentaries</li>
+		<li><i class="fa fa-circle"></i> Great interviews</li>
+		<li><i class="fa fa-circle"></i> Behind the scenes</li>
+	      </ul>
+	      <div class="upande-fa-button"> 
+		<a href="{% slugurl 'videos' %}">
+		  <i class="fa fa-arrow-circle-o-right fa-3x"></i>
+		</a>
+	      </div>
             </div>
           </div>
-          <!-- End Service Icon 4 -->
-	  
-          <!-- Start Service Icon 5 -->
-          <div class="col-md-3 col-sm-6 service-box service-center" data-animation="fadeIn" data-animation-delay="05">
-            <div class="service-icon">
-              <i class="fa fa-location-arrow icon-large"></i>
-            </div>
-            <div class="service-content">
+          <!-- End Videos Icon -->
+
+          <!-- Start Events Icon -->
+          <div class="col-md-3 col-sm-6">
+            <div class="widget-upande" style="background-color: mediumvioletred;">
               <h4>Events</h4>
-              <p>We are always look forward to engaging with you to hear your thoughts as well as share knowledge. Come hang out with us as we push at various events tailormade for you.</p>
-	      <div class="button-side" style="margin-top:4px;"><a href="{% slugurl 'events' %}" class="btn-system btn-large">See latest Events</a></div>
+	      <ul class="icons-list-upande">
+		<li><i class="fa fa-circle"></i> Great meetups</li>
+		<li><i class="fa fa-circle"></i> International events</li>
+		<li><i class="fa fa-circle"></i> Mamase trainings</li>
+	      </ul>
+	      <div class="upande-fa-button"> 
+		<a href="{% slugurl 'events' %}">
+		  <i class="fa fa-arrow-circle-o-right fa-3x"></i>
+		</a>
+	      </div>
             </div>
           </div>
-          <!-- End Service Icon 5 -->
-	  
+          <!-- End Events Icon -->
 	  
         </div><!-- .row -->
       </div><!-- .container -->

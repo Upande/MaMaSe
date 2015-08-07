@@ -1,0 +1,19 @@
+.widget-upande {
+    color: white;
+    border-width: 20px ;
+    padding: 20px 20px 5px 20px;
+
+}
+
+.widget-upande ul {
+padding: 10px
+}
+
+.widget-upande h4 {
+    color:white;
+}
+
+.upande-fa-button {
+    text-align: right;
+    margin-top: 4px;
+}
