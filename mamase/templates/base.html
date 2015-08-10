@@ -122,22 +122,15 @@
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
               <i class="fa fa-bars"></i>
             </button>
-            <!-- End Toggle Nav Link For Mobiles -->
-            
+            <!-- End Toggle Nav Link For Mobiles -->            
           </div>
+
           <div class="navbar-collapse collapse">
-            <!-- Stat Search -->
-            <div class="search-side">
-              <a href="#" class="show-search"><i class="fa fa-search"></i></a>
-              <div class="search-form">
-                <form autocomplete="off" role="search" method="get" class="searchform" action="#">
-                  <input type="text" value="" name="s" id="s" placeholder="Search the site...">
-                </form>
-              </div>
-            </div>
-            <!-- End Search -->
-            <!-- Start Navigation List -->
-            <ul class="nav navbar-nav navbar-left" style="padding:0 0 0 110px;" >
+            {% block search_box_collapse %}
+            {% include "search/search_box_collapsible.html" only %}
+            {% endblock search_box_collapse %}
+	    <!-- Start Navigation List -->
+              <ul class="nav navbar-nav navbar-left" style="padding:0 0 0 110px;" >
               <li>
                 <a class="active" href="/" >Home</a>
                 <ul class="dropdown">
@@ -256,7 +249,7 @@
           <!-- Start Images Icon -->
           <div class="col-md-3 col-sm-6">
             <div class="widget-upande" style="background-color: blueviolet;">
-              <h4>News</h4>
+              <h4>Images</h4>
 	      <ul class="icons-list-upande">
 		<li><i class="fa fa-circle"></i> Panoramic views</li>
 		<li><i class="fa fa-circle"></i> Up-close photos</li>

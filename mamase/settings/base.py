@@ -55,6 +55,8 @@ INSTALLED_APPS = (
     'search',
     'home',
     'disqus',
+    'schedule',
+    'djangobower',
 
     'apps.visualization',
     'apps.gallery',
