@@ -134,12 +134,15 @@
               <li>
                 <a class="active" href="/" >Home</a>
                 <ul class="dropdown">
+                  <li> <a href="{% slugurl 'news' %}">News</a> </li>
+                  <li> <a href="{% slugurl 'images' %}">Gallery</a> </li>		  
+                  <li> <a href="{% slugurl 'videos' %}">Video</a> </li>
+                  <li> <a href="{% slugurl 'events' %}">Events</a> </li>
                 </ul>
               </li>
               <li>
                 <a href="{% url 'visual' %}" >Visualization</a>
                 <ul class="dropdown">
-                  
                 </ul>
               </li>
               <li>
