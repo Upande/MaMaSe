@@ -1,8 +1,6 @@
 <div class="search-side">
-  <a href="#" class="show-search"><i class="fa fa-search"></i></a>
-  <div class="search-form">
-    <form autocomplete="off" role="search" method="get" class="searchform" action="{% url 'search' %}">
-      <input type="text" value="{{search_query}}" name="query" id="query" placeholder="Search the site...">
-    </form>
-  </div>
+  <form autocomplete="off" role="search" method="get" class="searchform" action="{% url 'search' %}">
+    <input type="text" value="{{search_query}}" name="query" id="query" placeholder="Search the site...">
+    <button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+  </form>
 </div>
