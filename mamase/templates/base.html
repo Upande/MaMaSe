@@ -109,14 +109,14 @@
       <div class="top-bar">
         <div class="container">
 	  <div class="col-md-12">
-	    <div class="col-md-10">
-              <div class="row" style="height:120px; margin:auto;">
+	    <div class="col-md-9">
+              <div class="row" style="height:120px; margin:auto; float:right">
 		<a class="navbar-brand" href="/">
 		  <img alt="" src="{% static "margo/images/mamase_logo_full.png" %}">
 		</a>
               </div>
             </div>
-	    <div class="col-md-2">
+	    <div class="col-md-3">
               <ul class="nav navbar-nav navbar-right">
 		<li>
                   <a href="{% url 'wagtailadmin_home' %}" >Login</a>
@@ -192,62 +192,57 @@
     
     <!-- Start Home Page Slider -->
     <section id="home">
-      <!-- Carousel -->
-      <div id="myCarousel" class="carousel slide" data-ride="carousel" style="max-width:70%; margin:auto; ">
-    <!-- Carousel indicators -->
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>   
-    <!-- Wrapper for carousel items -->
-    <div class="carousel-inner">
-        <div class="item active">
-          <img class="img-responsive" src="{% static "margo/images/slider/bg_mau.jpg" %}" alt="slider">
-            <div class="carousel-caption">
-              <!--h3>Mau</h3-->  
+      <div class="container">
+	<!-- Carousel -->
+	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+	  <!-- Carousel indicators -->
+	  <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+	  </ol>   
+	  <!-- Wrapper for carousel items -->
+	  <div class="carousel-inner">
+            <div class="item active">
+              <img class="img-responsive" src="{% static "margo/images/slider/bg_mau.jpg" %}" alt="slider">
+              <div class="carousel-caption">
+		<!--h3>Mau</h3-->  
+              </div>
             </div>
-        </div>
-        <div class="item">
-          <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.jpg" %}" alt="slider">
-            <div class="carousel-caption">
-              <!--h3>Serengeti</h3-->
+            <div class="item">
+              <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.jpg" %}" alt="slider">
+              <div class="carousel-caption">
+		<!--h3>Serengeti</h3-->
+              </div>	    
             </div>
-
-        </div>
-        <div class="item">
-          <img class="img-responsive" src="{% static "margo/images/slider/bg_mau3.jpg" %}" alt="slider">
-            <div class="carousel-caption">
-              <!--h3>Mara</h3-->
+            <div class="item">
+              <img class="img-responsive" src="{% static "margo/images/slider/bg_mau3.jpg" %}" alt="slider">
+              <div class="carousel-caption">
+		<!--h3>Mara</h3-->
+              </div>
             </div>
-        </div>
-    </div>
-    <!-- Carousel controls -->
-    <a class="carousel-control left" href="#myCarousel" data-slide="prev">
-        <span class="fa-fa-angle-left"></span>
-    </a>
-    <a class="carousel-control right" href="#myCarousel" data-slide="next">
-        <span class="fa-fa-angle-right"></span>
-    </a>
-</div>
+	  </div>
+	  <!-- Carousel controls -->
+	  <a class="carousel-control left" href="#myCarousel" data-slide="prev">
+            <span class="fa-fa-angle-left"></span>
+	  </a>
+	  <a class="carousel-control right" href="#myCarousel" data-slide="next">
+            <span class="fa-fa-angle-right"></span>
+	  </a>
+	</div>
+      </div>
+      
       <!-- /carousel -->
     </section>
     <!-- End Home Page Slider -->
     
     <!-- Start Services Section -->
-    <div class="section service">
+    <div class="section service" style="padding-top:20px;">
       <div class="container">
         <div class="row">
-          <!-- Start Big Heading -->
-          <div class="big-title text-center" data-animation="fadeInDown" data-animation-delay="01">
-            <h1>Check out the  <strong>Latest</strong></h1>
-          </div>
-          <!-- End Big Heading -->
-	  
-	  
           <!-- Start News Icon -->
           <div class="col-md-3 col-sm-6">
-            <div class="widget-upande" style="background-color: green;">
+            <div class="widget-upande" style="background-color: #34A8DF;">
               <h4>News</h4>
 	      <ul class="icons-list-upande">
 		<li><i class="fa fa-circle"></i> Team updates</li>
@@ -256,7 +251,7 @@
 	      </ul>
 	      <div class="upande-fa-button"> 
 		<a href="{% slugurl 'news' %}">
-		  <i class="fa fa-arrow-circle-o-right fa-3x"></i>
+		  <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
 		</a>
 	      </div>
             </div>
@@ -265,7 +260,7 @@
 	      
           <!-- Start Images Icon -->
           <div class="col-md-3 col-sm-6">
-            <div class="widget-upande" style="background-color: blueviolet;">
+            <div class="widget-upande" style="background-color: #92C01F;">
               <h4>Images</h4>
 	      <ul class="icons-list-upande">
 		<li><i class="fa fa-circle"></i> Panoramic views</li>
@@ -274,7 +269,7 @@
 	      </ul>
 	      <div class="upande-fa-button"> 
 		<a href="{% slugurl 'images' %}">
-		  <i class="fa fa-arrow-circle-o-right fa-3x"></i>
+		  <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
 		</a>
 	      </div>
             </div>
@@ -283,7 +278,7 @@
 
           <!-- Start Videos Icon -->
           <div class="col-md-3 col-sm-6">
-            <div class="widget-upande" style="background-color: peru;">
+            <div class="widget-upande" style="background-color: #DE9A00;">
               <h4>Videos</h4>
 	      <ul class="icons-list-upande">
 		<li><i class="fa fa-circle"></i> Documentaries</li>
@@ -292,7 +287,7 @@
 	      </ul>
 	      <div class="upande-fa-button"> 
 		<a href="{% slugurl 'videos' %}">
-		  <i class="fa fa-arrow-circle-o-right fa-3x"></i>
+		  <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
 		</a>
 	      </div>
             </div>
@@ -301,7 +296,7 @@
 
           <!-- Start Events Icon -->
           <div class="col-md-3 col-sm-6">
-            <div class="widget-upande" style="background-color: mediumvioletred;">
+            <div class="widget-upande" style="background-color: #925F36;">
               <h4>Events</h4>
 	      <ul class="icons-list-upande">
 		<li><i class="fa fa-circle"></i> Great meetups</li>
@@ -310,7 +305,7 @@
 	      </ul>
 	      <div class="upande-fa-button"> 
 		<a href="{% slugurl 'events' %}">
-		  <i class="fa fa-arrow-circle-o-right fa-3x"></i>
+		  <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
 		</a>
 	      </div>
             </div>
