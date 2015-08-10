@@ -191,3 +191,5 @@ BOWER_INSTALLED_APPS = (
     'jquery',
     'bootstrap'
 )
+
+ALLOWED_HOSTS = ['*']
