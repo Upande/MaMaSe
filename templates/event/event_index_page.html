@@ -13,57 +13,23 @@
 <div id="content">
   <div class="container">
     <div class="row sidebar-page">
-      <!--Sidebar-->
-      <div class="col-md-3 sidebar right-sidebar">
-	
-	{% block search_box %}
-	{% include "search/search_box.html" only %}
-	{% endblock search_box %}      
-	<!-- Categories Widget -->
-	<div class="widget widget-categories">
-	  <h4>Categories <span class="head-line"></span></h4>
-	  <ul>
-	    {% for categ in self.categories %}
-	    <li>
-	      <a href="{{request.path}}?category={{categ.name}}">{{categ.name}}</a>
-	    </li>
-	    {% endfor %}
-	  </ul>
-	</div>
-	
-	<!-- Popular Events widget -->
-	<div class="widget widget-popular-posts">
-	  <h4>Popular Events <span class="head-line"></span></h4>
-	  <ul>
-	    {% for item in events %}
-	    <li>
-	      <div class="widget-thumb">
-		<a href="{{item.url}}"><img src="{{item.main_image.file.url}}" alt="{{item.main_image.title}}" /></a>
-	      </div>
-	      <div class="widget-content">
-		<h5><a href="{{item.url}}">{{item.title}}</a></h5>
-		<span>{{item.start_date}}</span>
-	      </div>
-	      <div class="clearfix"></div>
-	    </li>
-	    {% endfor %}
-	  </ul>
-	</div>
-	            
-    </div>
-      <!--End sidebar-->
-
+   
       <!-- Page Content -->
       <div class="col-md-9 page-content">	
 	
 	<!-- Divider -->
 	<div class="hr1" style="margin-bottom:30px;"></div>
-	
+		<h4 class="classic-title container"><span>Events</span></h4>
+		<div class="latest-posts-classic container" >  
+			<p>
+				Events updates on MaMaSe Sustainable Water Initiative	
+			</p>
+		</div>
 	<div class="row">
 	  <div class="col-md-12">
 	    
 	    <!-- Classic Heading -->
-	    <h4 class="classic-title"><span>Latest Posts</span></h4>
+	    <h4 class="classic-title container"><span>Latest Posts</span></h4>
 	    
 	    <div class="latest-posts-classic">
 	      
@@ -104,7 +70,46 @@
 	<!-- End Pagination -->
       </div>      
       <!-- End Page Content-->      
-      
+         <!--Sidebar-->
+      <div class="col-md-3 sidebar right-sidebar">
+	
+	{% block search_box %}
+	{% include "search/search_box.html" only %}
+	{% endblock search_box %}      
+	<!-- Categories Widget -->
+	<div class="widget widget-categories">
+	  <h4>Categories <span class="head-line"></span></h4>
+	  <ul>
+	    {% for categ in self.categories %}
+	    <li>
+	      <a href="{{request.path}}?category={{categ.name}}">{{categ.name}}</a>
+	    </li>
+	    {% endfor %}
+	  </ul>
+	</div>
+	
+	<!-- Popular Events widget -->
+	<div class="widget widget-popular-posts">
+	  <h4>Popular Events <span class="head-line"></span></h4>
+	  <ul>
+	    {% for item in events %}
+	    <li>
+	      <div class="widget-thumb">
+		<a href="{{item.url}}"><img src="{{item.main_image.file.url}}" alt="{{item.main_image.title}}" /></a>
+	      </div>
+	      <div class="widget-content">
+		<h5><a href="{{item.url}}">{{item.title}}</a></h5>
+		<span>{{item.start_date}}</span>
+	      </div>
+	      <div class="clearfix"></div>
+	    </li>
+	    {% endfor %}
+	  </ul>
+	</div>
+	            
+    </div>
+      <!--End sidebar-->
+
     </div>
     
   </div>

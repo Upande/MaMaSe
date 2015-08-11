@@ -44,7 +44,7 @@
     
 
     <!-- Using Lato Font to standarize with existing MaMaSe apps-->
-<!--    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
 
     <!-- Color CSS Styles  -->
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/red.css' %}" title="red" media="screen" />
@@ -160,9 +160,8 @@
                 </ul>
               </li>
               <li>
-                <a href="#" >GIS Platform</a>
-                <ul class="dropdown">
-                  
+                <a href="{% url 'gis' %}" >GIS Platform</a>
+                <ul class="dropdown">                 
                 </ul>
               </li>
               <li>
@@ -216,7 +215,7 @@
               </div>	    
             </div>
             <div class="item">
-              <img class="img-responsive" src="{% static "margo/images/slider/bg_mau3.jpg" %}" alt="slider">
+              <img class="img-responsive" src="{% static "margo/images/slider/map_of_mara.png" %}" alt="slider">
               <div class="carousel-caption">
 		<!--h3>Mara</h3-->
               </div>
