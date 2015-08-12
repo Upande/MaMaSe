@@ -16,7 +16,6 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -67,6 +66,7 @@ INSTALLED_APPS = (
     'apps.true_false',
     'apps.multichoice',
     'apps.essay',
+    'apps.partners',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -90,6 +90,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(PROJECT_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'home', 'templates'),
             os.path.join(BASE_DIR, 'templates'),
             os.path.join(PROJECT_DIR, 'templates', 'site_pages'),
         ],
