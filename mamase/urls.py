@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^knowledge/', include('apps.quiz.urls')),
     url(r'^$', include('apps.partners.urls')),
+    url(r'^gis/', include('apps.gis.urls')), 
+
 
     url(r'', include(wagtail_urls)),
 

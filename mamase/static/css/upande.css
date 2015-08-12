@@ -17,3 +17,8 @@ padding: 10px
     text-align: right;
     margin-top: 4px;
 }
+
+.upande-list ul li a {
+    padding: 10px;
+    overflow: hidden;
+}

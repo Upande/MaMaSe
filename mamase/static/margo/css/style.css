@@ -599,8 +599,8 @@ ul.social-list li:last-child a i {
 	display: block;
     font-size: 14px;
 	font-weight: 300;
-    padding: 28px 15px 28px 15px;
-	overflow: hidden;
+    /*padding: 28px 15px 28px 15px;
+	overflow: hidden; */
     transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -webkit-transition: all 0.3s ease-in-out;

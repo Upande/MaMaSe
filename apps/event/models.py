@@ -1,6 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render
 from django.db import models
+from django.contrib.auth.models import User
 
 from wagtail.wagtailsearch import index
 from wagtail.wagtailcore.fields import RichTextField
@@ -63,7 +64,6 @@ EventPage.promote_panels = Page.promote_panels +[
 class EventIndexRelatedLink(Orderable, RelatedLink):
     page = ParentalKey('EventIndexPage', related_name='related_links')
 
-
 class EventIndexPage(Page):
     intro = RichTextField(blank=True)
     
@@ -117,3 +117,14 @@ class EventIndexPage(Page):
         context = super(EventIndexPage, self).get_context(request)
         context['events'] = events
         return context
+
+class Attendee(models.Model):
+    event = models.ForeignKey(EventPage)
+    user = models.ForeignKey(User)
+    tickets = models.IntegerField(default=1)
+    date = models.DateTimeField(auto_now_add = True)
+
+class watchlist(models.Model):
+    event = models.ForeignKey(EventPage)
+    user = models.ForeignKey(User)
+    date = models.DateTimeField(auto_now_add = True)
