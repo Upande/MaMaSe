@@ -1,90 +1,78 @@
 <style type="text/css" media="all">
-			html, body {
-				padding: 0;
-				margin: 0;
-			}
-			body, div, p {
-				font-family: Arial, Helvetica, Verdana;
-				color: #333;
-			}
-			body {
-				background-color: #eee;
-			}
-			h1 {
-				font-size: 60px;
-			}
-			a, a:link, a:active, a:visited {
-				color: black;
-				text-decoration: underline;
-			}
-			a:hover {
-				color: #9E1F63;
-			}
-			#intro {
-				width: 580px;
-				margin: 0 auto;
-			}
-			.wrapper {
-				background-color: white;
-				width: 95%;
-				margin: 40px auto;
-				padding: 20px;
-				box-shadow: 0 0 5px #999;
-			}
-			.list_carousel {
-				background-color: #f1f1f1;
-				margin: 0 0 30px 60px;
-				width: 95%;
-			}
-			.list_carousel ul {
-				margin: 0;
-				padding: 0;
-				list-style: none;
-				display: block;
-			}
-			.list_carousel li {
-				font-size: 40px;
-				color: #999;
-				text-align: center;
-				background-color: #eee;
-				width: auto;
-				height: 100px;
-				padding: 0;
-				margin: 6px;
-				display: block;
-				float: left;
-			}
-			.list_carousel.responsive {
-				width: auto;
-				margin-left: 0;
-			}
-			.clearfix {
-				float: none;
-				clear: both;
-			}
-			.prev {
-				float: left;
-				margin-left: 10px;
-			}
-			.next {
-				float: right;
-				margin-right: 10px;
-			}
-			.pager {
-				float: left;
-				width: 300px;
-				text-align: center;
-			}
-			.pager a {
-				margin: 0 5px;
-				text-decoration: none;
-			}
-			.pager a.selected {
-				text-decoration: underline;
-			}
-			.timer {
-				background-color: #999;
-				height: 6px;
-				width: 0px;
-			}
-		</style>
+html, body {
+    padding: 0;
+    margin: 0;
+}
+body {
+    background-color: #eee;
+}
+
+
+#intro {
+    width: 580px;
+    margin: 0 auto;
+}
+.wrapper {
+    background-color: white;
+    width: 95%;
+    margin: 40px auto;
+    padding: 20px;
+    box-shadow: 0 0 5px #999;
+}
+.list_carousel {
+    background-color: #f1f1f1;
+    margin: 0 0 30px 60px;
+    width: 95%;
+}
+.list_carousel ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: block;
+}
+.list_carousel li {
+    font-size: 40px;
+    color: #999;
+    text-align: center;
+    background-color: #eee;
+    width: auto;
+    height: 100px;
+    padding: 0;
+    margin: 6px;
+    display: block;
+    float: left;
+}
+.list_carousel.responsive {
+    width: auto;
+    margin-left: 0;
+}
+.clearfix {
+    float: none;
+    clear: both;
+}
+.prev {
+    float: left;
+    margin-left: 10px;
+}
+.next {
+    float: right;
+    margin-right: 10px;
+}
+.pager {
+    float: left;
+    width: 300px;
+    text-align: center;
+}
+.pager a {
+    margin: 0 5px;
+    text-decoration: none;
+}
+.pager a.selected {
+    text-decoration: underline;
+}
+.timer {
+    background-color: #999;
+    height: 6px;
+    width: 0px;
+}
+</style>

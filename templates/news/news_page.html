@@ -33,7 +33,7 @@
 	    <div class="post-type"><i class="fa fa-picture-o"></i></div>
 	    <h2><a href="#">{{ self.title }}</a></h2>
 	    <ul class="post-meta">
-	      <li>By <a href="#">{{self.author}}</a></li>
+	      <li>By <a href="#">{{self.owner.username}}</a></li>
 	      <li>{{ self.date }}</li>
 	      <li>
 		{% for tag in self.tags.all %}
