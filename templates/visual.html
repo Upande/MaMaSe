@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %} <title> Mamase | Visualization </title> {% endblock title %}
+{% block css %} <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> {% endblock css %}
+{% block js%} 
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="{% static 'js/c3.js' %}"></script>
+<script>
+$(document).ready(function() {
+var dt = new Date();
+dt.setHours(dt.getHours()-168)//7 days ago
+   $.ajax({
+        type: 'GET',
+        url : "http://api.thingspeak.com/channels/15792/feed.json?start="+dt+"&callback=",
+        dataType: "jsonp",
+        success: function(data) {
+            feeds = data.feeds
+            channel = data.channel
+            var created = ['created']
+            var field1 = [channel.field1]
+            var field2 = [channel.field2]
+            var field3 = [channel.field3]
+            for (var i = 0; i < feeds.length; i++) {
+                n = feeds[i].created_at;
+                f1 = feeds[i].field1;
+                f2 = feeds[i].field2;
+                f3 = feeds[i].field3;
+                created.push(n.replace('T',' ').replace('Z',''));
+                field1.push(f1);
+                field2.push(f2);
+                field3.push(f3);
+            }
+            var chart = c3.generate({
+                bindto: '#chart',
+                data: {
+		    x: 'created',
+                    xFormat: '%Y-%m-%d %H:%M:%S',
+                    columns: [
+                        created,
+                        field1,
+                        field3,
+                    ],
+                },
+axis: {
+        x: {
+            type: 'timeseries',
+            tick: {
+                format: '%Y-%m-%d %H:%M'
+            }
+        }
+    }
+            });
+        },
+    });
+});
+				</script>
+{% endblock js %}
+
+{% block body_class %}visual-index{% endblock %}
+
+{% block content %}
+<!-- Container -->
+<div id="container">  
+  <!-- Start Chart Section -->
+  <div class="pricing-section" style="padding-top:60px; padding-bottom:60px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+	  
+          <!-- Text -->
+          <p class="text-center" style="margin-bottom:20px;">Mamase data as collected by Upande using thingspeak. The data represents several readings collected over time. You can select from with channel to view data from.</p>
+        </div>
+      </div>
+      
+      <div class="row pricing-tables">
+        
+        <div class="col-md-12 col-sm-12">
+	  <div id="chart"></div>
+	</div>		
+      </div>		
+      
+    </div>
+  </div>
+  <!-- End Chart Section -->
+   
+  
+</div>
+<!-- End Container -->
+{% endblock content %}
+
