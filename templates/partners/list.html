@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block partners %}
+<link rel="stylesheet" type="text/css" href="{% static 'slider-partners/carouFredSel.css' %}">
+<script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1-packed.js' %}"></script>
+<!-- optionally include helper plugins -->
+<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.mousewheel.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.touchSwipe.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.transit.min.js' %}"></script>
+<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.ba-throttle-debounce.min.js' %}"></script>
+<script type="text/javascript">
+    $(function() {
+
+        //  Basic carousel, no options
+        $('#foo0').carouFredSel();
+
+        //  Basic carousel + timer, using CSS-transitions
+        $('#foo1').carouFredSel({
+            auto: {
+                pauseOnHover: 'resume',
+                progress: '#timer1'
+            }
+        }, {
+            transition: true
+        });
+
+        //  Scrolled by user interaction
+        $('#foo2').carouFredSel({
+            auto: false,
+            prev: '#prev2',
+            next: '#next2',
+            pagination: "#pager2",
+            mousewheel: true,
+            swipe: {
+                onMouse: true,
+                onTouch: true
+            }
+        });
+
+        //  Variable number of visible items with variable sizes
+        $('#foo3').carouFredSel({
+            width: 360,
+            height: 'auto',
+            prev: '#prev3',
+            next: '#next3',
+            auto: false
+        });
+
+        //  Responsive layout, resizing the items
+        $('#foo4').carouFredSel({
+            responsive: true,
+            width: '100%',
+            scroll: 2,
+            items: {
+                width: 400,
+            //  height: '30%',  //  optionally resize item-height
+                visible: {
+                    min: 2,
+                    max: 6
+                }
+            }
+        });
+
+        //  Fuild layout, centering the items
+        $('#foo5').carouFredSel({
+            width: '100%',
+            scroll: 2
+        });
+
+    });
+</script>
+<h3>PARTNERS</h3>
+<!-- List of uploaded documents --> 
+<div class="list_carousel">
+    <ul id="foo0" >
+        {% for logo in logos %}
+            <li><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}" style="height:100px"><li>    
+        {% endfor %}
+    </ul>
+    <div class="clearfix"></div>
+</div> 
+</br>
+{% endblock partners %} 
+     

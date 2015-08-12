@@ -1,0 +1,114 @@
+ <!-- Start Top Bar -->
+      <div class="top-bar">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-7">
+              <!-- Start Contact Info -->
+              <ul class="contact-details">
+                <li><a href="#"><i class="fa fa-map-marker"></i></a>
+                </li>
+                <li><a href="#"><i class="fa fa-envelope-o"></i></a>
+                </li>
+                <li><a href="#"><i class="fa fa-phone"></i></a>
+                </li>
+              </ul>
+              <!-- End Contact Info -->
+            </div><!-- .col-md-6 -->
+            <div class="col-md-5">
+              <!-- Start Social Links -->
+              <ul class="social-list">
+                <li>
+                  <a class="facebook itl-tooltip" data-placement="bottom" title="Facebook" href="#"><i class="fa fa-facebook"></i></a>
+                </li>
+                <li>
+                  <a class="twitter itl-tooltip" data-placement="bottom" title="Twitter" href="#"><i class="fa fa-twitter"></i></a>
+                </li>
+                <li>
+                  <a class="google itl-tooltip" data-placement="bottom" title="Google Plus" href="#"><i class="fa fa-google-plus"></i></a>
+                </li>
+                <!--li>
+                    <a class="linkdin itl-tooltip" data-placement="bottom" title="Linkedin" href="#"><i class="fa fa-linkedin"></i></a>
+                </li-->
+                <li>
+                  <a class="skype itl-tooltip" data-placement="bottom" title="Skype" href="#"><i class="fa fa-skype"></i></a>
+                </li>
+              </ul>
+              <!-- End Social Links -->
+            </div><!-- .col-md-6 -->
+          </div><!-- .row -->
+        </div><!-- .container -->
+      </div><!-- .top-bar -->
+      <!-- End Top Bar -->
+
+
+      <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#main-slide" data-slide-to="0" class="active"></li>
+          <li data-target="#main-slide" data-slide-to="1"></li>
+          <li data-target="#main-slide" data-slide-to="2"></li>
+        </ol>
+        <!--/ Indicators end-->
+  
+        <!-- Carousel inner -->
+        <div class="carousel-inner" style="overflow-x:hidden;">
+          <div class="item active">
+            <img class="img-responsive" src="{% static "margo/images/slider/bg_mau.jpg" %}" alt="slider">
+            <div class="slider-content">
+              <div class="col-md-12 text-center">
+                <h2 class="animated2">
+                  <!--span>Welcome to <strong>Margo</strong></span-->
+                </h2>
+                <h3 class="animated3">
+                  <!--span>The ultimate aim of your business</span-->
+                </h3>
+                <p class="animated4"><!--a href="#" class="slider btn btn-system btn-large">Check Now</a-->
+                </p>
+              </div>
+            </div>
+          </div>
+          <!--/ Carousel item end -->
+          <div class="item">
+            <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.jpg" %}" alt="slider">
+            <div class="slider-content">
+              <div class="col-md-12 text-center">
+                <h2 class="animated4">
+                  <!--span><strong>Margo</strong> for the highest</span-->
+                </h2>
+                <h3 class="animated5">
+                  <!--span>The Key of your Success</span-->
+                </h3>   
+                <p class="animated6"><!--a href="#" class="slider btn btn-system btn-large">Buy Now</a-->
+                </p>
+              </div>
+            </div>
+          </div>
+          <!--/ Carousel item end -->
+          <div class="item">
+            <img class="img-responsive" src="{% static "margo/images/slider/bg_mau3.jpg" %}" alt="slider">
+            <div class="slider-content">
+              <div class="col-md-12 text-center">
+                <h2 class="animated7 white">
+                  <!--span>The way of <strong>Success</strong></span-->
+                </h2>
+                <h3 class="animated8 white">
+                  <!--span>Why you are waiting</span-->
+                </h3>   
+                <div class="">
+                  <!--a class="animated4 slider btn btn-system btn-large btn-min-block" href="#">Get Now</a--><!--a class="animated4 slider btn btn-default btn-min-block" href="#">Live Demo</a-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--/ Carousel item end -->
+        </div>
+        <!-- Carousel inner end-->
+  
+        <!-- Controls -->
+        <a class="left carousel-control" href="#main-slide" data-slide="prev">
+          <span><i class="fa fa-angle-left"></i></span>
+        </a>
+        <a class="right carousel-control" href="#main-slide" data-slide="next">
+          <span><i class="fa fa-angle-right"></i></span>
+        </a>
+      </div>
+      <!-- /carousel -->
