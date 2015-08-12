@@ -10,113 +10,71 @@
 
 <!-- Start Content -->
 <div id="content">
-  <div class="container">
-    <div class="row sidebar-page">
-      
-      <!-- Page Content -->
-      <div class="col-md-9 page-content">	
-		
-	<div class="row">
-	  <div class="col-md-12">
-	    
-	    <!-- Classic Heading -->
-	    <h4 class="classic-title"><span>Latest News</span></h4>
-	    
-	    <div class="latest-posts-classic">
-	      
-	      <p>
-		News updates on MaMaSe Sustainable Water Initiative	
-	      </p>
-	      {% if news %}	      
-	      <!-- Post 1 -->
-	      {% for item in news %}
-	      <div class="col-md-6">
-		<div class="post-row">
-		  <div class="left-meta-post">
-		    <div class="post-date">
-		      <span class="day">{{ item.date.day }}</span>
-		      <span class="month">{{ item.date| date:"M"  }}</span>
-		    </div>
-		    <div class="post-type"><i class="fa fa-picture-o"></i></div>
-		  </div>
-		  <h3 class="post-title">
-		    <a href="{{ item.url }}">{{item.title| title}}</a>
-		  </h3>
-		  <div class="post-content">
-		    {{item.link_page.}}
-		    <p>{{ item.intro|safe }} <a class="read-more" href="{{ item.url }}">Read More...</a></p>
-		  </div>
+	<div class="container">
+		<div class="row sidebar-page">
+
+			<!-- Page Content -->
+			<div class="col-md-9 page-content">	
+
+				<div class="row">
+					<div class="col-md-12">
+
+						<!-- Classic Heading -->
+						<h4 class="classic-title"><span>Latest News</span></h4>
+
+						<div class="latest-posts-classic">
+
+							<p>
+								News updates on MaMaSe Sustainable Water Initiative	
+							</p>
+							{% if news %}	      
+							<!-- Post 1 -->
+							{% for item in news %}
+							<div class="col-md-6">
+								<div class="post-row">
+									<div class="left-meta-post">
+										<div class="post-date">
+											<span class="day">{{ item.date.day }}</span>
+											<span class="month">{{ item.date| date:"M"  }}</span>
+										</div>
+										<div class="post-type"><i class="fa fa-picture-o"></i></div>
+									</div>
+									<h3 class="post-title">
+										<a href="{{ item.url }}">{{item.title| title}}</a>
+									</h3>
+									<div class="post-content">
+										{{item.link_page.}}
+										<p>{{ item.intro|safe }} <a class="read-more" href="{{ item.url }}">Read More...</a></p>
+									</div>
+								</div>
+							</div>
+							{% endfor %}
+							{% endif %}	      
+						</div>
+					</div>      
+				</div>
+				<!-- Start Pagination -->
+				<div id="pagination" class="pagination">
+					<span class="all-pages">Page {{ news.number }} of {{ news.paginator.num_pages }}</span>
+					{% if news.has_previous %}
+					<a class="next-page" href="#">Previous</a>
+					{% endif %}
+					<span class="current page-num">{{news.number}}</span>
+					{% if news.has_next %}
+					<a class="next-page" href="#">Next</a>
+					{% endif %}
+				</div>
+				<!-- End Pagination -->
+			</div>      
+			<!-- End Page Content-->
+
+			{% block sidebar %}
+			{% include 'news/news_sidebar.html' %}
+			{% endblock%}
+
 		</div>
-	      </div>
-	      {% endfor %}
-	      {% endif %}	      
-	    </div>
-	  </div>      
+
 	</div>
-	<!-- Start Pagination -->
-	<div id="pagination" class="pagination">
-	  <span class="all-pages">Page {{ news.number }} of {{ news.paginator.num_pages }}</span>
-	  {% if news.has_previous %}
-	      <a class="next-page" href="#">Previous</a>
-	      {% endif %}
-	      <span class="current page-num">{{news.number}}</span>
-	      {% if news.has_next %}
-	      <a class="next-page" href="#">Next</a>
-	      {% endif %}
-	</div>
-	<!-- End Pagination -->
-      </div>      
-      <!-- End Page Content-->
-      
-      <!--Sidebar-->
-      <div class="col-md-3 sidebar right-sidebar" style=" border-left: 1px solid #eee;">	
-	<!-- Categories Widget -->
-	<div class="widget widget-categories">
-	  <h4>Categories <span class="head-line"></span></h4>
-	  <ul>
-	    {% for categ in self.categories %}
-	    <li>
-	      <a href="{{request.path}}?category={{categ.name}}">{{categ.name}}</a>
-	    </li>
-	    {% endfor %}
-	  </ul>
-	</div>
-	
-	<!-- Popular Posts widget -->
-	<div class="widget widget-popular-posts">
-	  <h4>Popular News <span class="head-line"></span></h4>
-	  <ul>
-	    {% for n in news|slice:":4" %}
-	    <li>
-	      <div class="widget-thumb">
-		<a href="{{n.url}}"><img src="{{n.main_image.file.url}}" alt="{{n.main_image.title}}" /></a>
-	      </div>
-	      <div class="widget-content">
-		<h5><a href="{{n.url}}">{{n.title}}</a></h5>
-		<span>{{n.date}}</span>
-	      </div>
-	      <div class="clearfix"></div>
-	    </li>
-	    {% endfor %}
-	  </ul>
-	</div>
-	
-      <!-- Tags Widget -->
-      <div class="widget widget-tags">
-	<h4>Tags <span class="head-line"></span></h4>
-	<div class="tagcloud">
-	  {% for tag in tags %}
-	  <a href="{{request.path}}?tag={{tag}}">{{ tag }}</a>
-	  {% endfor %}
-	</div>
-      </div>
-      
-    </div>
-      <!--End sidebar-->
-      
-    </div>
-    
-  </div>
 </div>
 </div>
 </div>

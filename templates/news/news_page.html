@@ -10,113 +10,67 @@
 
 <!-- Start Content -->
 <div id="content">
-  <div class="container">
-    <div class="row blog-page">
-      
-      <!-- Start Blog Posts -->
-      <div class="col-md-9 blog-box">
-	
-	<!-- Start Post -->
-	<div class="blog-post image-post">
-	  <!-- Post Thumb -->
-	  <div class="post-head">
-	    {% if self.main_image %}
-	    <a class="lightbox" title="This is an image title" href="images/blog-01.jpg">
-	      <div class="thumb-overlay"><i class="fa fa-arrows-alt"></i></div>
-	      {% image self.main_image width-400 %}
-	    </a>
-	    {% endif %}
-	    
-	  </div>
-	  <!-- Post Content -->
-	  <div class="post-content">
-	    <div class="post-type"><i class="fa fa-picture-o"></i></div>
-	    <h2><a href="#">{{ self.title }}</a></h2>
-	    <ul class="post-meta">
-	      <li>By <a href="#">{{self.owner.username}}</a></li>
-	      <li>{{ self.date }}</li>
-	      <li>
-		{% for tag in self.tags.all %}
-		<a href="{% slugurl 'news' %}?tag={{tag}}"> {{tag}} </a> 
-		{% endfor %}
-	      </li>
-	      <li><a href="#">{% disqus_num_replies %}</a></li>
-	    </ul>	    
-	    <p> {{ self.body|richtext }}</p>	
-	    
-	  </div>
-	<!-- Start comments section-->
-	<div>
-	  <div class="blog-post ">
-	    <div class="widget widget-categories">                                                                                                                                             
-              <h4>Comments <span class="head-line"></span></h4>	      
-	    </div>
-	    {% disqus_show_comments %}
-	    {% disqus_recent_comments shortname 5 50 0 24 %}
-	  </div>
+	<div class="container">
+		<div class="row blog-page">
+
+			<!-- Start Blog Posts -->
+			<div class="col-md-9 blog-box">
+
+				<!-- Start Post -->
+				<div class="blog-post image-post">
+					<!-- Post Thumb -->
+					<div class="post-head">
+						{% if self.main_image %}
+						<a class="lightbox" title="This is an image title" href="images/blog-01.jpg">
+							<div class="thumb-overlay"><i class="fa fa-arrows-alt"></i></div>
+							{% image self.main_image width-400 %}
+						</a>
+						{% endif %}
+
+					</div>
+					<!-- Post Content -->
+					<div class="post-content">
+						<div class="post-type"><i class="fa fa-picture-o"></i></div>
+						<h2><a href="#">{{ self.title }}</a></h2>
+						<ul class="post-meta">
+							<li>By <a href="#">{{self.owner.username}}</a></li>
+							<li>{{ self.date }}</li>
+							<li>
+								{% for tag in self.tags.all %}
+								<a href="{% slugurl 'news' %}?tag={{tag}}"> {{tag}} </a> 
+								{% endfor %}
+							</li>
+							<li><a href="#">{% disqus_num_replies %}</a></li>
+						</ul>	    
+						<p> {{ self.body|richtext }}</p>	
+
+					</div>
+					<!-- Start comments section-->
+					<div>
+						<div class="blog-post ">
+							<div class="widget widget-categories">                                                                                                                                             
+								<h4>Comments <span class="head-line"></span></h4>	      
+							</div>
+							{% disqus_show_comments %}
+							{% disqus_recent_comments shortname 5 50 0 24 %}
+						</div>
+					</div>
+					</div
+
+					<!-- End comments section -->
+
+				</div>
+				<!-- End Post -->
+				<!-- End Blog Posts -->
+
+			{% block sidebar %}	
+			{% include 'news/news_sidebar.html' %}
+			{% endblock%}
+
+			</div>
+		</div>
 	</div>
-      </div
+	<!-- End Content -->
 
-      <!-- End comments section -->
-
-	</div>
-	<!-- End Post -->
-      <!-- End Blog Posts -->
-      
-      
-      <!--Sidebar-->
-      <div class="col-md-3 sidebar right-sidebar">
-	
-	<!-- Categories Widget -->
-	<div class="widget widget-categories">
-	  <h4>Categories <span class="head-line"></span></h4>
-	  <ul>
-	    {% for categ in self.categories %}
-            <li>
-              <a href="{% slugurl 'news' %}?category={{categ.name}}">{{categ.name}}</a>
-            </li>
-            {% endfor %}
-	  </ul>
-	</div>
-
-	<!-- Popular Posts widget -->
-	<div class="widget widget-popular-posts">
-	  <h4>Other Exciting posts <span class="head-line"></span></h4>
-	  <ul>
-	    {% for news in self.news_items %}
-            <li>
-              <div class="widget-thumb">
-                <a href="{{news.url}}"><img src="{{news.main_image.file.url}}" alt="{{news.main_image.title}}" /></a>
-              </div>
-              <div class="widget-content">
-                <h5><a href="{{news.url}}">{{news.title}}</a></h5>
-                <span>{{news.date}}</span>
-              </div>
-              <div class="clearfix"></div>
-            </li>
-            {% endfor %}
-
-	  </ul>
-	</div>
-	
-	<!-- Tags Widget -->
-	<div class="widget widget-tags">
-	  <h4>Tags <span class="head-line"></span></h4>
-	  <div class="tagcloud">
-	    {% for tag in self.news_tags %}
-            <a href="{% slugurl 'news' %}?tag={{tag}}">{{ tag }}</a>
-            {% endfor %}
-	  </div>
-	  </div>
-
-	</div>
-      <!--End sidebar-->
-      
-      
-      </div>
-    </div>
-  </div>
-<!-- End Content -->
-
-{% endblock %}
-{% block partners %}{% endblock %}
+	{% endblock %}
+	{% block partners %}{% endblock %}
