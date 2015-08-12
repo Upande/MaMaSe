@@ -100,26 +100,20 @@
     <!-- Start Header Section --> 
     <div class="hidden-header"></div>
     <header class="clearfix">
-
-      <!-- Not sure what this does so I am commenting it out for now -->
-      <!--<div class="top-bar">
-	{ wagtailuserbar %}
-      </div> -->
-      
       <div class="top-bar">
         <div class="container">
-	  <div class="col-md-12">
-	    <div class="col-md-9">
-              <div class="row" style="height:120px; margin:auto; float:right">
+	  <div class="col-md-12" style="padding:0px;">
+	    <div class="col-md-9" style="padding:0px;">
+              <div class="row" style="height:120px; margin:auto;">
 		<a class="navbar-brand" href="/">
 		  <img alt="" src="{% static "margo/images/mamase_logo_full.png" %}">
 		</a>
               </div>
             </div>
-	    <div class="col-md-3">
+	    <div class="col-md-3" style="padding:0px;">
               <ul class="nav navbar-nav navbar-right">
 		<li>
-                  <a href="{% url 'wagtailadmin_home' %}" >Login</a>
+                  <a href="{% url 'wagtailadmin_home' %}">Login</a>
 		</li>
               </ul>
 	    </div>
@@ -138,7 +132,7 @@
           </div>
 
           <div class="navbar-collapse collapse upande-list">
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right"  style="margin-right:0px !important;">
 	      {% block search_box_collapse %}
 	      {% include "search/search_box_collapsible.html" only %}
               {% endblock search_box_collapse %}
