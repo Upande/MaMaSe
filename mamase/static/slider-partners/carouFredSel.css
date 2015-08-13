@@ -15,15 +15,15 @@ body {
 }
 .wrapper {
     background-color: white;
-    width: 95%;
-    margin: 40px auto;
-    padding: 20px;
+    width: 100%;
+    margin: auto;
+    padding: 0;
     box-shadow: 0 0 5px #999;
 }
 .list_carousel {
     background-color: #f1f1f1;
-    margin: 0 0 30px 60px;
-    width: 95%;
+    margin: 0 0 30px 0;
+    width: 100%;
 }
 .list_carousel ul {
     margin: 0;
