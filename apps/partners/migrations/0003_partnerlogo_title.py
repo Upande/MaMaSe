@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='partnerlogo',
             name='title',
-            field=models.CharField(default=datetime.datetime(2015, 8, 12, 7, 12, 32, 786544, tzinfo=utc), max_length=30),
+            field=models.CharField(default=datetime.datetime(2015, 8, 12, 7, 12, 32, 786544, tzinfo=utc), max_length=70),
             preserve_default=False,
         ),
     ]

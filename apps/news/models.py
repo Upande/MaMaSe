@@ -76,6 +76,13 @@ class NewsPage(Page):
         index.SearchField('body'),
     )
 
+    def get_context(self, request):
+        # Update template context
+        context = super(NewsPage, self).get_context(request)
+        context['news'] = self.news_items
+        context['tags'] = self.news_tags
+        return context
+        
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         ImageChooserPanel('main_image'),
@@ -83,6 +90,8 @@ class NewsPage(Page):
         FieldPanel('intro',classname="full" ),
         FieldPanel('body', classname="full")
     ]
+    
+    
 
 NewsPage.promote_panels = Page.promote_panels +[
     FieldPanel('tags'),

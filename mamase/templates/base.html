@@ -64,7 +64,7 @@
     </style>  
     <!-- Additional css not needed globally -->
     {% block css %}
-      <link rel="stylesheet" type="text/css" href="{% static 'slider-partners/carouFredSel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'slider-partners/carouFredSel.css' %}">
     {% endblock %}
 
     
@@ -91,14 +91,14 @@
     <!--Additional js that require to be initialized before the body -->
     {% block js_initialize %}
     <script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1.js' %}"></script>
-<script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1-packed.js' %}"></script>
-<!-- optionally include helper plugins -->
-<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.mousewheel.min.js' %}"></script>
-<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.touchSwipe.min.js' %}"></script>
-<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.transit.min.js' %}"></script>
-<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.ba-throttle-debounce.min.js' %}"></script>
-<script type="text/javascript">
-    $(function() {
+    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1-packed.js' %}"></script>
+    <!-- optionally include helper plugins -->
+    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.mousewheel.min.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.touchSwipe.min.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.transit.min.js' %}"></script>
+    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.ba-throttle-debounce.min.js' %}"></script>
+    <script type="text/javascript">
+      $(function() {
 
         //  Basic carousel, no options
         $('#foo0').carouFredSel();
@@ -178,14 +178,9 @@
     <!-- Start Header Section --> 
     <div class="hidden-header"></div>
     <header class="clearfix">
-
-      <!-- Not sure what this does so I am commenting it out for now -->
-      <!--<div class="top-bar">
-  { wagtailuserbar %}
-      </div> -->
-      
       <div class="top-bar">
         <div class="container">
+<<<<<<< HEAD
           
     <div class="col-md-12">
       <div class="col-md-9">
@@ -193,13 +188,21 @@
     <a class="navbar-brand" href="/">
       <img alt="" src="{% static "margo/images/mamase_logo_full.png" %}">
     </a>
+=======
+	  <div class="col-md-12" style="padding:0px;">
+	    <div class="col-md-9" style="padding:0px;">
+              <div class="row" style="height:120px; margin:auto;">
+		<a class="navbar-brand" href="/">
+		  <img alt="" src="{% static "margo/images/mamase_logo_full.png" %}">
+		</a>
+>>>>>>> 1f1afb7255bc6477e35dd07770b433e4a50fcdc3
               </div>
             </div>
-      <div class="col-md-3">
+	    <div class="col-md-3" style="padding:0px;">
               <ul class="nav navbar-nav navbar-right">
-    <li>
-                  <a href="{% url 'wagtailadmin_home' %}" >Login</a>
-    </li>
+		<li>
+                  <a href="{% url 'wagtailadmin_home' %}">Login</a>
+		</li>
               </ul>
       </div>
     </div>
@@ -217,13 +220,13 @@
           </div>
 
           <div class="navbar-collapse collapse upande-list">
-            <ul class="nav navbar-nav navbar-right">
-        {% block search_box_collapse %}
-        {% include "search/search_box_collapsible.html" only %}
+            <ul class="nav navbar-nav navbar-right"  style="margin-right:0px !important;">
+	      {% block search_box_collapse %}
+	      {% include "search/search_box_collapsible.html" only %}
               {% endblock search_box_collapse %}
-      </ul>
-      <!-- Start Navigation List -->
-              <ul class="nav navbar-nav navbar-left">
+	    </ul>
+	    <!-- Start Navigation List -->
+            <ul class="nav navbar-nav navbar-left">
               <li>
                 <a class="active" href="/" >Home</a>
                 <ul class="dropdown">

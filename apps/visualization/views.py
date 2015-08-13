@@ -1,4 +1,5 @@
 from django.shortcuts import render,render_to_response
+from django.views.generic.base import TemplateView
 from django.http import JsonResponse
 
 from . import thingspeak 
@@ -53,23 +54,16 @@ def logThingspeakData(request):
     return JsonResponse(results)
 
 
-def index(request):
-    args = {}
-    args['isLoggedIn'] = False
-    return render_to_response("index.html", args)
-
-def chart(request):
-    args = {}
-    args['isLoggedIn'] = False
-    return render_to_response("chart.html", args)
+class IndexView(TemplateView):
+    template_name = "visual.html"
 
 def page_not_found_view(request):
     args = {}
     args['url'] = '/'
-    return render_to_response("404.html", args)
+    return render("404.html", args)
     
 def page_not_found_view(request):
     args = {}
     args['url'] = '/'
-    return render_to_response("500.html", args)
+    return render("500.html", args)
     

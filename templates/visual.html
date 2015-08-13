@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 
 {% load static %}
-{% block title %} <title> Upande | Visualization </title> {% endblock title %}
+{% block title %} <title> Mamase | Visualization </title> {% endblock title %}
 {% block css %} <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> {% endblock css %}
 {% block js%} 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="{% static 'js/c3.js' %}"></script>
 <script>
 $(document).ready(function() {
+var dt = new Date();
+dt.setHours(dt.getHours()-168)//7 days ago
    $.ajax({
         type: 'GET',
-        url : "http://api.thingspeak.com/channels/15792/feed.json?callback=",
+        url : "http://api.thingspeak.com/channels/15792/feed.json?start="+dt+"&callback=",
         dataType: "jsonp",
         success: function(data) {
             feeds = data.feeds
@@ -59,26 +61,7 @@ axis: {
 
 {% block content %}
 <!-- Container -->
-<div id="container">
-  
-  <!-- Start Page Banner -->
-  <div class="page-banner no-subtitle">
-    <div class="container">
-      <div class="row">
-	<div class="col-md-6">
-	  <h2>Charts</h2>
-	</div>
-	<div class="col-md-6">
-	  <ul class="breadcrumbs">
-	    <li><a href="{{base_url}}">Home</a></li>
-	    <li>Visualization</li>
-	  </ul>
-	</div>
-      </div>
-    </div>
-  </div>
-  <!-- End Page Banner -->  
-  
+<div id="container">  
   <!-- Start Chart Section -->
   <div class="pricing-section" style="padding-top:60px; padding-bottom:60px;">
     <div class="container">
@@ -86,7 +69,7 @@ axis: {
         <div class="col-md-12">
 	  
           <!-- Text -->
-          <p class="text-center" style="margin-bottom:20px;">MaMasa data shown as charts will look amazing here. Check it out and enjoy. This one is from the <a href="http://thingspeak API http://api.thingspeak.com/channels/15792/feed.json?callback="> thingspeak </a> </p>
+          <p class="text-center" style="margin-bottom:20px;">Mamase data as collected by Upande using thingspeak. The data represents several readings collected over time. You can select from with channel to view data from.</p>
         </div>
       </div>
       
@@ -97,18 +80,6 @@ axis: {
 	</div>		
       </div>		
       
-      <div class="row pricing-tables">
-        
-        <div class="col-md-12 col-sm-12">
-	  <div class="col-md-12">
-            <!-- Text -->
-            <p class="text-center" style="margin-bottom:20px;">MaMasa Geonode data is rendered here </p>
-          </div>
-          <div class="col-md-12 col-sm-12">
-	    <div id="mamase"></div>
-	  </div>		
-	</div>		
-      </div>
     </div>
   </div>
   <!-- End Chart Section -->
