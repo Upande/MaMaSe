@@ -8,6 +8,7 @@ from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
 from apps.news.views import CommView
+#from apps.testapp.views import TView
 #from apps import *
 
 
@@ -25,7 +26,8 @@ urlpatterns = [
     url(r'^knowledge/', include('apps.quiz.urls')),
     url(r'^$', include('apps.partners.urls')),
     url(r'^gis/', include('apps.gis.urls')),
-    url(r'^gallery/', include('apps.galleryapp.urls')),
+    #url(r'^tpage/$', TView.as_view(), name="tgallery"),
+    #url(r'^galleryapp/', include('apps.galleryapp.urls')),
 
 
     url(r'', include(wagtail_urls)),
