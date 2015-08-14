@@ -69,6 +69,7 @@ INSTALLED_APPS = (
     'apps.multichoice',
     'apps.essay',
     'apps.partners',
+    'apps.testapp',
 )
 
 MIDDLEWARE_CLASSES = (
