@@ -20,7 +20,7 @@ urlpatterns = [
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search/$', 'search.views.search', name='search'),
-    url(r'^visual/', include('apps.visualization.urls')),
+    url(r'^mamase/', include('apps.visualization.urls')),
     url(r'^communications/$', CommView.as_view(), name="communications"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^knowledge/', include('apps.quiz.urls')),

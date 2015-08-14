@@ -26,3 +26,36 @@ padding: 10px
 .right-sidebar {
     border-left: 1px solid #eee;
 }
+
+/* Rich text CSS since richtext ships with no CSS*/
+
+.rich-text img {
+    max-width: 100%;
+    height: auto;
+}
+
+img.richtext-image.left {
+    float: left;
+    padding-right: 10pt;
+    overflow:hidden;
+}
+
+img.richtext-image.right {
+    float: right;
+    padding-left: 10pt;
+    overflow:hidden;
+}
+
+.responsive-object {
+    position: relative;
+}
+.responsive-object iframe,
+.responsive-object object,
+.responsive-object embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+

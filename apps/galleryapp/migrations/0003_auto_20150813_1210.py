@@ -16,6 +16,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='image',
             name='image',
-            field=filer.fields.image.FilerImageField(on_delete=django.db.models.deletion.SET_NULL, to='filer.Image', null=True),
+            field=models.ForeignKey(related_name='galleryapp_image', on_delete=django.db.models.deletion.SET_NULL, blank=True, to='wagtailimages.Image', null=True),
+            #field=filer.fields.image.FilerImageField(on_delete=django.db.models.deletion.SET_NULL, to='filer.Image', null=True),
         ),
     ]
