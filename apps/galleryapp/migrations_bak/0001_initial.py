@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import django.db.models.deletion
+import apps.galleryapp.thumbs
 
 
 class Migration(migrations.Migration):
@@ -15,11 +16,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Gallery',
             fields=[
-                ('page_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('name', models.CharField(max_length=55)),
+                ('page_ptr', models.OneToOneField(parent_link=True, auto_created=True, to='wagtailcore.Page')),
+                ('gallery_slug', models.SlugField(serialize=False, primary_key=True)),
+                ('name', models.CharField(max_length=50)),
                 ('description', models.TextField(blank=True)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('date_modified', models.DateTimeField(auto_now=True)),
             ],
             options={
                 'ordering': ['name'],
@@ -30,12 +30,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Image',
             fields=[
-                ('page_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
+                ('page_ptr', models.OneToOneField(parent_link=True, auto_created=True, to='wagtailcore.Page')),
+                ('image_slug', models.SlugField(serialize=False, primary_key=True)),
                 ('name', models.CharField(max_length=50)),
-                ('image', models.ImageField(null=True, upload_to=b'MaMaSeGalleries', blank=True)),
+                ('image', apps.galleryapp.thumbs.ImageWithThumbsField(upload_to=b'MaMaSeGalleries')),
                 ('description', models.TextField(blank=True)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('date_modified', models.DateTimeField(auto_now=True)),
+                ('date', models.DateField(blank=True)),
                 ('gallery', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='galleryapp.Gallery', null=True)),
             ],
             options={

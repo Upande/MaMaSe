@@ -22,6 +22,7 @@ class TPage(Page):
         ('image_carousel', blocks.ListBlock(ImageCarouselBlock(), template="testapp/t_page.html", icon="image")),
     ])
     content_panels =  Page.content_panels +[
-    StreamFieldPanel('body'),
+        FieldPanel('author'),
+        StreamFieldPanel('body'),
     ]
 
