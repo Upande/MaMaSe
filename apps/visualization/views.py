@@ -57,6 +57,9 @@ def logThingspeakData(request):
 class IndexView(TemplateView):
     template_name = "visual.html"
 
+class ContactView(TemplateView):
+    template_name = "contact.html"
+
 def page_not_found_view(request):
     args = {}
     args['url'] = '/'

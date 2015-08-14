@@ -36,10 +36,14 @@ padding: 10px
 
 img.richtext-image.left {
     float: left;
+    padding-right: 10pt;
+    overflow:hidden;
 }
 
 img.richtext-image.right {
     float: right;
+    padding-left: 10pt;
+    overflow:hidden;
 }
 
 .responsive-object {

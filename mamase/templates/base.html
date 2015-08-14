@@ -47,17 +47,7 @@
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
 
     <!-- Color CSS Styles  -->
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/red.css' %}" title="red" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/jade.css' %}" title="jade" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/green.css' %}" title="green" media="screen" />
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/blue.css' %}" title="blue" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/beige.css' %}" title="beige" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/cyan.css' %}" title="cyan" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/orange.css' %}" title="orange" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/peach.css' %}" title="peach" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/purple.css' %}" title="purple" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/sky-blue.css' %}" title="sky-blue" media="screen" />
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/yellow.css' %}" title="yellow" media="screen" />
     <!-- Caption Style -->
     <style> 
   
@@ -228,12 +218,12 @@
                 </ul>
               </li>
               <li>
-                <a href="{% url 'visual' %}" >Visualization</a>
+                <a href="{% url 'visual' %}" >Live data streams</a>
                 <ul class="dropdown">
                 </ul>
               </li>
               <li>
-                <a href="{% url 'gis' %}" >GIS Platform</a>
+                <a href="http://maps.mamase.org/" >Mara Geoportal</a>
                 <ul class="dropdown">                 
                 </ul>
               </li>
@@ -247,7 +237,7 @@
                 <ul class="dropdown">
                 </ul>
               </li>
-              <li><a href="#" >Contact Us</a>
+              <li><a href="{% url 'contact-us' %}" >Contact Us</a>
               </li>
             </ul>
             <!-- End Navigation List -->
@@ -499,39 +489,6 @@
     <ul class="colors-list">
       <li>
         <a onClick="setActiveStyleSheet('blue'); return false;" title="Blue" class="blue"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('sky-blue'); return false;" title="Sky Blue" class="sky-blue"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('cyan'); return false;" title="Cyan" class="cyan"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('jade'); return false;" title="Jade" class="jade"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('green'); return false;" title="Green" class="green"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('purple'); return false;" title="Purple" class="purple"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('pink'); return false;" title="Pink" class="pink"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('red'); return false;" title="Red" class="red"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('orange'); return false;" title="Orange" class="orange"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('yellow'); return false;" title="Yellow" class="yellow"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('peach'); return false;" title="Peach" class="peach"></a>
-      </li>
-      <li>
-        <a onClick="setActiveStyleSheet('beige'); return false;" title="Biege" class="beige"></a>
       </li>
     </ul>
     <span>Top Bar Color</span>
