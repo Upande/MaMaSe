@@ -180,6 +180,7 @@
     <header class="clearfix">
       <div class="top-bar">
         <div class="container">
+
 	  <div class="col-md-12" style="padding:0px;">
 	    <div class="col-md-9" style="padding:0px;">
               <div class="row" style="height:120px; margin:auto;">
@@ -426,16 +427,19 @@
     {% endblock content %}
 
     {% block partners %}
-    <h3>PARTNERS</h3>
+    
 <!-- List of uploaded documents --> 
-<div class="list_carousel">
-    <ul id="foo0" >
-        {% for logo in logos %}
-            <li><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}" style="height:100px"><li>    
-        {% endfor %}
-    </ul>
-    <div class="clearfix"></div>
-</div> 
+  <div class="container">
+    <h3>PARTNERS</h3>
+      <div class="list_carousel">
+          <ul id="foo0" >
+              {% for logo in logos %}
+                  <li><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}" style="height:100px"><li>    
+              {% endfor %}
+          </ul>
+          <div class="clearfix"></div>
+      </div> 
+  </div>    
 </br>
 
     {% endblock partners %}

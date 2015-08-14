@@ -55,9 +55,12 @@ INSTALLED_APPS = (
     'home',
     'disqus',
     'djangobower',
-
+    'filer',
+    'mptt',
+    'easy_thumbnails',
+    
     'apps.visualization',
-    'apps.gallery',
+    'apps.galleryapp',
     'apps.video',
     'apps.event',
     'apps.news',
