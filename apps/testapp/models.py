@@ -19,7 +19,7 @@ class TPage(Page):
     date_modified = models.DateField(auto_now=True)
     body = StreamField([
         ('image', ImageChooserBlock(icon="image")),
-        ('image_carousel', blocks.ListBlock(ImageCarouselBlock(), template="gallery/gallery2.html", icon="image")),
+        ('image_carousel', blocks.ListBlock(ImageCarouselBlock(), template="testapp/t_page.html", icon="image")),
     ])
     content_panels =  Page.content_panels +[
     StreamFieldPanel('body'),
