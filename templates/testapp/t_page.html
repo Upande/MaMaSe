@@ -15,13 +15,14 @@
           <ul id="foo0">
  
          {% if self %}
- 
+	 {% for item in self.image_carousel.image %}
                 {% image self.image height-400 as carouselimagedata %}
                 <a class="rsImg" data-rsw="{{ carouselimagedata.width }}" data-rsh="{{ carouselimagedata.height }}"  href="{{ carouselimagedata.url }}">
 		<li><img src= "{{ carouselimagedata.url }}"></li>
                         {{ item.caption }}
                 </a>
  
+         {% endfor %}
          {% endif %}
  
           </ul>
