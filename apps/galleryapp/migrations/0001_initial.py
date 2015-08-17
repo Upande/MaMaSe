@@ -18,8 +18,6 @@ class Migration(migrations.Migration):
                 ('page_ptr', models.OneToOneField(parent_link=True, auto_created=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
                 ('name', models.CharField(max_length=55)),
                 ('description', models.TextField(blank=True)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('date_modified', models.DateTimeField(auto_now=True)),
             ],
             options={
                 'ordering': ['name'],
@@ -34,8 +32,6 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=50)),
                 ('image', models.ImageField(null=True, upload_to=b'MaMaSeGalleries', blank=True)),
                 ('description', models.TextField(blank=True)),
-                ('date_created', models.DateTimeField(auto_now_add=True)),
-                ('date_modified', models.DateTimeField(auto_now=True)),
                 ('gallery', models.ForeignKey(on_delete=django.db.models.deletion.SET_NULL, to='galleryapp.Gallery', null=True)),
             ],
             options={

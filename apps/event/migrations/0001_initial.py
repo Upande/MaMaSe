@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import wagtail.wagtailcore.fields
+from django.conf import settings
 import modelcluster.fields
 
 
@@ -10,10 +11,19 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('taggit', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('wagtailcore', '0001_squashed_0016_change_page_url_path_to_text_field'),
     ]
 
     operations = [
+        migrations.CreateModel(
+            name='Attendee',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('tickets', models.IntegerField(default=1)),
+                ('date', models.DateTimeField(auto_now_add=True)),
+            ],
+        ),
         migrations.CreateModel(
             name='EventIndexPage',
             fields=[
@@ -64,5 +74,14 @@ class Migration(migrations.Migration):
             options={
                 'abstract': False,
             },
+        ),
+        migrations.CreateModel(
+            name='watchlist',
+            fields=[
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('date', models.DateTimeField(auto_now_add=True)),
+                ('event', models.ForeignKey(to='event.EventPage')),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+            ],
         ),
     ]

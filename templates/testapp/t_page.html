@@ -10,13 +10,23 @@
 <div class="container">
   <div class="list_carousel">
     <ul id="foo0">	  	  
-      {% for item in images %}
-      <!--section>{{ block }}</section-->
+      {% for block in self.body %}
+
+        {% if block.block_type == 'image_carousel' %}
+            <h1>{{ block.value }}</h1>
+            {% image block.image height-400 as carouselimagedata %}
+    
+        {% else %}
+            <section class="block-{{ block.block_type }}">
+                {{ block }}
+            </section>
+        {% endif %}
+      <!--section>{{ block }}</section>
       {% image item.image height-400 as carouselimagedata %}
           <a class="rsImg" data-rsw="{{ carouselimagedata.width }}" data-rsh="{{ carouselimagedata.height }}"  href="{{ carouselimagedata.url }}">
 	    <li><img src= "{{ carouselimagedata.url }}"></li>
             {{ item.caption }}
-          </a>	  
+          </a-->	  
       {% endfor %}
     </ul>	
   </div>

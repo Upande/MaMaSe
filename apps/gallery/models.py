@@ -1,5 +1,5 @@
 from django.db import models
-
+'''
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
 from wagtail.wagtailadmin.edit_handlers import FieldPanel
 from wagtail.wagtailcore.models import Page
@@ -73,3 +73,4 @@ class Gallery(Page):
        ImageChooserPanel('image6'),
        FieldPanel('image6_caption'),
     ]
+'''

@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
             name='PartnerLogo',
             fields=[
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
-                ('partner_logo', models.ImageField(upload_to=b'partners/%Y/%m/%d')),
+                ('title', models.CharField(max_length=255, null=True, blank=True)),
+                ('partner_logo', models.ImageField(upload_to=b'partners')),
             ],
         ),
     ]
