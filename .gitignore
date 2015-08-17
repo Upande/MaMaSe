@@ -1,6 +1,8 @@
 *.pyc
 *~
 *#
+*.#
+
 media/
 apps/partners/migrations/*
 # Byte-compiled / optimized / DLL files

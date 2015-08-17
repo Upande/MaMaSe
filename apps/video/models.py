@@ -101,7 +101,7 @@ class EmbeddedVideoPage(Page):
         PageChooserPanel('category'),
         FieldPanel('description', classname="full"),
     ]
-
+    
     @property
     def categories(self):
         # Get list of live news pages that are descendants of this page
