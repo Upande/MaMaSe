@@ -21,7 +21,7 @@
 	<div class="hr1" style="margin-bottom:30px;"></div>
 	<h4 class="classic-title container"><span>Video</span></h4>
 		    
-		<div class="latest-posts-classic container">
+		<div class="latest-posts-classic">
 			<p>
 				Video updates on MaMaSe Sustainable Water Initiative	
 			</p>
@@ -30,7 +30,7 @@
 	  <div class="col-md-12">
 	    
 	    <!-- Classic Heading -->
-	    <h4 class="classic-title container"><span>Latest Videos</span></h4>
+	    <h4 class="classic-title"><span>Latest Videos</span></h4>
 	    
 	    <div class="latest-posts-classic">
 	      
@@ -76,10 +76,6 @@
       
       <!--Sidebar-->
       <div class="col-md-3 sidebar right-sidebar">
-	
-	{% block search_box %}
-	{% include "search/search_box.html" only %}
-	{% endblock search_box %}      
 	<!-- Categories Widget -->
 	<div class="widget widget-categories">
 	  <h4>Categories <span class="head-line"></span></h4>
@@ -144,3 +140,4 @@
 <!-- End Content -->
 
 {% endblock content %}
+{% block partners %}{% endblock partners %}

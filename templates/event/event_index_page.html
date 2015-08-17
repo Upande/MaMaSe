@@ -19,8 +19,8 @@
 	
 	<!-- Divider -->
 	<div class="hr1" style="margin-bottom:30px;"></div>
-		<h4 class="classic-title container"><span>Events</span></h4>
-		<div class="latest-posts-classic container" >  
+		<h4 class="classic-title"><span>Events</span></h4>
+		<div class="latest-posts-classic" >  
 			<p>
 				Events updates on MaMaSe Sustainable Water Initiative	
 			</p>
@@ -29,7 +29,7 @@
 	  <div class="col-md-12">
 	    
 	    <!-- Classic Heading -->
-	    <h4 class="classic-title container"><span>Latest Posts</span></h4>
+	    <h4 class="classic-title"><span>Latest Events</span></h4>
 	    
 	    <div class="latest-posts-classic">
 	      
@@ -39,11 +39,13 @@
 	      <div class="col-md-12">
 		<div class="post-row">
 		  <div class="left-meta-post">
-		    <img class="img-thumbnail image-text" style="float:left; width:150px;" alt="" src="{{item.main_image.file.url}}">
+		    <a href="{{ item.url }}">
+		      <img class="img-thumbnail image-text" style="float:left; width:150px;" alt="" src="{{item.main_image.file.url}}" >
+		    </a>
 		  </div>
 		  <h5 class="post-title">{{item.start_date}} {% if item.end_date %} - {{item.end_date}}</h5> {% else%} </h5> {% endif %}
 		  <h3 class="post-title"> 
-		    <a href="{{ item.link }}">{{item.title| title}}</a>
+		    <a href="{{ item.url }}">{{item.title| title}}</a>
 		  </h3>
 		  <div class="post-content">
 		    <p>{{ item.body|safe }} </p>
@@ -73,9 +75,6 @@
          <!--Sidebar-->
       <div class="col-md-3 sidebar right-sidebar">
 	
-	{% block search_box %}
-	{% include "search/search_box.html" only %}
-	{% endblock search_box %}      
 	<!-- Categories Widget -->
 	<div class="widget widget-categories">
 	  <h4>Categories <span class="head-line"></span></h4>
@@ -98,7 +97,7 @@
 		<a href="{{item.url}}"><img src="{{item.main_image.file.url}}" alt="{{item.main_image.title}}" /></a>
 	      </div>
 	      <div class="widget-content">
-		<h5><a href="{{item.url}}">{{item.title}}</a></h5>
+		<h5><a href="{{item.url}}">{{item.title | title}}</a></h5>
 		<span>{{item.start_date}}</span>
 	      </div>
 	      <div class="clearfix"></div>
