@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     
     'apps.visualization',
     'apps.galleryapp',
+    'apps.gallery',
     'apps.video',
     'apps.event',
     'apps.news',
@@ -93,7 +94,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(PROJECT_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'home', 'templates'),
             os.path.join(BASE_DIR, 'templates'),
             os.path.join(PROJECT_DIR, 'templates', 'site_pages'),
         ],
