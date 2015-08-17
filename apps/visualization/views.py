@@ -59,6 +59,11 @@ class IndexView(TemplateView):
 
 class ContactView(TemplateView):
     template_name = "contact.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super(ContactView, self).get_context_data(**kwargs)
+        context['success'] = "Success! We have received your email and will respond ASAP."
+        return context
 
 def page_not_found_view(request):
     args = {}

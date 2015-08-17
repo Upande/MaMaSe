@@ -14,7 +14,7 @@
  
           <ul id="foo0">
  
-         {% for item in self %}
+         {% for item in self.body %}
  
                 {% image item.image height-400 as carouselimagedata %}
                 <a class="rsImg" data-rsw="{{ carouselimagedata.width }}" data-rsh="{{ carouselimagedata.height }}"  href="{{ carouselimagedata.url }}">
