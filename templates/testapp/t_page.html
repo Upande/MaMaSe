@@ -1,5 +1,6 @@
 {% load wagtailcore_tags wagtailimages_tags torchbox_tags %}
 {% load static %}
+
 <head>
 <script type="text/javascript" src="{% static 'margo/js/jquery-2.1.1.min.js' %}"></script>
 </head>
@@ -8,36 +9,10 @@
 <div class="container">
 
   <div class="list_carousel">
-    {{ self.body }}
     <ul id="foo0">	
     {% for s in src %}
-    <li><img src=s></li>
+    <li><img src="{{s}}"></li>
     {% endfor %}  	  
-      {% for block in self.body %}
-
-        {% if block.block_type == 'image_carousel' %}
-            <h1>{{ block.value }}</h1>
-            {% image block.image height-400 as carouselimagedata %}
-    
-        {% else %}
-            <section class="block-{{ block.block_type }}">
-                {{ block }}
-            </section>
-        {% endif %}
-      <!--section>{{ block }}</section>
-      {% image item.image height-400 as carouselimagedata %}
-          <a class="rsImg" data-rsw="{{ carouselimagedata.width }}" data-rsh="{{ carouselimagedata.height }}"  href="{{ carouselimagedata.url }}">
-	    <li><img src= "{{ carouselimagedata.url }}"></li>
-            {{ item.caption }}
-          </a-->	  
-      {% for item in self.body %}
-      <div>{{ item }}</div>
-      <!--{% image item.image height-400 as carouselimagedata %}
-          <a class="rsImg" data-rsw="{{ carouselimagedata.width }}" data-rsh="{{ carouselimagedata.height }}"  href="{{ carouselimagedata.url }}">
-	    <li><img src= "{{ carouselimagedata.url }}"></li>
-            {{ item.caption }}
-          </a>-->	  
-      {% endfor %}
     </ul>	
   </div>
 </div>
@@ -47,18 +22,3 @@
 
 {% block partners %}
 {% endblock %}
-
-<article>
-    {% for block in self.body %}
-        {% if block.block_type == 'image_carousel' %}
-            <h1>{{ block.block.media }}</h1>
-	    {% image block.image height-400 as carouselimagedata %}
-    <li><img src= "{{ carouselimagedata.url }}"></li>                                                                                                                                   
-    {{ item.caption }}                               
-    {% else %}
-            <section class="block-{{ block.block_type }}">
-                {{ block }}
-            </section>
-        {% endif %}
-    {% endfor %}
-</article>

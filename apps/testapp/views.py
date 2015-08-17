@@ -24,12 +24,13 @@ def GetImages(request):
     # Load images for the list page
     src = []
     images = TPage.objects.all()
-    for y in images.body:
-    	for i in y.value:
-    		src.append(i.get('image').file.url)
-    		
-
-
+    
+    for item in images:
+        for y in item.body:
+            for i in y.value:
+                print i.get('image').file.url
+    		src.append(i.get('image').file.url)    		
+                
     # Render list page with the documents and the form
     return render_to_response(
         'testapp/t_page.html',
