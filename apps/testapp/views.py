@@ -22,27 +22,17 @@ class TView(TemplateView):
 
 def GetImages(request):
     # Load images for the list page
-    lists = []
-    images = TPage.objects.live()
-    for i in images:
-    	print i
-
-    print '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@'
-    print [e.body for e in TPage.objects.live()]
-
-    print 'tttttttttttttttttttttttttttttttt'
-
-
-    
     src = []
-    
-    for i in images.body:
-        for a in i.value:
-            src.append(a.get('image').file.url)
+    images = TPage.objects.all()
+    for y in images.body:
+    	for i in y.value:
+    		src.append(i.get('image').file.url)
+    		
+
 
     # Render list page with the documents and the form
     return render_to_response(
         'testapp/t_page.html',
-        {'images': images, 'src':src},
+        {'src':src},
         context_instance=RequestContext(request)
     )
