@@ -52,7 +52,7 @@ class NewsPage(Page):
     @property
     def categories(self):
         # Get list of live news pages that are descendants of this page
-        categories = CategoryPage.objects.live() 
+        categories = CategoryPage.objects.live()
         
         return categories        
     

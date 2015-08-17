@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'^gis/', include('apps.gis.urls')),
     #url(r'^tpage/$', TView.as_view(), name="tgallery"),
     #url(r'^galleryapp/', include('apps.galleryapp.urls')),
-    #url(r'^tgallery/', include('apps.testapp.urls')),
+    url(r'^tgallery/', include('apps.testapp.urls')),
 
 
     url(r'', include(wagtail_urls)),

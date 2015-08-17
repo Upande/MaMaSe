@@ -9,9 +9,13 @@ from wagtail.wagtailadmin.edit_handlers import (FieldPanel,
                                                 MultiFieldPanel,
                                                 PageChooserPanel)
 
+from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 
 from apps.news.models import RelatedLink,CategoryPage
+
+from taggit.models import Tag, TaggedItemBase
+
 
 class EmbeddedVideoIndexRelatedLink(Orderable, RelatedLink):
     page = ParentalKey('EmbeddedVideoIndexPage', related_name='video_related_links')
@@ -28,7 +32,7 @@ class EmbeddedVideoIndexPage(Page):
     @property
     def categories(self):
         # Get list of live news pages that are descendants of this page
-        categories = CategoryPage.objects.live() 
+        categories = CategoryPage.objects.live()
         
         return categories
         
@@ -37,6 +41,12 @@ class EmbeddedVideoIndexPage(Page):
         # Get list of live news pages that are descendants of this page
         videos = EmbeddedVideoPage.objects.live().descendant_of(self) 
         return videos
+
+    @property
+    def tags(self):
+        #Get all unique tags that belong to the children                                                                                                                                        
+        vtags = EmbeddedVideoPage.objects.live().descendant_of(self).order_by('tags__name').distinct('tags__name').values_list('tags__name',flat=True)
+        return vtags
 
     def get_context(self, request):
         # Get news items
@@ -65,13 +75,19 @@ class EmbeddedVideoIndexPage(Page):
         # Update template context
         context = super(EmbeddedVideoIndexPage, self).get_context(request)
         context['videos'] = videos
+        context['tags'] = self.tags
         return context
+
+
+class EmbeddedVideoPageTag(TaggedItemBase):
+    content_object = ParentalKey('video.EmbeddedVideoPage', related_name='tagged_items')
 
 #View for a single embedded video.
 class EmbeddedVideoPage(Page):
     video_link = models.URLField("Video link", blank=True)
     description = RichTextField(blank=True)
 
+    tags = ClusterTaggableManager(through=EmbeddedVideoPageTag, blank=True)
     category = models.ForeignKey('news.CategoryPage', null=True, blank=True ,related_name='+',on_delete=models.SET_NULL )
 
     search_fields = Page.search_fields + (
@@ -85,3 +101,35 @@ class EmbeddedVideoPage(Page):
         PageChooserPanel('category'),
         FieldPanel('description', classname="full"),
     ]
+    
+    @property
+    def categories(self):
+        # Get list of live news pages that are descendants of this page
+        categories = CategoryPage.objects.live()
+        
+        return categories
+            
+    @property
+    def videos(self):
+        # Get list of live videos that are descendants of this page  Order by date and get the five latest ones
+        videos = EmbeddedVideoPage.objects.live().descendant_of(self.get_parent()).order_by('-latest_revision_created_at')[:5]
+        return videos
+
+    @property
+    def video_tags(self):
+        #Get all unique tags that belong to the children         
+        tags = EmbeddedVideoPage.objects.live().descendant_of(self.get_parent()).order_by('tags__name').distinct('tags__name').values_list('tags__name',flat=True)
+        return tags
+
+    def get_context(self, request):
+        # Update template context                                                                                                                                                               
+        context = super(EmbeddedVideoPage, self).get_context(request)
+        context['videos'] = self.videos
+        context['tags'] = self.video_tags
+        return context
+
+
+
+EmbeddedVideoPage.promote_panels = Page.promote_panels +[
+    FieldPanel('tags'),
+]
