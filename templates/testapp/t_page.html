@@ -9,7 +9,27 @@
 
   <div class="list_carousel">
     {{ self.body }}
-    <ul id="foo0">	  	  
+    <ul id="foo0">	
+    {% for s in src %}
+    <li><img src=s></li>
+    {% endfor %}  	  
+      {% for block in self.body %}
+
+        {% if block.block_type == 'image_carousel' %}
+            <h1>{{ block.value }}</h1>
+            {% image block.image height-400 as carouselimagedata %}
+    
+        {% else %}
+            <section class="block-{{ block.block_type }}">
+                {{ block }}
+            </section>
+        {% endif %}
+      <!--section>{{ block }}</section>
+      {% image item.image height-400 as carouselimagedata %}
+          <a class="rsImg" data-rsw="{{ carouselimagedata.width }}" data-rsh="{{ carouselimagedata.height }}"  href="{{ carouselimagedata.url }}">
+	    <li><img src= "{{ carouselimagedata.url }}"></li>
+            {{ item.caption }}
+          </a-->	  
       {% for item in self.body %}
       <div>{{ item }}</div>
       <!--{% image item.image height-400 as carouselimagedata %}
