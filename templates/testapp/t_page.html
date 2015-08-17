@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% load wagtailcore_tags wagtailimages_tags %}
+{% load wagtailcore_tags wagtailimages_tags torchbox_tags %}
 {% load static %}
 
 {% block body_class %}template-testpage{% endblock %}
@@ -10,13 +10,13 @@
 <div class="container">
   <div class="list_carousel">
     <ul id="foo0">	  	  
-      {% for block in self.body %}
-      <section>{{ block }}</section>
-      <!--{% image item.image height-400 as carouselimagedata %}
+      {% for item in images %}
+      <!--section>{{ block }}</section-->
+      {% image item.image height-400 as carouselimagedata %}
           <a class="rsImg" data-rsw="{{ carouselimagedata.width }}" data-rsh="{{ carouselimagedata.height }}"  href="{{ carouselimagedata.url }}">
 	    <li><img src= "{{ carouselimagedata.url }}"></li>
             {{ item.caption }}
-          </a>-->	  
+          </a>	  
       {% endfor %}
     </ul>	
   </div>
