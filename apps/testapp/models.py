@@ -6,6 +6,8 @@ from wagtail.wagtailcore import blocks
 from wagtail.wagtailadmin.edit_handlers import FieldPanel, StreamFieldPanel
 from wagtail.wagtailimages.blocks import ImageChooserBlock
 
+from templatetags.torchbox_tags import *
+
 class ImageCarouselBlock(blocks.StructBlock):
     image = ImageChooserBlock()
     caption = blocks.TextBlock(required=False)
@@ -26,3 +28,8 @@ class TPage(Page):
         StreamFieldPanel('body'),
     ]
 
+@register.assignment_tag(takes_context=False)
+def timestamp():
+    dt = datetime.now()
+    ts = dt.microsecond
+    return str(ts)

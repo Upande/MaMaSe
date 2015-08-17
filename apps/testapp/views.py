@@ -13,3 +13,15 @@ class TView(TemplateView):
 
 # Create your views here.
 '''
+
+def GetImages(request):
+    # Load images for the list page
+    images = TPage.objects.all()
+    #print images
+
+    # Render list page with the documents and the form
+    return render_to_response(
+        'testapp/t_page.html',
+        {'images': images,},
+        context_instance=RequestContext(request)
+    )
