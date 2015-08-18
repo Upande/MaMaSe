@@ -1,11 +1,12 @@
+from django.http import JsonResponse,HttpResponseRedirect
 from django.shortcuts import render,render_to_response
 from django.views.generic.base import TemplateView
-from django.http import JsonResponse
+from django.core.urlresolvers import reverse
 
 from . import thingspeak 
 from .emailSender import send_email
 
-from .models import LoggerData,Channel,ChannelField,Feed
+from .models import LoggerData,Channel,ChannelField,Feed,EmailRecipient
 
 import json
 
@@ -83,19 +84,21 @@ def email(request):
         message  = request.POST.get('message',None)
         
         status = False
+        html_message = ""
+
         if message != None and name != None:
             #Check who the email is intended for
             if recipient == "All":
-                er = EmailRecipeint.objects.all()
-                for item in er:
-                    html_message = create_email_message(item,email,subject)
+                er = EmailRecipient.objects.all()
             else:
                 er = EmailRecipient.objects.filter(role = recipient)
-                if er:
-                    html_message = create_email_message(er[0],email,subject)
+
+            to_list = er.values_list('email',flat=True)
+            
+            html_message = create_email_message(email,message)
                     
             #Create the html message to be sent via email
-            status = send_email(html_message,recipient,email)
+            status = send_email(html_message,"mamasewebsite.gmail.com",to_list,subject)
 
         if status:
             args['success_message'] = "Success! We have received your email and will respond ASAP. "
@@ -104,20 +107,11 @@ def email(request):
             
         return render(request, 'contact.html', args)
     else:
-        return HttpResponseRedirect(reverse('visual:email'))
+        return HttpResponseRedirect(reverse('contact-us'))
 
-def create_email_message(recipient,email,subject):
-    name_upper = recipient.name[0].upper() + recipient.name[1:len(name)]
-    subject, from_email = Subject,email
-    text_content = 'This is an important message.'
-    html_content = "From: MaMaSe Website<website@mamase.org>" 
-    html_content = html_content + "\nTo:" + recipient.email
-    html_content = html_content + "\nMIME-Version: 1.0"
-    html_content = html_content + "\nContent-type: text/html"
-    html_content = html_content + "\nSubject: [MaMaSe Website] " + subject
-    html_content = html_content + "\n\n"
-    html_content = html_content + "Hi " + name_upper + ",<br><br>"
-    html_content = html_content + "You have received mail from the website!<br>"
+def create_email_message(email,message):
+    html_content = "Hi there,<br><br>"
+    html_content = html_content + "You have received mail from the website<br>"
     html_content = html_content + "From: "+email
     html_content = html_content + "<br>Message Content:" + message
     html_content = html_content + '<br><br>'

@@ -197,3 +197,9 @@ BOWER_INSTALLED_APPS = (
 )
 
 ALLOWED_HOSTS = ['*']
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mamasewebsite@gmail.com'
+EMAIL_HOST_PASSWORD = 'mamasewebsite'
+EMAIL_PORT = 587

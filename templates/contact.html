@@ -18,7 +18,8 @@
 	<!-- Classic Heading -->
 	<h4 class="classic-title"><span>Contact Us</span></h4>
 	<div>
-	{{success}}
+	  <span class="label label-success">{{success_message}}</span>
+	  <span class="label label-danger">{{error_message}}</span>
 	</div>
 	<!-- Start Contact Form -->
 	<form role="form" class="contact-form" id="contact-form" method="post" action="{% url 'email' %}">
