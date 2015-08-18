@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
                 ('tag', models.TextField()),
                 ('field', models.TextField()),
                 ('added', models.DateTimeField(auto_now_add=True)),
-                ('channel', models.ForeignKey(to='visualization.Channel')),
+                ('channel', models.ForeignKey(to='utils.Channel')),
             ],
         ),
         migrations.CreateModel(
@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('entry_id', models.IntegerField(unique=True)),
                 ('created_at', models.DateTimeField()),
-                ('channel', models.ForeignKey(to='visualization.Channel')),
+                ('channel', models.ForeignKey(to='utils.Channel')),
             ],
         ),
         migrations.CreateModel(
@@ -51,8 +51,8 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('reading', models.TextField(default=b'')),
                 ('added', models.DateTimeField(auto_now_add=True)),
-                ('channelField', models.ForeignKey(to='visualization.ChannelField')),
-                ('feed', models.ForeignKey(to='visualization.Feed')),
+                ('channelField', models.ForeignKey(to='utils.ChannelField')),
+                ('feed', models.ForeignKey(to='utils.Feed')),
             ],
         ),
         migrations.CreateModel(

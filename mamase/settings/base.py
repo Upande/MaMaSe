@@ -59,7 +59,7 @@ INSTALLED_APPS = (
     'mptt',
     'easy_thumbnails',
     
-    'apps.visualization',
+    'apps.utils',
     'apps.galleryapp',
     'apps.gallery',
     'apps.video',
