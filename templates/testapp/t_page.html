@@ -1,3 +1,4 @@
+{% extends 'base.html' %}
 {% load wagtailcore_tags wagtailimages_tags torchbox_tags %}
 {% load static %}
 
@@ -6,17 +7,23 @@
 </head>
 {% block content %}
 
-<div class="container">
+
+{% for key, values in body_content %}
+  <div class="container">
+    {{key}}
 
   <div class="list_carousel">
-    <ul id="foo0">	
-    {% for s in src %}
-    <li><img src="{{s}}"></li>
-    {% endfor %}  	  
-    </ul>	
+        {% for i in values.value %}
+      <ul id="foo0">	
+        {{values}}
+        <!--li><img src="{{tmp_image.url}}"></li-->  
+      </ul>	
+      {% endfor %}
   </div>
+  
 </div>
-
+{% endfor %}
+ 
     
 {% endblock %}
 
