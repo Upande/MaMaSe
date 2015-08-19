@@ -18,13 +18,15 @@
 	<!-- Classic Heading -->
 	<h4 class="classic-title"><span>Contact Us</span></h4>
 	<div>
-	{{success}}
+	  <span class="label label-success">{{success_message}}</span>
+	  <span class="label label-danger">{{error_message}}</span>
 	</div>
 	<!-- Start Contact Form -->
-	<form role="form" class="contact-form" id="contact-form" method="post">
+	<form role="form" class="contact-form" id="contact-form" method="post" action="{% url 'email' %}">
+	  {% csrf_token %}
 	  <div class="form-group">
 	    <label for="recipient">Who do we send this email to?</label>
-	    <select class="form-control" id="recipient">
+	    <select class="form-control" id="recipient" name="recipient">
 	      <option>All</option>
 	      <option>Programme Manager</option>
 	      <option>Project Head</option>
@@ -47,8 +49,7 @@
 	    </div>
 	  </div>
 	  
-	  <div class="form-group">
-	    
+	  <div class="form-group">	    
 	    <div class="controls">
 	      <textarea rows="7"  placeholder="Message" name="message"></textarea>
 	    </div>
@@ -76,7 +77,6 @@
 	  <li><i class="fa fa-envelope-o"></i> <strong>Email:</strong> support@mamase.org</li>
 	  <li><i class="fa fa-mobile"></i> <strong>Phone:</strong> +12 345 678 001</li>
 	</ul>
-1	
 	<!-- Divider -->
 	<div class="hr1" style="margin-bottom:15px;"></div>
 	

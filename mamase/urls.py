@@ -12,22 +12,20 @@ from apps.news.views import CommView
 #from apps import *
 
 
-handler404 = 'apps.visualization.views.page_not_found_view'
-handler500 = 'apps.visualization.views.error_view'
+handler404 = 'apps.utils.views.page_not_found_view'
+handler500 = 'apps.utils.views.error_view'
 
 urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^search/$', 'search.views.search', name='search'),
-    url(r'^mamase/', include('apps.visualization.urls')),
+    url(r'^mamase/', include('apps.utils.urls')),
     url(r'^communications/$', CommView.as_view(), name="communications"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^knowledge/', include('apps.quiz.urls')),
     url(r'^$', include('apps.partners.urls')),
     url(r'^gis/', include('apps.gis.urls')),
-    #url(r'^tpage/$', TView.as_view(), name="tgallery"),
-    #url(r'^galleryapp/', include('apps.galleryapp.urls')),
     url(r'^tgallery/', include('apps.testapp.urls')),
 
 

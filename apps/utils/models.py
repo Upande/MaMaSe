@@ -43,3 +43,9 @@ class FeedField(models.Model):
     channelField = models.ForeignKey(ChannelField)
     feed = models.ForeignKey(Feed)
     added = models.DateTimeField(auto_now_add=True)
+
+class EmailRecipient(models.Model):
+    role = models.CharField(max_length = 200)
+    name = models.CharField(max_length = 200)
+    email = models.CharField(max_length = 200)
+    active = models.BooleanField(default = True)
