@@ -203,9 +203,11 @@
                 <a class="active" href="/" >About</a>
                 <ul class="dropdown">
                   <li> <a href="{% slugurl 'news' %}">News</a> </li>
-                  <li> <a href="#">Gallery</a> </li>     
-                  <li> <a href="{% slugurl 'videos' %}">Video</a> </li>
-                  <li> <a href="{% slugurl 'events' %}">Events</a> </li>
+                  <li> <a href="{% slugurl 'videos' %}">Photos and Videos</a> </li>
+                  <li> <a href="{% slugurl 'materials' %}">Materials</a> </li>     
+                  <li> <a href="{% slugurl 'partners' %}">Partners</a> </li>     
+                  <li> <a href="{% slugurl 'stories' %}">Stories</a> </li>     
+                  <li> <a href="{% slugurl 'media' %}">In the Media</a> </li>
                 </ul>
               </li>
               <li>
@@ -471,75 +473,6 @@
       <div class="dot2"></div>
     </div>
   </div>
-  
-  <!-- Style Switcher -->
-  <div class="switcher-box">
-    <a href="#" class="open-switcher show-switcher"><i class="fa fa-cog fa-2x"></i></a>
-    <h4>Style Switcher</h4>
-    <span>12 Predefined Color Skins</span>
-    <ul class="colors-list">
-      <li>
-        <a onClick="setActiveStyleSheet('blue'); return false;" title="Blue" class="blue"></a>
-      </li>
-    </ul>
-    <span>Top Bar Color</span>
-    <select id="topbar-style" class="topbar-style">
-      <option value="1">Light (Default)</option>
-      <option value="2">Dark</option>
-      <option value="3">Color</option>
-    </select>
-    <span>Layout Style</span>
-    <select id="layout-style" class="layout-style">
-      <option value="1">Wide</option>
-      <option value="2">Boxed</option>
-    </select>
-    <span>Patterns for Boxed Version</span>
-    <ul class="bg-list">
-      <li>
-        <a href="#" class="bg1"></a>
-      </li>
-      <li>
-        <a href="#" class="bg2"></a>
-      </li>
-      <li>
-        <a href="#" class="bg3"></a>
-      </li>
-      <li>
-        <a href="#" class="bg4"></a>
-      </li>
-      <li>
-        <a href="#" class="bg5"></a>
-      </li>
-      <li>
-        <a href="#" class="bg6"></a>
-      </li>
-      <li>
-        <a href="#" class="bg7"></a>
-      </li>
-      <li>
-        <a href="#" class="bg8"></a>
-      </li>
-      <li>
-        <a href="#" class="bg9"></a>
-      </li>
-      <li>
-        <a href="#" class="bg10"></a>
-      </li>
-      <li>
-        <a href="#" class="bg11"></a>
-      </li>
-      <li>
-        <a href="#" class="bg12"></a>
-      </li>
-      <li>
-        <a href="#" class="bg13"></a>
-      </li>
-      <li>
-        <a href="#" class="bg14"></a>
-      </li>
-    </ul>
-  </div>
-  
 </body>
     <!-- Additional js not needed globally -->
     {% block js %}{% endblock %}
