@@ -13,6 +13,7 @@ class ImageCarouselBlock(blocks.StructBlock):
     caption = blocks.TextBlock(required=False)
  
     class Meta:
+        template = "testapp/t_page.html"
         icon = 'image'
 
 class TPage(Page):

@@ -974,34 +974,42 @@ ul.social-list li:last-child a i {
 }
 
 .carousel .item.active .animated2 {
-	
+	-webkit-animation: lightSpeedIn 1s ease-in 200ms both;
+	animation: lightSpeedIn 1s ease-in 200ms both;
 }
 
 .carousel .item.active .animated3 {
-	
+	-webkit-animation: bounceInLeft 1s ease-in-out 500ms both;
+	animation: bounceInLeft 1s ease-in-out 500ms both;
 }
 
 .carousel .item.active .animated4 {
-	
+	-webkit-animation: flipInX 1s ease-in 500ms both;
+	animation: flipInX 1s ease-in 500ms both;
     text-align: center;
 }
 
 .carousel .item.active .animated5 {
-
+	-webkit-animation: bounceInLeft 1s ease-in-out 100ms both;
+	animation: bounceInLeft 1s ease-in-out 100ms both;
 }
 
 .carousel .item.active .animated6 {
-	
+	-webkit-animation: bounceIn 1s ease-in 500ms both;
+	animation: bounceIn 1s ease-in 500ms both;
     text-align: center;
 }
 
 .carousel .item.active .animated7 {
-	
+	-webkit-animation: bounceIn 1s ease-in 500ms both;
+	animation: bounceIn 1s ease-in 500ms both;
 }
 
 .carousel .item.active .animated8 {
-	
+	-webkit-animation: fadeInDown 1s ease-in 1000ms both;
+	animation: fadeInDown 1s ease-in 1000ms both;
 }
+
 
 
 
