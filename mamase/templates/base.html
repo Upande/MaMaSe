@@ -42,16 +42,53 @@
     <!-- Css3 Transitions Styles  -->
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/animate.css' %}" media="screen">
     
+    <style> 
+      /*-- Animation --*/
+      
+      .animated2 {
+        -webkit-animation: lightSpeedIn 0s ease-in 0ms both;
+        animation: lightSpeedIn 0s ease-in 0ms both;
+      }
 
+      .animated3 {
+        -webkit-animation: bounceInLeft 0s ease-in-out 0ms both;
+        animation: bounceInLeft 0s ease-in-out 500ms both;
+      }
+
+      .animated4 {
+        -webkit-animation: flipInX 0s ease-in 0ms both;
+        animation: flipInX 0s ease-in 0ms both;
+          text-align: center;
+      }
+
+      .animated5 {
+        -webkit-animation: bounceInLeft 0s ease-in-out 0ms both;
+        animation: bounceInLeft 0s ease-in-out 0ms both;
+      }
+
+      .animated6 {
+        -webkit-animation: bounceIn 0s ease-in 0ms both;
+        animation: bounceIn 0s ease-in 0ms both;
+          text-align: center;
+      }
+
+      .animated7 {
+        -webkit-animation: bounceIn 0s ease-in 0ms both;
+        animation: bounceIn 0s ease-in 0ms both;
+      }
+
+      .animated8 {
+        -webkit-animation: fadeInDown 0s ease-in 0ms both;
+        animation: fadeInDown 0s ease-in 0ms both;
+      }
+    </style>  
     <!-- Using Lato Font to standarize with existing MaMaSe apps-->
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
 
     <!-- Color CSS Styles  -->
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/blue.css' %}" title="blue" media="screen" />
     <!-- Caption Style -->
-    <style> 
-  
-    </style>  
+   
     <!-- Additional css not needed globally -->
     {% block css %}
     <link rel="stylesheet" type="text/css" href="{% static 'slider-partners/carouFredSel.css' %}">
@@ -127,7 +164,7 @@
             scroll: 2,
             items: {
                 width: 400,
-            //  height: '30%',  //  optionally resize item-height
+                height: '30%',  //  optionally resize item-height
                 visible: {
                     min: 2,
                     max: 6
@@ -209,7 +246,7 @@
                 </ul>
               </li>
               <li>
-                <a href="{% url 'visual' %}" >Live data streams</a>
+                <a href="{% url 'visual' %}">Live data streams</a>
                 <ul class="dropdown">
                 </ul>
               </li>
@@ -219,7 +256,7 @@
                 </ul>
               </li>
               <li>
-                <a  target="_blank" href="#" >Tools</a>
+                <a  target="_blank" href="http://www.afromaison.net/index.php/" >Tools</a>
                 <ul class="dropdown">
                 </ul>
               </li>
@@ -260,67 +297,67 @@
 
                 <!-- Carousel inner -->
                 <div class="carousel-inner container">
-                    <div class="item active">
-                        <img class="img-responsive" src="{% static "margo/images/slider/bg_mau.jpg" %}" alt="slider">
+                    <div class="item active" sty;e="height:385px; width:1180px;">
+                        <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
-                                <h2 class="animated2">
-                              <span style="color:#92C01F;">Photo & Video<strong>Gallery</strong></span>
+                                <h2 class="animated">
+                              <span style="color:#92C01F;">Photo & Video<strong style="color:#34A8DF">Gallery</strong></span>
                               </h2>
-                                <h3 class="animated3">
+                                <h3 class="animated">
                                 <span style="color:#92C01F;">MaMaSe in visuals </span>
                               </h3>
-                                <p class="animated4"><a href="#" class="slider btn btn-system btn-large">View here</a>
+                                <p class="animated"><a href="#" class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >View here</a>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <!--/ Carousel item end -->
-                    <div class="item">
-                        <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.jpg" %}" alt="slider">
+                    <div class="item" sty;e="height:385px; width:1180px;">
+                        <img class="img-responsive" src="{% static "margo/images/slider/mau_forest_edge.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
-                                <h2 class="animated4">
-                                <span style="color:#DE9A00;" > MaMaSe project <strong>materials</strong></span>
+                                <h2 class="animated">
+                                <span style="color:#DE9A00;" > MaMaSe project <strong style="color:#34A8DF">materials</strong></span>
                             </h2>
-                                <h3 class="animated5">
+                                <h3 class="animated">
                               <span style="color:#DE9A00;">Facts, figures & outputs</span>
                             </h3> 
-                                <p class="animated6"><a href="#" class="slider btn btn-system btn-large">Learn more</a>
+                                <p class="animated"><a href="#" class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >Learn more</a>
                                 </p>
                             </div>
                         </div>
                     </div>
                     <!--/ Carousel item end -->
-                    <div class="item">
-                        <img class="img-responsive" src="{% static "margo/images/slider/map_of_mara.png" %}" alt="slider">
+                    <div class="item" sty;e="height:385px; width:1180px;">
+                        <img class="img-responsive" src="{% static "margo/images/slider/map_of_mara_stations.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
-                                <h2 class="animated7 white">
-                                <span style="color:#925F36;">Interactive <strong>maps</strong></span>
+                                <h2 class="animated white">
+                                <span style="color:#925F36;">Interactive <strong style="color:#34A8DF">maps</strong></span>
                             </h2>
-                                <h3 class="animated8 white">
+                                <h3 class="animated white">
                               <span style="color:#925F36;"> Explore geospatial data and maps</span>
                             </h3> 
-                                <div class="">
-                                    <a target="_blank" class="animated4 slider btn btn-default btn-min-block" href="http://maps.mamase.org/"style="background-color: #925F36;" >Enter portal</a>
+                                <div class="animated">
+                                    <a target="_blank" class="animated slider btn btn-default btn-min-block" href="http://maps.mamase.org/"style="background-color: #34A8DF;" >Enter portal</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!--/ Carousel item end -->
-                    <div class="item">
-                        <img class="img-responsive" src="{% static "margo/images/slider/map_of_mara.png" %}" alt="slider">
+                    <div class="item" sty;e="height:385px; width:1180px;">
+                        <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
-                                <h2 class="animated7 white">
-                                <span style="color:#DE9A00;">Live <strong>data streams</strong></span>
+                                <h2 class="animated white">
+                                <span style="color:#DE9A00;">Live data<strong style="color:#34A8DF"> streams</strong></span>
                             </h2>
-                                <h3 class="animated8 white">
+                                <h3 class="animated white">
                               <span style="color:#DE9A00;">Check out the latest MaMaSe data</span>
                             </h3> 
-                                <div class="">
-                                    <a class="animated4 slider btn btn-default btn-min-block" href="#"style="background-color: #925F36;" >View here</a>
+                                <div class="animated">
+                                    <a class="animated slider btn btn-default btn-min-block" href="{% url 'visual' %}" style="background-color:#34A8DF;" >View here</a>
                                 </div>
                             </div>
                         </div>
