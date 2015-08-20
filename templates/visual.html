@@ -7,30 +7,56 @@
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="{% static 'js/c3.js' %}"></script>
 <script>
+
 $(document).ready(function() {
+$.ajax({
+type: 'GET',
+url : "http://api.thingspeak.com/channels/public.json?tag=mamase",
+dataType: "json",
+success: function(data) {
+channel = data.channels
+
+var channel_list = "";
+for (var i = 0; i< channel.length; i++) {
+               channel_list += '<li id="'+channel[i].id+'" onclick="drawChart(this.id)"><a href="#">'+channel[i].name+'</a></li>';
+               }
+		   $('#channel-list').html(channel_list);
+		   drawChart(channel[0].id);
+	       }
+               });
+	       
+
+});
+
+</script>
+<script>
 var dt = new Date();
-dt.setHours(dt.getHours()-168)//7 days ago
-   $.ajax({
-        type: 'GET',
-        url : "http://api.thingspeak.com/channels/15792/feed.json?start="+dt+"&callback=",
-        dataType: "jsonp",
-        success: function(data) {
-            feeds = data.feeds
-            channel = data.channel
-            var created = ['created']
-            var field1 = [channel.field1]
-            var field2 = [channel.field2]
-            var field3 = [channel.field3]
-            for (var i = 0; i < feeds.length; i++) {
-                n = feeds[i].created_at;
-                f1 = feeds[i].field1;
-                f2 = feeds[i].field2;
-                f3 = feeds[i].field3;
-                created.push(n.replace('T',' ').replace('Z',''));
-                field1.push(f1);
-                field2.push(f2);
-                field3.push(f3);
-            }
+dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
+
+function drawChart(id){
+$.ajax({
+type: 'GET',
+url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+dt+"&callback=",
+dataType: "jsonp",
+success: function(data) {
+feeds = data.feeds
+channel = data.channel
+var created = ['created']
+var field1 = [channel.field1]
+var field2 = [channel.field2]
+var field3 = [channel.field3]
+$('#channeldesc').html(channel.description);
+$('#channelname').html(channel.name);
+for (var i = 0; i < feeds.length; i++) {
+                    n = feeds[i].created_at;
+                    f1 = feeds[i].field1;
+                    f2 = feeds[i].field2;
+                    f3 = feeds[i].field3;
+                    created.push(n.replace('T',' ').replace('Z',''));
+                    field1.push(f1);
+                    field2.push(f2);
+                    field3.push(f3);
+		    }
             var chart = c3.generate({
                 bindto: '#chart',
                 data: {
@@ -39,6 +65,7 @@ dt.setHours(dt.getHours()-168)//7 days ago
                     columns: [
                         created,
                         field1,
+                        field2,
                         field3,
                     ],
                 },
@@ -53,8 +80,9 @@ axis: {
             });
         },
     });
-});
-				</script>
+}
+
+</script>
 {% endblock js %}
 
 {% block body_class %}visual-index{% endblock %}
@@ -75,7 +103,19 @@ axis: {
       
       <div class="row pricing-tables">
         <div class="col-md-2 col-sm-2">
-	  <div> Description goes here</div>
+	  <div class="dropdown">
+	    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	      Select Channel
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
+	      <li><a href="#">Action</a></li>
+	    </ul>
+	  </div>
+	  <div style="margin-top:20px;">
+	    <h4 id="channelname" class="primary"></h4>
+	    <p id="channeldesc"></p>
+	  </div>
 	</div>		
         <div class="col-md-10 col-sm-10">
 	  <div id="chart"></div>
