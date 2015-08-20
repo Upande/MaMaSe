@@ -73,7 +73,7 @@ def GetImages(request):
     # Render list page with the documents and the form
     return render_to_response(
         'testapp/t_page.html',
-        {'src':sorted(images_url_list_dict.iteritems()), 'albums':albums, 'captions':sorted(get_captions_dict.iteritems()), 'body_content':sorted(body_content.iteritems()), 'body': body, 'images_captions':images_captions},
+        {'src':sorted(images_url_list_dict.iteritems(), reverse=True), 'albums':albums, 'captions':sorted(get_captions_dict.iteritems()), 'body_content':sorted(body_content.iteritems()), 'body': body, 'images_captions':images_captions},
         context_instance=RequestContext(request)
     )
 	
