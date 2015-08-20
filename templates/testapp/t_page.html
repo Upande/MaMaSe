@@ -12,18 +12,18 @@
 
 {% for album, urls in src %}
   <div class="container" style="width:1000px; height:400px;">
-    {{album}} 
     </br>
+    <h4>{{album}}</h4> 
+    &nbsp;
       <ul class="bxslider"> 	
         {% for i in urls %}
           <li><img src="{{i}}" style="width:800px; height:400px; margin:auto;"></li> 
         {% endfor %}
       </ul>	  
 </div>
-</br></br></br>
+</br></br></br></br>
 {% endfor %}
- 
-    
+</br>   
 {% endblock %}
 
 {% block partners %}
