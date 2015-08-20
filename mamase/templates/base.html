@@ -12,7 +12,7 @@
 <head>
     {% block title%}
     <!-- Basic -->
-    <title>MaMaSe | {{ self.title }} </title>
+    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} About {% endif %}</title>
     {% endblock title%}
     <!-- Define Charset -->
     <meta charset="utf-8">
@@ -69,6 +69,9 @@
     <script type="text/javascript" src="{% static 'margo/js/jquery.textillate.js' %}"></script>
     <script type="text/javascript" src="{% static 'margo/js/jquery.nicescroll.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'margo/js/script.js' %}"></script>
+
+    <!-- Custom upande CSS. Added by Magondu -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/upande.css' %}" />
 
     <!--Additional js that require to be initialized before the body -->
     {% block js_initialize %}
@@ -141,21 +144,17 @@
     });
 </script>
     {% endblock js_initialize %}
-
-    <!-- Custom upande CSS. Added by Magondu -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/upande.css' %}" />
     <!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
 </head>
 {% endblock head %}
-<body class="{% block body_class %}{% endblock %}">
-  
+<body class="{% block body_class %}{% endblock %}" style="background-image: url({{static }}margo/images/patterns/3.png)">
   
   {% block header %}
   
   <!-- Full Body Container -->
-  <div id="container">
+  <div id="container" class="boxed-page">
     
     <!-- Start Header Section --> 
     <div class="hidden-header"></div>
@@ -201,7 +200,7 @@
 	    <!-- Start Navigation List -->
             <ul class="nav navbar-nav navbar-left">
               <li>
-                <a class="active" href="/" >Home</a>
+                <a class="active" href="/" >About</a>
                 <ul class="dropdown">
                   <li> <a href="{% slugurl 'news' %}">News</a> </li>
                   <li> <a href="#">Gallery</a> </li>     

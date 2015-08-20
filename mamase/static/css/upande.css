@@ -59,3 +59,7 @@ img.richtext-image.right {
     height: 100%;
 }
 
+.carousel {
+    padding-left: 0px;
+    padding-right: 0px;
+}
