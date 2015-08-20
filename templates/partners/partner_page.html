@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load static %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+
+<!-- Start Content -->
+<div id="content">
+  <div class="container">
+    <div class="row blog-page">
+      
+      <!-- Start Blog Posts -->
+      <div class="col-md-12 blog-box">
+
+	<!-- Start Post -->
+	<div class="blog">
+	  <!-- Post Content -->
+	    <h3>{{ self.title }}</h3>	  
+	    <div class="col-md-5">
+	      <div class="post-head">
+		{% if self.main_image %}
+		{% image self.main_image width-400 %}
+		{% endif %}	      
+	      </div>
+	    </div>
+	    <div class="col-md-5 ">
+	      <p> {{ self.bio|richtext }}</p>	
+	    </div>
+	</div>
+      </div>
+      <!-- End Post -->
+      <!-- End Blog Posts -->
+      
+    </div>
+  </div>
+</div>
+<!-- End Content -->
+  
+{% endblock %}
+{% block partners %}{% endblock %}
+
