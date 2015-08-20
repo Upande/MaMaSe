@@ -11,21 +11,16 @@
  </script>
 
 {% for album, urls in src %}
-  <div class="container">
-    {{album}}
-  
-  
-       
-      <ul class="bxslider">	
+  <div class="container" style="width:1000px; height:400px;">
+    {{album}} 
+    </br>
+      <ul class="bxslider"> 	
         {% for i in urls %}
-          <li><img src="{{i}}" style="width:1440px; height:500px;"></li> 
+          <li><img src="{{i}}" style="width:800px; height:400px; margin:auto;"></li> 
         {% endfor %}
-      </ul>	
-         
-  
-  
+      </ul>	  
 </div>
-
+</br></br></br>
 {% endfor %}
  
     
