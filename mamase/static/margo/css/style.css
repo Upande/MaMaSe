@@ -39,17 +39,17 @@
 
 @font-face {
   font-family: 'Open Sans';
-  src: url('../font/opensans/OpenSans-Regular.ttf');
+  src: url('../fonts/opensans/OpenSans-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Lora';
-  src: url('../font/lora/Lora-Regular.ttf');
+  src: url('../fonts/lora/Lora-Regular.ttf');
 }
 
 @font-face {
   font-family: 'Raleway';
-  src: url('../font/raleway/Raleway-Regular.ttf');
+  src: url('../fonts/raleway/Raleway-Regular.ttf');
 }
 
 
