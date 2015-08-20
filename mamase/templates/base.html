@@ -344,88 +344,70 @@
         <!-- End Home Page Slider -->
 
     
-    <!-- Start Services Section -->
-    <div class="section service" style="padding-top:20px;">
-      <div class="container">
-        <div class="row">
-          <!-- Start News Icon -->
-          <div class="col-md-3 col-sm-6">
-            <div class="widget-upande" style="background-color: #34A8DF;">
-              <h4>News</h4>
-        <ul class="icons-list-upande">
-    <li><i class="fa fa-circle"></i> Team updates</li>
-    <li><i class="fa fa-circle"></i> Upcoming milestones</li>
-    <li><i class="fa fa-circle"></i> Newsletters</li>
-        </ul>
-        <div class="upande-fa-button"> 
-    <a href="{% slugurl 'news' %}">
-      <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
-    </a>
-        </div>
-            </div>
-          </div>
-          <!-- End News Icon -->
-        
-          <!-- Start Images Icon -->
-          <div class="col-md-3 col-sm-6">
-            <div class="widget-upande" style="background-color: #92C01F;">
-              <h4>Images</h4>
-        <ul class="icons-list-upande">
-    <li><i class="fa fa-circle"></i> Panoramic views</li>
-    <li><i class="fa fa-circle"></i> Up-close photos</li>
-    <li><i class="fa fa-circle"></i> Custom images</li>
-        </ul>
-        <div class="upande-fa-button"> 
-    <a href="#">
-      <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
-    </a>
-        </div>
-            </div>
-          </div>
-          <!-- End Images Icon -->
-
-          <!-- Start Videos Icon -->
-          <div class="col-md-3 col-sm-6">
-            <div class="widget-upande" style="background-color: #DE9A00;">
-              <h4>Videos</h4>
-        <ul class="icons-list-upande">
-    <li><i class="fa fa-circle"></i> Documentaries</li>
-    <li><i class="fa fa-circle"></i> Great interviews</li>
-    <li><i class="fa fa-circle"></i> Behind the scenes</li>
-        </ul>
-        <div class="upande-fa-button"> 
-    <a href="{% slugurl 'videos' %}">
-      <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
-    </a>
-        </div>
-            </div>
-          </div>
-          <!-- End Videos Icon -->
-
-          <!-- Start Events Icon -->
-          <div class="col-md-3 col-sm-6">
-            <div class="widget-upande" style="background-color: #925F36;">
-              <h4>Events</h4>
-        <ul class="icons-list-upande">
-    <li><i class="fa fa-circle"></i> Great meetups</li>
-    <li><i class="fa fa-circle"></i> International events</li>
-    <li><i class="fa fa-circle"></i> Mamase trainings</li>
-        </ul>
-        <div class="upande-fa-button"> 
-    <a href="{% slugurl 'events' %}">
-      <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
-    </a>
-        </div>
-            </div>
-          </div>
-          <!-- End Events Icon -->
-    
-        </div><!-- .row -->
-      </div><!-- .container -->
-    </div>
-    <!-- End Services Section -->    
-    
-    {% endblock content %}
+	<!-- Start Services Section -->
+	<div class="section service" style="padding-top:20px;">
+	  <div class="container">
+            <div class="row">
+              <!-- Start News Icon -->
+              <div class="col-md-4 col-sm-4">
+		<div class="widget-upande" style="background-color: #34A8DF;">
+		  <h4>News</h4>
+		  <ul class="icons-list-upande">
+		    <li><i class="fa fa-circle"></i> Updates</li>
+		    <li><i class="fa fa-circle"></i> Event Reports</li>
+		    <li><i class="fa fa-circle"></i> Newsletters</li>
+		  </ul>
+		  <div class="upande-fa-button"> 
+		    <a href="{% slugurl 'news' %}">
+		      <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
+		    </a>
+		  </div>
+		</div>
+              </div>
+              <!-- End News Icon -->
+              
+              <!-- Start Images Icon -->
+              <div class="col-md-4 col-sm-4">
+		<div class="widget-upande" style="background-color: #92C01F;">
+		  <h4>Featured Map</h4>
+		  <ul class="icons-list-upande">
+		    <li><i class="fa fa-circle"></i> </li>
+		    <li><i class="fa fa-circle"></i> </li>
+		    <li><i class="fa fa-circle"></i> </li>
+		  </ul>
+		  <div class="upande-fa-button"> 
+		    <a href="#">
+		      <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
+		    </a>
+		  </div>
+		</div>
+              </div>
+              <!-- End Images Icon -->
+	      
+              <!-- Start Videos Icon -->
+              <div class="col-md-4 col-sm-4">
+		<div class="widget-upande" style="background-color: #DE9A00;">
+		  <h4>Real Time Data</h4>
+		  <ul class="icons-list-upande">
+		    <li><i class="fa fa-circle"></i> Documentaries</li>
+		    <li><i class="fa fa-circle"></i> Great interviews</li>
+		    <li><i class="fa fa-circle"></i> Behind the scenes</li>
+		  </ul>
+		  <div class="upande-fa-button"> 
+		    <a href="{% slugurl 'visual' %}">
+		      <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
+		    </a>
+		  </div>
+		</div>
+              </div>
+              <!-- End Videos Icon -->
+	      
+            </div><!-- .row -->
+	  </div><!-- .container -->
+	</div>
+	<!-- End Services Section -->    
+	
+	{% endblock content %}
 
     {% block partners %}
     
