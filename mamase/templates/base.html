@@ -346,9 +346,9 @@
 		<div class="widget-upande" style="background-color: #34A8DF;">
 		  <h4>News</h4>
 		  <ul class="icons-list-upande">
-		    <li><i class="fa fa-circle"></i> Updates</li>
-		    <li><i class="fa fa-circle"></i> Event Reports</li>
-		    <li><i class="fa fa-circle"></i> Newsletters</li>
+		    <li><i class="fa fa-circle"></i><a href ="{%slugurl 'news' %}?category={%slugurl 'updates'%}" style="color: white;"> Updates</a></li>
+		    <li><i class="fa fa-circle"></i><a href ="{%slugurl 'news' %}?category={%slugurl 'event-reports'%}" style="color: white;"> Event Reports</li>
+		    <li><i class="fa fa-circle"></i><a href ="{%slugurl 'news' %}?category={%slugurl 'newsletters '%}" style="color: white;"> Newsletters</li>
 		  </ul>
 		  <div class="upande-fa-button"> 
 		    <a href="{% slugurl 'news' %}">
