@@ -43,7 +43,7 @@ class NewsPage(Page):
         related_name='+'
     )
     date = models.DateField("Post date")
-    intro = RichTextField(max_length=200)
+    intro = RichTextField()
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=NewsPageTag, blank=True)
     
@@ -201,3 +201,29 @@ class NewsIndexPage(Page):
         context['news'] = news_item
         context['tags'] = tags
         return context
+
+class NoCommentPage(Page):
+    date = models.DateField("Post date")
+    intro = RichTextField(blank=True)
+    body = RichTextField(blank=True)
+    category = models.ForeignKey('news.CategoryPage', null=True, blank=True ,related_name='+',on_delete=models.SET_NULL )
+
+    @property
+    def categories(self):
+        # Get list of live news pages that are descendants of this page
+        categories = CategoryPage.objects.live()        
+        return categories        
+            
+    search_fields = Page.search_fields + (
+        index.SearchField('intro'),
+        index.SearchField('body'),
+    )
+        
+    content_panels = Page.content_panels + [
+        FieldPanel('date'),
+        PageChooserPanel('category'),
+        FieldPanel('intro',classname="full" ),
+        FieldPanel('body', classname="full")
+    ]
+    
+    
