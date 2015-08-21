@@ -9,9 +9,11 @@ from django.db import models
 class PartnerLogo(models.Model):
 	title = models.CharField(max_length=255, blank=True, null=True)
 	partner_logo = models.ImageField(upload_to='partners')
+	url = models.URLField()
 
 	def __str__(self):
 		return self.title
+
                 
 class PartnerPage(Page):
         main_image = models.ForeignKey(

@@ -254,9 +254,9 @@
                 <!--/ Indicators end-->
 
                 <!-- Carousel inner -->
-                <div class="carousel-inner container">
+                <div class="carousel-inner container" style="padding-left:0; padding-right:0; width:97.5%;">
                     <div class="item active">
-                        <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
+                        <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider" style="margin:auto">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
                                 <h2 class="animated">
@@ -265,7 +265,7 @@
                                 <h3 class="animated">
                                 <span style="color:#92C01F;">MaMaSe in visuals </span>
                               </h3>
-                                <p class="animated"><a href="#" class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >View here</a>
+                                <p class="animated"><a href="{% slugurl 'videos' %}"class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >View here</a>
                                 </p>
                             </div>
                         </div>
@@ -281,7 +281,7 @@
                                 <h3 class="animated">
                               <span style="color:#DE9A00;">Facts, figures & outputs</span>
                             </h3> 
-                                <p class="animated"><a href="#" class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >Learn more</a>
+                                <p class="animated"><a href="{% slugurl 'material' %}" class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >Learn more</a>
                                 </p>
                             </div>
                         </div>
@@ -410,7 +410,7 @@
       <div class="list_carousel">
           <ul id="foo0" >
               {% for logo in logos %}
-                  <li><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}" style="height:100px"><li>    
+                  <li><a href="{{logo.url}}" target="_blank"><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}"></a><li>    
               {% endfor %}
           </ul>
           <div class="clearfix"></div>
