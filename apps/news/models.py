@@ -43,7 +43,7 @@ class NewsPage(Page):
         related_name='+'
     )
     date = models.DateField("Post date")
-    intro = RichTextField()
+    intro = RichTextField(blank=True)
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=NewsPageTag, blank=True)
     
@@ -87,7 +87,7 @@ class NewsPage(Page):
         FieldPanel('date'),
         ImageChooserPanel('main_image'),
         PageChooserPanel('category'),
-        FieldPanel('intro',classname="full" ),
+        FieldPanel('intro'),
         FieldPanel('body', classname="full")
     ]
     
@@ -157,10 +157,14 @@ class NewsIndexPage(Page):
     
     @property
     def news_item(self):
+        '''Due to a late change of requirements, this page is used for more than news item. As such it works
+        by getting all children unlike before where it got news pages only. Shall need to be redesinged and
+        reworked to be clear'''
+
         # Get list of live news pages that are descendants of this page
-        news_item = NewsPage.objects.live().descendant_of(self) 
+        news_item = self.get_children().live() #NewsPage.objects.live().descendant_of(self) 
         # Order by most recent date first
-        news_item = news_item.order_by('-date')
+        news_item = news_item.order_by('-id')
 
         return news_item
 
@@ -214,6 +218,20 @@ class NoCommentPage(Page):
         categories = CategoryPage.objects.live()        
         return categories        
             
+    @property
+    def news_item(self):
+        # Get list of live news pages that are descendants of this page
+        news_item = NoCommentPage.objects.live().descendant_of(self.get_parent()) 
+        # Order by most recent date first
+        news_item = news_item.order_by('-date')[:5]
+
+        return news_item
+
+    def get_context(self, request):
+        context = super(NoCommentPage, self).get_context(request)
+        context['news'] = self.news_item
+        return context
+
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
         index.SearchField('body'),

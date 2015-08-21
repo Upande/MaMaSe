@@ -33,18 +33,19 @@
 	      <div class="col-md-6">
 		<div class="post-row">
 		  <div class="left-meta-post">
+		    {% if item.date %}
 		    <div class="post-date">
 		      <span class="day">{{ item.date.day }}</span>
 		      <span class="month">{{ item.date| date:"M"  }}</span>
 		    </div>
+		    {% endif %}
 		    <div class="post-type"><i class="fa fa-picture-o"></i></div>
 		  </div>
 		  <h3 class="post-title">
-		    <a href="{{ item.url }}">{{item.title| title}}</a>
+		    <a href="{{ item.url }}">{{item.title}}</a>
 		  </h3>
 		  <div class="post-content">
-		    {{item.link_page.}}
-		    <p>{{ item.intro|safe }} <a class="read-more" href="{{ item.url }}">Read More...</a></p>
+		    <p>{{ item.intro |richtext }} <a class="read-more" href="{{ item.url }}">Read More...</a></p>
 		  </div>
 		</div>
 	      </div>
