@@ -3,7 +3,7 @@
 {% load static %}
 {% load wagtailcore_tags %}
 
-{% block title %}<title>Upande | Search{% if search_results %} results{% endif %} </title>{% endblock %}
+{% block title %}<title>MaMaSe| Search{% if search_results %} results{% endif %} </title>{% endblock %}
 
 {% block content %}
 
@@ -14,26 +14,38 @@
       <!-- Page Content -->
       <div class="col-md-9 page-content">
 	
-	{% if search_results %}
-        <ul>
-          {% for result in search_results %}
-          <li>
-            <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
-            {% if result.search_description %}
-            {{ result.search_description|safe }}
-            {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
-	{% elif search_query %}
-        No results found
-	{% else %}
-        Please type something into the search box
-	{% endif %}
+	<div class="row">
+          <div class="col-md-12">                                                                                                          
+            <!-- Classic Heading -->
+            <h4 class="classic-title"><span>Search results</span> </h4>                                    
+	    
+	    {% if search_results %}
+            <div class="latest-posts-classic">                                                                                          
+              <p>
+                Search results for: <b>{% if request.GET.query %}  {{ request.GET.query |upper }} {% endif %}</b>
+              </p>
+              <ul>
+		{% for result in search_results %}
+		<li>
+		  <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
+		  {% if result.specific.search_description %}
+		  {{ result.specific.search_description|safe }}
+		  {% endif %}
+		</li>
+		{% endfor %}
+              </ul>
+	      {% elif search_query %}
+              No results found
+	      {% else %}
+              Please type something into the search box
+	      {% endif %}
+	    </div>
+	  </div>
+	</div>
       </div>
-      <!--Sidebar-->
     </div>
   </div>
 </div>
-  
+
 {% endblock %}
+{% block partners%}{% endblock %}
