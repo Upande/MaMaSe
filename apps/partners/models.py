@@ -13,7 +13,7 @@ class PartnerLogo(models.Model):
 
 	def __str__(self):
 		return self.title
-		return self.url
+
                 
 class PartnerPage(Page):
         main_image = models.ForeignKey(
