@@ -27,7 +27,7 @@
               <ul>
 		{% for result in search_results %}
 		<li>
-		  <h4><a href="{% pageurl result %}">{{ result }}</a></h4>
+		  <h4><a href="{% pageurl result.specific %}">{{ result.specific }}</a></h4>
 		  {% if result.specific.search_description %}
 		  {{ result.specific.search_description|safe }}
 		  {% endif %}
