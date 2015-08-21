@@ -24,28 +24,28 @@ class TView(TemplateView):
 
 
 def GetImages(request):
-    # Load images for the list page
-    
-    src = []
-    images = TPage.objects.all()
-    
-    for item in images:
-        for y in item.body:
-            for i in y.value:
-                #print i.get('image').file.url
-                src.append(i.get('image').file.url)  
                 
+    item_list = []
+    images_url_list = []
+    get_captions = []
     
+    items = TPage.objects.all()
+
+    for item in items:
+        for s_item in item.body:
+            item_list.append(s_item.value)
+    
+    for s_item_body in item_list:
+        get_captions.append([s.get('caption') for s in s_item_body])
+        images_url_list.append([s.get('image').file.url for s in s_item_body]) 
+
 
     body_cont = []
     albums = []
     values = [] 
-    d_list = []
-    srcd = []
-    srcd2 = []
     captions = []
     
-    items = TPage.objects.all()
+    
     NumOfAlbums = len(items)
 
     for i in items.values():
@@ -63,15 +63,17 @@ def GetImages(request):
     body_content = dict(zip(albums, body_cont))
 
     for body_key, body_value in body_content.iteritems():
-        print body_value['value']
+        body_value['value']
 
-
-
+    get_captions_dict = dict(zip(albums, get_captions))
+    images_url_list_dict = dict(zip(albums, images_url_list))
+    images_captions = [images_url_list_dict, get_captions_dict]
+    
                 
     # Render list page with the documents and the form
     return render_to_response(
         'testapp/t_page.html',
-        {'srcd':srcd, 'albums':albums, 'captions':captions, 'body_content':sorted(body_content.iteritems()), 'body': body},
+        {'src':sorted(images_url_list_dict.iteritems(), reverse=True), 'albums':albums, 'captions':sorted(get_captions_dict.iteritems()), 'body_content':sorted(body_content.iteritems()), 'body': body, 'images_captions':images_captions},
         context_instance=RequestContext(request)
     )
 	

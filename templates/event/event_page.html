@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
-{% load disqus_tags %}
 {% load static %}
 
 {% block body_class %}template-blogpage{% endblock %}
@@ -40,7 +39,6 @@
 								<a href="#?tag={{tag}}"> {{tag}} </a> 
 								{% endfor %}
 							</li>
-							<li><a href="#">{% disqus_num_replies %}</a></li>
 						</ul>
 						<div class="blog-post quote-post">
 							<!-- Post Content -->
@@ -59,16 +57,14 @@
 
 					</div>
 					<!-- Start comments section-->
-					<div>
-						<div class="blog-post ">
+					<!--<div>
+					  <div class="blog-post ">
 							<div class="widget widget-categories">                                                                                                                                             
 								<h4>Comments <span class="head-line"></span></h4>	      
 							</div>
-							{% disqus_show_comments %}
-							{% disqus_recent_comments shortname 5 50 0 24 %}
 						</div>
 					</div>
-					</div
+					</div>-->
 
 					<!-- End comments section -->
 

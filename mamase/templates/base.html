@@ -12,7 +12,7 @@
 <head>
     {% block title%}
     <!-- Basic -->
-    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} About {% endif %}</title>
+    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} MaMaSe {% endif %}</title>
     {% endblock title%}
     <!-- Define Charset -->
     <meta charset="utf-8">
@@ -43,22 +43,44 @@
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/animate.css' %}" media="screen">
     
     <style> 
-    .splash{
+      /*-- Animation --*/
       
-      overflow: hidden;
-      position: absolute;
-      margin-left: 5px;
-      margin-right: 5px;
-      min-width: 1160px;
-      min-height: 385px;
-    }
+      .animated2 {
+        -webkit-animation: lightSpeedIn 0s ease-in 0ms both;
+        animation: lightSpeedIn 0s ease-in 0ms both;
+      }
 
-    #main-slide{
-      
-    }
-    span{
-      
-    }
+      .animated3 {
+        -webkit-animation: bounceInLeft 0s ease-in-out 0ms both;
+        animation: bounceInLeft 0s ease-in-out 500ms both;
+      }
+
+      .animated4 {
+        -webkit-animation: flipInX 0s ease-in 0ms both;
+        animation: flipInX 0s ease-in 0ms both;
+          text-align: center;
+      }
+
+      .animated5 {
+        -webkit-animation: bounceInLeft 0s ease-in-out 0ms both;
+        animation: bounceInLeft 0s ease-in-out 0ms both;
+      }
+
+      .animated6 {
+        -webkit-animation: bounceIn 0s ease-in 0ms both;
+        animation: bounceIn 0s ease-in 0ms both;
+          text-align: center;
+      }
+
+      .animated7 {
+        -webkit-animation: bounceIn 0s ease-in 0ms both;
+        animation: bounceIn 0s ease-in 0ms both;
+      }
+
+      .animated8 {
+        -webkit-animation: fadeInDown 0s ease-in 0ms both;
+        animation: fadeInDown 0s ease-in 0ms both;
+      }
     </style>  
     <!-- Using Lato Font to standarize with existing MaMaSe apps-->
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
@@ -103,68 +125,24 @@
         //  Basic carousel, no options
         $('#foo0').carouFredSel();
 
-        //  Basic carousel + timer, using CSS-transitions
-        $('#foo1').carouFredSel({
-            auto: {
-                pauseOnHover: 'resume',
-                progress: '#timer1'
-            }
-        }, {
-            transition: true
-        });
-
-        //  Scrolled by user interaction
-        $('#foo2').carouFredSel({
-            auto: false,
-            prev: '#prev2',
-            next: '#next2',
-            pagination: "#pager2",
-            mousewheel: true,
-            swipe: {
-                onMouse: true,
-                onTouch: true
-            }
-        });
-
-        //  Variable number of visible items with variable sizes
-        $('#foo3').carouFredSel({
-            width: 360,
-            height: 'auto',
-            prev: '#prev3',
-            next: '#next3',
-            auto: false
-        });
-
-        //  Responsive layout, resizing the items
-        $('#foo4').carouFredSel({
-            responsive: true,
-            width: '100%',
-            scroll: 2,
-            items: {
-                width: 400,
-                height: '30%',  //  optionally resize item-height
-                visible: {
-                    min: 2,
-                    max: 6
-                }
-            }
-        });
-
-        //  Fuild layout, centering the items
-        $('#foo5').carouFredSel({
-            width: '100%',
-            scroll: 2
-        });
-
     });
 </script>
+<!-- bxslider used in the gallery page -->
+<script type="text/javascript" language="javascript" src="{% static 'bxslider/jquery.bxslider.min.js' %}"></script>
     {% endblock js_initialize %}
+
+
+    <!-- Custom upande CSS. Added by Magondu -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/upande.css' %}" />
+    <!-- bxslider css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'bxslider/jquery.bxslider.css' %}" />
+
     <!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
     <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
 </head>
 {% endblock head %}
-<body class="{% block body_class %}{% endblock %}" style="background-image: url({{static }}margo/images/patterns/3.png)">
+<body class="{% block body_class %}{% endblock %}" style="background-image: url({% static 'margo/images/patterns/3.png' %})">
   
   {% block header %}
   
@@ -219,7 +197,7 @@
                 <ul class="dropdown">
                   <li> <a href="{% slugurl 'news' %}">News</a> </li>
                   <li> <a href="{% slugurl 'videos' %}">Photos and Videos</a> </li>
-                  <li> <a href="{% slugurl 'materials' %}">Materials</a> </li>     
+                  <li> <a href="{% slugurl 'material' %}">Materials</a> </li>     
                   <li> <a href="{% slugurl 'partners' %}">Partners</a> </li>     
                   <li> <a href="{% slugurl 'stories' %}">Stories</a> </li>     
                   <li> <a href="{% slugurl 'media' %}">In the Media</a> </li>
@@ -277,7 +255,7 @@
 
                 <!-- Carousel inner -->
                 <div class="carousel-inner container">
-                    <div class="item active splash">
+                    <div class="item active">
                         <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
@@ -293,7 +271,7 @@
                         </div>
                     </div>
                     <!--/ Carousel item end -->
-                    <div class="item splash">
+                    <div class="item">
                         <img class="img-responsive" src="{% static "margo/images/slider/mau_forest_edge.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
@@ -309,7 +287,7 @@
                         </div>
                     </div>
                     <!--/ Carousel item end -->
-                    <div class="item splash">
+                    <div class="item">
                         <img class="img-responsive" src="{% static "margo/images/slider/map_of_mara_stations.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
@@ -326,7 +304,7 @@
                         </div>
                     </div>
                     <!--/ Carousel item end -->
-                    <div class="item splash">
+                    <div class="item">
                         <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">

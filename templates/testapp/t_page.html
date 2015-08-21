@@ -1,27 +1,29 @@
 {% extends 'base.html' %}
-{% load wagtailcore_tags wagtailimages_tags torchbox_tags %}
+{% load wagtailcore_tags wagtailimages_tags torchbox_tags wagtailadmin_tags %}
 {% load static %}
 
 {% block content %}
 
+<script type=text/javascript>
+  $(document).ready(function(){
+  $('.bxslider').bxSlider();
+  });
+ </script>
 
-{% for key, values in body_content %}
-  <div class="container">
-    {{key}}
-
-  <div class="list_carousel">
-        {% for i in values.value %}
-      <ul id="foo0">	
-        {{values}}
-        <!--li><img src="{{tmp_image.url}}"></li-->  
-      </ul>	
-      {% endfor %}
-  </div>
-  
+{% for album, urls in src %}
+  <div class="container" style="width:950px; height:400px;">
+    </br>
+    <h4>{{album}}</h4> 
+    &nbsp;
+      <ul class="bxslider"> 	
+        {% for i in urls %}
+          <li><img src="{{i}}" style="width:700px; height:400px; margin:auto;"></li> 
+        {% endfor %}
+      </ul>	  
 </div>
+</br></br></br></br>
 {% endfor %}
- 
-    
+</br>   
 {% endblock %}
 
 {% block partners %}
