@@ -20,7 +20,7 @@
 	  <div class="col-md-12">
 
 	    <!-- Classic Heading -->
-	    <h4 class="classic-title"><span>Latest News</span></h4>
+	    <h4 class="classic-title"><span>Latest News </span>  {% if request.GET.category %} | {{ request.GET.category  }} {% endif %} </h4>
 	    
 	    <div class="latest-posts-classic">
 	      
@@ -59,22 +59,22 @@
 	  {% if news.has_previous %}
 	  <a class="next-page" href="#">Previous</a>
 	  {% endif %}
-					<span class="current page-num">{{news.number}}</span>
-					{% if news.has_next %}
-					<a class="next-page" href="#">Next</a>
-					{% endif %}
-				</div>
-				<!-- End Pagination -->
-			</div>      
-			<!-- End Page Content-->
-
-			{% block sidebar %}
-			{% include 'news/news_sidebar.html' %}
-			{% endblock%}
-
-		</div>
-
+	  <span class="current page-num">{{news.number}}</span>
+	  {% if news.has_next %}
+	  <a class="next-page" href="#">Next</a>
+	  {% endif %}
 	</div>
+	<!-- End Pagination -->
+      </div>      
+      <!-- End Page Content-->
+      
+      {% block sidebar %}
+      {% include 'news/news_sidebar.html' %}
+      {% endblock%}
+      
+    </div>
+    
+  </div>
 </div>
 </div>
 </div>

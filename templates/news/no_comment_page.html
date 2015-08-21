@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
-{% load disqus_tags %}
 {% load static %}
 
 {% block body_class %}template-blogpage{% endblock %}
@@ -18,16 +17,6 @@
 	
 	<!-- Start Post -->
 	<div class="blog-post image-post">
-	  <!-- Post Thumb -->
-	  <div class="post-head">
-	    {% if self.main_image %}
-	    <a class="lightbox" title="This is an image title" href="images/blog-01.jpg">
-	      <div class="thumb-overlay"><i class="fa fa-arrows-alt"></i></div>
-	      {% image self.main_image width-400 %}
-	    </a>
-	    {% endif %}
-	    
-	  </div>
 	  <!-- Post Content -->
 	  <div class="post-content">
 	    <div class="post-type"><i class="fa fa-picture-o"></i></div>
@@ -35,27 +24,10 @@
 	    <ul class="post-meta">
 	      <li>By <a href="#">{{self.owner.username}}</a></li>
 	      <li>{{ self.date }}</li>
-	      <li>
-		{% for tag in self.tags.all %}
-		<a href="{% slugurl 'news' %}?tag={{tag}}"> {{tag}} </a> 
-		{% endfor %}
-	      </li>
-	      <li><a href="#">{% disqus_num_replies %}</a></li>
 	    </ul>	    
 	    <p> {{ self.body|richtext }}</p>	
 	    
 	  </div>
-	  <!-- Start comments section-->
-	  <div>					  
-	    <div class="blog-post ">
-	      <div class="widget widget-categories">                                                                                                                                             
-		<h4>Comments <span class="head-line"></span></h4>	      
-	      </div>
-	      {% disqus_show_comments %}
-	    </div>
-	  </div>
-	</div>
-	<!-- End comments section -->
       </div>
       <!-- End Post -->
       <!-- End Blog Posts -->
