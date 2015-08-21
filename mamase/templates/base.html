@@ -43,44 +43,22 @@
     <link rel="stylesheet" type="text/css" href="{% static 'margo/css/animate.css' %}" media="screen">
     
     <style> 
-      /*-- Animation --*/
+    .splash{
       
-      .animated2 {
-        -webkit-animation: lightSpeedIn 0s ease-in 0ms both;
-        animation: lightSpeedIn 0s ease-in 0ms both;
-      }
+      overflow: hidden;
+      position: absolute;
+      margin-left: 5px;
+      margin-right: 5px;
+      min-width: 1160px;
+      min-height: 385px;
+    }
 
-      .animated3 {
-        -webkit-animation: bounceInLeft 0s ease-in-out 0ms both;
-        animation: bounceInLeft 0s ease-in-out 500ms both;
-      }
-
-      .animated4 {
-        -webkit-animation: flipInX 0s ease-in 0ms both;
-        animation: flipInX 0s ease-in 0ms both;
-          text-align: center;
-      }
-
-      .animated5 {
-        -webkit-animation: bounceInLeft 0s ease-in-out 0ms both;
-        animation: bounceInLeft 0s ease-in-out 0ms both;
-      }
-
-      .animated6 {
-        -webkit-animation: bounceIn 0s ease-in 0ms both;
-        animation: bounceIn 0s ease-in 0ms both;
-          text-align: center;
-      }
-
-      .animated7 {
-        -webkit-animation: bounceIn 0s ease-in 0ms both;
-        animation: bounceIn 0s ease-in 0ms both;
-      }
-
-      .animated8 {
-        -webkit-animation: fadeInDown 0s ease-in 0ms both;
-        animation: fadeInDown 0s ease-in 0ms both;
-      }
+    #main-slide{
+      
+    }
+    span{
+      
+    }
     </style>  
     <!-- Using Lato Font to standarize with existing MaMaSe apps-->
     <!-- <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
@@ -299,7 +277,7 @@
 
                 <!-- Carousel inner -->
                 <div class="carousel-inner container">
-                    <div class="item active" sty;e="height:385px; width:1180px;">
+                    <div class="item active splash">
                         <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
@@ -315,7 +293,7 @@
                         </div>
                     </div>
                     <!--/ Carousel item end -->
-                    <div class="item" sty;e="height:385px; width:1180px;">
+                    <div class="item splash">
                         <img class="img-responsive" src="{% static "margo/images/slider/mau_forest_edge.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
@@ -331,7 +309,7 @@
                         </div>
                     </div>
                     <!--/ Carousel item end -->
-                    <div class="item" sty;e="height:385px; width:1180px;">
+                    <div class="item splash">
                         <img class="img-responsive" src="{% static "margo/images/slider/map_of_mara_stations.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
@@ -348,7 +326,7 @@
                         </div>
                     </div>
                     <!--/ Carousel item end -->
-                    <div class="item" sty;e="height:385px; width:1180px;">
+                    <div class="item splash">
                         <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
