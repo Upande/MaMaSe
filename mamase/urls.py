@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^knowledge/', include('apps.quiz.urls')),
     url(r'^$', include('apps.partners.urls')),
     url(r'^gis/', include('apps.gis.urls')),
+    url(r'^intro/', include('apps.intro.urls')),
     url(r'^tgallery/', include('apps.testapp.urls')),
 
 

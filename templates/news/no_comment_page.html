@@ -13,34 +13,34 @@
     <div class="row blog-page">
       
       <!-- Start Blog Posts -->
-      <div class="col-md-12 blog-box">
-
+      <div class="col-md-9 blog-box">
+	
 	<!-- Start Post -->
-	<div class="blog">
+	<div class="blog-post image-post">
 	  <!-- Post Content -->
-	    <h3>{{ self.title }}</h3>	  
-	    <div class="col-md-5">
-	      <div class="post-head">
-		{% if self.main_image %}
-		{% image self.main_image width-400 %}
-		{% endif %}	      
-	      </div>
-	    </div>
-	    <div class="col-md-5 ">
-	      <p> {{ self.bio|richtext }}</p>
-	      <br>
-	      <p><b> Website: <a href ="{{self.website}}" >{{self.website}}</a></b></p>
-	    </div>
-	</div>
+	  <div class="post-content">
+	    <div class="post-type"><i class="fa fa-picture-o"></i></div>
+	    <h2><a href="#">{{ self.title }}</a></h2>
+	    <ul class="post-meta">
+	      <li>By <a href="#">{{self.owner.username}}</a></li>
+	      <li>{{ self.date }}</li>
+	    </ul>	    
+	    <p> {{ self.body|richtext }}</p>	
+	    
+	  </div>
       </div>
       <!-- End Post -->
       <!-- End Blog Posts -->
+      
+      {% block sidebar %}	
+      {% include 'news/news_sidebar.html' %}
+      {% endblock%}
       
     </div>
   </div>
 </div>
 <!-- End Content -->
-  
+
 {% endblock %}
 {% block partners %}{% endblock %}
 

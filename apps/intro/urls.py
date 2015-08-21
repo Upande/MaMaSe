@@ -6,7 +6,8 @@ from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
 
-urlpatterns = patterns('apps.gis.views',
+urlpatterns = patterns('',
 
-    url(r'^$', 'index', name='geoportal'),
+	url(r'^$', 'apps.intro.views.index', name='knowledge'),
+
 )
