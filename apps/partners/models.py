@@ -21,13 +21,13 @@ class PartnerPage(Page):
                 on_delete=models.SET_NULL,
                 related_name='+'
         )
-        date = models.DateField("Entry date")
         bio = RichTextField(blank=True)
+	website = models.CharField(max_length=100, blank=True, null=True)
         
         content_panels = Page.content_panels + [
-                FieldPanel('date'),
                 ImageChooserPanel('main_image'),
-                FieldPanel('bio', classname="full")
+                FieldPanel('bio', classname="full"),
+                FieldPanel('website'),
         ]
         
         
