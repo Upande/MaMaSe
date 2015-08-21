@@ -21,7 +21,7 @@ def LogoUpload(request):
 
     # Load images for the list page
     logos = PartnerLogo.objects.all()
-
+    print logos
     # Render list page with the documents and the form
     return render_to_response(
         'base.html',
