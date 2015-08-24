@@ -66,7 +66,7 @@ INSTALLED_APPS = (
     'apps.event',
     'apps.news',
     'apps.quiz',
-    'apps.media',
+    'apps.mamasemedia',
     'apps.true_false',
     'apps.multichoice',
     'apps.essay',
