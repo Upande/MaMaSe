@@ -10,402 +10,450 @@
 <html lang="en">
 {% block head %}
 <head>
-    {% block title%}
-    <!-- Basic -->
-    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} About {% endif %}</title>
-    {% endblock title%}
-    <!-- Define Charset -->
-    <meta charset="utf-8">
+	{% block title%}
+	<!-- Basic -->
+	<title>MaMaSe |{% if self.title %} {{self.title}} {% else %} About {% endif %}</title>
+	{% endblock title%}
+	<!-- Define Charset -->
+	<meta charset="utf-8">
 
-    <!-- Responsive Metatag -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Responsive Metatag -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <!-- Page Description and Author -->
-    <meta name="description" content="Mau Mara Serengeti Sustainable Water Initiative">
-    <meta name="author" content="Upande">
+	<!-- Page Description and Author -->
+	<meta name="description" content="Mau Mara Serengeti Sustainable Water Initiative">
+	<meta name="author" content="Upande">
 
-    <!-- Mamase favicon -->
-    <link rel="icon" type="image/png" href="{% static "margo/images/favicon.ico" %}" />
+	<!-- Mamase favicon -->
+	<link rel="icon" type="image/png" href="{% static "margo/images/favicon.ico" %}" />
 
-    <!-- Bootstrap CSS  -->
-    <link rel="stylesheet" href="{% static 'margo/asset/css/bootstrap.min.css' %}" type="text/css" media="screen">
+	<!-- Bootstrap CSS  -->
+	<link rel="stylesheet" href="{% static 'margo/asset/css/bootstrap.min.css' %}" type="text/css" media="screen">
 
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="{% static 'margo/css/font-awesome.min.css' %}" type="text/css" media="screen">
+	<!-- Font Awesome CSS -->
+	<link rel="stylesheet" href="{% static 'margo/css/font-awesome.min.css' %}" type="text/css" media="screen">
 
-    <!-- Margo CSS Styles  -->
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/style.css' %}" media="screen">
+	<!-- Margo CSS Styles  -->
+	<link rel="stylesheet" type="text/css" href="{% static 'margo/css/style.css' %}" media="screen">
 
-    <!-- Responsive CSS Styles  -->
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/responsive.css' %}" media="screen">
+	<!-- Responsive CSS Styles  -->
+	<link rel="stylesheet" type="text/css" href="{% static 'margo/css/responsive.css' %}" media="screen">
 
-    <!-- Css3 Transitions Styles  -->
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/animate.css' %}" media="screen">
-    
-    <style> 
-      /*-- Animation --*/
-      
-      .animated2 {
-        -webkit-animation: lightSpeedIn 0s ease-in 0ms both;
-        animation: lightSpeedIn 0s ease-in 0ms both;
-      }
+	<!-- Css3 Transitions Styles  -->
+	<link rel="stylesheet" type="text/css" href="{% static 'margo/css/animate.css' %}" media="screen">
 
-      .animated3 {
-        -webkit-animation: bounceInLeft 0s ease-in-out 0ms both;
-        animation: bounceInLeft 0s ease-in-out 500ms both;
-      }
+	<style> 
+		/*-- Animation --*/
 
-      .animated4 {
-        -webkit-animation: flipInX 0s ease-in 0ms both;
-        animation: flipInX 0s ease-in 0ms both;
-          text-align: center;
-      }
+		.animated2 {
+			-webkit-animation: lightSpeedIn 0s ease-in 0ms both;
+			animation: lightSpeedIn 0s ease-in 0ms both;
+		}
 
-      .animated5 {
-        -webkit-animation: bounceInLeft 0s ease-in-out 0ms both;
-        animation: bounceInLeft 0s ease-in-out 0ms both;
-      }
+		.animated3 {
+			-webkit-animation: bounceInLeft 0s ease-in-out 0ms both;
+			animation: bounceInLeft 0s ease-in-out 500ms both;
+		}
 
-      .animated6 {
-        -webkit-animation: bounceIn 0s ease-in 0ms both;
-        animation: bounceIn 0s ease-in 0ms both;
-          text-align: center;
-      }
+		.animated4 {
+			-webkit-animation: flipInX 0s ease-in 0ms both;
+			animation: flipInX 0s ease-in 0ms both;
+			text-align: center;
+		}
 
-      .animated7 {
-        -webkit-animation: bounceIn 0s ease-in 0ms both;
-        animation: bounceIn 0s ease-in 0ms both;
-      }
+		.animated5 {
+			-webkit-animation: bounceInLeft 0s ease-in-out 0ms both;
+			animation: bounceInLeft 0s ease-in-out 0ms both;
+		}
 
-      .animated8 {
-        -webkit-animation: fadeInDown 0s ease-in 0ms both;
-        animation: fadeInDown 0s ease-in 0ms both;
-      }
-    </style>  
-    <!-- Using Lato Font to standarize with existing MaMaSe apps-->
-    <!-- <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
+		.animated6 {
+			-webkit-animation: bounceIn 0s ease-in 0ms both;
+			animation: bounceIn 0s ease-in 0ms both;
+			text-align: center;
+		}
 
-    <!-- Color CSS Styles  -->
-    <link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/blue.css' %}" title="blue" media="screen" />
-    <!-- Caption Style -->
-   
-    <!-- Additional css not needed globally -->
-    {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'slider-partners/carouFredSel.css' %}">
-    {% endblock %}
+		.animated7 {
+			-webkit-animation: bounceIn 0s ease-in 0ms both;
+			animation: bounceIn 0s ease-in 0ms both;
+		}
 
-    
+		.animated8 {
+			-webkit-animation: fadeInDown 0s ease-in 0ms both;
+			animation: fadeInDown 0s ease-in 0ms both;
+		}
+	</style>  
+	<!-- Using Lato Font to standarize with existing MaMaSe apps-->
+	<!-- <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
 
-    <!-- Margo JS  -->
-    <script type="text/javascript" src="{% static 'margo/js/jquery-2.1.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'margo/js/jquery.migrate.js' %}"></script>
-    <script type="text/javascript" src="{% static 'margo/js/modernizrr.js' %}"></script>
-    <script type="text/javascript" src="{% static 'margo/asset/js/bootstrap.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'margo/js/jquery.fitvids.js' %}"></script>
-    <script type="text/javascript" src="{% static 'margo/js/jquery.isotope.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'margo/js/jquery.textillate.js' %}"></script>
-    <script type="text/javascript" src="{% static 'margo/js/jquery.nicescroll.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'margo/js/script.js' %}"></script>
+	<!-- Color CSS Styles  -->
+	<link rel="stylesheet" type="text/css" href="{% static 'margo/css/colors/blue.css' %}" title="blue" media="screen" />
+	<!-- Caption Style -->
 
-    <!-- Custom upande CSS. Added by Magondu -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/upande.css' %}" />
+	<!-- Additional css not needed globally -->
+	{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static 'slider-partners/carouFredSel.css' %}">
+	{% endblock %}  
 
-    <!--Additional js that require to be initialized before the body -->
-    {% block js_initialize %}
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1-packed.js' %}"></script>
-    <!-- optionally include helper plugins -->
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.mousewheel.min.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.touchSwipe.min.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.transit.min.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.ba-throttle-debounce.min.js' %}"></script>
-    <script type="text/javascript">
-      $(function() {
+	<!-- Margo JS  -->
+	<script type="text/javascript" src="{% static 'margo/js/jquery-2.1.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'margo/js/jquery.migrate.js' %}"></script>
+	<script type="text/javascript" src="{% static 'margo/js/modernizrr.js' %}"></script>
+	<script type="text/javascript" src="{% static 'margo/asset/js/bootstrap.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'margo/js/jquery.fitvids.js' %}"></script>
+	<script type="text/javascript" src="{% static 'margo/js/jquery.isotope.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'margo/js/jquery.textillate.js' %}"></script>
+	<script type="text/javascript" src="{% static 'margo/js/jquery.nicescroll.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'margo/js/script.js' %}"></script>
+
+	<!-- Custom upande CSS. Added by Magondu -->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/upande.css' %}" />
+
+	<!--Additional js that require to be initialized before the body -->
+	{% block js_initialize %}
+	<script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1.js' %}"></script>
+	<script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1-packed.js' %}"></script>
+	<!-- optionally include helper plugins -->
+	<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.mousewheel.min.js' %}"></script>
+	<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.touchSwipe.min.js' %}"></script>
+	<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.transit.min.js' %}"></script>
+	<script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.ba-throttle-debounce.min.js' %}"></script>
+	<script type="text/javascript">
+		$(function() {
 
         //  Basic carousel, no options
         $('#foo0').carouFredSel();
 
     });
-</script>
-<!-- bxslider used in the gallery page -->
-<script type="text/javascript" language="javascript" src="{% static 'bxslider/jquery.bxslider.min.js' %}"></script>
-    {% endblock js_initialize %}
+	</script>
+	<!-- bxslider used in the gallery page -->
+	<script type="text/javascript" language="javascript" src="{% static 'bxslider/jquery.bxslider.min.js' %}"></script>
+
+	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<script src="{% static 'js/c3.js' %}"></script>
+	<script>
+		$(document).ready(function() {
+			var dt = new Date();
+			dt.setHours(dt.getHours()-12)//Time is in hours. 1 days ago
 
 
-    <!-- Custom upande CSS. Added by Magondu -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/upande.css' %}" />
-    <!-- bxslider css -->
-    <link rel="stylesheet" type="text/css" href="{% static 'bxslider/jquery.bxslider.css' %}" />
+			$.ajax({
+				type: 'GET',
+				url : "http://api.thingspeak.com/channels/"+15792+"/feed.json?start="+dt+"&callback=",
+				dataType: "jsonp",
+				success: function(data) {
+					feeds = data.feeds
+					channel = data.channel
+					var created = ['created']
+					var field1 = [channel.field1]
+					var field2 = [channel.field2]
+					var field3 = [channel.field3]
+					$('#channeldesc').html(channel.description);
+					$('#channelname').html(channel.name);
+					for (var i = 0; i < feeds.length; i++) {
+						n = feeds[i].created_at;
+						f1 = feeds[i].field1;
+						f2 = feeds[i].field2;
+						f3 = feeds[i].field3;
+						created.push(n.replace('T',' ').replace('Z',''));
+						field1.push(f1);
+						field2.push(f2);
+						field3.push(f3);
+					}
+					var chart = c3.generate({
+						bindto: '#chart',
+						data: {
+							x: 'created',
+							xFormat: '%Y-%m-%d %H:%M:%S',
+							columns: [
+							created,
+							field1,
+							field2,
+							field3,
+							],
+						},
+						axis: {
+							x: {
+								type: 'timeseries',
+								tick: {
+									format: '%Y-%m-%d %H:%M'
+								}
+							}
+						}
+					});
+				},
+			});
+});
+</script>  
+	{% endblock js_initialize %}
 
-    <!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-    <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!-- Custom upande CSS. Added by Magondu -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/upande.css' %}" />
+<!-- bxslider css -->
+<link rel="stylesheet" type="text/css" href="{% static 'bxslider/jquery.bxslider.css' %}" />
+
+<!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
 </head>
 {% endblock head %}
 <body class="{% block body_class %}{% endblock %}" style="background-image: url({% static 'margo/images/patterns/3.png' %})">
-  
-  {% block header %}
-  
-  <!-- Full Body Container -->
-  <div id="container" class="boxed-page">
-    
-    <!-- Start Header Section --> 
-    <div class="hidden-header"></div>
-    <header class="clearfix">
-      <div class="top-bar">
-        <div class="container">
 
-	  <div class="col-md-12" style="padding:0px;">
-	    <div class="col-md-9" style="padding:0px;">
-              <div class="row" style="height:120px; margin:auto;">
-		<a class="navbar-brand" href="/">
-		  <img alt="" src="{% static "margo/images/mamase_logo_full.png" %}">
-		</a>
-              </div>
-            </div>
-	    <div class="col-md-3" style="padding:0px;">
-              <ul class="nav navbar-nav navbar-right">
-		<li>
-                  <a href="{% url 'wagtailadmin_home' %}">Login</a>
-		</li>
-              </ul>
-      </div>
-    </div>
-        </div>
-      </div>
-      <!-- Start  Logo & Naviagtion  -->
-      <div class="navbar navbar-default navbar-static-top">
-        <div class="container">
-          <div class="navbar-header">
-            <!-- Stat Toggle Nav Link For Mobiles -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <i class="fa fa-bars"></i>
-            </button>
-            <!-- End Toggle Nav Link For Mobiles -->            
-          </div>
+	{% block header %}
 
-          <div class="navbar-collapse collapse upande-list">
-            <ul class="nav navbar-nav navbar-right"  style="margin-right:0px !important;">
-	      {% block search_box_collapse %}
-	      {% include "search/search_box_collapsible.html" only %}
-              {% endblock search_box_collapse %}
-	    </ul>
-	    <!-- Start Navigation List -->
-            <ul class="nav navbar-nav navbar-left">
-              <li>
-                <a class="active" href="/" >About</a>
-                <ul class="dropdown">
-                  <li> <a href="{% slugurl 'news' %}">News</a> </li>
-                  <li> <a href="{% slugurl 'videos' %}">Photos and Videos</a> </li>
-                  <li> <a href="{% slugurl 'material' %}">Materials</a> </li>     
-                  <li> <a href="{% slugurl 'partners' %}">Partners</a> </li>     
-                  <li> <a href="{% slugurl 'stories' %}">Stories</a> </li>     
-                  <li> <a href="{% slugurl 'media' %}">In the Media</a> </li>
-                </ul>
-              </li>
-              <li>
-                <a href="{% url 'visual' %}">Live data streams</a>
-                <ul class="dropdown">
-                </ul>
-              </li>
-              <li>
-                <a  target="_blank" href="http://maps.mamase.org/" >Mara Geoportal</a>
-                <ul class="dropdown">                 
-                </ul>
-              </li>
+	<!-- Full Body Container -->
+	<div id="container" class="boxed-page">
+
+		<!-- Start Header Section --> 
+		<div class="hidden-header"></div>
+		<header class="clearfix">
+			<div class="top-bar">
+				<div class="container">
+
+					<div class="col-md-12" style="padding:0px;">
+						<div class="col-md-9" style="padding:0px;">
+							<div class="row" style="height:120px; margin:auto;">
+								<a class="navbar-brand" href="/">
+									<img alt="" src="{% static "margo/images/mamase_logo_full.png" %}">
+								</a>
+							</div>
+						</div>
+						<div class="col-md-3" style="padding:0px;">
+							<ul class="nav navbar-nav navbar-right">
+								<li>
+									<a href="{% url 'wagtailadmin_home' %}">Login</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Start  Logo & Naviagtion  -->
+			<div class="navbar navbar-default navbar-static-top">
+				<div class="container">
+					<div class="navbar-header">
+						<!-- Stat Toggle Nav Link For Mobiles -->
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+							<i class="fa fa-bars"></i>
+						</button>
+						<!-- End Toggle Nav Link For Mobiles -->            
+					</div>
+
+					<div class="navbar-collapse collapse upande-list">
+						<ul class="nav navbar-nav navbar-right"  style="margin-right:0px !important;">
+							{% block search_box_collapse %}
+							{% include "search/search_box_collapsible.html" only %}
+							{% endblock search_box_collapse %}
+						</ul>
+						<!-- Start Navigation List -->
+						<ul class="nav navbar-nav navbar-left">
+							<li>
+								<a class="active" href="/" >About</a>
+								<ul class="dropdown">
+									<li> <a href="{% slugurl 'news' %}">News</a> </li>
+									<li> <a href="{% slugurl 'tgallery' %}">Photos and Videos</a> </li>
+									<li> <a href="{% slugurl 'material' %}">Materials</a> </li>     
+									<li> <a href="{% slugurl 'partners' %}">Partners</a> </li>     
+									<li> <a href="{% slugurl 'stories' %}">Stories</a> </li>     
+									<li> <a href="{% slugurl 'media' %}">In the Media</a> </li>
+								</ul>
+							</li>
+							<li>
+								<a href="{% url 'visual' %}">Live data streams</a>
+								<ul class="dropdown">
+								</ul>
+							</li>
+							<li>
+								<a  target="_blank" href="http://maps.mamase.org/" >Mara Geoportal</a>
+								<ul class="dropdown">                 
+								</ul>
+							</li>
 	      <!-- Hiding tools for now. We need text just like geoportal
               <li>
                 <a  target="_blank" href="http://www.afromaison.net/index.php/" >Tools</a>
                 <ul class="dropdown">
                 </ul>
-              </li>-->
-              <li>
-                <a href="/intro">Knowledge Platform</a>
-                <ul class="dropdown">
-                </ul>
-              </li>
-              <li><a href="{% url 'contact-us' %}" >Contact Us</a>
-              </li>
-            </ul>
-            <!-- End Navigation List -->
-          </div>
-        </div>
-      </div>
-      <!-- End Header Logo & Naviagtion -->
-      
-    </header> 
-    <!-- End Header Section -->
-    {% endblock %}
-    
-    {% block content %}    
-    
- 
-     <!-- Start Home Page Slider -->
-        <section id="home">
-            <!-- Carousel -->
-            <div id="main-slide" class="carousel slide container" data-ride="carousel">
+            </li>-->
+            <li>
+            	<a href="/intro">Knowledge Platform</a>
+            	<ul class="dropdown">
+            	</ul>
+            </li>
+            <li><a href="{% url 'contact-us' %}" >Contact Us</a>
+            </li>
+        </ul>
+        <!-- End Navigation List -->
+    </div>
+</div>
+</div>
+<!-- End Header Logo & Naviagtion -->
 
-                <!-- Indicators -->
-                <ol class="carousel-indicators" style="bottom: -10px;">
-                    <li data-target="#main-slide" data-slide-to="0" class="active"></li>
-                    <li data-target="#main-slide" data-slide-to="1"></li>
-                    <li data-target="#main-slide" data-slide-to="2"></li>
-                    <li data-target="#main-slide" data-slide-to="3"></li>
-                </ol>
-                <!--/ Indicators end-->
+</header> 
+<!-- End Header Section -->
+{% endblock %}
 
-                <!-- Carousel inner -->
-                <div class="carousel-inner container" style="padding-left:0; padding-right:0; width:97.5%;">
-                    <div class="item active">
-                        <img class="img-responsive carousel" src="{% static "images/mamase_banner_image_1.jpg" %}" alt="slider" style="margin:auto">
-                        <div class="slider-content">
-                            <div class="col-md-12 text-center">
-                                <h2 class="animated">
-                              <span style="color:#FFF;">Photo & Video<strong style="color:#34A8DF"> Gallery</strong></span>
-                              </h2>
-                                <h3 class="animated">
-                                <span style="color:#FFF;">Vision on the basin </span>
-                              </h3>
-                                <p class="animated"><a href="{% slugurl 'videos' %}"class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >View here</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Carousel item end -->
-                    <div class="item">
-                        <img class="img-responsive carousel" src="{% static "images/mamase_banner_image_2.jpg"" %}" alt="slider">
-                        <div class="slider-content">
-                            <div class="col-md-12 text-center">
-                                <h2 class="animated">
-                                <span style="color:#FFF;" > MaMaSe project <strong style="color:#34A8DF">materials</strong></span>
-                            </h2>
-                                <h3 class="animated">
-                              <span style="color:#FFF">Facts, figures & outputs</span>
-                            </h3> 
-                                <p class="animated"><a href="{% slugurl 'material' %}" class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >Learn more</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Carousel item end -->
-                    <div class="item">
-<<<<<<< HEAD
-                        <img class="img-responsive" src="{% static "margo/images/slider/map_mara_stations.png" %}" alt="slider">
-=======
-                        <img class="img-responsive carousel" src="{% static "margo/images/slider/map_of_mara_stations.png" %}" alt="slider">
->>>>>>> 44480316422552d401a3bce7f1b6c029367d9f3c
-                        <div class="slider-content">
-                            <div class="col-md-12 text-center">
-                                <h2 class="animated white">
-                                <span style="color:#925F36;">Interactive <strong style="color:#34A8DF">maps</strong></span>
-                            </h2>
-                                <h3 class="animated white">
-                              <span style="color:#925F36;"> Explore geospatial data and maps</span>
-                            </h3> 
-                                <div class="animated">
-                                    <a target="_blank" class="animated slider btn btn-default btn-min-block" href="http://maps.mamase.org/"style="background-color: #34A8DF;" >Enter portal</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Carousel item end -->
-                    <div class="item">
-                        <img class="img-responsive carousel" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
-                        <div class="slider-content">
-                            <div class="col-md-12 text-center">
-                                <h2 class="animated white">
-                                <span style="color:#FFF;">Live data<strong style="color:#34A8DF"> streams</strong></span>
-                            </h2>
-                                <h3 class="animated white">
-                              <span style="color:#FFF;">Check out the latest MaMaSe data</span>
-                            </h3> 
-                                <div class="animated">
-                                    <a class="animated slider btn btn-default btn-min-block" href="{% url 'visual' %}" style="background-color:#34A8DF;" >View here</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Carousel item end -->
-                </div>
-                <!-- Carousel inner end-->
+{% block content %}    
 
-                <!-- Controls -->
-                <a class="left carousel-control" href="#main-slide" data-slide="prev">
-                    <span><i class="fa fa-angle-left"></i></span>
-                </a>
-                <a class="right carousel-control" href="#main-slide" data-slide="next">
-                    <span><i class="fa fa-angle-right"></i></span>
-                </a>
-            </div>
-            <!-- /carousel -->
-        </section>
-        <!-- End Home Page Slider -->
 
-    
-	<!-- Start Services Section -->
-	<div class="section service" style="padding-top:20px;">
-	  <div class="container">
-            <div class="row">
-              <!-- Start News Icon -->
-              <div class="col-md-4 col-sm-4">
-		<div class="widget-upande" style="background-color: #34A8DF;">
-		  <h4>News</h4>
-		  <ul class="icons-list-upande">
-		    <li><i class="fa fa-circle"></i><a href ="{%slugurl 'news' %}?category={%slugurl 'updates'%}" style="color: white;"> Updates</a></li>
-		    <li><i class="fa fa-circle"></i><a href ="{%slugurl 'news' %}?category={%slugurl 'event-reports'%}" style="color: white;"> Event Reports</li>
-		    <li><i class="fa fa-circle"></i><a href ="{%slugurl 'news' %}?category={%slugurl 'newsletters '%}" style="color: white;"> Newsletters</li>
-		  </ul>
-		  <div class="upande-fa-button"> 
-		    <a href="{% slugurl 'news' %}">
-		      <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
-		    </a>
-		  </div>
+<!-- Start Home Page Slider -->
+<section id="home">
+	<!-- Carousel -->
+	<div id="main-slide" class="carousel slide container" data-ride="carousel">
+
+		<!-- Indicators -->
+		<ol class="carousel-indicators" style="bottom: -10px;">
+			<li data-target="#main-slide" data-slide-to="0" class="active"></li>
+			<li data-target="#main-slide" data-slide-to="1"></li>
+			<li data-target="#main-slide" data-slide-to="2"></li>
+			<li data-target="#main-slide" data-slide-to="3"></li>
+		</ol>
+		<!--/ Indicators end-->
+
+		<!-- Carousel inner -->
+		<div class="carousel-inner container" style="padding-left:0; padding-right:0; width:97.5%;">
+			<div class="item active">
+				<img class="img-responsive carousel" src="{% static "images/mamase_banner_image_1.jpg" %}" alt="slider" style="margin:auto">
+				<div class="slider-content">
+					<div class="col-md-12 text-center">
+						<h2 class="animated">
+							<span style="color:#FFF;">Photo & Video<strong style="color:#34A8DF"> Gallery</strong></span>
+						</h2>
+						<h3 class="animated">
+							<span style="color:#FFF;">Vision on the basin </span>
+						</h3>
+						<p class="animated"><a href="{% slugurl 'tgallery' %}"class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >View here</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<!-- Carousel item end -->
+			<div class="item">
+				<img class="img-responsive carousel" src="{% static "images/mamase_banner_image_2.jpg" %}" alt="slider">
+				<div class="slider-content">
+					<div class="col-md-12 text-center">
+						<h2 class="animated">
+							<span style="color:#FFF;" > MaMaSe project <strong style="color:#34A8DF">materials</strong></span>
+						</h2>
+						<h3 class="animated">
+							<span style="color:#FFF">Facts, figures & outputs</span>
+						</h3> 
+						<p class="animated"><a href="{% slugurl 'material' %}" class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >Learn more</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<!--/ Carousel item end -->
+			<div class="item">
+				<img class="img-responsive" src="{% static "margo/images/slider/map_of_mara_stations.png" %}" alt="slider">
+				<div class="slider-content">
+					<div class="col-md-12 text-center">
+						<h2 class="animated white">
+							<span style="color:#925F36;">Interactive <strong style="color:#34A8DF">maps</strong></span>
+						</h2>
+						<h3 class="animated white">
+							<span style="color:#925F36;"> Explore geospatial data and maps</span>
+						</h3> 
+						<div class="animated">
+							<a target="_blank" class="animated slider btn btn-default btn-min-block" href="http://maps.mamase.org/"style="background-color: #34A8DF;" >Enter portal</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ Carousel item end -->
+			<div class="item">
+				<img class="img-responsive carousel" src="{% static "images/mamase_banner_image_3.jpg" %}" alt="slider">
+				<div class="slider-content">
+					<div class="col-md-12 text-center">
+						<h2 class="animated white">
+							<span style="color:#FFF;">Live data<strong style="color:#34A8DF"> streams</strong></span>
+						</h2>
+						<h3 class="animated white">
+							<span style="color:#FFF;">Check out the latest MaMaSe data</span>
+						</h3> 
+						<div class="animated">
+							<a class="animated slider btn btn-default btn-min-block" href="{% url 'visual' %}" style="background-color:#34A8DF;" >View here</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--/ Carousel item end -->
 		</div>
-              </div>
-              <!-- End News Icon -->
-              
-              <!-- Start Images Icon -->
-              <div class="col-md-4 col-sm-4">
-		<div class="widget-upande" style="background-color: #92C01F; padding: 0px 0px 0px 0px; height:176px ;">		     
-       <a target="_blank" href="http://maps.mamase.org/"><iframe style="height:176px; width:360px;position:;" frameborder="0" src="http://maps.mamase.org/maps/209/embed">Map of Mara Low Cost Stations</iframe>
-		  </a>
-      	  
-		</div>
-              </div>
-              <!-- End Images Icon -->
-	      
-              <!-- Start Videos Icon -->
-              <div class="col-md-4 col-sm-4">
-		<div class="widget-upande" style="background-color: #DE9A00; ">
-		  <h4>Real Time Data</h4>
-		  <ul class="icons-list-upande">
-		    <li><i class="fa fa-circle"></i> Real time streaming of data</li>
-		    <li><i class="fa fa-circle"></i> Line graphs</li>
-		    <li><i class="fa fa-circle"></i> Bar charts</li>
-		  </ul>
-		  <div class="upande-fa-button"> 
-		    <a href="{% url 'visual' %}" >
-		      <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
-		    </a>
-		  </div>
-		</div>
-              </div>
-              <!-- End Videos Icon -->
-	      
-            </div><!-- .row -->
-	    <div class="section full-width-portfolio">
-	      <div class="big-title text-center animated fadeInDown delay-01"> <h1>What is MaMaSe about?</h1></div> 
-	      <p class="text-center">The MaMaSe Sustainable Water Initiative is aimed at improving water safety and security in the Mara River Basin to support structural poverty reduction, sustainable economic growth and conservation of the basin’s ecosystems. In this four year programme the people and institutions in the basin will be supported in a process of structural change, promoting water-wise economic development that lifts people out of poverty and sets them on a sustainable path to improved well being and self-reliance.</p>
-	    </div>
-	  </div><!-- .container -->
+		<!-- Carousel inner end-->
+
+		<!-- Controls -->
+		<a class="left carousel-control" href="#main-slide" data-slide="prev">
+			<span><i class="fa fa-angle-left"></i></span>
+		</a>
+		<a class="right carousel-control" href="#main-slide" data-slide="next">
+			<span><i class="fa fa-angle-right"></i></span>
+		</a>
 	</div>
-	<!-- End Services Section -->    
-	
-	{% endblock content %}
+	<!-- /carousel -->
+</section>
+<!-- End Home Page Slider -->
 
-    {% block partners %}
-    
-	<!-- List of uploaded documents --> 
+
+<!-- Start Services Section -->
+<div class="section service" style="padding-top:20px;">
+	<div class="container">
+		<div class="row">
+			<!-- Start News Icon -->
+			<div class="col-md-4 col-sm-4">
+				<div class="widget-upande" style="background-color: #34A8DF;">
+					<h4>News</h4>
+					<ul class="icons-list-upande">
+						<li><i class="fa fa-circle"></i><a href ="{%slugurl 'news' %}?category={% slugurl 'updates'%}" style="color: white;"> Updates</a></li>
+						<li><i class="fa fa-circle"></i><a href ="{%slugurl 'news' %}?category={% slugurl 'event-reports'%}" style="color: white;"> Event Reports</li>
+						<li><i class="fa fa-circle"></i><a href ="{%slugurl 'news' %}?category={% slugurl 'newsletters '%}" style="color: white;"> Newsletters</li>
+					</ul>
+					<div class="upande-fa-button"> 
+						<a href="{% slugurl 'news' %}">
+							<i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- End News Icon -->
+
+			<!-- Start Images Icon -->
+			<div class="col-md-4 col-sm-4">
+				<div class="widget-upande" style="background-color: #92C01F; padding: 0px 0px 0px 0px; height:176px ;">		     
+					<a target="_blank" href="http://maps.mamase.org/"><iframe style="height:176px; width:360px;position:;" frameborder="0" src="">Map of Mara Low Cost Stations</iframe>
+					</a>
+
+				</div>
+			</div>
+			<!-- End Images Icon -->
+
+			<!-- Start Videos Icon -->
+			<div class="col-md-4 col-sm-4">
+				<div class="widget-upande" style="background-color: #FFF; ">
+					<h4>Real Time Data</h4>
+					<ul class="icons-list-upande">
+						<div id="chart"></div>
+					</ul>
+					<div class="upande-fa-button"> 
+						<a href="{% url 'visual' %}" >
+							<i class="fa fa-arrow-circle-o-right fa-3x" ></i>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- End Videos Icon -->
+
+		</div><!-- .row -->
+		<div class="section full-width-portfolio" style="padding-bottom: 10px;">
+			<div class="big-title text-center animated fadeInDown delay-01"> <h1>What is MaMaSe about?</h1></div> 
+			<p class="text-center">The MaMaSe Sustainable Water Initiative is aimed at improving water safety and security in the Mara River Basin to support structural poverty reduction, sustainable economic growth and conservation of the basin’s ecosystems. In this four year programme the people and institutions in the basin will be supported in a process of structural change, promoting water-wise economic development that lifts people out of poverty and sets them on a sustainable path to improved well being and self-reliance. <a href="{% slugurl 'about-mamase' %}">See More.... </p>
+		</div>
+	</div><!-- .container -->
+</div>
+<!-- End Services Section -->    
+
+{% endblock content %}
+
+{% block partners %}
+
+<!-- List of uploaded documents --> 
 	<!-- <div class="container">
 	  <h3>PARTNERS</h3>
 	  <div class="list_carousel">
@@ -423,33 +471,33 @@
   </div>    
 </br> -->
 
-    {% endblock partners %}
-	    
-	    {% block footer %}     
-    
-    <!-- Start Footer Section -->
-    <footer style="padding-top:20px">
-      <div class="container" style="background-color:#222222;">
-        <a href="http://upande.com" class ="copyright-section col-sm-12" style="color:#34A8DF; font-weight:bold; text-align:center;">&copy; 2015 Upande Limited</a>
-      </div> 
-    </footer>
-    <!-- End Footer Section -->
-    
-    
-  </div>
-  <!-- End Full Body Container -->
-  {% endblock footer%}
-  <!-- Go To Top Link -->
-  <a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
-  
-  <div id="loader">
-    <div class="spinner">
-      <div class="dot1"></div>
-      <div class="dot2"></div>
-    </div>
-  </div>
+{% endblock partners %}
+
+{% block footer %}     
+
+<!-- Start Footer Section -->
+<footer style="padding-top:20px">
+	<div class="container" style="background-color:#222222;">
+		<a href="http://upande.com" class ="copyright-section col-sm-12" style="color:#34A8DF; font-weight:bold; text-align:center;">&copy; 2015 Upande Limited</a>
+	</div> 
+</footer>
+<!-- End Footer Section -->
+
+
+</div>
+<!-- End Full Body Container -->
+{% endblock footer%}
+<!-- Go To Top Link -->
+<a href="#" class="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+<div id="loader">
+	<div class="spinner">
+		<div class="dot1"></div>
+		<div class="dot2"></div>
+	</div>
+</div>
 </body>
-    <!-- Additional js not needed globally -->
-    {% block js %}{% endblock %}
+<!-- Additional js not needed globally -->
+{% block js %}{% endblock %}
 
 </html>
