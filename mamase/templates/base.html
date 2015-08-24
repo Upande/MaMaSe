@@ -246,7 +246,7 @@
             <div id="main-slide" class="carousel slide container" data-ride="carousel">
 
                 <!-- Indicators -->
-                <ol class="carousel-indicators">
+                <ol class="carousel-indicators" style="bottom: -10px;">
                     <li data-target="#main-slide" data-slide-to="0" class="active"></li>
                     <li data-target="#main-slide" data-slide-to="1"></li>
                     <li data-target="#main-slide" data-slide-to="2"></li>
@@ -264,7 +264,7 @@
                               <span style="color:#FFF;">Photo & Video<strong style="color:#34A8DF"> Gallery</strong></span>
                               </h2>
                                 <h3 class="animated">
-                                <span style="color:#FFF;">MaMaSe in visuals </span>
+                                <span style="color:#FFF;">Vision on the basin </span>
                               </h3>
                                 <p class="animated"><a href="{% slugurl 'videos' %}"class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >View here</a>
                                 </p>
@@ -397,6 +397,10 @@
               <!-- End Videos Icon -->
 	      
             </div><!-- .row -->
+	    <div class="section full-width-portfolio">
+	      <div class="big-title text-center animated fadeInDown delay-01"> <h1>What is MaMaSe about?</h1></div> 
+	      <p class="text-center">The MaMaSe Sustainable Water Initiative is aimed at improving water safety and security in the Mara River Basin to support structural poverty reduction, sustainable economic growth and conservation of the basin’s ecosystems. In this four year programme the people and institutions in the basin will be supported in a process of structural change, promoting water-wise economic development that lifts people out of poverty and sets them on a sustainable path to improved well being and self-reliance.</p>
+	    </div>
 	  </div><!-- .container -->
 	</div>
 	<!-- End Services Section -->    
@@ -405,11 +409,11 @@
 
     {% block partners %}
     
-<!-- List of uploaded documents --> 
-  <div class="container">
-    <h3>PARTNERS</h3>
-      <div class="list_carousel">
-          <ul id="foo0" >
+	<!-- List of uploaded documents --> 
+	<!-- <div class="container">
+	  <h3>PARTNERS</h3>
+	  <div class="list_carousel">
+            <ul id="foo0" >
               {% for logo in logos %}
                 {% if logo.url == '' %}
                   <li><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}"><li>
@@ -421,11 +425,11 @@
           <div class="clearfix"></div>
       </div> 
   </div>    
-</br>
+</br> -->
 
     {% endblock partners %}
-    
-    {% block footer %}     
+	    
+	    {% block footer %}     
     
     <!-- Start Footer Section -->
     <footer style="padding-top:20px">
