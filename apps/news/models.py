@@ -91,7 +91,6 @@ class NewsPage(Page):
         FieldPanel('body', classname="full")
     ]
     
-    
 
 NewsPage.promote_panels = Page.promote_panels +[
     FieldPanel('tags'),
