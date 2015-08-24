@@ -37,7 +37,7 @@ class Migration(migrations.Migration):
                 ('embedded_link', models.URLField(verbose_name=b'Embedded link', blank=True)),
                 ('title', models.CharField(help_text=b'Link title', max_length=255)),
                 ('image', models.ForeignKey(related_name='+', on_delete=django.db.models.deletion.SET_NULL, blank=True, to='wagtailimages.Image', null=True)),
-                ('page', modelcluster.fields.ParentalKey(related_name='related_links', to='media.MediaPage')),
+                ('page', modelcluster.fields.ParentalKey(related_name='related_links', to='mamasemedia.MediaPage')),
             ],
             options={
                 'ordering': ['sort_order'],
