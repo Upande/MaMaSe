@@ -411,7 +411,11 @@
       <div class="list_carousel">
           <ul id="foo0" >
               {% for logo in logos %}
-                  <li><a href="{{logo.url}}" target="_blank"><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}"></a><li>    
+                {% if logo.url == '' %}
+                  <li><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}"><li>
+                {% else %}
+                  <li><a href="{{logo.url}}" target="_blank"><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}"></a><li> 
+                {% endif %}    
               {% endfor %}
           </ul>
           <div class="clearfix"></div>
