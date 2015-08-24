@@ -63,3 +63,7 @@ img.richtext-image.right {
     padding-left: 0px;
     padding-right: 0px;
 }
+
+img.img-responsive.carousel {
+    height: 372px;
+}

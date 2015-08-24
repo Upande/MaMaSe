@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load disqus_tags %}
+{% load static %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+
+<!-- Container -->
+
+<!-- Start Content -->
+<div id="content">
+	<div class="container">
+		<div class="row portfolio-page">
+
+			<!-- Start Recent Projects Carousel -->
+			<ul id="portfolio-list" data-animated="fadeIn">
+				<li>
+					<img src="images/Portfolio-1/1.png" alt="" />
+					<div class="portfolio-item-content">
+						<span class="header">Town winter 2013</span>
+						<p class="body">web develpment, design</p>
+					</div>
+					<a href="#"><i class="more">+</i></a>
+
+				</li>
+				<li>
+					<img src="images/Portfolio-1/2.png" alt="" />
+					<div class="portfolio-item-content">
+						<span class="header">Quarterly Musashino</span>
+						<p class="body">web develpment, design</p>
+					</div>
+					<a href="#"><i class="more">+</i></a>
+
+				</li>
+			</ul>
+			<!-- End Portfolio Items -->
+
+		</div>
+	</div>
+</div>
+<!-- End Content -->
+
+<!-- End Container -->
+{% endblock %}
+{% block partners %}{% endblock %}
