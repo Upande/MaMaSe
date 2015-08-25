@@ -39,7 +39,7 @@ class PartnerIndexPage(Page):
         @property
         def partners(self):
                 # Get list of live partner pages that are descendants of this page
-                partners = PartnerPage.objects.live().order_by('-latest_revision_created_at,')
+                partners = PartnerPage.objects.live().order_by('-latest_revision_created_at')
                 return partners
                 
         content_panels = Page.content_panels + [
