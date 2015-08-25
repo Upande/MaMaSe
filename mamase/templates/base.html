@@ -92,6 +92,7 @@
 	<!-- Additional css not needed globally -->
 	{% block css %}
 	<link rel="stylesheet" type="text/css" href="{% static 'slider-partners/carouFredSel.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> 
 	{% endblock %}  
 
 	<!-- Margo JS  -->
@@ -154,7 +155,8 @@
 						f1 = feeds[i].field1;
 						f2 = feeds[i].field2;
 						f3 = feeds[i].field3;
-						created.push(n.replace('T',' ').replace('Z',''));
+						day = n.split('T',2)
+						created.push(day[0].replace('T',' ').concat(day[1].split(':',1)));
 						field1.push(f1);
 						field2.push(f2);
 						field3.push(f3);
@@ -163,7 +165,7 @@
 						bindto: '#chart',
 						data: {
 							x: 'created',
-							xFormat: '%Y-%m-%d %H:%M:%S',
+							xFormat: '%Y-%m-%d%H',
 							columns: [
 							created,
 							field1,
@@ -175,7 +177,10 @@
 							x: {
 								type: 'timeseries',
 								tick: {
-									format: '%Y-%m-%d %H:%M'
+							                count: 3,
+							    format: '%Y-%m-%d %H',
+							    culling: false,
+							    outer: false
 								}
 							}
 						}
@@ -426,13 +431,11 @@
 
 			<!-- Start Videos Icon -->
 			<div class="col-md-4 col-sm-4">
-				<div class="widget-upande" style="background-color: #FFF; ">
+				<div class="widget-upande" style="background-color: #FFF; color:black; border: solid;border-color:  #DE9A00;">
 					<h4>Real Time Data</h4>
-					<ul class="icons-list-upande">
-						<div id="chart"></div>
-					</ul>
+					<div id="chart"></div>
 					<div class="upande-fa-button"> 
-						<a href="{% url 'visual' %}" >
+					  <a href="{% url 'visual' %}" >
 							<i class="fa fa-arrow-circle-o-right fa-3x" ></i>
 						</a>
 					</div>
