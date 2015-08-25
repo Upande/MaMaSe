@@ -13,7 +13,7 @@
 
     {% block title%}
     <!-- Basic -->
-    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} MaMaSe {% endif %}</title>
+    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} About {% endif %}</title>
     {% endblock title%}
     <!-- Define Charset -->
     <meta charset="utf-8">
@@ -218,14 +218,19 @@
         <div class="container">
 
 	  <div class="col-md-12" style="padding:0px;">
-	    <div class="col-md-9" style="padding:0px;">
+	    <div class="col-md-5" style="padding:0px;">
               <div class="row" style="height:120px; margin:auto;">
 		<a class="navbar-brand" href="/">
 		  <img alt="" src="{% static "margo/images/mamase_logo_full.png" %}">
 		</a>
               </div>
             </div>
-	    <div class="col-md-3" style="padding:0px;">
+	    <div class="col-md-6">
+	      <div class="big-title text-center animated fadeInDown delay-01" style="padding-top:60px">
+		<h4 style="color:#34A8DF">Improving water safety and security in the Mara River Basin</h4>
+		</div>
+	    </div>
+	    <div class="col-md-1" style="padding:0px;">
               <ul class="nav navbar-nav navbar-right">
 		<li>
                   <a href="{% url 'wagtailadmin_home' %}">Login</a>
@@ -255,12 +260,12 @@
 	    <!-- Start Navigation List -->
             <ul class="nav navbar-nav navbar-left">
               <li>
-                <a href="{{ base_url }}">Home</a>
+                <a class="active" href="{{ base_url }}">Home</a>
                 <ul class="dropdown">
                 </ul>
               </li>
               <li>
-                <a class="active" href="{{ base_url }}" >About</a>
+                <a  href="{{ base_url }}" >About</a>
                 <ul class="dropdown">
                   <li> <a href="{% slugurl 'news' %}">News</a> </li>
                   <li> <a href="{% slugurl 'material' %}">Materials</a> </li>     
@@ -277,16 +282,16 @@
               <li>
                 <a>Knowledge</a>
                 <ul class="dropdown">
-		  <li> <a href="url 'visual'"> </a> Live Data Stream</li>
+		  <li> <a href="url 'visual'"> Live Data Stream</a></li>
 		  <li> <a target="_blank" href="http://maps.mamase.org/"> Mara Geoportal </a></li>
-		  <li> <a target="_blank" href="http://www.afromaison.net/index.php/"> </a> Tools</li>
+		  <li> <a target="_blank" href="http://www.afromaison.net/index.php/">Tools </a></li>
 		  <li> <a href="/intro">Knowledge Platform</a></li>
                 </ul>
               </li>
               <li>
                 <a href="#" >Media </a>
                 <ul class="dropdown">
-                  <li> <a href="{% slugurl 'videos' %}">Gallery</a> </li>
+                  <li> <a href="{% slugurl '' %}">Gallery</a> </li>
                   <li> <a href="{% slugurl 'videos' %}">Videos</a> </li>
                 </ul>
               </li>
