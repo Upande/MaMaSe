@@ -64,7 +64,7 @@ class ContactView(TemplateView):
     template_name = "contact.html"
         
         
-def page_not_found_view(request):
+def error_view(request):
     args = {}
     args['url'] = '/'
     return render("404.html", args)
