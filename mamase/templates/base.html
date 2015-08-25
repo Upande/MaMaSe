@@ -12,7 +12,7 @@
 <head>
     {% block title%}
     <!-- Basic -->
-    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} About {% endif %}</title>
+    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} MaMaSe {% endif %}</title>
     {% endblock title%}
     <!-- Define Charset -->
     <meta charset="utf-8">
@@ -213,12 +213,11 @@
                 <ul class="dropdown">                 
                 </ul>
               </li>
-	      <!-- Hiding tools for now. We need text just like geoportal
               <li>
                 <a  target="_blank" href="http://www.afromaison.net/index.php/" >Tools</a>
                 <ul class="dropdown">
                 </ul>
-              </li>-->
+              </li>
               <li>
                 <a href="/intro">Knowledge Platform</a>
                 <ul class="dropdown">
@@ -257,14 +256,14 @@
                 <!-- Carousel inner -->
                 <div class="carousel-inner container" style="padding-left:0; padding-right:0; width:97.5%;">
                     <div class="item active">
-                        <img class="img-responsive carousel" src="{% static "images/mamase_banner_image_1.jpg" %}" alt="slider" style="margin:auto">
+                        <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider" style="margin:auto">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
                                 <h2 class="animated">
-                              <span style="color:#FFF;">Photo & Video<strong style="color:#34A8DF"> Gallery</strong></span>
+                              <span style="color:#92C01F;">Photo & Video<strong style="color:#34A8DF">Gallery</strong></span>
                               </h2>
                                 <h3 class="animated">
-                                <span style="color:#FFF;">MaMaSe in visuals </span>
+                                <span style="color:#92C01F;">MaMaSe in visuals </span>
                               </h3>
                                 <p class="animated"><a href="{% slugurl 'videos' %}"class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >View here</a>
                                 </p>
@@ -273,14 +272,14 @@
                     </div>
                     <!--/ Carousel item end -->
                     <div class="item">
-                        <img class="img-responsive carousel" src="{% static "images/mamase_banner_image_2.jpg"" %}" alt="slider">
+                        <img class="img-responsive" src="{% static "margo/images/slider/mau_forest_edge.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
                                 <h2 class="animated">
-                                <span style="color:#FFF;" > MaMaSe project <strong style="color:#34A8DF">materials</strong></span>
+                                <span style="color:#DE9A00;" > MaMaSe project <strong style="color:#34A8DF">materials</strong></span>
                             </h2>
                                 <h3 class="animated">
-                              <span style="color:#FFF">Facts, figures & outputs</span>
+                              <span style="color:#DE9A00;">Facts, figures & outputs</span>
                             </h3> 
                                 <p class="animated"><a href="{% slugurl 'material' %}" class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >Learn more</a>
                                 </p>
@@ -289,11 +288,7 @@
                     </div>
                     <!--/ Carousel item end -->
                     <div class="item">
-<<<<<<< HEAD
                         <img class="img-responsive" src="{% static "margo/images/slider/map_mara_stations.png" %}" alt="slider">
-=======
-                        <img class="img-responsive carousel" src="{% static "margo/images/slider/map_of_mara_stations.png" %}" alt="slider">
->>>>>>> 44480316422552d401a3bce7f1b6c029367d9f3c
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
                                 <h2 class="animated white">
@@ -310,14 +305,14 @@
                     </div>
                     <!--/ Carousel item end -->
                     <div class="item">
-                        <img class="img-responsive carousel" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
+                        <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
                         <div class="slider-content">
                             <div class="col-md-12 text-center">
                                 <h2 class="animated white">
-                                <span style="color:#FFF;">Live data<strong style="color:#34A8DF"> streams</strong></span>
+                                <span style="color:#DE9A00;">Live data<strong style="color:#34A8DF"> streams</strong></span>
                             </h2>
                                 <h3 class="animated white">
-                              <span style="color:#FFF;">Check out the latest MaMaSe data</span>
+                              <span style="color:#DE9A00;">Check out the latest MaMaSe data</span>
                             </h3> 
                                 <div class="animated">
                                     <a class="animated slider btn btn-default btn-min-block" href="{% url 'visual' %}" style="background-color:#34A8DF;" >View here</a>
@@ -366,9 +361,10 @@
               
               <!-- Start Images Icon -->
               <div class="col-md-4 col-sm-4">
-		<div class="widget-upande" style="background-color: #92C01F; padding: 0px 0px 0px 0px; height:176px ;">		     
-       <a target="_blank" href="http://maps.mamase.org/"><iframe style="height:176px; width:360px;position:;" frameborder="0" src="http://maps.mamase.org/maps/209/embed">Map of Mara Low Cost Stations</iframe>
-		  </a>
+		<div class="widget-upande" style="background-color: #92C01F; padding: 0px 0px 0px 0px; height:176px ;">
+       <h4 style="position: absolute; color:#925F36;padding-top:20px; padding-left:20px;">Featured Map</h4>		     
+       <a target="_blank" href="http://maps.mamase.org/maps/209/view" ><img style="height:176px;width:360px;" frameborder="0" src="{% static "margo/images/slider/block_map_scaled.png" %}">
+		   </a>
       	  
 		</div>
               </div>
@@ -407,11 +403,7 @@
       <div class="list_carousel">
           <ul id="foo0" >
               {% for logo in logos %}
-                {% if logo.url == '' %}
-                  <li><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}"><li>
-                {% else %}
-                  <li><a href="{{logo.url}}" target="_blank"><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}"></a><li> 
-                {% endif %}    
+                  <li><a href="{{logo.url}}" target="_blank"><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}"></a><li>    
               {% endfor %}
           </ul>
           <div class="clearfix"></div>
@@ -426,8 +418,31 @@
     <!-- Start Footer Section -->
     <footer style="padding-top:20px">
       <div class="container" style="background-color:#222222;">
-        <a href="http://upande.com" class ="copyright-section col-sm-12" style="color:#34A8DF; font-weight:bold; text-align:center;">&copy; 2015 Upande Limited</a>
-      </div> 
+        <div class="row">
+          <div class = "col-md-4">
+            <h4 style="color:white">&nbsp;&nbsp;&nbsp;<u>Contacts</u></h4>
+            <ul>
+                &nbsp;
+                <li style="color:white"><span>&nbsp;- <b>Phone Number:</b></span></li>
+                <li style="color:white"><span>&nbsp;- <b>Email:</b></span></li>
+                <li style="color:white"><span>&nbsp;- <b>Location:</b></span> Nairobi/Kenya</li>
+            </ul>
+          </div>
+          <div class = "col-md-4">
+          </div>
+          <div class = "col-md-4">
+            <h4 style="color:white">&nbsp;&nbsp;&nbsp;<u>Social Sites</u></h4>
+              </br>
+                &nbsp;&nbsp;&nbsp;
+                <a class="facebook" href="https://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="twitter" href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <a class="google" href="https://plus.google.com" target="_blank"><i class="fa fa-google-plus"></i></a>
+          </div>
+          </div>
+            <a href="http://upande.com" class ="copyright-section col-sm-12" style="color:#34A8DF; font-weight:bold; text-align:center;">&copy; 2015 Upande Limited</a>
+         </div> 
     </footer>
     <!-- End Footer Section -->
     
