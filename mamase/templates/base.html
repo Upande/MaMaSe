@@ -260,12 +260,12 @@
 	    <!-- Start Navigation List -->
             <ul class="nav navbar-nav navbar-left">
               <li>
-                <a class="active" href="{{ base_url }}">Home</a>
+                <a class="active" href="/">Home</a>
                 <ul class="dropdown">
                 </ul>
               </li>
               <li>
-                <a  href="{{ base_url }}" >About</a>
+                <a  href="{{ url 'about' }}" >About</a>
                 <ul class="dropdown">
                   <li> <a href="{% slugurl 'news' %}">News</a> </li>
                   <li> <a href="{% slugurl 'news' %}">Activities</a> </li>
