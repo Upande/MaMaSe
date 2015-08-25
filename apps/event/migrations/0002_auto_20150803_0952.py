@@ -25,11 +25,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='eventindexrelatedlink',
-            name='link_page',
-            field=models.ForeignKey(related_name='+', blank=True, to='wagtailcore.Page', null=True),
-        ),
-        migrations.AddField(
-            model_name='eventindexrelatedlink',
             name='page',
             field=modelcluster.fields.ParentalKey(related_name='related_links', to='event.EventIndexPage'),
         ),
