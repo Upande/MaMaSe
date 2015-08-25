@@ -120,7 +120,7 @@ WSGI_APPLICATION = 'mamase.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'mamase_site', 
     }
 }
@@ -197,8 +197,13 @@ BOWER_INSTALLED_APPS = (
 
 ALLOWED_HOSTS = ['*']
 
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mamasewebsite@gmail.com'
-EMAIL_HOST_PASSWORD = 'mamasewebsite'
 EMAIL_PORT = 587
+EMAIL_HOST_USER = 'mamasewebsite@gmail.com'
+EMAIL_HOST_PASSWORD = 'mamasewebsite2015'
+EMAIL_USE_TLS = True
+
+DEFAULT_FROM_EMAIL = 'mamasewebsite@gmail.com'
+SERVER_EMAIL = 'mamasewebsite@gmail.com'

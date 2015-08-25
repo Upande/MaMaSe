@@ -9,7 +9,9 @@ from wagtail.wagtailadmin.edit_handlers import (FieldPanel,
                                                 InlinePanel,
                                                 MultiFieldPanel,
                                                 PageChooserPanel)
+
 from wagtail.wagtailimages.edit_handlers import ImageChooserPanel
+from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -48,6 +50,14 @@ class NewsPage(Page):
     tags = ClusterTaggableManager(through=NewsPageTag, blank=True)
     
     category = models.ForeignKey('news.CategoryPage', null=True, blank=True ,related_name='+',on_delete=models.SET_NULL )
+
+    link_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        related_name='+',
+        on_delete=models.SET_NULL,
+    )
 
     @property
     def categories(self):
@@ -88,7 +98,8 @@ class NewsPage(Page):
         ImageChooserPanel('main_image'),
         PageChooserPanel('category'),
         FieldPanel('intro'),
-        FieldPanel('body', classname="full")
+        FieldPanel('body', classname="full"),
+        DocumentChooserPanel('link_document'),
     ]
     
 
@@ -211,6 +222,14 @@ class NoCommentPage(Page):
     body = RichTextField(blank=True)
     category = models.ForeignKey('news.CategoryPage', null=True, blank=True ,related_name='+',on_delete=models.SET_NULL )
 
+    link_document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        related_name='+',
+        on_delete=models.SET_NULL,
+    )
+
     @property
     def categories(self):
         # Get list of live news pages that are descendants of this page
@@ -240,7 +259,8 @@ class NoCommentPage(Page):
         FieldPanel('date'),
         PageChooserPanel('category'),
         FieldPanel('intro',classname="full" ),
-        FieldPanel('body', classname="full")
+        FieldPanel('body', classname="full"),
+        DocumentChooserPanel('link_document'),
     ]
     
     

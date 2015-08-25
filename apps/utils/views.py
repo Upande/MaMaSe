@@ -98,7 +98,7 @@ def email(request):
             html_message = create_email_message(email,message)
                     
             #Create the html message to be sent via email
-            status = send_email(html_message,"mamasewebsite.gmail.com",to_list,subject)
+            status = send_email(html_message,"mamasewebsite@gmail.com",to_list,subject)
 
         if status:
             args['success_message'] = "Success! We have received your email and will respond ASAP. "
