@@ -19,7 +19,7 @@ except ImportError:
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'mamase_site', 
         'USER': 'postgres',
         'PASSWORD': 'postgres',
