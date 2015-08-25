@@ -220,7 +220,7 @@
 	  <div class="col-md-12" style="padding:0px;">
 	    <div class="col-md-5" style="padding:0px;">
               <div class="row" style="height:120px; margin:auto;">
-		<a class="navbar-brand" href="/">
+		<a class="navbar-brand" href="{{ request.get_host }}">
 		  <img alt="" src="{% static "margo/images/mamase_logo_full.png" %}">
 		</a>
               </div>
@@ -260,7 +260,7 @@
 	    <!-- Start Navigation List -->
             <ul class="nav navbar-nav navbar-left">
               <li>
-                <a class="active" href="/">Home</a>
+                <a class="active" href="{{ request.get_host }}">Home</a>
                 <ul class="dropdown">
                 </ul>
               </li>
