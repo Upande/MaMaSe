@@ -317,98 +317,7 @@
  
      <!-- Start Home Page Slider -->
         <section id="home">
-            <!-- Carousel -->
-            <div id="main-slide" class="carousel slide container" data-ride="carousel">
 
-                <!-- Indicators -->
-                <ol class="carousel-indicators">
-                    <li data-target="#main-slide" data-slide-to="0" class="active"></li>
-                    <li data-target="#main-slide" data-slide-to="1"></li>
-                    <li data-target="#main-slide" data-slide-to="2"></li>
-                    <li data-target="#main-slide" data-slide-to="3"></li>
-                </ol>
-                <!--/ Indicators end-->
-
-                <!-- Carousel inner -->
-                <div class="carousel-inner container" style="padding-left:0; padding-right:0; width:97.5%;">
-                    <div class="item active">
-                        <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider" style="margin:auto">
-                        <div class="slider-content">
-                            <div class="col-md-12 text-center">
-                                <h2 class="animated">
-                              <span style="color:#92C01F;">Photo & Video<strong style="color:#34A8DF">Gallery</strong></span>
-                              </h2>
-                                <h3 class="animated">
-                                <span style="color:#92C01F;">MaMaSe in visuals </span>
-                              </h3>
-                                <p class="animated"><a href="{% slugurl 'videos' %}"class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >View here</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Carousel item end -->
-                    <div class="item">
-                        <img class="img-responsive" src="{% static "margo/images/slider/mau_forest_edge.png" %}" alt="slider">
-                        <div class="slider-content">
-                            <div class="col-md-12 text-center">
-                                <h2 class="animated">
-                                <span style="color:#DE9A00;" > MaMaSe project <strong style="color:#34A8DF">materials</strong></span>
-                            </h2>
-                                <h3 class="animated">
-                              <span style="color:#DE9A00;">Facts, figures & outputs</span>
-                            </h3> 
-                                <p class="animated"><a href="{% slugurl 'material' %}" class="slider btn btn-system btn-large" style="background-color:#34A8DF;" >Learn more</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Carousel item end -->
-                    <div class="item">
-                        <img class="img-responsive" src="{% static "margo/images/slider/map_mara_stations.png" %}" alt="slider">
-                        <div class="slider-content">
-                            <div class="col-md-12 text-center">
-                                <h2 class="animated white">
-                                <span style="color:#925F36;">Interactive <strong style="color:#34A8DF">maps</strong></span>
-                            </h2>
-                                <h3 class="animated white">
-                              <span style="color:#925F36;"> Explore geospatial data and maps</span>
-                            </h3> 
-                                <div class="animated">
-                                    <a target="_blank" class="animated slider btn btn-default btn-min-block" href="http://maps.mamase.org/"style="background-color: #34A8DF;" >Enter portal</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Carousel item end -->
-                    <div class="item">
-                        <img class="img-responsive" src="{% static "margo/images/slider/bg_serengeti.png" %}" alt="slider">
-                        <div class="slider-content">
-                            <div class="col-md-12 text-center">
-                                <h2 class="animated white">
-                                <span style="color:#DE9A00;">Live data<strong style="color:#34A8DF"> streams</strong></span>
-                            </h2>
-                                <h3 class="animated white">
-                              <span style="color:#DE9A00;">Check out the latest MaMaSe data</span>
-                            </h3> 
-                                <div class="animated">
-                                    <a class="animated slider btn btn-default btn-min-block" href="{% url 'visual' %}" style="background-color:#34A8DF;" >View here</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Carousel item end -->
-                </div>
-                <!-- Carousel inner end-->
-
-                <!-- Controls -->
-                <a class="left carousel-control" href="#main-slide" data-slide="prev">
-                    <span><i class="fa fa-angle-left"></i></span>
-                </a>
-                <a class="right carousel-control" href="#main-slide" data-slide="next">
-                    <span><i class="fa fa-angle-right"></i></span>
-                </a>
-            </div>
-            <!-- /carousel -->
         </section>
         <!-- End Home Page Slider -->
 
@@ -437,24 +346,29 @@
               
               <!-- Start Images Icon -->
               <div class="col-md-4 col-sm-4">
-		<div class="widget-upande" style="background-color: #92C01F; padding: 0px 0px 0px 0px; height:176px ;">
-       <h4 style="position: absolute; color:#925F36;padding-top:20px; padding-left:20px;">Featured Map</h4>		     
-       <a target="_blank" href="http://maps.mamase.org/maps/209/view" ><img style="height:176px;width:360px;" frameborder="0" src="{% static "margo/images/slider/block_map_scaled.png" %}">
-		   </a>
-      	  
+		<div class="widget-upande" style="background-color: ; height:416px; background-color: #FFF; color: black; border: solid;border-color: #92C01F;">
+		  <h4 style="color:#925F36;">Featured Map</h4>		     
+		  <a target="_blank" href="http://maps.mamase.org/maps/209/view" >
+		    <img style="height:314px;width:360px;" frameborder="0" src="{% static "margo/images/slider/block_map_scaled.png" %}">
+		  </a>      		  	
+		  <div class="upande-fa-button"> 
+		    <a target="_blank" href="http://maps.mamase.org/maps/209/view" >
+		      <i class="fa fa-arrow-circle-o-right fa-3x" ></i>
+		    </a>
+		  </div>				  
 		</div>
               </div>
               <!-- End Images Icon -->	
 			<!-- Start real time data -->
 			<div class="col-md-4 col-sm-4">
 				<div class="widget-upande" style="background-color: #FFF; color: black; border: solid;border-color:  #DE9A00;">
-					<h4 style="color: black;">Real Time Data</h4>
-					<div id="chart"></div>
-					<div class="upande-fa-button"> 
-					  <a href="{% url 'visual' %}" >
-							<i class="fa fa-arrow-circle-o-right fa-3x" ></i>
-						</a>
-					</div>
+				  <h4 style="color: black;">Real Time Data</h4>
+				  <div id="chart"></div>
+				  <div class="upande-fa-button"> 
+				    <a href="{% url 'visual' %}" >
+				      <i class="fa fa-arrow-circle-o-right fa-3x" ></i>
+				    </a>
+				  </div>
 				</div>
 			</div>
 			<!-- End real time data -->
