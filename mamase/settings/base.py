@@ -174,7 +174,7 @@ DISQUS_WEBSITE_SHORTNAME = 'Upande'
 
 SITE_ID = 1
 
-es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://127.0.0.1:9200/')
+es = urlparse(os.environ.get('SEARCHBOX_URL'))
 port = es.port or 80
 
 
