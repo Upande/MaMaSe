@@ -7,7 +7,8 @@ from django.db import models, migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('partners', '0004_remove_partnerpage_date'),
+        ('partners', '0005_partnerlogo_url'),
+        ('partners', '0006_auto_20150821_1111'),
     ]
 
     operations = [
