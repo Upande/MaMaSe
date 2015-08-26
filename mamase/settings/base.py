@@ -107,6 +107,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'mamase.context_processor.baseurl',
+                'mamase.context_processor.news_items',
             ],
         },
     },
@@ -117,14 +119,6 @@ WSGI_APPLICATION = 'mamase.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mamase_site', 
-    }
-}
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -207,3 +201,10 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = 'mamasewebsite@gmail.com'
 SERVER_EMAIL = 'mamasewebsite@gmail.com'
+
+FIXTURE_DIRS = (
+   'apps/news/fixures/',
+   'apps/videos/fixures/',
+   'apps/utils/fixures/',
+   'apps/testapp/fixures/',
+)

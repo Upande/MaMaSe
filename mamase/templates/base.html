@@ -13,7 +13,7 @@
 
     {% block title%}
     <!-- Basic -->
-    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} About {% endif %}</title>
+    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} Home {% endif %}</title>
     {% endblock title%}
     <!-- Define Charset -->
     <meta charset="utf-8">
@@ -29,7 +29,7 @@
     <link rel="icon" type="image/png" href="{% static "margo/images/favicon.ico" %}" />
 
     <!-- Bootstrap CSS  -->
-    <link rel="stylesheet" href="{% static 'margo/asset/css/bootstrap.min.css' %}" type="text/css" media="screen">
+    <link rel="stylesheet" href="{% static 'margo/css/bootstrap.min.css' %}" type="text/css" media="screen">
 
     <!-- Font Awesome CSS -->
     <link rel="stylesheet" href="{% static 'margo/css/font-awesome.min.css' %}" type="text/css" media="screen">
@@ -102,7 +102,7 @@
     <script type="text/javascript" src="{% static 'margo/js/jquery-2.1.1.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'margo/js/jquery.migrate.js' %}"></script>
     <script type="text/javascript" src="{% static 'margo/js/modernizrr.js' %}"></script>
-    <script type="text/javascript" src="{% static 'margo/asset/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'margo/js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'margo/js/jquery.fitvids.js' %}"></script>
     <script type="text/javascript" src="{% static 'margo/js/jquery.isotope.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'margo/js/jquery.textillate.js' %}"></script>
@@ -142,7 +142,7 @@
 
 			$.ajax({
 				type: 'GET',
-				url : "http://api.thingspeak.com/channels/"+15792+"/feed.json?start="+dt+"&callback=",
+				url : "https://api.thingspeak.com/channels/"+15792+"/feed.json?start="+dt+"&callback=",
 				dataType: "jsonp",
 				success: function(data) {
 					feeds = data.feeds
@@ -220,7 +220,7 @@
 	  <div class="col-md-12" style="padding:0px;">
 	    <div class="col-md-5" style="padding:0px;">
               <div class="row" style="height:120px; margin:auto;">
-		<a class="navbar-brand" href="/">
+		<a class="navbar-brand" href="{{ BASE_URL }}">
 		  <img alt="" src="{% static "margo/images/mamase_logo_full.png" %}">
 		</a>
               </div>
@@ -260,19 +260,17 @@
 	    <!-- Start Navigation List -->
             <ul class="nav navbar-nav navbar-left">
               <li>
-                <a class="active" href="{{ base_url }}">Home</a>
+                <a class="{% if node.path == request.path %}active{% endif %}" href="{{ BASE_URL }}">Home</a>
                 <ul class="dropdown">
                 </ul>
               </li>
               <li>
-                <a  href="{{ base_url }}" >About</a>
+                <a class="{% if node.path == request.path %}active{% endif %}" href="{% url 'about' %}" >About</a>
                 <ul class="dropdown">
-                  <li> <a href="{% slugurl 'news' %}">News</a> </li>
-                  <li> <a href="{% slugurl 'news' %}">Activities</a> </li>
-                  <li> <a href="{% slugurl 'material' %}">Materials</a> </li>     
                   <li> <a href="{% slugurl 'partners' %}">Partners</a> </li>     
-                  <li> <a href="{% slugurl 'stories' %}">Stories</a> </li>     
-                  <li> <a href="{% slugurl 'media' %}">In the Media</a> </li>
+                  <li> <a href="{% slugurl 'challenges' %}">Challenges</a> </li>
+                  <li> <a href="{% slugurl 'solutions' %}">Solutions</a> </li>
+                  <li> <a href="{% slugurl 'result-areas' %}">Result areas</a> </li>     
                 </ul>
               </li>
               <li>
@@ -281,12 +279,12 @@
                 </ul>
               </li> 
               <li>
-                <a href="target="_blank" href="http://maps.mamase.org/" %}">Mara Geoportal</a>
+                <a target="_blank" href="http://maps.mamase.org/">Mara Geoportal</a>
                 <ul class="dropdown">
                 </ul>
               </li>
               <li>
-                <a href="/intro">Knowledge Platform</a>
+                <a href="{% url 'knowledge' %}">Knowledge Platform</a>
                 <ul class="dropdown">
                 </ul>
               </li>
@@ -382,7 +380,7 @@
 	</div>
       <!--/ Carousel item end -->
       <div class="item">
-	<img class="img-responsive carousel" src="{% static "images/mamase_banner_image_3.jpg" %}" alt="slider">
+	<img class="img-responsive carousel" src="{% static "images/mamase_banner_image_3.jpg" %}" alt="slider" style="height: 373px;">
 	<div class="slider-content">
 	  <div class="col-md-12 text-center">
 	    <h2 class="animated white">
@@ -425,13 +423,16 @@
 		<div class="widget-upande" style="background-color: #FFF; color: black; border: solid;border-color: #34A8DF;">
 		  <h4>News</h4>
 		  <ul class="icons-list-upande">
-		    {% for item in news %}
-		    <li><i class="fa fa-circle"></i><a href ="" style="color: white;"> Updates</a></li>
+		    {% for item in news_items %}
+		    <li>
+		      <i class="fa fa-circle"></i><a href ="{{item.url}}"> {{item.title}}</a>
+		      {{item.intro|richtext}}
+		    </li>
 		    {% endfor %}
 		  </ul>
 		  <div class="upande-fa-button"> 
 		    <a href="{% slugurl 'news' %}">
-		      <i class="fa fa-arrow-circle-o-right fa-3x" style="color: white;"></i>
+		      <i class="fa fa-arrow-circle-o-right fa-3x"></i>
 		    </a>
 		  </div>
 		</div>

@@ -264,3 +264,17 @@ class NoCommentPage(Page):
     ]
     
     
+class InformationPage(Page):
+    date = models.DateField("Post date")
+    body = RichTextField(blank=True)
+
+    search_fields = Page.search_fields + (
+        index.SearchField('body'),
+    )
+        
+    content_panels = Page.content_panels + [
+        FieldPanel('date'),
+        FieldPanel('body', classname="full"),
+    ]
+    
+    

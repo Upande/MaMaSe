@@ -60,19 +60,18 @@ def logThingspeakData(request):
 class IndexView(TemplateView):
     template_name = "visual.html"
 
+class AboutView(TemplateView):
+    template_name = "about.html"
+
 class ContactView(TemplateView):
     template_name = "contact.html"
         
         
-def page_not_found_view(request):
-    args = {}
-    args['url'] = '/'
-    return render("404.html", args)
+def error_view(request):
+    return render(request,"404.html")
     
 def page_not_found_view(request):
-    args = {}
-    args['url'] = '/'
-    return render("500.html", args)
+    return render(request,"500.html")
     
 def email(request):
     args = {}

@@ -22,8 +22,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'mamase_site', 
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'postgres',   
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5432', 
     }
 }

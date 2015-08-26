@@ -4592,7 +4592,7 @@ ul.footer-nav li a:hover {
 	background: #666;
 	background: rgba(0,0,0,0.8); 
 }
-.nivo-lightbox-theme-default .nivo-lightbox-content.nivo-lightbox-loading { background: url(../images/lightbox/loading.gif) no-repeat 50% 50%; }
+.nivo-lightbox-theme-default .nivo-lightbox-content.nivo-lightbox-loading {no-repeat 50% 50%; }
 
 .nivo-lightbox-theme-default .nivo-lightbox-nav {
 	top: 10%;
@@ -4612,14 +4612,12 @@ ul.footer-nav li a:hover {
 	background-color: rgba(0,0,0,0.5);
 }
 .nivo-lightbox-theme-default .nivo-lightbox-prev { 
-	background-image: url(../images/lightbox/prev.png); 
 	border-radius: 0 3px 3px 0;
 	-webkit-border-radius: 0 3px 3px 0;
     -moz-border-radius: 0 3px 3px 0;
     -o-border-radius: 0 3px 3px 0;
 }
 .nivo-lightbox-theme-default .nivo-lightbox-next { 
-	background-image: url(../images/lightbox/next.png); 
 	border-radius: 3px 0 0 3px;
 	-webkit-border-radius: 3px 0 0 3px;
     -moz-border-radius: 3px 0 0 3px;
@@ -4629,7 +4627,6 @@ ul.footer-nav li a:hover {
 
 .nivo-lightbox-theme-default .nivo-lightbox-close {
 	display: block;
-	background: url(../images/lightbox/close.png) no-repeat 5px 5px;
 	width: 16px;
 	height: 16px;
 	text-indent: -9999px;
@@ -4676,19 +4673,15 @@ ul.footer-nav li a:hover {
        (min-resolution: 1.3dppx) {
 
 	.nivo-lightbox-theme-default .nivo-lightbox-content.nivo-lightbox-loading { 
-		background-image: url(../images/lightbox/loading@2x.gif); 
 		background-size: 32px 32px;
 	}
 	.nivo-lightbox-theme-default .nivo-lightbox-prev { 
-		background-image: url(../images/lightbox/prev@2x.png); 
 		background-size: 48px 48px;
 	}
 	.nivo-lightbox-theme-default .nivo-lightbox-next { 
-		background-image: url(../images/lightbox/next@2x.png); 
 		background-size: 48px 48px;
 	}
 	.nivo-lightbox-theme-default .nivo-lightbox-close { 
-		background-image: url(../images/lightbox/close@2x.png); 
 		background-size: 16px 16px;
 	}
 	
@@ -4756,10 +4749,6 @@ ul.footer-nav li a:hover {
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-/* mouse grab icon */
-.grabbing { 
-    cursor:url(../images/icons/grabbing.png) 8 8, move;
-}
 
 /* fix */
 .owl-carousel  .owl-wrapper,
@@ -5167,7 +5156,6 @@ ul.footer-nav li a:hover {
 /* preloading images */
 .owl-item.loading{
 	min-height: 150px;
-	background: url(../images/icons/ajaxloader.gif) no-repeat center center
 }
 
 
@@ -5351,7 +5339,6 @@ ul.footer-nav li a:hover {
 }
 
 .switcher-box .open-switcher:hover {
-	background: url(../images/icons/switcher.png) #444 center no-repeat;
 	-webkit-box-shadow: 0 0 4px rgba(0,0,0,0.2);
 	-moz-box-shadow: 0 0 4px rgba(0,0,0,0.2);
 	box-shadow: 0 0 4px rgba(0,0,0,0.2);
