@@ -177,21 +177,16 @@ SITE_ID = 1
 es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://localhost:9200/')
 port = es.port or 80
 
-print es
-print es.hostname
-print es.port
-
 WAGTAILSEARCH_BACKENDS = {
     'default': {
        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',
-       'URLS': ['http://paas:b2c1e740d6776688d7644d0768c3d436@dwalin-us-east-1.searchly.com'], #es.scheme + '://' + es.hostname + ':' + str(port),
+       'URLS': [es.scheme + '://' + es.hostname + ':' + str(port)], #,
        'INDEX': 'mamase',
        'TIMEOUT': 5,
     }
 }
 
 if es.username:
-   print es.username
    WAGTAILSEARCH_BACKENDS['default']['KWARGS'] = {"http_auth": es.username + ':' + es.password}
 
 BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
