@@ -183,10 +183,10 @@ print es.port
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {
-        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',
-        'URL': 'http://paas:b2c1e740d6776688d7644d0768c3d436@dwalin-us-east-1.searchly.com', #es.scheme + '://' + es.hostname + ':' + str(port),
-        'INDEX': 'wagtail',
-        'TIMEOUT': 5,
+       'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',
+       'URLS': ['http://paas:b2c1e740d6776688d7644d0768c3d436@dwalin-us-east-1.searchly.com'], #es.scheme + '://' + es.hostname + ':' + str(port),
+       'INDEX': 'mamase',
+       'TIMEOUT': 5,
     }
 }
 
