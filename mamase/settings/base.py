@@ -174,10 +174,12 @@ DISQUS_WEBSITE_SHORTNAME = 'Upande'
 
 SITE_ID = 1
 
-es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://127.0.0.1:9200/')
+es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://localhost:9200/')
 port = es.port or 80
 
 print es
+print es.hostname
+print es.port
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {
@@ -189,7 +191,8 @@ WAGTAILSEARCH_BACKENDS = {
 }
 
 if es.username:
-   WAGTAILSEARCH_BACKENDS ['default']['KWARGS'] = {"http_auth": es.username + ':' + es.password}
+   print es.username
+   WAGTAILSEARCH_BACKENDS['default']['KWARGS'] = {"http_auth": es.username + ':' + es.password}
 
 BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
 
