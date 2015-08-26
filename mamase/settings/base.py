@@ -184,7 +184,7 @@ print es.port
 WAGTAILSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',
-        'URL': es.scheme + '://' + es.hostname + ':' + str(port),
+        'URL': 'http://paas:b2c1e740d6776688d7644d0768c3d436@dwalin-us-east-1.searchly.com', #es.scheme + '://' + es.hostname + ':' + str(port),
         'INDEX': 'wagtail',
         'TIMEOUT': 5,
     }
@@ -222,9 +222,9 @@ FIXTURE_DIRS = (
 )
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
+   'version': 1,
+   'disable_existing_loggers': False,
+   'formatters': {
         'verbose': {
             'format': ('%(asctime)s [%(process)d] [%(levelname)s] ' +
                        'pathname=%(pathname)s lineno=%(lineno)s ' +
