@@ -173,14 +173,21 @@ DISQUS_WEBSITE_SHORTNAME = 'Upande'
 
 SITE_ID = 1
 
+es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://127.0.0.1:9200/')
+port = es.port or 80
+
+
 WAGTAILSEARCH_BACKENDS = {
     'default': {
         'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',
-        'URLS': ['http://localhost:9200'],
+        'URL': es.scheme + '://' + es.hostname + ':' + str(port),
         'INDEX': 'wagtail',
         'TIMEOUT': 5,
     }
 }
+
+if es.username:
+   WAGTAILSEARCH_BACKENDS ['default']['KWARGS'] = {"http_auth": es.username + ':' + es.password}
 
 BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
 
