@@ -177,6 +177,7 @@ SITE_ID = 1
 es = urlparse(os.environ.get('SEARCHBOX_URL') or 'http://127.0.0.1:9200/')
 port = es.port or 80
 
+print es
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {
