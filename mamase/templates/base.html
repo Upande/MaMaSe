@@ -13,7 +13,7 @@
 
     {% block title%}
     <!-- Basic -->
-    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} About {% endif %}</title>
+    <title>MaMaSe |{% if self.title %} {{self.title}} {% else %} Home {% endif %}</title>
     {% endblock title%}
     <!-- Define Charset -->
     <meta charset="utf-8">
@@ -260,19 +260,17 @@
 	    <!-- Start Navigation List -->
             <ul class="nav navbar-nav navbar-left">
               <li>
-                <a class="active" href="{{ request.get_host }}">Home</a>
+                <a class="{% if node.path == request.path %}active{% endif %}" href="{{ request.get_host }}">Home</a>
                 <ul class="dropdown">
                 </ul>
               </li>
               <li>
-                <a  href="{% url 'about' %}" >About</a>
+                <a class="{% if node.path == request.path %}active{% endif %}" href="{% url 'about' %}" >About</a>
                 <ul class="dropdown">
-                  <li> <a href="{% slugurl 'news' %}">News</a> </li>
-                  <li> <a href="{% slugurl 'news' %}">Activities</a> </li>
-                  <li> <a href="{% slugurl 'material' %}">Materials</a> </li>     
                   <li> <a href="{% slugurl 'partners' %}">Partners</a> </li>     
-                  <li> <a href="{% slugurl 'stories' %}">Stories</a> </li>     
-                  <li> <a href="{% slugurl 'media' %}">In the Media</a> </li>
+                  <li> <a href="{% slugurl 'challenges' %}">Challenges</a> </li>
+                  <li> <a href="{% slugurl 'solutions' %}">Solutions</a> </li>
+                  <li> <a href="{% slugurl 'result-areas' %}">Result areas</a> </li>     
                 </ul>
               </li>
               <li>
