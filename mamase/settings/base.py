@@ -108,6 +108,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'mamase.context_processor.baseurl',
+                'mamase.context_processor.news_items',
             ],
         },
     },
