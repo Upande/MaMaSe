@@ -199,3 +199,10 @@ EMAIL_USE_TLS = True
 
 DEFAULT_FROM_EMAIL = 'mamasewebsite@gmail.com'
 SERVER_EMAIL = 'mamasewebsite@gmail.com'
+
+FIXTURE_DIRS = (
+   'apps/news/fixures/',
+   'apps/videos/fixures/',
+   'apps/utils/fixures/',
+   'apps/testapp/fixures/',
+)
