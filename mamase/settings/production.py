@@ -36,5 +36,5 @@ COMPRESS_CSS_FILTERS = [
 COMPRESS_CSS_HASHING_METHOD = 'content'
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-MEDIA_URL = "https://%s.s3.amazonaws.com/" % AWS_STORAGE_BUCKET_NAME
+MEDIA_URL = "https://%s.s3.amazonaws.com/media/" % AWS_STORAGE_BUCKET_NAME 
 MEDIA_ROOT = ''
