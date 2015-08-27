@@ -27,3 +27,13 @@ DATABASES = {
         'PORT': '5432', 
     }
 }
+
+
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+       'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',                                                                
+        'URLS': ['http://localhost:9200/'], #,                                                                                                                         
+       'INDEX': 'mamase',
+       'TIMEOUT': 5,
+    }
+}

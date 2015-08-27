@@ -39,3 +39,13 @@ AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = 'https://mamase.s3.amazonaws.com/media/'
+
+WAGTAILSEARCH_BACKENDS = {
+    'default': {
+       'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',                                                                
+        'URLS': [os.environ.get('SEARCHBOX_URL')], #,                                                                        
+       'INDEX': 'mamase',
+       'TIMEOUT': 5,
+    }
+}
+
