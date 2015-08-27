@@ -26,55 +26,56 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 AUTH_USER_MODEL = 'auth.User'
 
 INSTALLED_APPS = (
-    'django.contrib.admin',
-    'django.contrib.sites',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+   'django.contrib.admin',
+   'django.contrib.sites',
+   'django.contrib.auth',
+   'django.contrib.contenttypes',
+   'django.contrib.sessions',
+   'django.contrib.messages',
+   'django.contrib.staticfiles',
+   
+   'taggit',
+   'compressor',
+   'modelcluster',
+   
+   'wagtail.wagtailcore',
+   'wagtail.wagtailadmin',
+   'wagtail.wagtailsearch',
+   'wagtail.wagtailimages',
+   'wagtail.wagtaildocs',
+   'wagtail.wagtailsnippets',
+   'wagtail.wagtailusers',
+   'wagtail.wagtailsites',
+   'wagtail.wagtailembeds',
+   'wagtail.wagtailredirects',
+   'wagtail.wagtailforms',
+   
+   'jsonfield',
+   'elasticsearch',
+   'search',
+   'home',
+   'disqus',
+   'djangobower',
+   'filer',
+   'mptt',
+   'easy_thumbnails',
+   'storages',
 
-    'taggit',
-    'compressor',
-    'modelcluster',
-
-    'wagtail.wagtailcore',
-    'wagtail.wagtailadmin',
-    'wagtail.wagtailsearch',
-    'wagtail.wagtailimages',
-    'wagtail.wagtaildocs',
-    'wagtail.wagtailsnippets',
-    'wagtail.wagtailusers',
-    'wagtail.wagtailsites',
-    'wagtail.wagtailembeds',
-    'wagtail.wagtailredirects',
-    'wagtail.wagtailforms',
-
-    'jsonfield',
-    'elasticsearch',
-    'search',
-    'home',
-    'disqus',
-    'djangobower',
-    'filer',
-    'mptt',
-    'easy_thumbnails',
-    
-    'apps.utils',
-    'apps.galleryapp',
-    'apps.gallery',
-    'apps.video',
-    'apps.event',
-    'apps.news',
-    'apps.quiz',
-    'apps.mamasemedia',
-    'apps.true_false',
-    'apps.multichoice',
-    'apps.essay',
-    'apps.partners',
-    'apps.testapp',
-    'apps.intro',
-    'apps.gis',
+   'apps.utils',
+   'apps.galleryapp',
+   'apps.gallery',
+   'apps.video',
+   'apps.event',
+   'apps.news',
+   'apps.quiz',
+   'apps.mamasemedia',
+   'apps.true_false',
+   'apps.multichoice',
+   'apps.essay',
+   'apps.partners',
+   'apps.testapp',
+   'apps.intro',
+   'apps.gis',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -151,9 +152,6 @@ STATICFILES_DIRS = (
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 
 # Wagtail settings
