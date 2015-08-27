@@ -68,10 +68,10 @@ class ContactView(TemplateView):
         
         
 def error_view(request):
-    return render(request,"404.html")
+    return render(request,"500.html")
     
 def page_not_found_view(request):
-    return render(request,"500.html")
+    return render(request,"404.html")
     
 def email(request):
     args = {}
