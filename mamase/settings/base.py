@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 from urlparse import urlparse
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -230,13 +231,13 @@ LOGGING = {
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-            'strm': sys.stdout,
+            'formatter': 'simple',
+            'stream': sys.stdout
             },
         'file': {
             'class': 'logging.handlers.RotatingFileHandler',
             'formatter': 'verbose',
-            'filename': '/tmp/elimu.log',
+            'filename': '/tmp/mamase.log',
             'maxBytes': 1024000,
             'backupCount': 3,
             },
