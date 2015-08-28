@@ -231,6 +231,7 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
+            'strm': sys.stdout,
             },
         'file': {
             'class': 'logging.handlers.RotatingFileHandler',

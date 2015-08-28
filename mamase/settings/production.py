@@ -42,10 +42,10 @@ MEDIA_URL = 'https://mamase.s3.amazonaws.com/media/'
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {
-       'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',                                                                
+        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',                                                              
         'URLS': [os.environ.get('SEARCHBOX_URL')], #,                                                                        
-       'INDEX': 'mamase',
-       'TIMEOUT': 5,
+        'INDEX': 'mamase',
+        'TIMEOUT': 5,
     }
 }
 
