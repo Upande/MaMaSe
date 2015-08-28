@@ -205,34 +205,66 @@ FIXTURE_DIRS = (
 )
 
 LOGGING = {
-   'version': 1,
-   'disable_existing_loggers': False,
-   'formatters': {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
         'verbose': {
-            'format': ('%(asctime)s [%(process)d] [%(levelname)s] ' +
-                       'pathname=%(pathname)s lineno=%(lineno)s ' +
-                       'funcname=%(funcName)s %(message)s'),
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
+            'format': '%(levelname)s [%(asctime)s] %(module)s %(message)s'
+            },
         'simple': {
             'format': '%(levelname)s %(message)s'
-        }
-    },
-    'handlers': {
-        'null': {
-            'level': 'DEBUG',
-            'class': 'logging.NullHandler',
+            },
         },
+    
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+            }
+        },
+    'handlers': {
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler'
+            },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
-    },
+            'formatter': 'simple'
+            },
+        'file': {
+            'class': 'logging.handlers.RotatingFileHandler',
+            'formatter': 'verbose',
+            'filename': '/tmp/elimu.log',
+            'maxBytes': 1024000,
+            'backupCount': 3,
+            },
+        },
+
     'loggers': {
-        'testlogger': {
-            'handlers': ['console'],
-            'level': 'INFO',
+        'django': {
+            'handlers': ['file', 'console','mail_admins'],
+            'propagate': True,
+            'level': 'WARNING',
+            },
+
+        'django.db.backends': {
+            'handlers': ['file', 'console','mail_admins'],
+            'propagate': False,
+            'level': 'WARNING',
+            },
+
+        'scheduling': {
+            'handlers': ['file', 'console','mail_admins'],
+            'propagate': True,
+            'level': 'WARNING',
+            },
+
+        'django.request': {
+            'handlers': ['file','console','mail_admins'],
+            'level': 'WARNING',
+            'propagate': True,
+            },
         }
-    }
 }
+
