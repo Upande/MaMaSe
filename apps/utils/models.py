@@ -50,6 +50,9 @@ class EmailRecipient(models.Model):
     email = models.CharField(max_length = 200)
     active = models.BooleanField(default = True)
 
+    def __unicode__(self):
+        return self.name + " (" + self.email + ")"
+
 class Email(models.Model):
     sender = models.CharField(max_length = 200)
     email = models.CharField(max_length = 200)
@@ -57,3 +60,6 @@ class Email(models.Model):
     message = models.TextField()
     sent = models.DateTimeField(auto_now_add=True)
     
+    def __unicode__(self):
+        return self.sender + " (" + self.email + ")"
+

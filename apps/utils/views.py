@@ -4,6 +4,7 @@ from django.http import JsonResponse,HttpResponseRedirect
 from django.shortcuts import render,render_to_response
 from django.views.generic.base import TemplateView
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 from .models import LoggerData,Channel,ChannelField,Feed,EmailRecipient,Email
 from .emailSender import send_email
@@ -98,7 +99,7 @@ def email(request):
             
                     
             #Create the html message to be sent via email
-            status = send_email(html_message,"mamasewebsite@gmail.com",to_list,subject)
+            status = send_email(html_message,settings.EMAIL_HOST_USER,to_list,subject)
 
         if status:
             args['success_message'] = "Success! We have received your email and will respond ASAP. "

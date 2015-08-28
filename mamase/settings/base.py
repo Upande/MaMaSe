@@ -80,6 +80,8 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -192,8 +194,8 @@ EMAIL_PORT = 587
 #For gmail or google apps
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = 'mamasewebsite@gmail.com'
-SERVER_EMAIL = 'mamasewebsite@gmail.com'
+DEFAULT_FROM_EMAIL = os.environ.get('EMAIL_HOST_USER')
+SERVER_EMAIL = os.environ.get('EMAIL_HOST_USER') 
 
 FIXTURE_DIRS = (
    'apps/news/fixures/',

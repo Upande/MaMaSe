@@ -49,3 +49,12 @@ WAGTAILSEARCH_BACKENDS = {
     }
 }
 
+
+SEND_BROKEN_LINK_EMAILS=True
+ADMINS = (
+    ('Samuel', 'samuel@upande.com'),
+    ('Paul', 'paul@upande.com'),
+    ('Kevin', 'kevin@upande.com'),
+)
+
+MANAGERS = ADMINS
