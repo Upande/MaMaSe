@@ -13,7 +13,7 @@ class EmailRecipientAdmin(admin.ModelAdmin):
     fields = ['role', 'name','email']
 
 class EmailAdmin(admin.ModelAdmin):
-    fields = ['sender', 'name','email','message']
+    fields = ['sender', 'subject','email','message']
 
 class LoggerDataAdmin(admin.ModelAdmin):
     fields = ['raw_data']
