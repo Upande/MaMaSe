@@ -49,3 +49,11 @@ class EmailRecipient(models.Model):
     name = models.CharField(max_length = 200)
     email = models.CharField(max_length = 200)
     active = models.BooleanField(default = True)
+
+class Email(models.Model):
+    sender = models.CharField(max_length = 200)
+    email = models.CharField(max_length = 200)
+    subject = models.CharField(max_length = 255)
+    message = models.TextField()
+    sent = models.DateTimeField(auto_now_add=True)
+    

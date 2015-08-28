@@ -1,14 +1,15 @@
+import json
+
 from django.http import JsonResponse,HttpResponseRedirect
 from django.shortcuts import render,render_to_response
 from django.views.generic.base import TemplateView
 from django.core.urlresolvers import reverse
 
-from . import thingspeak 
+from .models import LoggerData,Channel,ChannelField,Feed,EmailRecipient,Email
 from .emailSender import send_email
+from . import thingspeak 
 
-from .models import LoggerData,Channel,ChannelField,Feed,EmailRecipient
 
-import json
 
 def logThingspeakData(request):
     data = thingspeak.parseAPIContent()
@@ -76,7 +77,6 @@ def page_not_found_view(request):
 def email(request):
     args = {}
     if request.method == "POST":
-        recipient  = request.POST.get('recipient',None)
         name  = request.POST.get('name',None)
         email  = request.POST.get('email',None)
         subject  = request.POST.get('subject',None)
@@ -87,14 +87,15 @@ def email(request):
 
         if message != None and name != None:
             #Check who the email is intended for
-            if recipient == "All":
-                er = EmailRecipient.objects.all()
-            else:
-                er = EmailRecipient.objects.filter(role = recipient)
+            sent_email = Email(sender = name,email=email,subject = subject,message = message)
+            sent_email.save()
+
+            er = EmailRecipient.objects.all()
 
             to_list = er.values_list('email',flat=True)
             
-            html_message = create_email_message(email,message)
+            html_message = create_email_message(email,message,name)
+            
                     
             #Create the html message to be sent via email
             status = send_email(html_message,"mamasewebsite@gmail.com",to_list,subject)
@@ -108,13 +109,14 @@ def email(request):
     else:
         return HttpResponseRedirect(reverse('contact-us'))
 
-def create_email_message(email,message):
-    html_content = "Hi there,<br><br>"
-    html_content = html_content + "You have received mail from the website<br>"
+def create_email_message(email,message,name):
+    html_content = "Hello, \n\n"
+    html_content = html_content + "You have received mail from the website.\n\n"
     html_content = html_content + "From: "+email
-    html_content = html_content + "<br>Message Content:" + message
-    html_content = html_content + '<br><br>'
-    html_content = html_content + 'Yours truly,<br>'
+    html_content = html_content + "\nName: "+name
+    html_content = html_content + "\nMessage: " + message
+    html_content = html_content + '\n\n'
+    html_content = html_content + 'Yours truly,\n\n'
     html_content = html_content + 'The Upande Team.'
     
     return html_content
