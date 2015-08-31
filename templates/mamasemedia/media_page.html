@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load disqus_tags %}
+{% load static %}
+
+{% block body_class %}template-mediapage{% endblock %}
+
+{% block content %}
+
+<!-- Container -->
+
+<!-- Start Content -->
+<div id="content">
+  <div class="container">
+    <div class="row portfolio-page">
+      
+      <!-- Start Recent Projects Carousel -->
+      <ul id="portfolio-list" data-animated="fadeIn">
+	{% for item in self.media_items.all %}
+	<li>
+	  <img src="{{item.link}}" alt="{{item.title}}" />
+	  <div class="portfolio-item-content">
+	    <span class="header">{{item.title}}</span>
+	    <p class="body">{{item.title}}</p>
+	  </div>
+	  <a href="{{item.link}}"><i class="more">+</i></a>
+	</li>
+	{% endfor %}
+      </ul>
+      <!-- End Portfolio Items -->
+      
+    </div>
+  </div>
+</div>
+<!-- End Content -->
+
+<!-- End Container -->
+{% endblock %}
+{% block partners %}{% endblock %}

@@ -24,7 +24,7 @@ class LinkFields(models.Model):
     @property
     def link(self):
         if self.image:
-            return self.image.url
+            return self.image.file.url
         else:
             return self.embedded_link
 

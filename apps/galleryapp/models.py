@@ -17,11 +17,8 @@ from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 
 
 class Gallery(Page):
-    #gallery_slug = models.SlugField(max_length=50)
     name = models.CharField(max_length=55)
     description = models.TextField(blank=True)
-#    date_created = models.DateTimeField(auto_now_add=True)
-#    date_modified = models.DateTimeField(auto_now=True)
 
     class Meta:
         ordering = ['name']
@@ -41,12 +38,9 @@ Gallery.content_panels = Page.content_panels + [
 
 
 class Image(Page):
-#    image_slug = models.SlugField(max_length=50)
     name =  models.CharField(max_length=50)
     image = models.ImageField(upload_to='MaMaSeGalleries',blank=True,null=True)
     description = models.TextField(blank=True)
-#    date_created = models.DateTimeField(auto_now_add=True)
-#    date_modified = models.DateTimeField(auto_now=True)
     gallery = models.ForeignKey(Gallery, on_delete=models.SET_NULL, null=True)
 
     class Meta:

@@ -64,8 +64,8 @@ INSTALLED_APPS = (
    'storages',
 
    'apps.utils',
-   'apps.galleryapp',
    'apps.gallery',
+   'apps.galleryapp',
    'apps.video',
    'apps.event',
    'apps.news',
