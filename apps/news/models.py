@@ -198,7 +198,7 @@ class NewsIndexPage(Page):
             news_item = news_item.filter(tags__name=tag)
 
         if category:
-            news_item = news_item.filter(category__name=category)
+            news_item = news_item.filter(categorypage__name=category)
             
         # Pagination
         page = request.GET.get('page')
