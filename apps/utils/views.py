@@ -89,7 +89,7 @@ def email(request):
         html_message = ""
         
         try:
-            validate_email(email):
+            validate_email(email)
         except ValidationError:
             args['error_message'] = "Error! Invalid email address!"            
             return render(request, 'contact.html', args)
