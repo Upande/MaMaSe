@@ -3,8 +3,9 @@ import json
 from django.http import JsonResponse,HttpResponseRedirect
 from django.shortcuts import render,render_to_response
 from django.views.generic.base import TemplateView
-from django.core.urlresolvers import reverse
 from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+from django.core.urlresolvers import reverse
 from django.conf import settings
 
 from .models import LoggerData,Channel,ChannelField,Feed,EmailRecipient,Email
@@ -87,7 +88,9 @@ def email(request):
         status = False
         html_message = ""
         
-        if not validate_email(email):
+        try:
+            validate_email(email):
+        except ValidationError:
             args['error_message'] = "Error! Invalid email address!"            
             return render(request, 'contact.html', args)
         
