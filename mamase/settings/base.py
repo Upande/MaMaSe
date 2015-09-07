@@ -54,8 +54,6 @@ INSTALLED_APPS = (
    
    'jsonfield',
    'elasticsearch',
-   'search',
-   'home',
    'disqus',
    'djangobower',
    'filer',
@@ -75,6 +73,7 @@ INSTALLED_APPS = (
    'apps.partners',
    'apps.testapp',
    'apps.gis',
+   'apps.search',
 )
 
 MIDDLEWARE_CLASSES = (
