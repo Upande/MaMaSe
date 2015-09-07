@@ -64,8 +64,6 @@ INSTALLED_APPS = (
    'storages',
 
    'apps.utils',
-   'apps.gallery',
-   'apps.galleryapp',
    'apps.video',
    'apps.event',
    'apps.news',
@@ -76,7 +74,6 @@ INSTALLED_APPS = (
    'apps.essay',
    'apps.partners',
    'apps.testapp',
-   'apps.intro',
    'apps.gis',
 )
 

@@ -1,7 +1,7 @@
 import json
 
+from django.shortcuts import render,render_to_response,RequestContext
 from django.http import JsonResponse,HttpResponseRedirect
-from django.shortcuts import render,render_to_response
 from django.views.generic.base import TemplateView
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -130,3 +130,6 @@ def create_email_message(email,message,name):
     html_content = html_content + 'The Upande Team.'
     
     return html_content
+
+def knowledge(request):
+    return render_to_response('knowledge_platform.html', locals(), context_instance=RequestContext(request))

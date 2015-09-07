@@ -92,7 +92,6 @@
    
     <!-- Additional css not needed globally -->
     {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'slider-partners/carouFredSel.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> 
     {% endblock %}
 
@@ -121,78 +120,70 @@
     <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.touchSwipe.min.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.transit.min.js' %}"></script>
     <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.ba-throttle-debounce.min.js' %}"></script>
-    <script type="text/javascript">
-      $(function() {
-
-        //  Basic carousel, no options
-        $('#foo0').carouFredSel();
-
-    });
-	</script>
-	<!-- bxslider used in the gallery page -->
-	<script type="text/javascript" language="javascript" src="{% static 'bxslider/jquery.bxslider.min.js' %}"></script>
-
-	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-	<script src="{% static 'js/c3.js' %}"></script>
-	<script>
-		$(document).ready(function() {
-			var dt = new Date();
-			dt.setHours(dt.getHours()-24)//Time is in hours. 1 days ago
-
-
-			$.ajax({
-				type: 'GET',
-				url : "https://api.thingspeak.com/channels/"+15792+"/feed.json?start="+dt+"&callback=",
-				dataType: "jsonp",
-				success: function(data) {
-					feeds = data.feeds
-					channel = data.channel
-					var created = ['created']
-					var field1 = [channel.field1]
-					var field2 = [channel.field2]
-					var field3 = [channel.field3]
-					$('#channeldesc').html(channel.description);
-					$('#channelname').html(channel.name);
-					for (var i = 0; i < feeds.length; i++) {
-						n = feeds[i].created_at;
-						f1 = feeds[i].field1;
-						f2 = feeds[i].field2;
-						f3 = feeds[i].field3;
-						day = n.split('T',2)
-						created.push(day[0].replace('T',' ').concat(day[1].split(':',1)));
-						field1.push(f1);
-						field2.push(f2);
-						field3.push(f3);
-					}
-					var chart = c3.generate({
-						bindto: '#chart',
-						data: {
-							x: 'created',
-							xFormat: '%Y-%m-%d%H',
-							columns: [
-							created,
-							field1,
-							field2,
-							field3,
-							],
-						},
-						axis: {
-							x: {
-								type: 'timeseries',
-								tick: {
-							                count: 3,
-							    format: '%Y-%m-%d %H',
-							    culling: false,
-							    outer: false
-								}
-							}
-						}
-					});
-				},
-			});
-});
-</script>  
-	{% endblock js_initialize %}
+    <!-- bxslider used in the gallery page -->
+    <script type="text/javascript" language="javascript" src="{% static 'bxslider/jquery.bxslider.min.js' %}"></script>
+    
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="{% static 'js/c3.js' %}"></script>
+    <script>
+      $(document).ready(function() {
+      var dt = new Date();
+      dt.setHours(dt.getHours()-24)//Time is in hours. 1 days ago
+      
+      
+      $.ajax({
+      type: 'GET',
+      url : "https://api.thingspeak.com/channels/"+15792+"/feed.json?start="+dt+"&callback=",
+      dataType: "jsonp",
+      success: function(data) {
+      feeds = data.feeds
+      channel = data.channel
+      var created = ['created']
+      var field1 = [channel.field1]
+      var field2 = [channel.field2]
+      var field3 = [channel.field3]
+      $('#channeldesc').html(channel.description);
+      $('#channelname').html(channel.name);
+      for (var i = 0; i < feeds.length; i++) {
+			  n = feeds[i].created_at;
+			  f1 = feeds[i].field1;
+			  f2 = feeds[i].field2;
+			  f3 = feeds[i].field3;
+			  day = n.split('T',2)
+			  created.push(day[0].replace('T',' ').concat(day[1].split(':',1)));
+			  field1.push(f1);
+			  field2.push(f2);
+			  field3.push(f3);
+			  }
+			  var chart = c3.generate({
+			  bindto: '#chart',
+			  data: {
+			  x: 'created',
+			  xFormat: '%Y-%m-%d%H',
+			  columns: [
+			  created,
+			  field1,
+			  field2,
+			  field3,
+			  ],
+			  },
+			  axis: {
+			  x: {
+			  type: 'timeseries',
+			  tick: {
+			  count: 3,
+			  format: '%Y-%m-%d %H',
+			  culling: false,
+			  outer: false
+			  }
+			  }
+			  }
+			  });
+			  },
+			  });
+			  });
+			  </script>  
+    {% endblock js_initialize %}
 
 <!-- bxslider css -->
 <link rel="stylesheet" type="text/css" href="{% static 'bxslider/jquery.bxslider.css' %}" />
@@ -480,24 +471,6 @@
 <!-- End Services Section -->    
 
 {% endblock content %}
-
-{% block partners %}
-
-<!-- List of uploaded documents --> 
-	<!-- <div class="container">
-	  <h3>PARTNERS</h3>
-	  <div class="list_carousel">
-            <ul id="foo0" >
-              {% for logo in logos %}
-                  <li><a href="{{logo.url}}" target="_blank"><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}"></a><li>    
-              {% endfor %}
-          </ul>
-          <div class="clearfix"></div>
-      </div> 
-  </div>    
-</br> -->
-
-{% endblock partners %}
 
 {% block footer %}     
 
