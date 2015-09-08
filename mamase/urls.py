@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^search/$', 'search.views.search', name='search'),
+    url(r'^search/$', 'apps.search.views.search', name='search'),
     url(r'^mamase/', include('apps.utils.urls')),
     url(r'^communications/$', CommView.as_view(), name="communications"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
