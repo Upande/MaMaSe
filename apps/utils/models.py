@@ -1,5 +1,6 @@
 from django.db import models
 from jsonfield import JSONField
+import datetime
 # Create your models here.
 
 class LoggerData(models.Model):
@@ -16,33 +17,40 @@ class Channel(models.Model):
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
     elevation = models.TextField()
-    last_entry_id = models.IntegerField()
+    last_entry_id = models.IntegerField(default=0)
+    username = models.TextField()
+    
+    #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried
+    field1 = models.TextField(default="",null=True,blank=True)
+    field2 = models.TextField(default="",null=True,blank=True)
+    field3 = models.TextField(default="",null=True,blank=True)
+    field4 = models.TextField(default="",null=True,blank=True)
+    field5 = models.TextField(default="",null=True,blank=True)
+    field6 = models.TextField(default="",null=True,blank=True)
+    field7 = models.TextField(default="",null=True,blank=True)
+    field8 = models.TextField(default="",null=True,blank=True)
     
     def __unicode__(self):
         return self.name
-
-class ChannelField(models.Model):
-    tag = models.TextField()
-    field = models.TextField()
-    added = models.DateTimeField(auto_now_add=True)
-    channel = models.ForeignKey(Channel)
-
-    def __unicode__(self):
-        return self.field
 
 class Feed(models.Model):
     channel = models.ForeignKey(Channel)
     entry_id = models.IntegerField(unique=True)
     created_at = models.DateTimeField()
+    added = models.DateTimeField(auto_now_add=True)
+
+    #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried
+    field1 = models.FloatField(default=0.0,null=True,blank=True)
+    field2 = models.FloatField(default=0.0,null=True,blank=True)
+    field3 = models.FloatField(default=0.0,null=True,blank=True)
+    field4 = models.FloatField(default=0.0,null=True,blank=True)
+    field5 = models.FloatField(default=0.0,null=True,blank=True)
+    field6 = models.FloatField(default=0.0,null=True,blank=True)
+    field7 = models.FloatField(default=0.0,null=True,blank=True)
+    field8 = models.FloatField(default=0.0,null=True,blank=True)
 
     def __unicode__(self):
         return str(self.entry_id)
-
-class FeedField(models.Model):
-    reading = models.TextField(default="")
-    channelField = models.ForeignKey(ChannelField)
-    feed = models.ForeignKey(Feed)
-    added = models.DateTimeField(auto_now_add=True)
 
 class EmailRecipient(models.Model):
     role = models.CharField(max_length = 200)
