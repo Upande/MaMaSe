@@ -58,7 +58,6 @@ INSTALLED_APPS = (
    'jsonfield',
    'elasticsearch',
    'disqus',
-   'djangobower',
    'filer',
    'mptt',
    'easy_thumbnails',
@@ -146,7 +145,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-    'djangobower.finders.BowerFinder',
 )
 
 STATICFILES_DIRS = (
