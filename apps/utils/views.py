@@ -8,7 +8,7 @@ from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.conf import settings
 
-from .models import LoggerData,Channel,ChannelField,Feed,EmailRecipient,Email
+from .models import LoggerData,Channel,Feed,EmailRecipient,Email
 from .emailSender import send_email
 from . import thingspeak 
 

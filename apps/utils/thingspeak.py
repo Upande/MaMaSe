@@ -1,5 +1,4 @@
-from apps.utils.models import Channel,Feeds
-
+from apps.utils.models import Channel,Feed
 import requests
 
 def getAPIData(url):
@@ -22,18 +21,16 @@ def getChannel():
     
     
     for item in channels:
-        c = Channel.objects.get_or_create(        
-            c.data_id = item['id'],
-            defaults={dict(c.username = item['username'],
-                           c.elevation = item['elevation'],
-                           c.description = item['description'],
-                           c.name = item['name'],
-                           c.longitude = item['longitude'],
-                           c.latitude = item['latitude'],
-                           c.created_at = item['created_at'],
-                           c.last_entry_id = item['last_entry_id'],
-                       )}
-        }
+        c,created = Channel.objects.get_or_create(data_id = item['id'], defaults={'username':item['username'],
+                                                                                  'elevation':item['elevation'],
+                                                                                  'description': item['description'],
+                                                                                  'name':item['name'],
+                                                                                  'longitude':item['longitude'],
+                                                                                  'latitude':item['latitude'],
+                                                                                  'created_at':item['created_at'],
+                                                                                  'last_entry_id':item['last_entry_id'],
+                                                                              }
+                                              )
         
             
 def parseAPIContent():
@@ -65,18 +62,16 @@ def getFeedData(data_id):
     channel.save()
     
     for item in feeds:
-        f = Feed.objects.get_or_create(        
-            f.entry_id = item['entry_id'],
-            defaults={dict(f.channel = channel,
-                           f.field1 = item.get('field1',None),
-                           f.field2 = item.get('field2',None),
-                           f.field3 = item.get('field3',None),
-                           f.field4 = item.get('field4',None),
-                           f.field5 = item.get('field5',None),
-                           f.field6 = item.get('field6',None),
-                           f.field7 = item.get('field7',None),
-                           f.field8 = item.get('field8',None),
+        f,created = Feed.objects.get_or_create(        
+            entry_id = item['entry_id'],
+            defaults={dict(channel = channel,
+                           field1 = item.get('field1',None),
+                           field2 = item.get('field2',None),
+                           field3 = item.get('field3',None),
+                           field4 = item.get('field4',None),
+                           field5 = item.get('field5',None),
+                           field6 = item.get('field6',None),
+                           field7 = item.get('field7',None),
+                           field8 = item.get('field8',None),
                        )}
-        }
-        
-        
+        )

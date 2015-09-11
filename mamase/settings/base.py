@@ -19,6 +19,9 @@ from urlparse import urlparse
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
+#print PROJECT_DIR
+print BASE_DIR
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -55,7 +58,6 @@ INSTALLED_APPS = (
    'jsonfield',
    'elasticsearch',
    'disqus',
-   'djangobower',
    'filer',
    'mptt',
    'easy_thumbnails',
@@ -143,16 +145,14 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-    'djangobower.finders.BowerFinder',
 )
 
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static/assets'),
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
 
 # Wagtail settings
 
@@ -171,13 +171,6 @@ DISQUS_API_KEY = 'xhv95xoheLTkiaS7PKaZmxe9NpTObz4LDUsNmC2e1XNgW2SKIO0bLSqfwIRWrz
 DISQUS_WEBSITE_SHORTNAME = 'Upande'
 
 SITE_ID = 1
-
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
-
-BOWER_INSTALLED_APPS = (
-    'jquery',
-    'bootstrap'
-)
 
 ALLOWED_HOSTS = ['*']
 
