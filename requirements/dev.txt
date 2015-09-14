@@ -1,0 +1,2 @@
+# Local development dependencies go here
+--requirement=base.txt

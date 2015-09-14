@@ -58,3 +58,5 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+os.environ['http_proxy'] = os.environ['QUOTAGUARDSTATIC_URL']
