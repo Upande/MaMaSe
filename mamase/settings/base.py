@@ -16,11 +16,10 @@ import os
 import sys
 from urlparse import urlparse
 
+import djcelery
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
-
-#print PROJECT_DIR
-print BASE_DIR
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -31,51 +30,52 @@ print BASE_DIR
 AUTH_USER_MODEL = 'auth.User'
 
 INSTALLED_APPS = (
-   'django.contrib.admin',
-   'django.contrib.sites',
-   'django.contrib.auth',
-   'django.contrib.contenttypes',
-   'django.contrib.sessions',
-   'django.contrib.messages',
-   'django.contrib.staticfiles',
-   
-   'taggit',
-   'compressor',
-   'modelcluster',
-   
-   'wagtail.wagtailcore',
-   'wagtail.wagtailadmin',
-   'wagtail.wagtailsearch',
-   'wagtail.wagtailimages',
-   'wagtail.wagtaildocs',
-   'wagtail.wagtailsnippets',
-   'wagtail.wagtailusers',
-   'wagtail.wagtailsites',
-   'wagtail.wagtailembeds',
-   'wagtail.wagtailredirects',
-   'wagtail.wagtailforms',
-   
-   'jsonfield',
-   'elasticsearch',
-   'disqus',
-   'filer',
-   'mptt',
-   'easy_thumbnails',
-   'storages',
-
-   'apps.utils',
-   'apps.video',
-   'apps.event',
-   'apps.news',
-   'apps.quiz',
-   'apps.mamasemedia',
-   'apps.true_false',
-   'apps.multichoice',
-   'apps.essay',
-   'apps.partners',
-   'apps.testapp',
-   'apps.gis',
-   'apps.search',
+    'django.contrib.admin',
+    'django.contrib.sites',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    
+    'taggit',
+    'compressor',
+    'modelcluster',
+    
+    'wagtail.wagtailcore',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailimages',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailsites',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailforms',
+    
+    'jsonfield',
+    'elasticsearch',
+    'disqus',
+    'filer',
+    'mptt',
+    'easy_thumbnails',
+    'storages',
+    'djcelery',
+    
+    'apps.utils',
+    'apps.video',
+    'apps.event',
+    'apps.news',
+    'apps.quiz',
+    'apps.mamasemedia',
+    'apps.true_false',
+    'apps.multichoice',
+    'apps.essay',
+    'apps.partners',
+    'apps.testapp',
+    'apps.gis',
+    'apps.search',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -260,3 +260,5 @@ LOGGING = {
         }
 }
 
+#Celery
+djcelery.setup_loader()

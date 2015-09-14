@@ -1,5 +1,8 @@
-from apps.utils.models import Channel,Feed
+from celery import task
 import requests
+
+from apps.utils.models import Channel,Feed
+
 
 def getAPIData(url):
     r = requests.get(url)
@@ -38,6 +41,8 @@ def parseAPIContent():
     
     for item in data_ids:
         getFeedData(item)
+
+    return True
 
 def getFeedData(data_id):
     url = "https://thingspeak.com/channels/"+data_id+"/feed.json"
