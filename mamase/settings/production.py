@@ -59,4 +59,4 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-BROKER_URL = 'django://'
+BROKER_URL = os.environ.get('CLOUDAMQP_URL')
