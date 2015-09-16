@@ -12,10 +12,10 @@ class Channel(models.Model):
     data_id = models.IntegerField(unique=True)
     name = models.TextField()
     description = models.TextField()
-    latitide  = models.FloatField()
+    latitude  = models.FloatField()
     longitude  = models.FloatField()
     created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    updated_at = models.DateTimeField(auto_now_add=True)
     elevation = models.TextField()
     last_entry_id = models.IntegerField(default=0)
     username = models.TextField()
@@ -36,7 +36,6 @@ class Channel(models.Model):
 class Feed(models.Model):
     channel = models.ForeignKey(Channel)
     entry_id = models.IntegerField(unique=True)
-    created_at = models.DateTimeField()
     added = models.DateTimeField(auto_now_add=True)
 
     #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried

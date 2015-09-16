@@ -1,9 +1,9 @@
 from __future__ import absolute_import
 
-from celery import shared_task
+from celery import task
 
 from apps.utils.thingspeak import parseAPIContent
 
-@shared_task
+@task
 def refreshThingspeakData():
     return parseAPIContent()
