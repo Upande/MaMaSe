@@ -2,8 +2,14 @@ from celery import task
 import requests
 import json
 
-from apps.utils.models import Channel,Feed
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse,HttpResponse
+from django.core import serializers
 
+from rest_framework.renderers import JSONRenderer
+
+from apps.utils.serializers import ChannelSerializer,FeedSerializer
+from apps.utils.models import Channel,Feed
 
 def getAPIData(url):
     r = requests.get(url)
@@ -84,3 +90,49 @@ def getFeedData(data_id):
                       'field8':item.get('field8',None),
                   }
         )
+
+
+class JSONResponse(HttpResponse):
+    """
+    An HttpResponse that renders its content into JSON.
+    """
+    def __init__(self, data, **kwargs):
+        content = JSONRenderer().render(data)
+        kwargs['content_type'] = 'application/json'
+        super(JSONResponse, self).__init__(content, **kwargs)
+        
+@csrf_exempt
+def returnChannelData(request):
+    if request.method == 'GET':
+        channels = Channel.objects.all()
+        cserializer = ChannelSerializer(channels, many=True)
+        return JSONResponse(cserializer.data)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        cserializer = ChannelSerializer(data=data)
+        if cserializer.is_valid():
+            cserializer.save()
+            return JSONResponse(cserializer.data, status=201)
+        return JSONResponse(cserializer.errors, status=400)
+
+
+@csrf_exempt
+def returnFeedData(request):
+    if request.method == 'GET':
+        feeds = Feed.objects.all()
+        fserializer = FeedSerializer(feeds, many=True)
+        return JSONResponse(fserializer.data)
+
+    elif request.method == 'POST':
+        data = JSONParser().parse(request)
+        fserializer = FeedSerializer(data=data)
+        if fserializer.is_valid():
+            fserializer.save()
+            return JSONResponse(fserializer.data, status=201)
+        return JSONResponse(fserializer.errors, status=400)
+
+
+def returnFeedDataOld(request):
+    data = serializers.serialize("json", Feed.objects.all(),use_natural_foreign_keys=True, use_natural_primary_keys=True)
+    return JsonResponse(dict(data=json.loads(data)))
