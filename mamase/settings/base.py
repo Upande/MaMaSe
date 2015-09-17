@@ -16,6 +16,8 @@ import os
 import sys
 from urlparse import urlparse
 
+import djcelery
+
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
@@ -28,56 +30,52 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 AUTH_USER_MODEL = 'auth.User'
 
 INSTALLED_APPS = (
-   'django.contrib.admin',
-   'django.contrib.sites',
-   'django.contrib.auth',
-   'django.contrib.contenttypes',
-   'django.contrib.sessions',
-   'django.contrib.messages',
-   'django.contrib.staticfiles',
-   
-   'taggit',
-   'compressor',
-   'modelcluster',
-   
-   'wagtail.wagtailcore',
-   'wagtail.wagtailadmin',
-   'wagtail.wagtailsearch',
-   'wagtail.wagtailimages',
-   'wagtail.wagtaildocs',
-   'wagtail.wagtailsnippets',
-   'wagtail.wagtailusers',
-   'wagtail.wagtailsites',
-   'wagtail.wagtailembeds',
-   'wagtail.wagtailredirects',
-   'wagtail.wagtailforms',
-   
-   'jsonfield',
-   'elasticsearch',
-   'search',
-   'home',
-   'disqus',
-   'djangobower',
-   'filer',
-   'mptt',
-   'easy_thumbnails',
-   'storages',
-
-   'apps.utils',
-   'apps.gallery',
-   'apps.galleryapp',
-   'apps.video',
-   'apps.event',
-   'apps.news',
-   'apps.quiz',
-   'apps.mamasemedia',
-   'apps.true_false',
-   'apps.multichoice',
-   'apps.essay',
-   'apps.partners',
-   'apps.testapp',
-   'apps.intro',
-   'apps.gis',
+    'django.contrib.admin',
+    'django.contrib.sites',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    
+    'taggit',
+    'compressor',
+    'modelcluster',
+    
+    'wagtail.wagtailcore',
+    'wagtail.wagtailadmin',
+    'wagtail.wagtailsearch',
+    'wagtail.wagtailimages',
+    'wagtail.wagtaildocs',
+    'wagtail.wagtailsnippets',
+    'wagtail.wagtailusers',
+    'wagtail.wagtailsites',
+    'wagtail.wagtailembeds',
+    'wagtail.wagtailredirects',
+    'wagtail.wagtailforms',
+    
+    'jsonfield',
+    'elasticsearch',
+    'disqus',
+    'filer',
+    'mptt',
+    'easy_thumbnails',
+    'storages',
+    'djcelery',
+    
+    'apps.utils',
+    'apps.video',
+    'apps.event',
+    'apps.news',
+    'apps.quiz',
+    'apps.mamasemedia',
+    'apps.true_false',
+    'apps.multichoice',
+    'apps.essay',
+    'apps.partners',
+    'apps.testapp',
+    'apps.gis',
+    'apps.search',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -147,16 +145,14 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-    'djangobower.finders.BowerFinder',
 )
 
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static/assets'),
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
-
 
 # Wagtail settings
 
@@ -175,13 +171,6 @@ DISQUS_API_KEY = 'xhv95xoheLTkiaS7PKaZmxe9NpTObz4LDUsNmC2e1XNgW2SKIO0bLSqfwIRWrz
 DISQUS_WEBSITE_SHORTNAME = 'Upande'
 
 SITE_ID = 1
-
-BOWER_COMPONENTS_ROOT = os.path.join(BASE_DIR, 'components')
-
-BOWER_INSTALLED_APPS = (
-    'jquery',
-    'bootstrap'
-)
 
 ALLOWED_HOSTS = ['*']
 
@@ -271,3 +260,6 @@ LOGGING = {
         }
 }
 
+#Celery
+djcelery.setup_loader()
+CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'

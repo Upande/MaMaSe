@@ -58,3 +58,5 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
+BROKER_URL = os.environ.get('CLOUDAMQP_URL')

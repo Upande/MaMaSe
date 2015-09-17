@@ -1,0 +1,3 @@
+#Avoid putting anything here since there should be nothing on production that is not on development. 
+#However some apps are specific to the production env so it might be inevitable
+--requirement=base.txt

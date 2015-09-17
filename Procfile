@@ -1,1 +1,1 @@
-web: gunicorn mamase.wsgi --log-file -
+web: newrelic-admin run-program gunicorn mamase.wsgi
