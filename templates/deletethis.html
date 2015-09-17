@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>"My Json"</title>
+<script>
+
+
+var myobj =
+    {
+        p1: "value1",
+        p2: "value2",
+        p3: "value3",
+        field1:"rain",
+        field2:"temp",
+        field3:"press",
+        field4:"wind speed",
+        field5:"Wind direction",
+        field6:"Soil Moisture 1",
+        field7:"soil Moisture 2",
+        log:"36.233",
+        lat:"0.1245"
+    };
+
+
+
+keys=Object.keys(myobj);// convert to an object
+len=keys.length-5;//get length of obj
+console.log('length of obj = '+len);
+//$('#field1').html(myobj.field1);
+
+/*x=0;
+
+field="";
+
+  for (var key in myobj) {
+  if (myobj.hasOwnProperty(key)) {
+  	 
+  	 x+=1,
+  	 field='field'+x,
+  	 console.log(field);
+  	 console.log(field + " -> " + myobj[field])
+  	  
+  	 //field_no=myobj.length;
+  }
+ }*/
+ //field_no=key.length)-5;
+  //console.log(field_no);
+
+  for(var i=0;i<len;i++){//loop thru all fields
+  		
+  		//field='field'+(i+1),
+      field='field'+(1+i),
+  		console.log(field),
+      console.log(field +':'+myobj[field]+'field value = '+field12
+  }
+
+	
+</script>
+</head>
+<body>
+<h1> My Json Thing</h1>
+	<p id="field1"></p>
+</body>
+</html>

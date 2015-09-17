@@ -9,7 +9,9 @@
 <script>
 
 $(document).ready(function() {
-
+///governor camp=16152
+///mulot=15792
+///mar=16151
 $.ajax({
 type: 'GET',
 url : "http://api.thingspeak.com/channels/"+15792+"/feed.json?start="+dt+"&callback=",
@@ -17,33 +19,83 @@ dataType: "jsonp",
 success: function(data) {
 feeds = data.feeds
 channel = data.channel
+///
+channel_obj=Object.keys(channel);// convert to an object
+len=channel_obj.length-9;//get length of obj
+console.log('length of obj = '+len);//display results
+///
+ 
 var created = ['created']
-var field1 = [channel.field1]
-var field2 = [channel.field2]
-var field3 = [channel.field3]
+var myarry=[];
+///
+	field = "";
+ for(var i=0;i<len;i++){//loop thru all fields
+  		  		
+      field='field'+(1+i),
+      
+      //eval('var field'+ (1+i) + '= ["'+(channel[field])+'"]');//define fields
+      eval('var '+field+' = ["'+(channel[field])+'"]');
+
+      //eval( console.log(field))
+
+      	//console.log(field),
+  		console.log(field +':'+channel[field])
+
+  		//console.log(myfields[field])
+  //}
+///
+/*console.log('length of field1 = '+field1.length)
+console.log(field3)
+console.log(field5)*/
+
+
+/*var field1 = [channel.field1]
+var field2= [channel.field2]
+var field3 = [channel.field3]*/
 $('#channeldesc').html(channel.description);
 $('#channelname').html(channel.name);
-for (var i = 0; i < feeds.length; i++) {
-                    n = feeds[i].created_at;
-                    f1 = feeds[i].field1;
-                    f2 = feeds[i].field2;
-                    f3 = feeds[i].field3;
+for (var j = 0; j < feeds.length; j++) {
+                    n = feeds[j].created_at;
+                    console.log('field is '+field)
+                    eval('f1 ='+ 'feeds[j].'+field);
+                    console.log('f1 = '+f1);
                     created.push(n.replace('T',' ').replace('Z',''));
-                    field1.push(f1);
-                    field2.push(f2);
-                    field3.push(f3);
-		    }
+
+                    //console.log('created = '+created);
+                   eval(field+'.push(f1)');
+                   
+                    
+                 	}
+                 	myarry.push(created),
+                 	eval('myarry.push('+field+')')
+                 	//console.log('length '+myarry.length)
+
+                 }
+
+                console.log( 'field1 '+myarry[0])
+                //console.log( 'length of myarry[0]'+myarry.length)
+
+                /*data=[]
+                for (a=0;a<myarry.length;a++){
+                	data=data.push(myarry[i])
+                	console.log('data '+data)
+                } */                        
+
+
             var chart = c3.generate({
                 bindto: '#chart',
                 data: {
 		    x: 'created',
                     xFormat: '%Y-%m-%d %H:%M:%S',
-                    columns: [
-                        created,
-                        field1,
+                    columns: myarry, //[
+
+                        //created,
+                        //myarry[0], myarry[1],myarry[3],myarry[4],myarry[5],	
+                        //myarry,			                    
+                        /*field1,
                         field2,
-                        field3,
-                    ],
+                        field3,*/
+                    //],
                 },
 axis: {
         x: {
