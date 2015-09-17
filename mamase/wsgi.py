@@ -18,6 +18,3 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mamase.settings")
 
 application = get_wsgi_application()
 application = DjangoWhiteNoise(application)
-
-# Assign QuotaGuard to your environment's http_proxy variable
-os.environ['http_proxy'] = os.environ['QUOTAGUARDSTATIC_URL']
