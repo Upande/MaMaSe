@@ -21,11 +21,11 @@ class Channel(models.Model):
     username = models.TextField()
     
     #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried
-    field1 = models.TextField(default="",null=True,blank=True)
-    field2 = models.TextField(default="",null=True,blank=True)
-    field3 = models.TextField(default="",null=True,blank=True)
-    field4 = models.TextField(default="",null=True,blank=True)
-    field5 = models.TextField(default="",null=True,blank=True)
+    field1 = models.TextField(default=None,null=True,blank=True)
+    field2 = models.TextField(default=None,null=True,blank=True)
+    field3 = models.TextField(default=None,null=True,blank=True)
+    field4 = models.TextField(default=None,null=True,blank=True)
+    field5 = models.TextField(default=None,null=True,blank=True)
     field6 = models.TextField(default="",null=True,blank=True)
     field7 = models.TextField(default="",null=True,blank=True)
     field8 = models.TextField(default="",null=True,blank=True)
@@ -34,7 +34,7 @@ class Channel(models.Model):
         return self.name
 
 class Feed(models.Model):
-    channel = models.ForeignKey(Channel)
+    channel = models.ForeignKey(Channel, related_name="channels")
     entry_id = models.IntegerField(unique=True)
     added = models.DateTimeField(auto_now_add=True)
 
