@@ -1,3 +1,0 @@
-//fire plugin onDocumentReady
-
-    

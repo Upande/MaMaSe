@@ -1,8 +1,6 @@
 {% load static %}
 {% load wagtailcore_tags %}
 {% load wagtailadmin_tags %}
-<!-- Not sure what this does so I am commenting it out for now -->
-<!--{% load wagtailuserbar %}-->
 
 <!doctype html>
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -87,12 +85,9 @@
         animation: fadeInDown 0s ease-in 0ms both;
       }
     </style>  
-    <!-- Using Lato Font to standarize with existing MaMaSe apps-->
-    <!-- <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>-->
    
     <!-- Additional css not needed globally -->
     {% block css %}
-    <link rel="stylesheet" type="text/css" href="{% static 'slider-partners/carouFredSel.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> 
     {% endblock %}
 
@@ -114,22 +109,8 @@
 
     <!--Additional js that require to be initialized before the body -->
     {% block js_initialize %}
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/jquery.carouFredSel-6.2.1-packed.js' %}"></script>
     <!-- optionally include helper plugins -->
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.mousewheel.min.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.touchSwipe.min.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.transit.min.js' %}"></script>
-    <script type="text/javascript" language="javascript" src="{% static 'slider-partners/helper-plugins/jquery.ba-throttle-debounce.min.js' %}"></script>
-    <script type="text/javascript">
-      $(function() {
-
-        //  Basic carousel, no options
-        $('#foo0').carouFredSel();
-
-    });
-	</script>
-	<!-- bxslider used in the gallery page -->
+    <!-- bxslider used in the gallery page -->
 	<script type="text/javascript" language="javascript" src="{% static 'bxslider/jquery.bxslider.min.js' %}"></script>
 
 	<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
@@ -214,7 +195,7 @@
     <header class="clearfix">
       <div class="top-bar">
         <div class="container">
-
+	  
 	  <div class="col-md-12" style="padding:0px;">
 	    <div class="col-md-5" style="padding:0px;">
               <div class="row" style="height:120px; margin:auto;">
@@ -226,7 +207,7 @@
 	    <div class="col-md-6">
 	      <div class="big-title text-center animated fadeInDown delay-01" style="padding-top:60px">
 		<h4 style="color:#34A8DF">Improving water safety and security in the Mara River Basin</h4>
-		</div>
+	      </div>
 	    </div>
 	    <div class="col-md-1" style="padding:0px;">
               <ul class="nav navbar-nav navbar-right">
@@ -388,7 +369,7 @@
 	      <span style="color:#FFF;">Check out the latest MaMaSe data</span>
 	      </h3> 
 	    <div class="animated">
-	      <a class="animated slider btn btn-default btn-min-block" href="{% url 'visual' %}" style="background-color:#34A8DF;" >View here</a>
+	      <a class="animated slider btn btn-default btn-min-block" href="{% url 'visual' %}" style="background-color:#34A8DF;">View here</a>
 	      </div>
 	    </div>
 	  </div>
@@ -480,24 +461,6 @@
 <!-- End Services Section -->    
 
 {% endblock content %}
-
-{% block partners %}
-
-<!-- List of uploaded documents --> 
-	<!-- <div class="container">
-	  <h3>PARTNERS</h3>
-	  <div class="list_carousel">
-            <ul id="foo0" >
-              {% for logo in logos %}
-                  <li><a href="{{logo.url}}" target="_blank"><img src="{{ logo.partner_logo.url }}" alt="{{ logo.partner_logo.name }}"></a><li>    
-              {% endfor %}
-          </ul>
-          <div class="clearfix"></div>
-      </div> 
-  </div>    
-</br> -->
-
-{% endblock partners %}
 
 {% block footer %}     
 
