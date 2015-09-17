@@ -14,7 +14,7 @@ $(document).ready(function() {
 ///mar=16151
 $.ajax({
 type: 'GET',
-url : "http://api.thingspeak.com/channels/"+15792+"/feed.json?start="+dt+"&callback=",
+url : "http://api.thingspeak.com/channels/"+16151+"/feed.json?start="+dt+"&callback=",
 dataType: "jsonp",
 success: function(data) {
 feeds = data.feeds
@@ -66,13 +66,17 @@ for (var j = 0; j < feeds.length; j++) {
                    
                     
                  	}
-                 	myarry.push(created),
+                 	 if(myarry[0] == null) {//if created is not in myarry
+   					   myarry.push(created)
+						}
+					
+
                  	eval('myarry.push('+field+')')
-                 	//console.log('length '+myarry.length)
+                 	console.log('length '+myarry.length)
 
                  }
-
-                console.log( 'field1 '+myarry[0])
+                
+                console.log( 'field 5 '+myarry[2])
                 //console.log( 'length of myarry[0]'+myarry.length)
 
                 /*data=[]
@@ -87,15 +91,7 @@ for (var j = 0; j < feeds.length; j++) {
                 data: {
 		    x: 'created',
                     xFormat: '%Y-%m-%d %H:%M:%S',
-                    columns: myarry, //[
-
-                        //created,
-                        //myarry[0], myarry[1],myarry[3],myarry[4],myarry[5],	
-                        //myarry,			                    
-                        /*field1,
-                        field2,
-                        field3,*/
-                    //],
+                    columns: myarry, 
                 },
 axis: {
         x: {
