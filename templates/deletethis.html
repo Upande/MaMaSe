@@ -50,14 +50,36 @@ field="";
   		//field='field'+(i+1),
       field='field'+(1+i),
   		console.log(field),
-      console.log(field +':'+myobj[field]+'field value = '+field12
+      console.log(field +':'+myobj[field]+'field value = '+field)
   }
+
+
+  
+ 
 
 	
 </script>
+
+
+
+
 </head>
 <body>
+
+
 <h1> My Json Thing</h1>
 	<p id="field1"></p>
+
+
+  <script>
+
+var dateString='M2015-09-17T13:33:58.752Z';
+dateString=new Date(dateString).toUTCString();
+dateString=dateString.split(' ').slice(0, 4).join(' ')
+console.log(dateString);
+
+
+</script>
+
 </body>
 </html>
