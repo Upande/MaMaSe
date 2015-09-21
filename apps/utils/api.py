@@ -12,17 +12,18 @@ def getFeeds(request):
 
     kwargs = {}
     args = {}
-    
+
     if channel:
         kwargs[ 'channel_id' ] = channel
         args['id'] = channel
         
     if start:
         kwargs[ 'added__gte' ] = start
+
     if end:
         kwargs[ 'added__lte' ] = end
         
-    feed = Feed.objects.filter(**kwargs).values('entry_id','channel_id','added','field1','field2','field3','field4','field5','field6','field7','field8','id')    
+    feed = Feed.objects.filter(**kwargs).values('entry_id','channel_id','added_formatted','field1','field2','field3','field4','field5','field6','field7','field8','id')    
     ch = Channel.objects.filter(**args).values('id','name','description','latitude','longitude','field1','field2','field3','field4','field5','field6','field7','field8')
 
     if limit:

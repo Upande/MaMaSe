@@ -48,6 +48,10 @@ class Feed(models.Model):
     field7 = models.FloatField(default=0.0,null=True,blank=True)
     field8 = models.FloatField(default=0.0,null=True,blank=True)
 
+    @property
+    def added_formatted(self):
+        return self.added.strftime('%Y-%m-%d %H:%M:%S')
+
     def __unicode__(self):
         return str(self.entry_id)
 
