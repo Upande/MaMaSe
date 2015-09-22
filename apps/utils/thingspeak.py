@@ -88,6 +88,8 @@ def getFeedData(data_id):
                       'field6':item.get('field6',None),
                       'field7':item.get('field7',None),
                       'field8':item.get('field8',None),
+                      'added':item.get('created_at',None),
+                      'entry_id':item.get('entry_id',None),
                   }
         )
 
