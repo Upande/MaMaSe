@@ -66,3 +66,7 @@ img.richtext-image.right {
 img.img-responsive.carousel {
     height: 372px;
 }
+
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
+    border: none;
+}
