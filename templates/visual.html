@@ -15,13 +15,14 @@ $(document).ready(function() {
 $.ajax({
 type: 'GET',
 //url : "http://api.thingspeak.com/channels/"+16151+"/feed.json?start="+dt+"&callback=",
-url:"/mamase/api/feed/?channel=18",
+url:"/mamase/api/feed/?channel=16",
 dataType: "json",
 success: function(data) {
 feeds = data.feed
 channel = data.channel[0]
 
-//console.log(feeds)
+console.log(channel)
+console.log(feeds)
 //console.log(feeds.length)
 //console.log(feeds[2].field2)
 //console.log("channel 3"+channel[0].length)
@@ -46,7 +47,7 @@ var myarry=[];
       //eval( console.log(field))
 
       	//console.log(field),
-  		//console.log(field +':'+channel[field])
+  		console.log(field +':'+channel[field])
 
   		//console.log(myfields[field])
  
@@ -66,14 +67,14 @@ for (var j = 0; j < feeds.length; j++) {
                     	
                    
                     eval('f1 ='+ 'feeds[j].'+field);
-                    //console.log('f1 = '+f1);
+                    console.log('f1 = '+f1);
                     //created.push(n.replace('T',' ').replace('Z',''));
                     
                     
 
-                    
+                    if (f1 !=undefined){
                     //console.log('created = '+created);
-                   eval(field+'.push(f1)');
+                   eval(field+'.push(f1)');}
                    
                     
                  	}
@@ -108,7 +109,7 @@ axis: {
         x: {
             type: 'timeseries',
             tick: {
-                format: '%Y-%m-%d %H:%M'            
+                format: '%Y-%m-%d %H'            
             }
         }
     }
@@ -192,8 +193,9 @@ for (var j = 0; j < feeds.length; j++) {
                     
 
                     
+                    if (f1 !=undefined){
                     //console.log('created = '+created);
-                   eval(field+'.push(f1)');
+                   eval(field+'.push(f1)');}
                    
                     
                   }
@@ -220,7 +222,7 @@ axis: {
         x: {
             type: 'timeseries',
             tick: {
-                format: '%Y-%m-%d %H:%M'            
+                format: '%Y-%m-%d %H'            
             }
         }
     }

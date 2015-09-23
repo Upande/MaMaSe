@@ -160,9 +160,11 @@ for (var j = 0; j < feeds.length; j++) {
                   day = n.split('T',2)
 
                   console.log("day = "+day)
+                  console.log("created"+j+" is "+n.replace('T',' ').replace('Z',''))
+
 
                   if(created.length<=feeds.length) {
-                  created.push(day[0].replace('T',' ').concat(day[1].split(':',1)));
+                  created.push(n.replace('T',' ').replace('Z',''));
                 }
                                         
                    
@@ -190,17 +192,56 @@ for (var j = 0; j < feeds.length; j++) {
                 bindto: '#chart',
                 data: {
         x: 'created',                         
-                    xFormat: '%Y-%m-%d%H',
-                    columns: myarry,                    
+                    xFormat: '%Y-%m-%d %H:%M:%S',
+                    columns: [myarry[0],myarry[3],myarry[2]
+                    ],
+                    axes: {
+                    'Barometric Pressure': 'y2'
+      }                   
                 },
 axis: {
         x: {
             type: 'timeseries',
             tick: {
-                format: '%m-%d -%H'            
-            }
+                format: '%H:%M'            
+
+            },
+            label: { // ADD
+          text: 'Time',
+          position: 'outer-middle'
         }
-    }
+            
+
+        },
+        y: {
+        show: true,
+        label: { // ADD
+          text:'Temperature',
+          position: 'outer-middle'
+        },
+        tick:{
+          format: d3.format(".0f"),
+          culling:{
+            max:3}
+          }
+        },
+
+        y2: {
+        show: true,
+        label: { // ADD
+          text:'Barometric Pressure',
+          position: 'outer-middle'
+        },
+        tick:{
+          format: d3.format(".0f"),
+          culling:{
+            max:3}
+          }
+        }
+      }        
+        
+        
+    
             });
         },
     });
