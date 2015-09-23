@@ -64,6 +64,9 @@ def logThingspeakData(request):
 class IndexView(TemplateView):
     template_name = "visual.html"
 
+class ChartView(TemplateView):
+    template_name = "chart.html"
+
 class AboutView(TemplateView):
     template_name = "about.html"
 

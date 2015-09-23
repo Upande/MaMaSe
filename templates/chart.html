@@ -1,0 +1,265 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %} <title> Mamase | Visualization </title> {% endblock title %}
+{% block css %} 
+<link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> 
+<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+{% endblock css %}
+{% block js%} 
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="{% static 'js/c3.js' %}"></script>
+<script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function(){
+  $('#charttable').DataTable();
+  });
+</script>
+{% endblock js %}
+
+{% block body_class %}visual-index{% endblock %}
+
+{% block content %}
+
+<!-- Container -->
+<div id="container">  
+  <!-- Start Chart Section -->
+  <div class="pricing-section" style="padding-top:60px; padding-bottom:60px;">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+	  
+          <!-- Text -->
+          <p class="text-center" style="margin-bottom:20px;">Low cost stations in the Mara River Basin collect real time data. Here the open access data can be viewed. Click one of the channels to view data of your interest.</p>
+        </div>
+      </div>
+      
+      <div class="row pricing-tables">
+        <div class="col-md-4 col-sm-4">
+	  <div class="dropdown">
+	    <p> Select Display Mode: 
+	      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		Rainfall and Temperature
+		<span class="caret"></span>
+	      </button>
+	      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-lis">
+		<li><a href="#">Action</a></li>
+	      </ul>
+	    </p>
+	  </div>	    
+	  <div style="margin-top:20px;">
+	    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d255282.1616275287!2d36.84739685!3d-1.30480355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1442993224780" width="400" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
+	  </div>
+	</div>		
+        <div class="col-md-8 col-sm-8">
+	  <div class="col-md-12">
+	    <div id="chart"></div>
+	  </div>
+	  <div class="col-md-12">
+	    <div id="controls">
+	      <table  class='table borderless'>
+		<thead>
+		  <tr>
+		    <td>
+		      SELECT:
+		    </td>
+		    <td>
+		      Weather Station
+		    </td>
+		    <td>
+		      Time Interval
+		    </td>
+		    <td>
+		      Month
+		    </td>
+		    <td>
+		      Year
+		    </td>
+		    <td>
+		    </td>	
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+		    <td>
+		    </td>
+		    <td>
+		      <div class="dropdown">
+			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		          Select Station
+		          <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
+		          <li><a href="#">Mara</a></li>
+		          <li><a href="#">Mulot</a></li>
+			</ul>
+		      </div>
+		    </td>
+		    <td>
+ 		      <div class="dropdown">
+			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		          Interval
+		          <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
+		          <li><a href="#">Weekly</a></li>
+		          <li><a href="#">Monthly</a></li>
+			</ul>
+		      </div>
+		    </td>
+		    <td>
+		      <div class="dropdown">
+			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		          Month
+		          <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
+		          <li><a href="#">Jan</a></li>
+		          <li><a href="#">Feb</a></li>
+		          <li><a href="#">Mar</a></li>
+		          <li><a href="#">Apr</a></li>
+		          <li><a href="#">May</a></li>
+		          <li><a href="#">Jun</a></li>
+		          <li><a href="#">Jul</a></li>
+		          <li><a href="#">Aug</a></li>
+		          <li><a href="#">Sep</a></li>
+		          <li><a href="#">Oct</a></li>
+		          <li><a href="#">Nov</a></li>
+		          <li><a href="#">Dec</a></li>
+			</ul>
+		      </div>
+		    </td>
+		    <td>
+		      <div class="dropdown">
+			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		          Year
+		          <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
+		          <li><a href="#">2015</a></li>
+		          <li><a href="#">2014</a></li>
+			</ul>
+		      </div>
+		    </td>
+		    <td>
+		      <button type="button" class="btn btn-default">Generate CSV <i class="fa fa-download"></i></button>		      
+		    </td>
+		  </tr>
+		</tbody>
+	      </table>
+	    </div>
+	  </div>
+	  <div class="col-md-12">
+	    <table id="charttable" class="display" cellspacing="0" width="100%" style="margin-top: 20px; width:60%">
+	      <thead>
+		<tr>
+                  <th>Station Name</th>
+                  <th>Jan</th>
+                  <th>Feb</th>
+                  <th>Mar</th>
+                  <th>Apr</th>
+                  <th>May</th>
+                  <th>Jun</th>
+                  <th>Jul</th>
+                  <th>Aug</th>
+                  <th>Sep</th>
+                  <th>Oct</th>
+                  <th>Nov</th>
+                  <th>Dec</th>
+		</tr>
+              </thead>
+	      
+              <tfoot style="text-align: left;">
+		<tr>
+                  <th>Station Name</th>
+                  <th>Jan</th>
+                  <th>Feb</th>
+                  <th>Mar</th>
+                  <th>Apr</th>
+                  <th>May</th>
+                  <th>Jun</th>
+                  <th>Jul</th>
+                  <th>Aug</th>
+                  <th>Sep</th>
+                  <th>Oct</th>
+                  <th>Nov</th>
+                  <th>Dec</th>
+		</tr>
+              </tfoot>
+	      <tbody style="text-align: left;"> 
+		<tr>
+                  <td>Mulot</td>
+                  <td>23</td>
+                  <td>34</td>
+                  <td>61</td>
+                  <td>25</td>
+                  <td>32</td>
+                  <td>43</td>
+                  <td>34</td>
+                  <td>61</td>
+                  <td>75</td>
+                  <td>22</td>
+                  <td>15</td>
+                  <td>52</td>
+		</tr>
+		<tr>
+                  <td>Governer</td>
+                  <td>23</td>
+                  <td>34</td>
+                  <td>61</td>
+                  <td>25</td>
+                  <td>32</td>
+                  <td>43</td>
+                  <td>34</td>
+                  <td>61</td>
+                  <td>75</td>
+                  <td>22</td>
+                  <td>15</td>
+                  <td>52</td>
+		</tr>
+		<tr>
+                  <td>Mara</td>
+                  <td>32</td>
+                  <td>31</td>
+                  <td>41</td>
+                  <td>55</td>
+                  <td>22</td>
+                  <td>33</td>
+                  <td>44</td>
+                  <td>31</td>
+                  <td>45</td>
+                  <td>32</td>
+                  <td>35</td>
+                  <td>32</td>
+		</tr>
+		<tr>
+                  <td>Keerok</td>
+                  <td>23</td>
+                  <td>34</td>
+                  <td>61</td>
+                  <td>25</td>
+                  <td>32</td>
+                  <td>43</td>
+                  <td>34</td>
+                  <td>61</td>
+                  <td>75</td>
+                  <td>22</td>
+                  <td>15</td>
+                  <td>52</td>
+		</tr>
+	      </tbody>
+	    </table>
+	  </div>
+	</div>		
+      </div>		
+      
+    </div>
+  </div>
+  <!-- End Chart Section -->
+   
+  
+</div>
+<!-- End Container -->
+{% endblock content %}
+
+{% block partners %}{% endblock  %}
