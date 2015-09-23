@@ -3,7 +3,7 @@
 {% load static %}
 {% block title %} <title> Mamase | Visualization </title> {% endblock title %}
 {% block css %} <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> {% endblock css %}
-{% block js%} 
+{% block js_initialize%} 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="{% static 'js/c3.js' %}"></script>
 <script>
@@ -22,13 +22,13 @@ feeds = data.feed
 channel = data.channel[0]
 
 //console.log(feeds)
-console.log(feeds.length)
-console.log(feeds[2].field2)
+//console.log(feeds.length)
+//console.log(feeds[2].field2)
 //console.log("channel 3"+channel[0].length)
 ///
 channel_obj=Object.keys(channel);// convert to an object
 len=channel_obj.length-5;//get length of obj
-console.log('length of obj = '+len);//display results
+//console.log('length of obj = '+len);//display results
 
 ///
  
@@ -46,7 +46,7 @@ var myarry=[];
       //eval( console.log(field))
 
       	//console.log(field),
-  		console.log(field +':'+channel[field])
+  		//console.log(field +':'+channel[field])
 
   		//console.log(myfields[field])
  
@@ -55,7 +55,7 @@ var myarry=[];
 var field2= [channel.field2]
 var field3 = [channel.field3]*/
 
-console.log("channel description "+channel.description)
+//console.log("channel description "+channel.description)
 $('#channeldesc').html(channel.description);
 $('#channelname').html(channel.name);
 for (var j = 0; j < feeds.length; j++) {
@@ -66,7 +66,7 @@ for (var j = 0; j < feeds.length; j++) {
                     	
                    
                     eval('f1 ='+ 'feeds[j].'+field);
-                    console.log('f1 = '+f1);
+                    //console.log('f1 = '+f1);
                     //created.push(n.replace('T',' ').replace('Z',''));
                     
                     
@@ -83,11 +83,11 @@ for (var j = 0; j < feeds.length; j++) {
 					//console.log(myarry)
 
                  	eval('myarry.push('+field+')')
-                 	console.log('length '+myarry.length)
+                 	//console.log('length '+myarry.length)
 
                  }
                 
-                console.log( 'field date '+myarry[0])
+                //console.log( 'field date '+myarry[0])
                 //console.log( 'length of myarry[0]'+myarry.length)
 
                 /*data=[]
@@ -96,7 +96,7 @@ for (var j = 0; j < feeds.length; j++) {
                 	console.log('data '+data)
                 } */                        
 
-            console.log(myarry)
+            //console.log(myarry)
             var chart = c3.generate({
                 bindto: '#chart',
                 data: {
@@ -123,7 +123,7 @@ url:"/mamase/channel/",
 dataType: "json",
 success: function(data) {
 channel = data
-console.log("Channelssssssssssss")
+//console.log("Channelssssssssssss")
 console.log(channel.length)
 
 var channel_list = "";
@@ -150,72 +150,77 @@ type: 'GET',
 url:"/mamase/api/feed/?channel="+id,
 dataType: "json",
 success: function(data) {
-feeds = data.feeds
-channel = data.channel
+  feeds = data.feed
+channel = data.channel[0]
+console.log(channel)
+
+
+///
 channel_obj=Object.keys(channel);// convert to an object
-len=channel_obj.length-9;//get length of obj
-console.log('length of obj = '+len);//display results
+len=channel_obj.length-5;//get length of obj
+//console.log('length of obj = '+len);//display results
+
 ///
  
 var created = ['created']
 var myarry=[];
 ///
-	field = "";
+  field = "";
  for(var i=0;i<len;i++){//loop thru all fields
-  		  		
+            
       field='field'+(1+i),
       
       //eval('var field'+ (1+i) + '= ["'+(channel[field])+'"]');//define fields
       eval('var '+field+' = ["'+(channel[field])+'"]');
 
-      //eval( console.log(field))
+   
 
-      	//console.log(field),
-  		console.log(field +':'+channel[field])
-
-  		//console.log(myfields[field])
- 
-
-/*var field1 = [channel.field1]
-var field2= [channel.field2]
-var field3 = [channel.field3]*/
+//console.log("channel description "+channel.description)
 $('#channeldesc').html(channel.description);
 $('#channelname').html(channel.name);
 for (var j = 0; j < feeds.length; j++) {
-                    n = feeds[j].created_at;
+                    n = feeds[j].added_formatted;
 
-                    console.log('field is '+field)
+                    if(created.length<=feeds.length) {//if created is not in myarry
+                    created.push(n)}
+                      
+                   
                     eval('f1 ='+ 'feeds[j].'+field);
-                    console.log('f1 = '+f1);
+                    //console.log('f1 = '+f1);
                     //created.push(n.replace('T',' ').replace('Z',''));
+                    
+                    
 
+                    
                     //console.log('created = '+created);
                    eval(field+'.push(f1)');
                    
                     
-                 	}
-                 	 if(myarry[0] == null) {//if created is not in myarry
-   					   myarry.push(created)
-						}
-					
+                  }
+                   if (myarry.length ==0){
+               myarry.push(created)}
+            
+          //console.log(myarry)
 
-                 	eval('myarry.push('+field+')')
-                 	console.log('length '+myarry.length)
+                  eval('myarry.push('+field+')')
+                  //console.log('length '+myarry.length)
 
-                 }             
-                                
+                 }
+                
+                //console.log( 'field date '+myarry[0])
+
             var chart = c3.generate({
                 bindto: '#chart',
                 data: {
-		    x: 'created',
-                    xFormat: '%Y-%m-%d %H:%M:%S.SSS',
-                    columns: myarry1, 
+        x: 'created',                         
+                    xFormat: '%Y-%m-%d %H:%M:%S',
+                    columns: myarry,                    
                 },
 axis: {
         x: {
             type: 'timeseries',
             tick: {
-                format: '%Y-%m-%d %H:%M'
+                format: '%Y-%m-%d %H:%M'            
             }
         }
     }
@@ -225,7 +230,7 @@ axis: {
 }
 
 </script>
-{% endblock js %}
+{% endblock js_initialize %}
 
 {% block body_class %}visual-index{% endblock %}
 
