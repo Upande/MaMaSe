@@ -118,96 +118,61 @@
 	 <script>
 		$(document).ready(function() {
 			var dt = new Date();
-      
 			dt.setHours(dt.getHours()-24)//Time is in hours. 1 days ago
       console.log("dt = "+dt)
 
 
 			$.ajax({
-type: 'GET',
-url : "http://api.thingspeak.com/channels/"+15792+"/feed.json?start="+dt+"&callback=",
-//url:"/mamase/api/feed/?channel=18",
-dataType: "jsonp",
-success: function(data) {
-
-feeds = data.feeds
-channel = data.channel
-
-
-channel_obj=Object.keys(channel);// convert to an object
-len=channel_obj.length-9;//get length of obj
-
- 
-var created = ['created']
-var myarry=[];
-///
-  field = "";
- for(var i=0;i<len;i++){//loop thru all fields
-            
-      field='field'+(1+i),
-      
-      //eval('var field'+ (1+i) + '= ["'+(channel[field])+'"]');//define fields
-      eval('var '+field+' = ["'+(channel[field])+'"]');
-
-    
-$('#channeldesc').html(channel.description);
-$('#channelname').html(channel.name);
-for (var j = 0; j < feeds.length; j++) {
-
-                  n = feeds[j].created_at
-                  console.log("n = "+n)
-
-                  day = n.split('T',2)
-
-                  console.log("day = "+day)
-
-                  if(created.length<=feeds.length) {
-                  created.push(day[0].replace('T',' ').concat(day[1].split(':',1)));
-                }
-                                        
-                   
-                    eval('f1 ='+ 'feeds[j].'+field);
-                    
-                   eval(field+'.push(f1)');
-                   
-                    
-                  }
-                   if (myarry.length ==0){
-               myarry.push(created)}
-            
-       
-
-                  eval('myarry.push('+field+')')
-                  
-
-                 }
-                
-                console.log( 'field date '+myarry[0])
-                                       
-
-            console.log(myarry)
-            var chart = c3.generate({
-                bindto: '#chart',
-                data: {
-        x: 'created',                         
-                    xFormat: '%Y-%m-%d%H',
-                    columns: myarry,                    
-                },
-axis: {
-        x: {
-            type: 'timeseries',
-            tick: {
-                format: '%m-%d -%H'            
-            }
-        }
-    }
-            });
-        },
-    });
-});
-
-
- 
+				type: 'GET',
+				url : "https://api.thingspeak.com/channels/"+15792+"/feed.json?start="+dt+"&callback=",
+				dataType: "jsonp",
+				success: function(data) {
+					feeds = data.feeds
+					channel = data.channel
+					var created = ['created']
+					var field1 = [channel.field1]
+					var field2 = [channel.field2]
+					var field3 = [channel.field3]
+					$('#channeldesc').html(channel.description);
+					$('#channelname').html(channel.name);
+					for (var i = 0; i < feeds.length; i++) {
+						n = feeds[i].created_at;
+						f1 = feeds[i].field1;
+						f2 = feeds[i].field2;
+						f3 = feeds[i].field3;
+						day = n.split('T',2)
+						created.push(day[0].replace('T',' ').concat(day[1].split(':',1)));
+						field1.push(f1);
+						field2.push(f2);
+						field3.push(f3);
+					}
+					var chart = c3.generate({
+						bindto: '#chart',
+						data: {
+							x: 'created',
+							xFormat: '%Y-%m-%d%H',
+							columns: [
+							created,
+							field1,
+							//field2,
+							field3,
+							],
+						},
+						axis: {
+							x: {
+								type: 'timeseries',
+								tick: {
+							                count: 3,
+							    format: '%Y-%m-%d %H',
+							    culling: false,
+							    outer: false
+								}
+							}
+						}
+					});
+				},
+			});
+});*/
 </script>  
 	{% endblock js_initialize %}
 
