@@ -138,17 +138,20 @@ for (var i = 0; i< channel.length; i++) {
 	       
 
 });
-
+///Sun Sep 20 2015 22:53:38 GMT+0300 (EAT)
 </script>
 <script>
 var dt = new Date();
-dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
+dt.setHours(dt.getHours()-84);//Time is in hours. 3.5 days ago
+dt = dt.toISOString();
+
 
 function drawChart(id){
 $.ajax({
 type: 'GET',
 //url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+dt+"&callback=",
-url:"/mamase/api/feed/?channel="+id,
+//url:"/mamase/api/feed/?channel="+id,
+url:"/mamase/api/feed/?channel="+id+"&start="+dt,//2015-09-19%2009:10:49
 dataType: "json",
 success: function(data) {
   feeds = data.feed
