@@ -5,6 +5,12 @@ from django.http import JsonResponse
 from apps.utils.models import Channel,Feed
 
 def getFeeds(request):
+    """
+    To use this API, you can filter based on four parameters. You can filter bu channel, start time or end time. These three could be used indivually or together.
+    The fourth parameter is the limit on number of results returned. The filtering is a GET request.
+    
+    An example would be  /mamase/api/feed/?channel=1&start='2015-09-09'&end='2015-09-10'&limit=10
+    """
     channel = request.GET.get('channel',None)
     start = request.GET.get('start',None)
     end = request.GET.get('end',None)

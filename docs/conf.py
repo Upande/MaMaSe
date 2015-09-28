@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
-# mamase documentation build configuration file, created by
-# sphinx-quickstart on Fri Sep 25 15:20:40 2015.
+# MaMaSe documentation build configuration file, created by
+# sphinx-quickstart on Fri Sep 25 18:03:10 2015.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -21,6 +21,10 @@ import shlex
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
+sys.path.insert(0, os.path.abspath('..'))
+from django.conf import settings
+settings.configure()
+
 # -- General configuration ------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
@@ -31,13 +35,6 @@ import shlex
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.ifconfig',
-    'sphinx.ext.viewcode',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -55,9 +52,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'mamase'
-copyright = u'2015, upande'
-author = u'upande'
+project = u'MaMaSe'
+copyright = u'2015, Upande Ltd'
+author = u'Upande Ltd'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -110,7 +107,7 @@ pygments_style = 'sphinx'
 #keep_warnings = False
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = True
+todo_include_todos = False
 
 
 # -- Options for HTML output ----------------------------------------------
@@ -209,7 +206,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'mamasedoc'
+htmlhelp_basename = 'MaMaSedoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -231,8 +228,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'mamase.tex', u'mamase Documentation',
-   u'upande', 'manual'),
+  (master_doc, 'MaMaSe.tex', u'MaMaSe Documentation',
+   u'Upande Ltd', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -261,7 +258,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'mamase', u'mamase Documentation',
+    (master_doc, 'mamase', u'MaMaSe Documentation',
      [author], 1)
 ]
 
@@ -275,8 +272,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'mamase', u'mamase Documentation',
-   author, 'mamase', 'One line description of project.',
+  (master_doc, 'MaMaSe', u'MaMaSe Documentation',
+   author, 'MaMaSe', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -291,7 +288,3 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
-
-
-# Example configuration for intersphinx: refer to the Python standard library.
-intersphinx_mapping = {'https://docs.python.org/': None}
