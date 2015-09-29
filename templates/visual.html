@@ -15,14 +15,14 @@ $(document).ready(function() {
 $.ajax({
 type: 'GET',
 //url : "http://api.thingspeak.com/channels/"+16151+"/feed.json?start="+dt+"&callback=",
-url:"/mamase/api/feed/?channel=16",
+url:"/mamase/api/feed/?channel=18",
 dataType: "json",
 success: function(data) {
 feeds = data.feed
 channel = data.channel[0]
 
-console.log(channel)
-console.log(feeds)
+//console.log(channel)
+//console.log(feeds)
 //console.log(feeds.length)
 //console.log(feeds[2].field2)
 //console.log("channel 3"+channel[0].length)
@@ -47,7 +47,7 @@ var myarry=[];
       //eval( console.log(field))
 
       	//console.log(field),
-  		console.log(field +':'+channel[field])
+  		//console.log(field +':'+channel[field])
 
   		//console.log(myfields[field])
  
@@ -67,7 +67,7 @@ for (var j = 0; j < feeds.length; j++) {
                     	
                    
                     eval('f1 ='+ 'feeds[j].'+field);
-                    console.log('f1 = '+f1);
+                    //console.log('f1 = '+f1);
                     //created.push(n.replace('T',' ').replace('Z',''));
                     
                     
@@ -105,6 +105,9 @@ for (var j = 0; j < feeds.length; j++) {
                     xFormat: '%Y-%m-%d %H:%M:%S',
                     columns: myarry,                    
                 },
+                 tooltip: {
+        grouped: false //one graph at a time
+    },
 axis: {
         x: {
             type: 'timeseries',
@@ -113,6 +116,7 @@ axis: {
             }
         }
     }
+    
             });
         },
     });
@@ -124,8 +128,12 @@ url:"/mamase/channel/",
 dataType: "json",
 success: function(data) {
 channel = data
+
+var theMax = d3.max(channel);
+
+
 //console.log("Channelssssssssssss")
-console.log(channel.length)
+//console.log(channel.length)
 
 var channel_list = "";
 for (var i = 0; i< channel.length; i++) {
@@ -151,12 +159,12 @@ $.ajax({
 type: 'GET',
 //url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+dt+"&callback=",
 //url:"/mamase/api/feed/?channel="+id,
-url:"/mamase/api/feed/?channel="+id+"&start="+dt,//2015-09-19%2009:10:49
+url:"/mamase/api/feed/?channel="+id,//+"&start="+dt,//2015-09-19%2009:10:49
 dataType: "json",
 success: function(data) {
   feeds = data.feed
 channel = data.channel[0]
-console.log(channel)
+//console.log(channel)
 
 
 ///
@@ -221,6 +229,9 @@ for (var j = 0; j < feeds.length; j++) {
                     xFormat: '%Y-%m-%d %H:%M:%S',
                     columns: myarry,                    
                 },
+          tooltip: {
+        grouped: false //one graph at a time
+        },
 axis: {
         x: {
             type: 'timeseries',
