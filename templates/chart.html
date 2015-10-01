@@ -11,6 +11,9 @@
 <script src="{% static 'js/c3.js' %}"></script>
 <script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
 <script>
+
+
+
 	var monthly_data =  [
 	[ "Mulot", 25,37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26,],
 	[ "Kerook", 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37,],
@@ -39,9 +42,32 @@
 	var time1=['station',1,	2,	3,	4,	5,	6,	7,	8,	9,	10,	11,	12,	13,	14,	15,	16,	17,	18,	19,	20,	21,	22,	23,	24,	25,	26,	27,	28,	29,	30]
 	var xaxis = ['station','Jan','Feb','Mar','Apr','May','June','Jul','Aug','Sep','Oct','Nov','Dec'];   
 		
-
-
 	dataset=monthly_data
+
+
+		//change station
+		function selectStation(interval) {
+    var station = interval.value;
+	console.log("selected station is "+station )
+	}
+
+    	//change weather variable
+    function weatherVariable(interval) {
+    var weather = interval.value;
+	console.log("selected weather station is "+weather )
+	}
+
+    	//change month
+    function selMonth(interval) {
+    var month = interval.value;
+    console.log("selected month is "+month )
+	}
+
+    //change year
+    function selYear(interval) {
+    var year = interval.value;
+	console.log("selected year is "+year )
+	}
 		
 	      
       function timeInterval(interval) {
@@ -49,17 +75,18 @@
      if (value=="monthly") {
       dataset=monthly_data
       x_data=xaxis 
-      console.log("Monthly "+dataset)
+      //console.log("Monthly "+dataset)
     }
     else if (value=="daily") {
       dataset=daily_data
       x_data=time1
-      console.log("Daily "+dataset)
+     // console.log("Daily "+dataset)
       
     }
     else if (value=="raw data") {dataset =raw_data,
     	xdata=time1
-    console.log("raw Data :"+dataset)}
+    //console.log("raw Data :"+dataset)
+}
 
 
     dataset.push(x_data)
@@ -83,8 +110,13 @@
 
 
 
+
 	$(document).ready(function(){
 	var asInitVals = new Array();
+	var year//for changing year
+var month//for changing month
+var station="Mulot"//for changing station
+var weather="temperature"//for weather
 	var oTable = $('#charttable').DataTable( {
 	dom: 'Bfrtip',
 	buttons: [
@@ -274,6 +306,9 @@ function strip_tags(html) {
 													<option id="Nairotia Weather">Nairotia Weather</option>
 													<option id="Mara Conservancy Weather">Mara Conservancy Weather</option>
 													</select> 
+
+
+
 												</ul>
 											</div>
 										</td>
@@ -287,7 +322,7 @@ function strip_tags(html) {
 													<li><a href="#">Temperature</a></li>
 													<li><a href="#">Pressure</a></li>-->
 												<select id="weathervariables" onchange="weatherVariable(this)">
-													<option value="">Select Time Interval</option>
+													
 													<option value="Rain">Rain</option>
 													<option value="Barometric Pressure">Barometric Pressure</option>
 													<option value="Air Temperature">Air Temperature</option>

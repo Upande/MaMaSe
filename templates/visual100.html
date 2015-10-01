@@ -3,7 +3,7 @@
 {% load static %}
 {% block title %} <title> Mamase | Visualization </title> {% endblock title %}
 {% block css %} <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> {% endblock css %}
-{% block js%} 
+{% block js_initialize%} 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="{% static 'js/c3.js' %}"></script>
 <script>
@@ -14,15 +14,23 @@ $(document).ready(function() {
 ///mar=16151
 $.ajax({
 type: 'GET',
-url : "http://api.thingspeak.com/channels/"+16151+"/feed.json?start="+dt+"&callback=",
-dataType: "jsonp",
+//url : "http://api.thingspeak.com/channels/"+16151+"/feed.json?start="+dt+"&callback=",
+url:"/mamase/api/feed/?channel=18",
+dataType: "json",
 success: function(data) {
-feeds = data.feeds
-channel = data.channel
+feeds = data.feed
+channel = data.channel[0]
+
+//console.log(channel)
+//console.log(feeds)
+//console.log(feeds.length)
+//console.log(feeds[2].field2)
+//console.log("channel 3"+channel[0].length)
 ///
 channel_obj=Object.keys(channel);// convert to an object
-len=channel_obj.length-9;//get length of obj
-console.log('length of obj = '+len);//display results
+len=channel_obj.length-5;//get length of obj
+//console.log('length of obj = '+len);//display results
+
 ///
  
 var created = ['created']
@@ -39,7 +47,7 @@ var myarry=[];
       //eval( console.log(field))
 
       	//console.log(field),
-  		console.log(field +':'+channel[field])
+  		//console.log(field +':'+channel[field])
 
   		//console.log(myfields[field])
  
@@ -47,35 +55,40 @@ var myarry=[];
 /*var field1 = [channel.field1]
 var field2= [channel.field2]
 var field3 = [channel.field3]*/
+
+//console.log("channel description "+channel.description)
 $('#channeldesc').html(channel.description);
 $('#channelname').html(channel.name);
 for (var j = 0; j < feeds.length; j++) {
-                    n = feeds[j].created_at;
+                    n = feeds[j].added_formatted;
 
                     if(created.length<=feeds.length) {//if created is not in myarry
-                    created.push(n.replace('T',' ').replace('Z',''));}
-                    //console.log('field is '+field)
+                    created.push(n)}
+                    	
+                   
                     eval('f1 ='+ 'feeds[j].'+field);
                     //console.log('f1 = '+f1);
+                    //created.push(n.replace('T',' ').replace('Z',''));
+                    
                     
 
+                    if (f1 !=undefined){
                     //console.log('created = '+created);
-                   eval(field+'.push(f1)');
+                   eval(field+'.push(f1)');}
                    
                     
                  	}
-                 	 if(myarry[0] == null) {//if created is not in myarry
-   					   myarry.push(created)
-						}
-					
+                 	 if (myarry.length ==0){
+   					   myarry.push(created)}
+						
+					//console.log(myarry)
 
                  	eval('myarry.push('+field+')')
                  	//console.log('length '+myarry.length)
 
                  }
                 
-                //console.log( 'field 5 '+myarry[2])
-                 console.log(myarry)
+                //console.log( 'field date '+myarry[0])
                 //console.log( 'length of myarry[0]'+myarry.length)
 
                 /*data=[]
@@ -84,32 +97,43 @@ for (var j = 0; j < feeds.length; j++) {
                 	console.log('data '+data)
                 } */                        
 
-
+            //console.log(myarry)
             var chart = c3.generate({
                 bindto: '#chart',
                 data: {
-		    x: 'created',
+		    x: 'created',		                      
                     xFormat: '%Y-%m-%d %H:%M:%S',
-                    columns: myarry, 
+                    columns: myarry,                    
                 },
+                 tooltip: {
+        grouped: false //one graph at a time
+    },
 axis: {
         x: {
             type: 'timeseries',
             tick: {
-                format: '%Y-%m-%d %H:%M'
+                format: '%Y-%m-%d %H'            
             }
         }
     }
+    
             });
         },
     });
 
 $.ajax({
 type: 'GET',
-url : "http://api.thingspeak.com/channels/public.json?tag=mamase",
+//url : "http://api.thingspeak.com/channels/public.json?tag=mamase",
+url:"/mamase/channel/",
 dataType: "json",
 success: function(data) {
-channel = data.channels
+channel = data
+
+var theMax = d3.max(channel);
+
+
+//console.log("Channelssssssssssss")
+//console.log(channel.length)
 
 var channel_list = "";
 for (var i = 0; i< channel.length; i++) {
@@ -122,96 +146,97 @@ for (var i = 0; i< channel.length; i++) {
 	       
 
 });
-
+///Sun Sep 20 2015 22:53:38 GMT+0300 (EAT)
 </script>
 <script>
 var dt = new Date();
-dt.setHours(dt.getHours()-800)//Time is in hours. 3.5 days ago
+dt.setHours(dt.getHours()-804);//Time is in hours. 3.5 days ago
+dt = dt.toISOString();
+
 
 function drawChart(id){
 $.ajax({
 type: 'GET',
-url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+dt+"&callback=",
-dataType: "jsonp",
+//url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+dt+"&callback=",
+//url:"/mamase/api/feed/?channel="+id,
+url:"/mamase/api/feed/?channel="+id,//+"&start="+dt,//2015-09-19%2009:10:49
+dataType: "json",
 success: function(data) {
-feeds = data.feeds
-channel = data.channel
+  feeds = data.feed
+channel = data.channel[0]
+//console.log(channel)
+
+
+///
 channel_obj=Object.keys(channel);// convert to an object
-len=channel_obj.length-9;//get length of obj
-console.log('length of obj = '+len);//display results
+len=channel_obj.length-5;//get length of obj
+//console.log('length of obj = '+len);//display results
+
 ///
  
 var created = ['created']
 var myarry=[];
 ///
-	field = "";
+  field = "";
  for(var i=0;i<len;i++){//loop thru all fields
-  		  		
+            
       field='field'+(1+i),
       
       //eval('var field'+ (1+i) + '= ["'+(channel[field])+'"]');//define fields
       eval('var '+field+' = ["'+(channel[field])+'"]');
 
-      //eval( console.log(field))
+   
 
-      	//console.log(field),
-  		console.log(field +':'+channel[field])
-
-  		//console.log(myfields[field])
- 
-
-/*var field1 = [channel.field1]
-var field2= [channel.field2]
-var field3 = [channel.field3]*/
+//console.log("channel description "+channel.description)
 $('#channeldesc').html(channel.description);
 $('#channelname').html(channel.name);
 for (var j = 0; j < feeds.length; j++) {
-                                    n = feeds[j].created_at;
+                    n = feeds[j].added_formatted;
 
                     if(created.length<=feeds.length) {//if created is not in myarry
-                    created.push(n.replace('T',' ').replace('Z',''));}
-                    //console.log('field is '+field)
+                    created.push(n)}
+                      
+                   
                     eval('f1 ='+ 'feeds[j].'+field);
                     //console.log('f1 = '+f1);
+                    //created.push(n.replace('T',' ').replace('Z',''));
+                    
                     
 
+                    
+                    if (f1 !=undefined){
                     //console.log('created = '+created);
-                   eval(field+'.push(f1)');
+                   eval(field+'.push(f1)');}
                    
                     
                   }
-                   if(myarry[0] == null) {//if created is not in myarry
-               myarry.push(created)
-            }
-          
+                   if (myarry.length ==0){
+               myarry.push(created)}
+            
+          //console.log(myarry)
 
                   eval('myarry.push('+field+')')
                   //console.log('length '+myarry.length)
 
                  }
                 
-                console.log( 'field 2 '+myarry[2])
-                //console.log( 'length of myarry[0]'+myarry.length)
-
-                /*data=[]
-                for (a=0;a<myarry.length;a++){
-                	data=data.push(myarry[i])
-                	console.log('data '+data)
-                } */                        
-
+                //console.log( 'field date '+myarry[0])
 
             var chart = c3.generate({
                 bindto: '#chart',
                 data: {
-		    x: 'created',
+        x: 'created',                         
                     xFormat: '%Y-%m-%d %H:%M:%S',
-                    columns: myarry, 
+                    columns: myarry,                    
                 },
+          tooltip: {
+        grouped: false //one graph at a time
+        },
 axis: {
         x: {
             type: 'timeseries',
             tick: {
-                format: '%Y-%m-%d %H:%M'
+                format: '%Y-%m-%d %H'            
             }
         }
     }
@@ -221,7 +246,7 @@ axis: {
 }
 
 </script>
-{% endblock js %}
+{% endblock js_initialize %}
 
 {% block body_class %}visual-index{% endblock %}
 
