@@ -13,4 +13,5 @@ urlpatterns = patterns(
     url(r'^channel/$','apps.utils.thingspeak.returnChannelData', name='channel_data'),
     url(r'^feed/$','apps.utils.thingspeak.returnFeedData', name='feed_data'),
     url(r'^api/feed/$','apps.utils.api.getFeeds', name='api_feed'),
+    url(r'^api/all/$','apps.utils.api.getAllData', name='api_all'),
 )
