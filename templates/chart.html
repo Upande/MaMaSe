@@ -28,14 +28,8 @@
 	var oTable = $('#charttable').DataTable( {
 	dom: 'Bfrtip',
 	buttons: [
- {
+	{
             extend: 'csvHtml5',
-            text: 'Copy all data',
-            exportOptions: {
-                modifier: {
-                    search: 'none'
-                }
-            }
         }
 	],
 			data: dataset,
