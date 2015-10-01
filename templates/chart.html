@@ -217,7 +217,7 @@ function strip_tags(html) {
 					<div class="dropdown">
 						<p> Select Display Mode: 
 							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-								Rainfall and Temperature
+								Weather Station
 								<span class="caret"></span>
 							</button>
 							<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-lis">
@@ -245,6 +245,9 @@ function strip_tags(html) {
 											Weather Station
 										</td>
 										<td>
+											Weather Variable
+										</td>
+										<td>
 											Time Interval
 										</td>
 										<td>
@@ -263,16 +266,38 @@ function strip_tags(html) {
 										</td>
 										<td>
 											<div class="dropdown">
-												<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-													Select Station
-													<span class="caret"></span>
-												</button>
-												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
-													<li><a href="#">Mara</a></li>
-													<li><a href="#">Mulot</a></li>
+												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
+													
+												<select id="selectstation" onchange="selectStation(this)"
+													<option id="">Station</option>
+													<option id="Mulot Weather">Mulot Weather</option>
+													<option id="Nairotia Weather">Nairotia Weather</option>
+													<option id="Mara Conservancy Weather">Mara Conservancy Weather</option>
+													</select> 
 												</ul>
 											</div>
 										</td>
+										<td>
+											<div class="dropdown">
+												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+													Rainfall
+													<span class="caret"></span>
+												</button>
+												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
+													<li><a href="#">Temperature</a></li>
+													<li><a href="#">Pressure</a></li>-->
+												<select id="weathervariables" onchange="weatherVariable(this)">
+													<option value="">Select Time Interval</option>
+													<option value="Rain">Rain</option>
+													<option value="Barometric Pressure">Barometric Pressure</option>
+													<option value="Air Temperature">Air Temperature</option>
+													<option value="Wind Direction">Wind Direction</option>
+													<option value="Wind Direction">Wind Direction</option>
+													</select> 
+
+												
+											</div>
+										</td>	
 										<td>
 											<div class="dropdown">
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -285,22 +310,23 @@ function strip_tags(html) {
 													<li><a value="raw" href="#">Raw Data</a></li>-->
 
 
-													<select id="mycombo" onchange="timeInterval(this)">
+													<select id="timeinterval" onchange="timeInterval(this)">
 													<option value="">Select Time Interval</option>
 													<option value="daily">Daily</option>
 													<option value="monthly">Monthly</option>
 													<option value="raw data">Raw Data</option>
 													</select> 
-												</ul>
+												
 											</div>
 										</td>
 										<td>
 											<div class="dropdown">
-												<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 													Month
 													<span class="caret"></span>
 												</button>
 												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
+
 													<li><a href="#">Jan</a></li>
 													<li><a href="#">Feb</a></li>
 													<li><a href="#">Mar</a></li>
@@ -313,19 +339,38 @@ function strip_tags(html) {
 													<li><a href="#">Oct</a></li>
 													<li><a href="#">Nov</a></li>
 													<li><a href="#">Dec</a></li>
-												</ul>
+												</ul>-->
+												<select id="month" onchange="selMonth(this)">		
+													<option value="jan">Jan</option>
+													<option value="feb">Feb</option>
+													<option value="mar">Mar</option>
+													<option value="apr">Apr</option>
+													<option value="may">May</option>
+													<option value="jun">Jun</option>
+													<option value="jul">Jul</option>
+													<option value="aug">Aug</option>
+													<option value="sep">Sep</option>
+													<option value="oct">Oct</option>
+													<option value="nov">Nov</option>
+													<option value="dec">Dec</option>
+													</select> 
 											</div>
 										</td>
 										<td>
 											<div class="dropdown">
-												<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 													Year
 													<span class="caret"></span>
 												</button>
 												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
 													<li><a href="#">2015</a></li>
 													<li><a href="#">2014</a></li>
-												</ul>
+												</ul>-->
+												<select id="year" onchange="selYear(this)">			
+													<option value="2014">2014</option>
+													<option value="2015">2015</option>
+													<option value="2016">2016</option>
+													</select> 
 											</div>
 										</td>
 										<td>
