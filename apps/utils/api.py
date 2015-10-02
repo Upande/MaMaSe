@@ -103,7 +103,7 @@ def getAllData(request):
     '''
 
     #Approach 2. Takes twice the time as approach one
-    d_avg = Feed.objects.exclude(channel__field2="",channel__field3="",channel__field4="",channel__field5="",channel__field6="",channel__field7="",channel__field8="").extra({'date':'date(added)'}).extra(select={'added':"to_char(added, 'YYYY-MM-DD')"}).values('channel__name','added').annotate(
+    d_avg = Feed.objects.extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
         Avg('field1'),
         Avg('field2'),
         Avg('field3'),
@@ -114,7 +114,7 @@ def getAllData(request):
         Avg('field8'),
     )
 
-    d_sum = Feed.objects.exclude(channel__field2="",channel__field3="",channel__field4="",channel__field5="",channel__field6="",channel__field7="",channel__field8="").extra({'date':'date(added)'}).extra(select={'added':"to_char(added, 'YYYY-MM-DD')"}).values('channel__name','added').annotate(
+    d_sum = Feed.objects.extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
         Sum('field1'),
         Sum('field2'),
         Sum('field3'),
@@ -125,7 +125,7 @@ def getAllData(request):
         Sum('field8'),
     )
     
-    d_min = Feed.objects.exclude(channel__field2="",channel__field3="",channel__field4="",channel__field5="",channel__field6="",channel__field7="",channel__field8="").extra({'date':'date(added)'}).extra(select={'added':"to_char(added, 'YYYY-MM-DD')"}).values('channel__name','added').annotate(
+    d_min = Feed.objects.extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
         Min('field1'),
         Min('field2'),
         Min('field3'),
@@ -136,7 +136,7 @@ def getAllData(request):
         Min('field8'),
     )
 
-    d_max = Feed.objects.exclude(channel__field2="",channel__field3="",channel__field4="",channel__field5="",channel__field6="",channel__field7="",channel__field8="").extra({'date':'date(added)'}).extra(select={'added':"to_char(added, 'YYYY-MM-DD')"}).values('channel__name','added').annotate(
+    d_max = Feed.objects.extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
         Max('field1'),
         Max('field2'),
         Max('field3'),
@@ -146,7 +146,7 @@ def getAllData(request):
         Max('field7'),
         Max('field8'),
     )
-    d_count = Feed.objects.exclude(channel__field2="",channel__field3="",channel__field4="",channel__field5="",channel__field6="",channel__field7="",channel__field8="").extra({'date':'date(added)'}).extra(select={'added':"to_char(added, 'YYYY-MM-DD')"}).values('channel__name','added').annotate(
+    d_count = Feed.objects.extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
         Count('field1'),
         Count('field2'),
         Count('field3'),
@@ -159,7 +159,7 @@ def getAllData(request):
     
     #Let aggregate Monthly data
     
-    m_avg = Feed.objects.all().extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM')"}).values('channel__name','added').annotate(
+    m_avg = Feed.objects.extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
         Avg('field1'),
         Avg('field2'),
         Avg('field3'),
@@ -170,7 +170,7 @@ def getAllData(request):
         Avg('field8'),
     )
     
-    m_max = Feed.objects.all().extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM')"}).values('channel__name','added').annotate(
+    m_max = Feed.objects.extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
         Max('field1'),
         Max('field2'),
         Max('field3'),
@@ -181,7 +181,7 @@ def getAllData(request):
         Max('field8'),
     )
     
-    m_min = Feed.objects.all().extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM')"}).values('channel__name','added').annotate(
+    m_min = Feed.objects.extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
         Min('field1'),
         Min('field2'),
         Min('field3'),
@@ -192,7 +192,7 @@ def getAllData(request):
         Min('field8'),
     )
     
-    m_sum = Feed.objects.all().extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM')"}).values('channel__name','added').annotate(
+    m_sum = Feed.objects.extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
         Sum('field1'),
         Sum('field2'),
         Sum('field3'),
@@ -203,7 +203,7 @@ def getAllData(request):
         Sum('field8'),
     )
     
-    m_count = Feed.objects.all().extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM')"}).values('channel__name','added').annotate(
+    m_count = Feed.objects.extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
         Count('field1'),
         Count('field2'),
         Count('field3'),
@@ -215,6 +215,10 @@ def getAllData(request):
     )
     
     #Maybe ignore the loop for now (Approach 3). Will take up alot of precious time designing the logic and most probably it will be slower
+    
+    #So the above works great. Like a charm. But it is not sorted by channels. I might have to do a loop on all channels and get data for that specific channel and return that as a dictionary
+    #A loop might be unavoidable but it shall not be more than 10. (Number of channels) and that is acceptable by my books.
+
     data = {}
     data['daily'] = ({'average':list(d_avg),'min':list(d_min), 'max':list(d_max), 'count':list(d_count), 'sum':list(d_sum)})
     data['monthly'] = ({'average':list(m_avg),'min':list(m_min), 'max':list(m_max), 'count':list(m_count), 'sum':list(m_sum)})
