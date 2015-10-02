@@ -120,7 +120,7 @@
 			var dt = new Date();
       
 			dt.setHours(dt.getHours()-24)//Time is in hours. 1 days ago
-      console.log("dt = "+dt)
+      //console.log("dt = "+dt)
 
 
 			$.ajax({
@@ -155,12 +155,12 @@ $('#channelname').html(channel.name);
 for (var j = 0; j < feeds.length; j++) {
 
                   n = feeds[j].created_at
-                  console.log("n = "+n)
+                  //console.log("n = "+n)
 
                   day = n.split('T',2)
 
-                  console.log("day = "+day)
-                  console.log("created"+j+" is "+n.replace('T',' ').replace('Z',''))
+                  //console.log("day = "+day)
+                  //console.log("created"+j+" is "+n.replace('T',' ').replace('Z',''))
 
 
                   if(created.length<=feeds.length) {
@@ -184,10 +184,10 @@ for (var j = 0; j < feeds.length; j++) {
 
                  }
                 
-                console.log( 'field date '+myarry[0])
+               // console.log( 'field date '+myarry[0])
                                        
 
-            console.log(myarry)
+            //console.log(myarry)
             var chart = c3.generate({
                 bindto: '#chart',
                 data: {
