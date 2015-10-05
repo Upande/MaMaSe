@@ -60,6 +60,8 @@ for (var j = 0; j < feeds.length; j++) {
 
                 console.log(myarry)
 
+                
+                
                 var chart = c3.generate({
                 	bindto: '#chart',
                 	data: {
@@ -67,6 +69,9 @@ for (var j = 0; j < feeds.length; j++) {
                 		xFormat: '%Y-%m-%d %H:%M:%S',
                 		columns: myarry, 
                 	},
+                	tooltip: {
+		        	grouped: false //one graph at a time
+		        	},
                 	axis: {
                 		x: {
                 			type: 'timeseries',
@@ -76,6 +81,7 @@ for (var j = 0; j < feeds.length; j++) {
                 		}
                 	}
                 });
+              
             },
         });
 
@@ -101,7 +107,7 @@ $.ajax({
 </script>
 <script>
 	var dt = new Date();
-dt.setHours(dt.getHours()-800)//Time is in hours. 3.5 days ago
+dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 
 function drawChart(id){
 	$.ajax({
@@ -113,7 +119,7 @@ function drawChart(id){
 			channel = data.channel
 channel_obj=Object.keys(channel);// convert to an object
 len=channel_obj.length-9;//get length of obj
-console.log('length of obj = '+len);//display results
+//console.log('length of obj = '+len);//display results
 ///
 
 var created = ['created']
@@ -149,7 +155,7 @@ for (var j = 0; j < feeds.length; j++) {
 
               }
 
-              console.log( 'field 2 '+myarry[2])
+              //console.log( 'field 2 '+myarry[2])
 
                 var chart = c3.generate({
                 	bindto: '#chart',
@@ -158,6 +164,9 @@ for (var j = 0; j < feeds.length; j++) {
                 		xFormat: '%Y-%m-%d %H:%M:%S',
                 		columns: myarry, 
                 	},
+                	tooltip: {
+		        	grouped: false //one graph at a time
+		        	},
                 	axis: {
                 		x: {
                 			type: 'timeseries',
