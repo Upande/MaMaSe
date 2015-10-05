@@ -67,43 +67,48 @@ def getAllData(request):
           - Get all this data from the database and use django aggregators to do the math and ordering for me
           - Get all data and do the ordering via a loop in code
     '''
-    month_filter = connection.ops.date_trunc_sql('month', 'added')
-
-    feed = Feed.objects.all().annotate(av_field1=Avg('field1'),av_field2=Avg('field2'),av_field3=Avg('field3'),av_field4=Avg('field4')).extra({'month':month_filter}).exclude(field2__lte = 0,field3__lte = 0,field4__lte = 0,field5__lte = 0,field6__lte = 0,field7__lte = 0,field8__lte = 0)
-
-    #I will writing random scripts to test out each approach. Approcha one
+    ch = Channel.objects.all()
     
-    '''
-    d = Feed.objects.exclude(channel__field2="",channel__field3="",channel__field4="",channel__field5="",channel__field6="",channel__field7="",channel__field8="").extra({'date':'date(added)'}).extra(select={'added':"to_char(added, 'YYYY-MM-DD')"}).values('channel__name','added').annotate(
-        Avg('field1'),Max('field1'),Min('field1'),Sum('field1'),Count('field1'),
-        Avg('field2'),Max('field2'),Min('field2'),Sum('field2'),Count('field2'),
-        Avg('field3'),Max('field3'),Min('field3'),Sum('field3'),Count('field3'),
-        Avg('field4'),Max('field4'),Min('field4'),Sum('field4'),Count('field4'),
-        Avg('field5'),Max('field5'),Min('field5'),Sum('field5'),Count('field5'),
-        Avg('field6'),Max('field6'),Min('field6'),Sum('field6'),Count('field6'),
-        Avg('field7'),Max('field7'),Min('field7'),Sum('field7'),Count('field7'),
-        Avg('field8'),Max('field8'),Min('field8'),Sum('field8'),Count('field8'),
-    )
+    daily_avg = []
+    daily_sum = []
+    daily_cnt = []
+    daily_min = []
+    daily_max = []
 
-    m = Feed.objects.all().extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM')"}).values('channel__name','added').annotate(
-        Avg('field1'),Max('field1'),Min('field1'),Sum('field1'),Count('field1'),
-        Avg('field2'),Max('field2'),Min('field2'),Sum('field2'),Count('field2'),
-        Avg('field3'),Max('field3'),Min('field3'),Sum('field3'),Count('field3'),
-        Avg('field4'),Max('field4'),Min('field4'),Sum('field4'),Count('field4'),
-        Avg('field5'),Max('field5'),Min('field5'),Sum('field5'),Count('field5'),
-        Avg('field6'),Max('field6'),Min('field6'),Sum('field6'),Count('field6'),
-        Avg('field7'),Max('field7'),Min('field7'),Sum('field7'),Count('field7'),
-        Avg('field8'),Max('field8'),Min('field8'),Sum('field8'),Count('field8'),
-    )
-    
-    
+    month_avg = []
+    month_sum = []
+    month_cnt = []
+    month_min = []
+    month_max = []
+
+    for item in ch:
+        ch_data = aggregateFeedData(item)
+        print ch_data[0] 
+        print "\n"
+            
+        daily_avg.append({item.id:list(ch_data[0])})
+        daily_sum.append({item.id:list(ch_data[1])})
+        daily_cnt.append({item.id:list(ch_data[2])})
+        daily_min.append({item.id:list(ch_data[3])})
+        daily_max.append({item.id:list(ch_data[4])})
+        month_avg.append({item.id:list(ch_data[5])})
+        month_sum.append({item.id:list(ch_data[6])})
+        month_cnt.append({item.id:list(ch_data[7])})
+        month_min.append({item.id:list(ch_data[8])})
+        month_max.append({item.id:list(ch_data[9])})
+        
+
     data = {}
-    data['daily'] = list(d)
-    data['monthly'] = list(m)
-    '''
+    data['daily'] = ({'average':daily_avg,'min':daily_min, 'max':daily_max, 'count':daily_cnt, 'sum':daily_sum})
+    data['monthly'] = ({'average':month_avg,'min':month_min, 'max':month_max, 'count':month_cnt, 'sum':month_sum})
+    return JsonResponse(data)
 
-    #Approach 2. Takes twice the time as approach one
-    d_avg = Feed.objects.extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
+def aggregateFeedData(ch):
+    month_filter = connection.ops.date_trunc_sql('month', 'added')
+    kwargs = {}
+    kwargs['channel'] = ch
+
+    d_avg = Feed.objects.filter(**kwargs).extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
         Avg('field1'),
         Avg('field2'),
         Avg('field3'),
@@ -114,7 +119,7 @@ def getAllData(request):
         Avg('field8'),
     )
 
-    d_sum = Feed.objects.extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
+    d_sum = Feed.objects.filter(**kwargs).extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
         Sum('field1'),
         Sum('field2'),
         Sum('field3'),
@@ -125,7 +130,7 @@ def getAllData(request):
         Sum('field8'),
     )
     
-    d_min = Feed.objects.extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
+    d_min = Feed.objects.filter(**kwargs).extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
         Min('field1'),
         Min('field2'),
         Min('field3'),
@@ -136,7 +141,7 @@ def getAllData(request):
         Min('field8'),
     )
 
-    d_max = Feed.objects.extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
+    d_max = Feed.objects.filter(**kwargs).extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
         Max('field1'),
         Max('field2'),
         Max('field3'),
@@ -146,7 +151,7 @@ def getAllData(request):
         Max('field7'),
         Max('field8'),
     )
-    d_count = Feed.objects.extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
+    d_count = Feed.objects.filter(**kwargs).extra(select={'added':"to_char(added, 'YYYY-MM-DD 12:00:00')"}).values('channel__name','added').annotate(
         Count('field1'),
         Count('field2'),
         Count('field3'),
@@ -159,7 +164,7 @@ def getAllData(request):
     
     #Let aggregate Monthly data
     
-    m_avg = Feed.objects.extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
+    m_avg = Feed.objects.filter(**kwargs).extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
         Avg('field1'),
         Avg('field2'),
         Avg('field3'),
@@ -170,7 +175,7 @@ def getAllData(request):
         Avg('field8'),
     )
     
-    m_max = Feed.objects.extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
+    m_max = Feed.objects.filter(**kwargs).extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
         Max('field1'),
         Max('field2'),
         Max('field3'),
@@ -181,7 +186,7 @@ def getAllData(request):
         Max('field8'),
     )
     
-    m_min = Feed.objects.extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
+    m_min = Feed.objects.filter(**kwargs).extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
         Min('field1'),
         Min('field2'),
         Min('field3'),
@@ -192,7 +197,7 @@ def getAllData(request):
         Min('field8'),
     )
     
-    m_sum = Feed.objects.extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
+    m_sum = Feed.objects.filter(**kwargs).extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
         Sum('field1'),
         Sum('field2'),
         Sum('field3'),
@@ -203,7 +208,7 @@ def getAllData(request):
         Sum('field8'),
     )
     
-    m_count = Feed.objects.extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
+    m_count = Feed.objects.filter(**kwargs).extra({'date':month_filter}).extra(select={'added':"to_char(added, 'YYYY-MM-15 00:00:00')"}).values('channel__name','added').annotate(
         Count('field1'),
         Count('field2'),
         Count('field3'),
@@ -214,12 +219,14 @@ def getAllData(request):
         Count('field8'),
     )
     
+    
+    return d_avg,d_sum,d_count,d_min,d_max,m_avg,m_sum,m_count,m_min,m_max
     #Maybe ignore the loop for now (Approach 3). Will take up alot of precious time designing the logic and most probably it will be slower
     
     #So the above works great. Like a charm. But it is not sorted by channels. I might have to do a loop on all channels and get data for that specific channel and return that as a dictionary
     #A loop might be unavoidable but it shall not be more than 10. (Number of channels) and that is acceptable by my books.
 
-    data = {}
-    data['daily'] = ({'average':list(d_avg),'min':list(d_min), 'max':list(d_max), 'count':list(d_count), 'sum':list(d_sum)})
-    data['monthly'] = ({'average':list(m_avg),'min':list(m_min), 'max':list(m_max), 'count':list(m_count), 'sum':list(m_sum)})
-    return JsonResponse(data)
+
+    
+    #Have this as two processes. Calculate and store result as JSON string. Do a query and get latest json string
+    
