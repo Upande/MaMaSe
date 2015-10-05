@@ -61,6 +61,9 @@ dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 		function selectStation(selstation) {
     weather_station = selstation.value;
     id=weather_station
+    
+    myarry=[]
+    newdata=[];
     pullData(id,dt)
 	console.log("selected station is "+weather_station )
 
