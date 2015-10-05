@@ -70,3 +70,15 @@ class Email(models.Model):
     def __unicode__(self):
         return self.sender + " (" + self.email + ")"
 
+class AggregateDailyFeed(models.Model):
+    data = JSONField(blank=True,null=True)
+    lastupdate = models.DateTimeField(auto_now_add =True)
+    timestamp = models.DateTimeField()#This has to be midday on the specific day
+    channel = models.ForeignKey(Channel, related_name="daily_channels")
+    
+    
+class AggregateMonthlyFeed(models.Model):
+    data = JSONField(blank=True,null=True)
+    lastupdate = models.DateTimeField(auto_now_add =True)
+    timestamp = models.DateTimeField()#This has to be midmonth
+    channel = models.ForeignKey(Channel, related_name="monthly_channels")
