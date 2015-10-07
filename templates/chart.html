@@ -66,6 +66,8 @@ dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
     newdata=[];
     pullData(id,dt)
 	console.log("selected station is "+weather_station )
+	console.log("selected weather var is "+weather_variable)
+	
 
 
 	}
@@ -128,6 +130,42 @@ for (var i=0;i<myarry.length;i++)
 
                 drawGraph(newdata)
             }
+
+ //load existing weather variables
+ function populateWeathervariables(){
+ 	$('#weathervariables').empty()//empty weather variable list
+ 	var myoption=""
+ 	mylist=[]
+for ( var i=1; i<myarry.length;i++){
+	myoption=myarry[i][0]
+	mylist.push(myoption)
+	//console.log(mylist)
+	$('#weathervariables').append($('<option>', {
+    value: myoption,
+    text: myoption
+}));
+	
+ }
+
+
+ var check=$.inArray(weather_variable, mylist)
+if(check==-1){
+
+	var e = document.getElementById("weathervariables");
+
+var strUser = e.options[e.selectedIndex].value;
+weather_variable=strUser
+
+}
+//select the appropriate text in the weather dropdown 
+var weather_text = weather_variable;
+$("select option").filter(function() {
+    
+    return $(this).text() == weather_text; 
+}).prop('selected', true);
+
+
+}
 //draw graph usin c3js
 function drawGraph(){
    	var chart = c3.generate({
@@ -252,7 +290,8 @@ for (var j = 0; j < feeds.length; j++) {
               		newdata=[myarry[0],myarry[i]]
               	}
               }*/
-
+              //Disable non-existing weather Variables
+              populateWeathervariables(myarry)
               defineNewdata(myarry)
             },
         });
@@ -393,7 +432,7 @@ function strip_tags(html) {
 										<td>
 										</td>
 										<td>
-											<div class="dropdown">
+											<div class="dropdown_station">
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
 													
 												<select id="selectstation" onchange="selectStation(this)">												
@@ -403,9 +442,10 @@ function strip_tags(html) {
 													<option value="16509">Bomet Weather</option>
 													<option value="16152">Governor's Camp Weather</option>
 													<option value="16145">Rekero Camp Weather</option>
-													<option value="16148">Keekorok Weather</option>
-													<option value="16153">Mara River @ Serena</option>
+													<option value="16148">Keekorok Weather</option>			
 													<option value="16151">Mara Conservancy Weather</option>
+													<option value="16153">Mara River @ Serena</option>
+													<option value="16157">Talek River @ Fig Tree</option>
 													</select> 
 
 
@@ -414,7 +454,7 @@ function strip_tags(html) {
 											</div>
 										</td>
 										<td>
-											<div class="dropdown">
+											<div class="dropdown_weather">
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 													Rainfall
 													<span class="caret"></span>
@@ -424,18 +464,18 @@ function strip_tags(html) {
 													<li><a href="#">Pressure</a></li>-->
 												<select id="weathervariables" onchange="weatherVariable(this)">
 													
-													<option value="Rain">Rain</option>
+													<!--<option value="Rain">Rain</option>
 													<option value="Barometric Pressure">Barometric Pressure</option>
 													<option value="Air Temperature">Air Temperature</option>
 													<option value="Wind Direction">Wind Direction</option>
 													<option value="Wind Speed">Wind Speed</option>
-													</select> 
+													</select>--> 
 
 												
 											</div>
 										</td>	
 										<td>
-											<div class="dropdown">
+											<div class="dropdown_interval">
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 													Interval
 													<span class="caret"></span>
@@ -456,7 +496,7 @@ function strip_tags(html) {
 											</div>
 										</td>
 										<td>
-											<div class="dropdown">
+											<div class="dropdown_month">
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 													Month
 													<span class="caret"></span>
@@ -476,23 +516,23 @@ function strip_tags(html) {
 													<li><a href="#">Dec</a></li>
 												</ul>-->
 												<select id="month" onchange="selectedMonth(this)">		
-													<option value="jan">Jan</option>
-													<option value="feb">Feb</option>
-													<option value="mar">Mar</option>
-													<option value="apr">Apr</option>
-													<option value="may">May</option>
-													<option value="jun">Jun</option>
-													<option value="jul">Jul</option>
-													<option value="aug">Aug</option>
-													<option value="sep">Sep</option>
-													<option value="oct">Oct</option>
-													<option value="nov">Nov</option>
-													<option value="dec">Dec</option>
+													<option value="1">Jan</option>
+													<option value="2">Feb</option>
+													<option value="3">Mar</option>
+													<option value="4">Apr</option>
+													<option value="5">May</option>
+													<option value="6">Jun</option>
+													<option value="7">Jul</option>
+													<option value="8">Aug</option>
+													<option value="9">Sep</option>
+													<option value="10">Oct</option>
+													<option value="11">Nov</option>
+													<option value="12">Dec</option>
 													</select> 
 											</div>
 										</td>
 										<td>
-											<div class="dropdown">
+											<div class="dropdown_year">
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 													Year
 													<span class="caret"></span>
