@@ -10,3 +10,4 @@ sudo apt-get -y install elasticsearch=1.4.4
 sed -c -i "s/\($TARGET_KEY *= *\).*/\1$REPLACEMENT_VALUE/" $CONFIG_FILE
 sudo service elasticsearch restart
 sudo update-rc.d elasticsearch defaults 95 10
+sudo apt-get install supervisor

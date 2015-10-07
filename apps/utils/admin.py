@@ -8,8 +8,8 @@ class ChannelAdmin(admin.ModelAdmin):
     list_display=['name','description','latitude','longitude','elevation','created_at']
 
 class FeedAdmin(admin.ModelAdmin):
-    fields = ['entry_id', 'channel','field1','field2','field3','field4','field5','field6','field7','field8']
-    list_display = ['entry_id','channel','field1','field2','field3','field4','field5','field6','field7','field8']
+    fields = ['entry_id', 'channel','field1','field2','field3','field4','field5','field6','field7','field8','added']
+    list_display = ['entry_id','channel','field1','field2','field3','field4','field5','field6','field7','field8','added']
     
 class EmailRecipientAdmin(admin.ModelAdmin):
     fields = ['role', 'name','email']
