@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Channel,Feed,LoggerData,EmailRecipient,Email
+from .models import Channel,Feed,LoggerData,EmailRecipient,Email,AggregateMonthlyFeed,AggregateDailyFeed
 # Register your models here.
 
 class ChannelAdmin(admin.ModelAdmin):
@@ -23,8 +23,18 @@ class LoggerDataAdmin(admin.ModelAdmin):
     fields = ['raw_data']
     list_display = ['raw_data','added']
 
+class AggregateMonthlyFeedAdmin(admin.ModelAdmin):
+    fields = ['data','channel','aggregation','timestamp']
+    list_display = ['data','lastupdate','channel','aggregation','timestamp']
+
+class AggregateDailyFeedAdmin(admin.ModelAdmin):
+    fields = ['data','channel','aggregation','timestamp']
+    list_display = ['data','lastupdate','channel','aggregation','timestamp']
+
 admin.site.register(Channel,ChannelAdmin)
 admin.site.register(Feed,FeedAdmin)
 admin.site.register(LoggerData,LoggerDataAdmin)
 admin.site.register(EmailRecipient,EmailRecipientAdmin)
 admin.site.register(Email,EmailAdmin)
+admin.site.register(AggregateDailyFeed,AggregateDailyFeedAdmin)
+admin.site.register(AggregateMonthlyFeed,AggregateMonthlyFeedAdmin)

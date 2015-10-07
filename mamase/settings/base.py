@@ -53,7 +53,8 @@ INSTALLED_APPS = (
     'wagtail.wagtailembeds',
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
-    
+
+    'djsupervisor',
     'jsonfield',
     'elasticsearch',
     'disqus',
