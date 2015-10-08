@@ -1,3 +1,4 @@
+from dateutil.relativedelta import relativedelta
 import datetime
 import json
 
@@ -42,8 +43,7 @@ def getFeeds(request):
         
         feed = list(feed)
         
-        for item in feed:
-            feed_without_null.append(dict((k,v) for (k,v) in item.items() if v is not None))
+        feed_without_null = removeNullValue(feed)
 
     elif data.lower() == "daily":
         feed = {}
@@ -63,10 +63,7 @@ def getFeeds(request):
         except:
             pass
 
-    channel_without_null = []
-
-    for item in ch:
-        channel_without_null.append(dict((k,v) for (k,v) in item.items() if v != ""))
+    channel_without_null = removeEmptyString(ch)
         
         
     return JsonResponse(dict(channel=channel_without_null,feed=feed_without_null))
@@ -173,6 +170,13 @@ def aggregateDailyFeedData(kwargs):
         Count('field7'),
         Count('field8'),
     )
+    
+    d_count = removeZeroValue(d_count)
+    d_avg = removeNullValue(d_avg)
+    d_max = removeNullValue(d_max)
+    d_min = removeNullValue(d_min)
+    d_sum = removeNullValue(d_sum)
+
     return d_avg,d_sum,d_count,d_min,d_max
 
 def aggregateMonthlyFeedData(kwargs): 
@@ -234,6 +238,11 @@ def aggregateMonthlyFeedData(kwargs):
         Count('field8'),
     )
     
+    m_count = removeZeroValue(m_count)
+    m_avg = removeNullValue(m_avg)
+    m_max = removeNullValue(m_max)
+    m_min = removeNullValue(m_min)
+    m_sum = removeNullValue(m_sum)
     
     return m_avg,m_sum,m_count,m_min,m_max
     #Maybe ignore the loop for now (Approach 3). Will take up alot of precious time designing the logic and most probably it will be slower
@@ -256,14 +265,17 @@ def storeAggregatedData():
     - Save
     #Need to remove the None/null's from the data
     '''
-
-    currentmonthly = AggregateMonthlyFeed.objects.all().order_by('-id').first()
-    currentdaily = AggregateDailyFeed.objects.all().order_by('-id').first()
     
-    ch = Channel.objects.all()
+    #I am tired. Forgive my poorly arranged code. I pray I come back and fix all this later. 
 
-    if not currentmonthly: 
-        for item in ch:
+    ch = Channel.objects.all()
+    for item in ch:
+
+        currentmonthly = AggregateMonthlyFeed.objects.filter(channel=item).order_by('-timestamp').first()
+        currentdaily = AggregateDailyFeed.objects.filter(channel=item).order_by('-timestamp').first()
+    
+        
+        if not currentmonthly: 
             mdata = aggregateMonthlyFeedData({'channel':item})
 
             month_avg = list(mdata[0])
@@ -292,8 +304,7 @@ def storeAggregatedData():
                 x = AggregateMonthlyFeed(data = mma,channel = item,aggregation = 'MAX',timestamp = mma['timestamp'])
                 x.save()            
 
-    elif not currentdaily:
-        for item in ch:
+        elif not currentdaily:
             ddata = aggregateDailyFeedData({'channel':item})
             
             daily_avg = list(ddata[0])
@@ -322,33 +333,45 @@ def storeAggregatedData():
                 x = AggregateDailyFeed(data = dma,channel = item,aggregation = 'MAX',timestamp = dma['timestamp'])
                 x.save()
                         
-    else:
-        m = datetime.datetime.now().month
-        d = datetime.datetime.now().day
-        
-        thismonth = datetime.datetime.now().replace(day=1,hour=0,minute=0,second=0,microsecond=0)
-        today = datetime.datetime.now().replace(hour=0,minute=0,second=0,microsecond=0)
-
-        timestampmonth = currentmonthly.timestamp.month 
-        timestampday = currentdaily.timestamp.day
-        
-        #Get begging and end of the months to limit
-
-        for item in ch:
+        else:
+            m = datetime.datetime.now().month
+            d = datetime.datetime.now().day
+            
+            thismonth = datetime.datetime.now().replace(day=1,hour=0,minute=0,second=0,microsecond=0)
+            nextmonth = thismonth + relativedelta(months=1) 
+            midmonth = datetime.datetime.now().replace(day=15,hour=0,minute=0,second=0,microsecond=0)
+            
+            today = datetime.datetime.now().replace(hour=0,minute=0,second=0,microsecond=0)
+            
+            timestampmonth = currentmonthly.timestamp.month 
+            timestampday = currentdaily.timestamp.day
+            
+            #Get begging and end of the months to limit
+            
+            print "In channel loop. Now checking " + item.name
             if timestampmonth == m:
-                data = aggregateMonthlyFeedData({'channel':item,'timestamp__gte':thismonth})
+                data = aggregateMonthlyFeedData({'channel':item,'timestamp__gte':thismonth,'timestamp__lte':nextmonth})
                                                 
-                mc = AggregateMonthlyFeed.objects.filter(aggregation = "COUNT").order_by('-id').first()
-                ma = AggregateMonthlyFeed.objects.filter(aggregation = "AVG").order_by('-id').first()
-                ms = AggregateMonthlyFeed.objects.filter(aggregation = "SUM").order_by('-id').first()
-                mma = AggregateMonthlyFeed.objects.filter(aggregation = "MAX").order_by('-id').first()
-                mmi = AggregateMonthlyFeed.objects.filter(aggregation = "MIN").order_by('-id').first()
+                mc = AggregateMonthlyFeed.objects.filter(aggregation = "COUNT",channel=item).order_by('-timestamp').first()
+                ma = AggregateMonthlyFeed.objects.filter(aggregation = "AVG",channel=item).order_by('-timestamp').first()
+                ms = AggregateMonthlyFeed.objects.filter(aggregation = "SUM",channel=item).order_by('-timestamp').first()
+                mma = AggregateMonthlyFeed.objects.filter(aggregation = "MAX",channel=item).order_by('-timestamp').first()
+                mmi = AggregateMonthlyFeed.objects.filter(aggregation = "MIN",channel=item).order_by('-timestamp').first()
                 
                 ma.data = list(data[0])
+                ma.lastupdate = datetime.datetime.now()
+
                 ms.data = list(data[1])
+                ms.lastupdate = datetime.datetime.now()
+
                 mc.data = list(data[2])
-                mma.data = list(data[3])
-                mmi.data = list(data[4])
+                mc.lastupdate = datetime.datetime.now()
+
+                mmi.data = list(data[3])
+                mmi.lastupdate = datetime.datetime.now()
+
+                mma.data = list(data[4])
+                mma.lastupdate = datetime.datetime.now()
                 
                 ma.save()
                 ms.save()
@@ -357,7 +380,7 @@ def storeAggregatedData():
                 mmi.save()
                 
             else:
-                data = aggregateMonthlyFeedData({'channel':item,'timestamp__gte':thismonth})
+                data = aggregateMonthlyFeedData({'channel':item,'timestamp__gte':thismonth,'timestamp__lte':nextmonth})
             
                 month_avg = list(data[0])
                 month_sum = list(data[1])
@@ -366,39 +389,49 @@ def storeAggregatedData():
                 month_max = list(data[4])        
                 
                 if month_avg:
-                    ma = AggregateMonthlyFeed(data = month_avg,channel = item,aggregation = 'AVG',timestamp = thismonth)
+                    ma = AggregateMonthlyFeed(data = month_avg,channel = item,aggregation = 'AVG',timestamp = midmonth)
                     ma.save()
 
                 if month_sum:
-                    ms = AggregateMonthlyFeed(data = month_sum,channel = item,aggregation = 'SUM',timestamp = thismonth)
+                    ms = AggregateMonthlyFeed(data = month_sum,channel = item,aggregation = 'SUM',timestamp = midmonth)
                     ms.save()
 
                 if month_cnt:
-                    mc = AggregateMonthlyFeed(data = month_cnt,channel = item,aggregation = 'COUNT',timestamp =thismonth)
+                    mc = AggregateMonthlyFeed(data = month_cnt,channel = item,aggregation = 'COUNT',timestamp = midmonth)
                     mc.save()
 
                 if month_min:
-                    mmi = AggregateMonthlyFeed(data = month_min,channel = item,aggregation = 'MIN',timestamp = thismonth)
+                    mmi = AggregateMonthlyFeed(data = month_min,channel = item,aggregation = 'MIN',timestamp = midmonth)
                     mma.save()
 
                 if month_max:
-                    mma = AggregateMonthlyFeed(data = month_max,channel = item,aggregation = 'MAX',timestamp = thismonth)                    
+                    mma = AggregateMonthlyFeed(data = month_max,channel = item,aggregation = 'MAX',timestamp = midmonth)                    
                     mmi.save()
                                                 
             if timestampday == d:
+                print "Updating todays records for channel " + item.name
                 data = aggregateDailyFeedData({'channel':item,'timestamp__gte':today})
-                                              
-                dc = AggregateDailyFeed.objects.filter(aggregation = "COUNT").order_by('-id').first()
-                da = AggregateDailyFeed.objects.filter(aggregation = "AVG").order_by('-id').first()
-                ds = AggregateDailyFeed.objects.filter(aggregation = "SUM").order_by('-id').first()
-                dma = AggregateDailyFeed.objects.filter(aggregation = "MAX").order_by('-id').first()
-                dmi = AggregateDailyFeed.objects.filter(aggregation = "MIN").order_by('-id').first()
+                
+                dc = AggregateDailyFeed.objects.filter(aggregation = "COUNT",channel=item).order_by('-timestamp').first()
+                da = AggregateDailyFeed.objects.filter(aggregation = "AVG",channel=item).order_by('-timestamp').first()
+                ds = AggregateDailyFeed.objects.filter(aggregation = "SUM",channel=item).order_by('-timestamp').first()
+                dma = AggregateDailyFeed.objects.filter(aggregation = "MAX",channel=item).order_by('-timestamp').first()
+                dmi = AggregateDailyFeed.objects.filter(aggregation = "MIN",channel=item).order_by('-timestamp').first()
                 
                 da.data = list(data[0])
+                da.lastupdate = datetime.datetime.now()
+
                 ds.data = list(data[1])
+                ds.lastupdate = datetime.datetime.now()
+
                 dc.data = list(data[2])
+                dc.lastupdate = datetime.datetime.now()
+
                 dma.data = list(data[3])
+                dma.lastupdate = datetime.datetime.now()
+
                 dmi.data = list(data[4])
+                dmi.lastupdate = datetime.datetime.now()
                 
                 da.save()
                 ds.save()
@@ -434,7 +467,29 @@ def storeAggregatedData():
                 if daily_max:
                     dma = AggregateDailyFeed(data = daily_max,channel = item,aggregation = 'MAX',timestamp = today)
                     dma.save()
-                
-                
+
+def removeNullValue(data):
+    data_without_null = []
+    for item in data:
+        data_without_null.append(dict((k,v) for (k,v) in item.items() if v is not None))
+
+    return data_without_null
+
+def removeZeroValue(data):
+    #For counts
+    data_without_zero = []
+    for item in data:
+        data_without_zero.append(dict((k,v) for (k,v) in item.items() if v is not 0))
+
+    return data_without_zero
+
+def removeEmptyString(data):
+    data_without_empty = []
+
+    for item in data:
+        data_without_empty.append(dict((k,v) for (k,v) in item.items() if v != ""))
+
+    return data_without_empty
+
 def updateAggregatedData():
     pass
