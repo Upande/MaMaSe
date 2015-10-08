@@ -36,7 +36,8 @@ class Channel(models.Model):
 class Feed(models.Model):
     channel = models.ForeignKey(Channel, related_name="channels")
     entry_id = models.IntegerField(unique=True)
-    added = models.DateTimeField()
+    timestamp = models.DateTimeField()
+    lastupdate = models.DateTimeField(auto_now_add =True)
 
     #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried
     field1 = models.FloatField(default=0.0,null=True,blank=True)
