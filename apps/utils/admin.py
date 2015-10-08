@@ -6,11 +6,13 @@ from .models import Channel,Feed,LoggerData,EmailRecipient,Email,AggregateMonthl
 class ChannelAdmin(admin.ModelAdmin):
     fields = ['name', 'description','latitude','longitude','elevation','created_at']
     list_display=['name','description','latitude','longitude','elevation','created_at']
+    search_fields = ['name']
 
 class FeedAdmin(admin.ModelAdmin):
-    fields = ['entry_id', 'channel','field1','field2','field3','field4','field5','field6','field7','field8','added']
-    list_display = ['entry_id','channel','field1','field2','field3','field4','field5','field6','field7','field8','added']
-    
+    fields = ['entry_id', 'channel','field1','field2','field3','field4','field5','field6','field7','field8','timestamp']
+    list_display = ['entry_id','channel','field1','field2','field3','field4','field5','field6','field7','field8','timestamp','lastupdate']
+    search_fields = ['channel__name']
+
 class EmailRecipientAdmin(admin.ModelAdmin):
     fields = ['role', 'name','email']
     list_display=['role','name','email']
@@ -26,10 +28,12 @@ class LoggerDataAdmin(admin.ModelAdmin):
 class AggregateMonthlyFeedAdmin(admin.ModelAdmin):
     fields = ['data','channel','aggregation','timestamp']
     list_display = ['data','lastupdate','channel','aggregation','timestamp']
+    search_fields = ['channel__name','aggregation']
 
 class AggregateDailyFeedAdmin(admin.ModelAdmin):
     fields = ['data','channel','aggregation','timestamp']
     list_display = ['data','lastupdate','channel','aggregation','timestamp']
+    search_fields = ['channel__name','aggregation']
 
 admin.site.register(Channel,ChannelAdmin)
 admin.site.register(Feed,FeedAdmin)
