@@ -19,14 +19,16 @@ var raw=[]
 var weather_station= "Mulot Weather"
 var weather_variable="Rain"
 var time_interval = "daily"
-var month = "jan"
-var year = 2015
+var month = 0
+var month_text="Jan"
+var year = 2014
 var aggragation = "average"
 var chart_type='category'
 var id =15792
 var dt = new Date();
 var myarry=[];
-dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
+
+//dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 
 	var monthly_data =  [
 	[ "Mulot", 25,37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26,],
@@ -57,14 +59,19 @@ dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 	var xaxis = ['station','Jan','Feb','Mar','Apr','May','June','Jul','Aug','Sep','Oct','Nov','Dec'];   
 		
 	dataset=monthly_data
+
+	//Unload data before loading new data
+	function refreshAndloadData(){
+	myarry=[]
+    newdata=[];
+    pullData(id,month,year)
+	}
+
 		//change station
 		function selectStation(selstation) {
     weather_station = selstation.value;
-    id=weather_station
-    
-    myarry=[]
-    newdata=[];
-    pullData(id,dt)
+    id=weather_station    
+    refreshAndloadData(id,month,year)
 	console.log("selected station is "+weather_station )
 	console.log("selected weather var is "+weather_variable)
 	
@@ -81,13 +88,22 @@ dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 	}
     	//change month
     function selectedMonth(selmonth) {
-    month = selmonth.value;
+    month = selmonth.value-1;
     console.log("selected month is "+month )
+    console.log("year selected : "+year)
+    //pullData(id,year,month)
+    refreshAndloadData(id,month,year)
 	}
     //change year
     function selectedYear(selyear) {
-    var year = selyear.value;
+    year = selyear.value;
+
 	console.log("selected year is "+year )
+	console.log("selected month is "+month )
+	refreshAndloadData(id,month,year)
+
+
+	//pullData(id,year,month)
 	}
 		
 	      
@@ -147,7 +163,7 @@ for ( var i=1; i<myarry.length;i++){
 	
  }
 
-
+ 
  var check=$.inArray(weather_variable, mylist)
 if(check==-1){
 
@@ -159,14 +175,14 @@ weather_variable=strUser
 }
 //select the appropriate text in the weather dropdown 
 var weather_text = weather_variable;
-$("select option").filter(function() {
+$('#weathervariables option').filter(function() {
     
     return $(this).text() == weather_text; 
 }).prop('selected', true);
 
 
 }
-//draw graph usin c3js
+//draw graph using c3js
 function drawGraph(){
    	var chart = c3.generate({
                 	bindto: '#charter',
@@ -196,7 +212,14 @@ function drawGraph(){
 
 	$(document).ready(function(){
 	var asInitVals = new Array();
-	var year//for changing year
+	//var year//for changing year
+
+	
+	//select the appropriate year in the year dropdown
+$('#year option').filter(function() {
+    
+    return $(this).text() == year; 
+}).prop('selected', true);
 
 	var oTable = $('#charttable').DataTable( {
 	dom: 'Bfrtip',
@@ -227,18 +250,68 @@ function drawGraph(){
 
 		
 
-		//drawGraph(dataset,chart_type)
+		//get current date
 			var dt = new Date();
-dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
+//split date to year and month
+year=dt.getFullYear();
+month=dt.getMonth();
 
-//pull data from api and (create myarry) 
-pullData(id,dt)
+//Set year and month dropdwns to appropriate values
+
+console.log("year = "+year+" month = "+month)
+
+//load data
+pullData(id,year,month)
 
 });
-function pullData(){	
+
+	//select the appropriate year in the year dropdown
+$('#year option').filter(function() {
+    
+    return $(this).text() == year; 
+}).prop('selected', true);
+
+	//select the appropriate month in the year dropdown
+$('#month option').filter(function() {
+    
+    return $(this).val() == month+1; 
+}).prop('selected', true);
+
+
+function pullData(){
+
+console.log("YEAR IS : "+year)
+console.log("MONTHS IS : "+month)
+
+	//select the appropriate year in the year dropdown
+$('#year option').filter(function() {
+    
+    return $(this).text() == year; 
+}).prop('selected', true);
+
+	//select the appropriate month in the year dropdown
+$('#month option').filter(function() {
+    
+    return $(this).val() == month+1; 
+}).prop('selected', true);
+
+//year =2015
+//month=6
+var now = new Date(year,month);
+  var startdate = new Date(now.getFullYear(), now.getMonth(), 1);//First day of current month
+  var enddate  = new Date(now.getFullYear(), now.getMonth()+1, 1);//First day of following month
+
+
+	//define start and end date 
+//startdate = new Date(year,month-1, 1);
+//enddate = new Date(year, month , 0);
+console.log("date is "+startdate+"enddate : "+enddate)
+
+//pull data from api and (create myarry) 
 	$.ajax({
 		type: 'GET',
-		url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+dt+"&callback=",
+		//http://api.thingspeak.com/channels/16151/feed.json?start=2015-07-24T07:47:46Z&&end=2015-07-30T07:53:59Z
+		url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+startdate+"&&end="+enddate+"&callback=",
 		dataType: "jsonp",
 		success: function(data) {
 			feeds = data.feeds
@@ -486,8 +559,7 @@ function strip_tags(html) {
 													<li><a value="raw" href="#">Raw Data</a></li>-->
 
 
-													<select id="timeinterval" onchange="timeInterval(this)">
-													<option value="">Select Time Interval</option>
+													<select id="timeinterval" onchange="timeInterval(this)">			
 													<option value="daily">Daily</option>
 													<option value="monthly">Monthly</option>
 													<option value="raw data">Raw Data</option>
