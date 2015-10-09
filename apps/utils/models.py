@@ -35,7 +35,7 @@ class Channel(models.Model):
 
 class Feed(models.Model):
     channel = models.ForeignKey(Channel, related_name="channels")
-    entry_id = models.IntegerField(unique=True)
+    entry_id = models.IntegerField()
     timestamp = models.DateTimeField()
     lastupdate = models.DateTimeField(auto_now_add =True)
 

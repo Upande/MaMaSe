@@ -27,12 +27,9 @@ def getChannel():
     if not data:
         return
         
-    print data
     channels = data['channels']
-    print channels
     
     for item in channels:
-        print item
         c,created = Channel.objects.get_or_create(data_id = item['id'], defaults={'username':item['username'],
                                                                                   'elevation':item['elevation'],
                                                                                   'description': item['description'],
@@ -55,7 +52,7 @@ def parseAPIContent():
     return True
 
 def getFeedData(data_id):
-    url = "https://thingspeak.com/channels/"+data_id+"/feed.json"
+    url = "https://thingspeak.com/channels/"+str(data_id)+"/feed.json"
     data = getAPIData(url)
     
     if not data:
@@ -79,8 +76,8 @@ def getFeedData(data_id):
     for item in feeds:
         f,created = Feed.objects.get_or_create(        
             entry_id = item['entry_id'],
-            defaults={'channel':channel,
-                      'field1':item.get('field1',None),
+            channel = channel,
+            defaults={'field1':item.get('field1',None),
                       'field2':item.get('field2',None),
                       'field3':item.get('field3',None),
                       'field4':item.get('field4',None),
@@ -92,7 +89,8 @@ def getFeedData(data_id):
                       'entry_id':item.get('entry_id',None),
                   }
         )
-
+        print f
+        print created
 
 class JSONResponse(HttpResponse):
     """

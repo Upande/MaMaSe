@@ -11,7 +11,7 @@ class ChannelAdmin(admin.ModelAdmin):
 class FeedAdmin(admin.ModelAdmin):
     fields = ['entry_id', 'channel','field1','field2','field3','field4','field5','field6','field7','field8','timestamp']
     list_display = ['entry_id','channel','field1','field2','field3','field4','field5','field6','field7','field8','timestamp','lastupdate']
-    search_fields = ['channel__name']
+    search_fields = ['channel__name','entry_id']
 
 class EmailRecipientAdmin(admin.ModelAdmin):
     fields = ['role', 'name','email']
