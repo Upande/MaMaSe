@@ -1,11 +1,12 @@
 from django.conf.urls import patterns, include, url
 
-from apps.utils.views import IndexView,ContactView,AboutView,ChartView
+from apps.utils.views import IndexView,ContactView,AboutView,ChartView,MeView
 urlpatterns = patterns(
     '',
     url(r'^ts/$', 'apps.utils.views.logThingspeakData', name='visual-ts'),
     url(r'^live$', IndexView.as_view(), name='visual'),
     url(r'^chart$', ChartView.as_view(), name='chart'),
+    url(r'^me$', MeView.as_view(), name='me'),
     url(r'^about$', AboutView.as_view(), name='about'),
     url(r'^contact/$', ContactView.as_view(), name='contact-us'),
     url(r'^email/$','apps.utils.views.email', name='email'),
