@@ -3,6 +3,7 @@
 *#
 *.#
 apps/testapp/migrations/
+celerybeat.pid
 
 media/
 media_old/
