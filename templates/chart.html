@@ -4,12 +4,14 @@
 {% block title %} <title> Mamase | Visualization </title> {% endblock title %}
 {% block css %} 
 <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> 
+<link rel="stylesheet" type="text/css" href="/static/assets/css/loadpage.css">
 <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
 {% endblock css %}
 {% block js%} 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script src="{% static 'js/c3.js' %}"></script>
 <script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+
 <script>
 
 var daily = []
@@ -60,6 +62,7 @@ var myarry=[];
 		
 	dataset=monthly_data
 
+
 	//Unload data before loading new data
 	function refreshAndloadData(){
 	myarry=[]
@@ -102,11 +105,9 @@ var myarry=[];
 	console.log("selected month is "+month )
 	refreshAndloadData(id,month,year)
 
-
-	//pullData(id,year,month)
 	}
 		
-	      
+	    //change time interval  
       function timeInterval(interval) {
     var value = interval.value;
      if (value=="monthly") {
@@ -151,6 +152,7 @@ for (var i=0;i<myarry.length;i++)
  function populateWeathervariables(){
  	$('#weathervariables').empty()//empty weather variable list
  	var myoption=""
+ 	//create a list of existing fields, e.g rain, temp, humidity etc
  	mylist=[]
 for ( var i=1; i<myarry.length;i++){
 	myoption=myarry[i][0]
@@ -163,7 +165,7 @@ for ( var i=1; i<myarry.length;i++){
 	
  }
 
- 
+ //check whether current weather_variable in present in mylist
  var check=$.inArray(weather_variable, mylist)
 if(check==-1){
 
@@ -180,9 +182,8 @@ $('#weathervariables option').filter(function() {
     return $(this).text() == weather_text; 
 }).prop('selected', true);
 
-
 }
-//draw graph using c3js
+//draw graph for monthly data
 function drawGraph(){
    	var chart = c3.generate({
                 	bindto: '#charter',
@@ -192,7 +193,29 @@ function drawGraph(){
                 		columns: newdata, 
                 	},
                 	tooltip: {
-		        	grouped: false //one graph at a time
+		        	grouped: false //tooltip for one graph at a time
+		        	},
+                	axis: {
+                		x: {
+                			type: 'timeseries',
+                			tick: {
+                				format: '%Y-%m-%d %H:%M'
+                			}
+                		}
+                	}
+                });
+   }
+//draw graph for raw and daily using c3js
+function drawGraph(){
+   	var chart = c3.generate({
+                	bindto: '#charter',
+                	data: {
+                		x: 'created',
+                		xFormat: '%Y-%m-%d %H:%M:%S',
+                		columns: newdata, 
+                	},
+                	tooltip: {
+		        	grouped: false //tooltip for one graph at a time
 		        	},
                 	axis: {
                 		x: {
@@ -205,16 +228,17 @@ function drawGraph(){
                 });
    }
 
+//Attach loading to all ajax calls
+$body = $("body");
 
-
-
-
+$(document).on({
+    ajaxStart: function() { $body.addClass("loading");    },
+     ajaxStop: function() { $body.removeClass("loading"); }    
+});
 
 	$(document).ready(function(){
 	var asInitVals = new Array();
-	//var year//for changing year
 
-	
 	//select the appropriate year in the year dropdown
 $('#year option').filter(function() {
     
@@ -256,7 +280,17 @@ $('#year option').filter(function() {
 year=dt.getFullYear();
 month=dt.getMonth();
 
-//Set year and month dropdwns to appropriate values
+	//select the appropriate year in the year dropdown
+$('#year option').filter(function() {
+    
+    return $(this).text() == year; 
+}).prop('selected', true);
+
+	//select the appropriate month in the month dropdown
+$('#month option').filter(function() {
+    
+    return $(this).val() == month+1; 
+}).prop('selected', true);
 
 console.log("year = "+year+" month = "+month)
 
@@ -265,54 +299,34 @@ pullData(id,year,month)
 
 });
 
-	//select the appropriate year in the year dropdown
-$('#year option').filter(function() {
-    
-    return $(this).text() == year; 
-}).prop('selected', true);
 
-	//select the appropriate month in the year dropdown
-$('#month option').filter(function() {
-    
-    return $(this).val() == month+1; 
-}).prop('selected', true);
-
-
+//Fxn to pull data from the API
 function pullData(){
 
-console.log("YEAR IS : "+year)
-console.log("MONTHS IS : "+month)
+	$('#spinner').bind("ajaxSend", function() {
+	    $(this).show();
+    }).bind("ajaxComplete", function() {
+	    $(this).hide();
+    });
 
-	//select the appropriate year in the year dropdown
-$('#year option').filter(function() {
-    
-    return $(this).text() == year; 
-}).prop('selected', true);
 
-	//select the appropriate month in the year dropdown
-$('#month option').filter(function() {
-    
-    return $(this).val() == month+1; 
-}).prop('selected', true);
-
-//year =2015
-//month=6
 var now = new Date(year,month);
   var startdate = new Date(now.getFullYear(), now.getMonth(), 1);//First day of current month
   var enddate  = new Date(now.getFullYear(), now.getMonth()+1, 1);//First day of following month
 
 
-	//define start and end date 
-//startdate = new Date(year,month-1, 1);
-//enddate = new Date(year, month , 0);
 console.log("date is "+startdate+"enddate : "+enddate)
 
 //pull data from api and (create myarry) 
 	$.ajax({
+
 		type: 'GET',
 		//http://api.thingspeak.com/channels/16151/feed.json?start=2015-07-24T07:47:46Z&&end=2015-07-30T07:53:59Z
 		url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+startdate+"&&end="+enddate+"&callback=",
 		dataType: "jsonp",
+		/*beforeSend: function(){
+                       $("#loaderDiv").show();
+                   },*/
 		success: function(data) {
 			feeds = data.feeds
 			channel = data.channel
@@ -328,7 +342,6 @@ field = "";
  for(var i=0;i<len;i++){//loop thru all fields
 
  	field='field'+(1+i),
-
  		
 
       eval('var '+field+' = ["'+(channel[field])+'"]')
@@ -367,6 +380,12 @@ for (var j = 0; j < feeds.length; j++) {
               populateWeathervariables(myarry)
               defineNewdata(myarry)
             },
+
+            /*complete: function(){
+     $("#loaderDiv").hide();
+  },     */
+                       
+                   
         });
 	}
 	
@@ -508,8 +527,7 @@ function strip_tags(html) {
 											<div class="dropdown_station">
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
 													
-												<select id="selectstation" onchange="selectStation(this)">												
-													
+												<select id="selectstation" onchange="selectStation(this)">			
 													<option value="15792">Mulot Weather</option>
 													<option value="16511">Nairotia Weather</option>
 													<option value="16509">Bomet Weather</option>
@@ -520,7 +538,6 @@ function strip_tags(html) {
 													<option value="16153">Mara River @ Serena</option>
 													<option value="16157">Talek River @ Fig Tree</option>
 													</select> 
-
 
 
 												</ul>
@@ -625,6 +642,29 @@ function strip_tags(html) {
 										</td>
 									</tr>
 								</tbody>
+
+								<tbody>
+									<tr>
+										<td>
+										</td>
+										<td>
+											<div class="dropdown_station">
+												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
+													
+												<select id="selectaggregation" onchange="selectAggregation(this)">			
+													<option value="average">Average</option>
+													<option value="sum">Sum</option>
+													<option value="min">Min</option>
+													<option value="max">Max</option>													
+													</select> 
+
+
+												</ul>
+											</div>
+										</td>
+										</tbody>
+
+
 							</table>
 						</div>
 					</div>
@@ -641,6 +681,9 @@ function strip_tags(html) {
 
 
 </div>
+
+<div class="modal"><!-- Place at bottom of page --></div>
+
 <!-- End Container -->
 {% endblock content %}
 
