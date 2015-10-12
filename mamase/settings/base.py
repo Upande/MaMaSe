@@ -264,3 +264,4 @@ LOGGING = {
 #Celery
 djcelery.setup_loader()
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERY_SEND_TASK_ERROR_EMAILS = True

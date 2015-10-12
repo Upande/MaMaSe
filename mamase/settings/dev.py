@@ -48,4 +48,4 @@ MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = 'https://mamase.s3.amazonaws.com/media/'
 
 #Use Rabbit for production
-BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+BROKER_URL = 'amqp://upande:upandegani@localhost:5672//'
