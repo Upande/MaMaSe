@@ -492,4 +492,5 @@ def removeEmptyString(data):
     return data_without_empty
 
 def updateAggregatedData():
+    #Get all data for this year and aggregate it.
     pass

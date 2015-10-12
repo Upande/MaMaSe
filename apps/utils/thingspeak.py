@@ -1,5 +1,6 @@
 from celery import task
 import requests
+import string
 import json
 
 from django.views.decorators.csrf import csrf_exempt
@@ -136,3 +137,88 @@ def returnFeedData(request):
 def returnFeedDataOld(request):
     data = serializers.serialize("json", Feed.objects.all(),use_natural_foreign_keys=True, use_natural_primary_keys=True)
     return JsonResponse(dict(data=json.loads(data)))
+
+def addClassicData(request):
+        
+    results = request.GET.get('records',None)
+    start = request.GET.get('start',None)
+    
+    if not results and not start:
+        results = 8000
+        start = ""
+
+    ch = Channel.objects.all()
+    
+    for c in ch:
+        url = "https://thingspeak.com/channels/"+str(c.data_id)+"/feed.json?results="+str(results)+"&start="+str(start)
+        data = getAPIData(url)
+        
+        print url
+        #print data
+
+        if not data:
+            print "No data found"
+            continue
+
+        feeds = data['feeds']
+        
+        for item in feeds:
+            #Some weird values show up. Like 101.0=270
+            #So I need to strip that out.
+
+            field1 = item.get('field1',None)
+            if field1:
+                field1 = clean(field1)
+
+            field2 = item.get('field2',None)
+            if field2:
+                field2 = clean(field2)
+
+            field3 = item.get('field3',None)
+            if field3:
+                field3 = clean(field3)
+
+            field4 = item.get('field4',None)
+            if field4:
+                field4 = clean(field4)
+
+            field5 = item.get('field5',None)
+            if field5:
+                field5 = clean(field5)
+
+            field6 = item.get('field6',None)
+            if field6:
+                field6 = clean(field6)
+
+            field7 = item.get('field7',None)
+            if field7:
+                field7 = clean(field7)
+
+            field8 = item.get('field8',None)
+            if field8:
+                field8 = clean(field8)
+
+            f,created = Feed.objects.get_or_create(        
+                entry_id = item['entry_id'],
+                channel = c,
+
+                defaults={'field1':field1,
+                          'field2':field2,
+                          'field3':field3,
+                          'field4':field4,
+                          'field5':field5,
+                          'field6':field6,
+                          'field7':field7,
+                          'field8':field8,
+                          'timestamp':item.get('created_at',None),
+                          'entry_id':item.get('entry_id',None),
+                      }
+            )
+            
+    return HttpResponse("Done")
+
+def clean(text):
+    text = filter(lambda x: x in string.printable, text)
+    text = text.split("=")[0]
+    text = text.split("t/")[0]
+    return text

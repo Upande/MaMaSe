@@ -4,8 +4,8 @@ from .models import Channel,Feed,LoggerData,EmailRecipient,Email,AggregateMonthl
 # Register your models here.
 
 class ChannelAdmin(admin.ModelAdmin):
-    fields = ['name', 'description','latitude','longitude','elevation','created_at']
-    list_display=['name','description','latitude','longitude','elevation','created_at']
+    fields = ['name', 'description','latitude','longitude','elevation','created_at','data_id']
+    list_display=['name','description','latitude','longitude','elevation','created_at','data_id']
     search_fields = ['name']
 
 class FeedAdmin(admin.ModelAdmin):

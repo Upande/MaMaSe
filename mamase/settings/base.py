@@ -232,29 +232,36 @@ LOGGING = {
             'maxBytes': 1024000,
             'backupCount': 3,
             },
+        'celery': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/tmp/celery.log',
+            'formatter': 'simple',
+            'maxBytes': 1024 * 1024 * 100,  # 100 mb
         },
+    },
 
     'loggers': {
         'django': {
-            'handlers': ['file', 'console','mail_admins'],
+            'handlers': ['file', 'console','mail_admins','celery'],
             'propagate': True,
             'level': 'WARNING',
             },
 
         'django.db.backends': {
-            'handlers': ['file', 'console','mail_admins'],
+            'handlers': ['file', 'console','mail_admins','celery'],
             'propagate': False,
             'level': 'WARNING',
             },
 
         'scheduling': {
-            'handlers': ['file', 'console','mail_admins'],
+            'handlers': ['file', 'console','mail_admins','celery'],
             'propagate': True,
             'level': 'WARNING',
             },
 
         'django.request': {
-            'handlers': ['file','console','mail_admins'],
+            'handlers': ['file','console','mail_admins','celery'],
             'level': 'WARNING',
             'propagate': True,
             },

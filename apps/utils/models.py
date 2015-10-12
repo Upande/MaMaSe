@@ -40,14 +40,14 @@ class Feed(models.Model):
     lastupdate = models.DateTimeField(auto_now_add =True)
 
     #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried
-    field1 = models.FloatField(default=0.0,null=True,blank=True)
-    field2 = models.FloatField(default=0.0,null=True,blank=True)
-    field3 = models.FloatField(default=0.0,null=True,blank=True)
-    field4 = models.FloatField(default=0.0,null=True,blank=True)
-    field5 = models.FloatField(default=0.0,null=True,blank=True)
-    field6 = models.FloatField(default=0.0,null=True,blank=True)
-    field7 = models.FloatField(default=0.0,null=True,blank=True)
-    field8 = models.FloatField(default=0.0,null=True,blank=True)
+    field1 = models.TextField(default="",null=True,blank=True)
+    field2 = models.TextField(default="",null=True,blank=True)
+    field3 = models.TextField(default="",null=True,blank=True)
+    field4 = models.TextField(default="",null=True,blank=True)
+    field5 = models.TextField(default="",null=True,blank=True)
+    field6 = models.TextField(default="",null=True,blank=True)
+    field7 = models.TextField(default="",null=True,blank=True)
+    field8 = models.TextField(default="",null=True,blank=True)
 
     def __unicode__(self):
         return str(self.entry_id)
