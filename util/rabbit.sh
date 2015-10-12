@@ -1,6 +1,6 @@
 #!/bin/bash
 #Setup instruction of a debian based OS.
-#Based on  http://monkeyhacks.com/post/installing-rabbitmq-on-ubuntu-14-04
+#Based on  https://gist.github.com/marcqualie/4745097
 
 USER="upande"
 PASS="upandegani"
@@ -21,7 +21,7 @@ apt-get update
 apt-get install rabbitmq-server -y
 rm rabbitmq-signing-key-public.asc
 service rabbitmq-server start
-apt-get autoremove
+apt-get autoremove -y
 
 #Installation should be complete. Now let us configure our setup
 echo "Installation complete. Now configuring local copy"
@@ -36,5 +36,6 @@ service rabbitmq-server restart
 
 # Show settings
 echo "Default Login:"
+echo "  url: http://localhost:15672/"
 echo "  user: $USER"
 echo "  pass: $PASS"
