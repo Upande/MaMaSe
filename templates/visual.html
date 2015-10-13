@@ -11,6 +11,7 @@
 	$(document).ready(function() {
 $.ajax({
 	type: 'GET',
+	
 	url : "http://api.thingspeak.com/channels/"+16151+"/feed.json?start="+dt+"&callback=",
 	dataType: "jsonp",
 	success: function(data) {
@@ -58,7 +59,7 @@ for (var j = 0; j < feeds.length; j++) {
 
                  }
 
-                console.log(myarry)
+                //console.log(myarry)
 
                 
                 
@@ -76,7 +77,9 @@ for (var j = 0; j < feeds.length; j++) {
                 		x: {
                 			type: 'timeseries',
                 			tick: {
-                				format: '%Y-%m-%d %H:%M'
+                				format: '%Y-%m-%d %H:%M',
+                				count:5,
+                				fit:true
                 			}
                 		}
                 	}
@@ -84,6 +87,7 @@ for (var j = 0; j < feeds.length; j++) {
               
             },
         });
+
 
 $.ajax({
 	type: 'GET',
@@ -171,7 +175,8 @@ for (var j = 0; j < feeds.length; j++) {
                 		x: {
                 			type: 'timeseries',
                 			tick: {
-                				format: '%Y-%m-%d %H:%M'
+                				format: '%Y-%m-%d %H:%M',
+                				count:5
                 			}
                 		}
                 	}
