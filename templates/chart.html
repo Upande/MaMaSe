@@ -199,29 +199,13 @@ function drawGraph(){
                 		x: {
                 			type: 'timeseries',
                 			tick: {
-                				format: '%Y-%m-%d %H:%M'
-                			}
-                		}
-                	}
-                });
-   }
-//draw graph for raw and daily using c3js
-function drawGraph(){
-   	var chart = c3.generate({
-                	bindto: '#charter',
-                	data: {
-                		x: 'created',
-                		xFormat: '%Y-%m-%d %H:%M:%S',
-                		columns: newdata, 
-                	},
-                	tooltip: {
-		        	grouped: false //tooltip for one graph at a time
-		        	},
-                	axis: {
-                		x: {
-                			type: 'timeseries',
-                			tick: {
-                				format: '%Y-%m-%d %H:%M'
+                				culling: {
+        								max: 5
+        							},
+                				count:5,                				
+                				format: '%Y-%m-%d',
+                				fit: true
+                				
                 			}
                 		}
                 	}
