@@ -243,80 +243,43 @@ def addClassicData(request):
 
         if daily_avg:
             for item in daily_avg:
-                da,created = AggregateDailyFeed.get_or_create(timestamp = item['timestamp'],
-                                                              defaults={'data':item,
-                                                                        'channel':c,
-                                                                        'aggregation':'AVG',
-                                                                    })
+                da,created = AggregateDailyFeed.objects.get_or_create(timestamp = item['timestamp'],aggregation ='AVG',channel=c,defaults={'data':item, })
                 
         if daily_sum:
             for item in daily_sum:
-                ds,created = AggregateDailyFeed.get_or_create(timestamp = item['timestamp'],
-                                                              defaults={'data':item,
-                                                                        'channel':c,
-                                                                        'aggregation':'SUM',
-                                                                    })
+                ds,created = AggregateDailyFeed.objects.get_or_create(timestamp = item['timestamp'],aggregation='SUM',channel=c,defaults={'data':item,})
 
         if daily_cnt:
             for item in daily_cnt:
-                dc,created = AggregateDailyFeed.get_or_create(timestamp = item['timestamp'],
-                                                              defaults={'data':item,
-                                                                        'channel':c,
-                                                                        'aggregation':'COUNT',
-                                                                    })
+                dc,created = AggregateDailyFeed.objects.get_or_create(timestamp = item['timestamp'],aggregation='COUNT',channel=c, defaults={'data':item,})
+
         if daily_min:
             for item in daily_min:
-                dmi,created = AggregateDailyFeed.get_or_create(timestamp = item['timestamp'],
-                                                               defaults={'data':item,
-                                                                         'channel':c,
-                                                                         'aggregation':'MIN',
-                                                                     })
+                dmi,created = AggregateDailyFeed.objects.get_or_create(timestamp = item['timestamp'],aggregation='MIN',channel=c,defaults={'data':item,})
+
         if daily_max:
             for item in daily_max:
-                dma,created = AggregateDailyFeed.get_or_create(timestamp = item['timestamp'],
-                                                               defaults={'data':item,
-                                                                         'channel':c,
-                                                                         'aggregation':'MAX',
-                                                                     })
+                dma,created = AggregateDailyFeed.objects.get_or_create(timestamp = item['timestamp'],aggregation='MAX',channel=c,defaults={'data':item,})
+
         if month_avg:
             for item in month_avg:
-                ma,created = AggregateMonthlyFeed.get_or_create(timestamp = item['timestamp'],
-                                                                defaults={'data':item,
-                                                                          'channel':c,
-                                                                          'aggregation':'AVG',
-                                                                      })
-
+                ma,created = AggregateMonthlyFeed.objects.get_or_create(timestamp = item['timestamp'],aggregation='AVG',channel=c,defaults={'data':item,})
                 
         if month_sum:
             for item in month_sum:
-                ms,created = AggregateMonthlyFeed.get_or_create(timestamp = item['timestamp'],
-                                                                defaults={'data':item,
-                                                                          'channel':c,
-                                                                          'aggregation':'SUM',
-                                                                      })
+                ms,created = AggregateMonthlyFeed.objects.get_or_create(timestamp = item['timestamp'],aggregation='SUM',channel=c,defaults={'data':item,})
+
         if month_cnt:
             for item in month_cnt:
-                mc,created = AggregateMonthlyFeed.get_or_create(timestamp = item['timestamp'],
-                                                                defaults={'data':item,
-                                                                          'channel':c,
-                                                                          'aggregation':'COUNT',
-                                                                      })
+                mc,created = AggregateMonthlyFeed.objects.get_or_create(timestamp = item['timestamp'],aggregation='COUNT',channel=c,defaults={'data':item,})
 
         if month_min:
             for item in month_min:
-                mmi,created = AggregateMonthlyFeed.get_or_create(timestamp = item['timestamp'],
-                                                                defaults={'data':item,
-                                                                          'channel':c,
-                                                                          'aggregation':'MIN',
-                                                                      })
+                mmi,created = AggregateMonthlyFeed.objects.get_or_create(timestamp = item['timestamp'],aggregation='MIN',channel=c,defaults={'data':item,})
             
         if month_max:
             for item in month_max:
-                mma,created = AggregateMonthlyFeed.get_or_create(timestamp = item['timestamp'],
-                                                                defaults={'data':item,
-                                                                          'channel':c,
-                                                                          'aggregation':'MAX',
-                                                                      })
+                mma,created = AggregateMonthlyFeed.objects.get_or_create(timestamp = item['timestamp'],aggregation='MAX',channel=c,defaults={'data':item,})
 
     return HttpResponse("Done")
 
@@ -329,8 +292,12 @@ def clean(text):
     try:
         float(text)
     except:
-        #Assume this to be a date
-        dt = datetime.datetime.strptime(text, "%Y/%m/%d") 
-        text = time.mktime(dt.timetuple()) + (dt.microsecond / 1000000.0)
-
+        for fmt in ('%Y/%m/%d','%Y:%m:%d','%H:%M:%S'):
+            try:
+                #Assume this to be a date
+                dt = datetime.datetime.strptime(text, fmt) 
+                text = time.mktime(dt.timetuple()) + (dt.microsecond / 1000000.0)
+                return text
+            except ValueError:
+                pass
     return text
