@@ -20,7 +20,7 @@ var raw=[]
 //defining control variables
 var weather_station= "Mulot Weather"
 var weather_variable="Rain"
-var time_interval = "daily"
+var time_interval = "raw data"
 var month = 0
 var month_text="Jan"
 var year = 2014
@@ -109,28 +109,18 @@ var myarry=[];
 		
 	    //change time interval  
       function timeInterval(interval) {
-    var value = interval.value;
-     if (value=="monthly") {
-      dataset=monthly_data
-      x_data=xaxis 
-      
-      //console.log("Monthly "+dataset)
-    }
-    else if (value=="daily") {
-      dataset=daily_data
-      x_data=time1
-      
-     // console.log("Daily "+dataset)
-      
-    }
-    else if (value=="raw data") {dataset =raw_data,
-    	xdata=time1
-    	
-    //console.log("raw Data :"+dataset)
+    time_interval = interval.value;
+      if (time_interval == 'monthly') {
+         //Disable month selection 
+         $( "#month" ).prop( "disabled", true ).css('opacity',0.5);
+
+     } else {
+         $( "#month" ).prop( "disabled", false ).css('opacity',1);
+     }
+        
 }
-    dataset.push(x_data)
-    drawGraph(dataset,chart_type)    
-}
+
+
 
 //extract weather variable from myarry
 function defineNewdata(){
@@ -166,6 +156,7 @@ for ( var i=1; i<myarry.length;i++){
  }
 
  //check whether current weather_variable in present in mylist
+ //if it does not, change weather_variable value to that of the first item in mylist
  var check=$.inArray(weather_variable, mylist)
 if(check==-1){
 
@@ -198,10 +189,7 @@ function drawGraph(){
                 	axis: {
                 		x: {
                 			type: 'timeseries',
-                			tick: {
-                				culling: {
-        								max: 5
-        							},
+                			tick: {                				
                 				count:5,                				
                 				format: '%Y-%m-%d',
                 				fit: true
@@ -276,6 +264,13 @@ $('#month option').filter(function() {
     return $(this).val() == month+1; 
 }).prop('selected', true);
 
+	//select the appropriate timeinterval in the timeinterval dropdown		
+$('#timeinterval option').filter(function() {
+    
+    return $(this).val() == time_interval; 
+}).prop('selected', true);
+
+
 console.log("year = "+year+" month = "+month)
 
 //load data
@@ -305,6 +300,7 @@ console.log("date is "+startdate+"enddate : "+enddate)
 	$.ajax({
 
 		type: 'GET',
+		//http://localhost:8000/mamase/api/feed/?channel=13&start=2015-09-15&data=daily
 		//http://api.thingspeak.com/channels/16151/feed.json?start=2015-07-24T07:47:46Z&&end=2015-07-30T07:53:59Z
 		url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+startdate+"&&end="+enddate+"&callback=",
 		dataType: "jsonp",
