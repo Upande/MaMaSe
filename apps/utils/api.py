@@ -272,8 +272,7 @@ def storeAggregatedData():
     for item in ch:
 
         currentmonthly = AggregateMonthlyFeed.objects.filter(channel=item).order_by('-timestamp').first()
-        currentdaily = AggregateDailyFeed.objects.filter(channel=item).order_by('-timestamp').first()
-    
+        currentdaily = AggregateDailyFeed.objects.filter(channel=item).order_by('-timestamp').first()    
         
         if not currentmonthly: 
             mdata = aggregateMonthlyFeedData({'channel':item})
