@@ -187,6 +187,8 @@ $('#weathervariables option').filter(function() {
 }
 //draw graph for monthly data
 function drawGraph(){
+	if (newdata[1][1]){
+	console.log(newdata[1][1])
    	var chart = c3.generate({
                 	bindto: '#charter',
                 	data: {
@@ -210,6 +212,12 @@ function drawGraph(){
                 	}
                 });
    }
+
+else{
+	$("#cart_item").html("");
+	$("#charter").prepend('<img id="theImg" src="/static/assets/images/noData.png" />');
+}
+}
 
 //Attach loading to all ajax calls
 $body = $("body");
