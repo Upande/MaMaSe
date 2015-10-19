@@ -53,7 +53,8 @@ INSTALLED_APPS = (
     'wagtail.wagtailembeds',
     'wagtail.wagtailredirects',
     'wagtail.wagtailforms',
-    
+
+    'djsupervisor',
     'jsonfield',
     'elasticsearch',
     'disqus',
@@ -152,7 +153,6 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/static/'
 
 # Wagtail settings
 
@@ -231,29 +231,36 @@ LOGGING = {
             'maxBytes': 1024000,
             'backupCount': 3,
             },
+        'celery': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/tmp/celery.log',
+            'formatter': 'simple',
+            'maxBytes': 1024 * 1024 * 100,  # 100 mb
         },
+    },
 
     'loggers': {
         'django': {
-            'handlers': ['file', 'console','mail_admins'],
+            'handlers': ['file', 'console','mail_admins','celery'],
             'propagate': True,
             'level': 'WARNING',
             },
 
         'django.db.backends': {
-            'handlers': ['file', 'console','mail_admins'],
+            'handlers': ['file', 'console','mail_admins','celery'],
             'propagate': False,
             'level': 'WARNING',
             },
 
         'scheduling': {
-            'handlers': ['file', 'console','mail_admins'],
+            'handlers': ['file', 'console','mail_admins','celery'],
             'propagate': True,
             'level': 'WARNING',
             },
 
         'django.request': {
-            'handlers': ['file','console','mail_admins'],
+            'handlers': ['file','console','mail_admins','celery'],
             'level': 'WARNING',
             'propagate': True,
             },
@@ -263,3 +270,4 @@ LOGGING = {
 #Celery
 djcelery.setup_loader()
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
+CELERY_SEND_TASK_ERROR_EMAILS = True

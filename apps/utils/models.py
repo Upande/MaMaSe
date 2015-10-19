@@ -21,11 +21,11 @@ class Channel(models.Model):
     username = models.TextField()
     
     #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried
-    field1 = models.TextField(default=None,null=True,blank=True)
-    field2 = models.TextField(default=None,null=True,blank=True)
-    field3 = models.TextField(default=None,null=True,blank=True)
-    field4 = models.TextField(default=None,null=True,blank=True)
-    field5 = models.TextField(default=None,null=True,blank=True)
+    field1 = models.TextField(default="",null=True,blank=True)
+    field2 = models.TextField(default="",null=True,blank=True)
+    field3 = models.TextField(default="",null=True,blank=True)
+    field4 = models.TextField(default="",null=True,blank=True)
+    field5 = models.TextField(default="",null=True,blank=True)
     field6 = models.TextField(default="",null=True,blank=True)
     field7 = models.TextField(default="",null=True,blank=True)
     field8 = models.TextField(default="",null=True,blank=True)
@@ -35,8 +35,9 @@ class Channel(models.Model):
 
 class Feed(models.Model):
     channel = models.ForeignKey(Channel, related_name="channels")
-    entry_id = models.IntegerField(unique=True)
-    added = models.DateTimeField(auto_now_add=True)
+    entry_id = models.IntegerField()
+    timestamp = models.DateTimeField()
+    lastupdate = models.DateTimeField(auto_now_add =True)
 
     #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried
     field1 = models.FloatField(default=0.0,null=True,blank=True)
@@ -70,3 +71,33 @@ class Email(models.Model):
     def __unicode__(self):
         return self.sender + " (" + self.email + ")"
 
+class AggregateDailyFeed(models.Model):
+    
+    AGGREGATE_TYPES = (
+        ('COUNT', 'Count'),
+        ('SUM', 'Sum'),
+        ('MIN', 'Min'),
+        ('MAX', 'Max'),
+        ('AVG', 'Avg'),
+    )
+
+    data = JSONField(blank=True,null=True)
+    lastupdate = models.DateTimeField(auto_now_add =True)
+    timestamp = models.DateTimeField()#This has to be midday on the specific day
+    channel = models.ForeignKey(Channel, related_name="daily_channels")
+    aggregation = models.CharField(max_length=15,choices=AGGREGATE_TYPES,default="Count")
+    
+class AggregateMonthlyFeed(models.Model):
+    AGGREGATE_TYPES = (
+        ('COUNT', 'Count'),
+        ('SUM', 'Sum'),
+        ('MIN', 'Min'),
+        ('MAX', 'Max'),
+        ('AVG', 'Avg'),
+    )
+
+    data = JSONField(blank=True,null=True)
+    lastupdate = models.DateTimeField(auto_now_add =True)
+    timestamp = models.DateTimeField()#This has to be midmonth
+    channel = models.ForeignKey(Channel, related_name="monthly_channels")
+    aggregation = models.CharField(max_length=15,choices=AGGREGATE_TYPES,default="Count")

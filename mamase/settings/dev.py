@@ -11,6 +11,8 @@ SECRET_KEY = '($px*i9j!^q9-y^-d*fe^zrb=ud4j4%-!sps@&d1@cf1(t8gpi'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+STATIC_URL = '/static/'
+
 INSTALLED_APPS += ('kombu.transport.django',)
 
 try:
@@ -48,4 +50,4 @@ MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = 'https://mamase.s3.amazonaws.com/media/'
 
 #Use Rabbit for production
-BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+BROKER_URL = 'amqp://upande:upandegani@localhost:5672//'
