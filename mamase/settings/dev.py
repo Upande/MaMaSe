@@ -11,6 +11,8 @@ SECRET_KEY = '($px*i9j!^q9-y^-d*fe^zrb=ud4j4%-!sps@&d1@cf1(t8gpi'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+STATIC_URL = '/static/'
+
 INSTALLED_APPS += ('kombu.transport.django',)
 
 try:
