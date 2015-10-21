@@ -48,7 +48,7 @@ def getFeeds(request):
     elif data.lower() == "daily":
         feed = {}
         data = aggregateDailyFeedData(kwargs)
-        feed['daily'] = ({'average':list(data[0]),'min':list(data[3]), 'max':list(data[4]), 'count':list(data[2]), 'sum':list(data[1])})
+        feed['daily'] = ({'avg':list(data[0]),'min':list(data[3]), 'max':list(data[4]), 'count':list(data[2]), 'sum':list(data[1])})
         feed_without_null.append(feed)
         
     elif data.lower() == "monthly":
@@ -112,8 +112,8 @@ def getAllData(request):
         month_max.append({item.id:list(chm_data[4])})
         
     data = {}
-    data['daily'] = ({'average':daily_avg,'min':daily_min, 'max':daily_max, 'count':daily_cnt, 'sum':daily_sum})
-    data['monthly'] = ({'average':month_avg,'min':month_min, 'max':month_max, 'count':month_cnt, 'sum':month_sum})
+    data['daily'] = ({'avg':daily_avg,'min':daily_min, 'max':daily_max, 'count':daily_cnt, 'sum':daily_sum})
+    data['monthly'] = ({'avg':month_avg,'min':month_min, 'max':month_max, 'count':month_cnt, 'sum':month_sum})
     return JsonResponse(data)
 
 def aggregateDailyFeedData(kwargs):
