@@ -42,7 +42,6 @@ MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = 'https://mamase.s3.amazonaws.com/media/'
 
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
-STATIC_URL = "https://%s/" % AWS_S3_CUSTOM_DOMAIN
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {
@@ -64,3 +63,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 BROKER_URL = os.environ.get('CLOUDAMQP_URL')
+
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
