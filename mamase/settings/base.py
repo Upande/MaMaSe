@@ -62,6 +62,7 @@ INSTALLED_APPS = (
     'mptt',
     'easy_thumbnails',
     'storages',
+    'boto',
     'djcelery',
     
     'apps.utils',
