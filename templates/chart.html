@@ -4,13 +4,13 @@
 {% block title %} <title> Mamase | Visualization </title> {% endblock title %}
 {% block css %} 
 <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> 
-<link rel="stylesheet" type="text/css" href="/static/assets/css/loadpage.css">
-<link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="{% static 'css/loadpage.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/jquery.dataTables.min.css' %}">
 {% endblock css %}
 {% block js%} 
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="{% static 'js/d3.js' %}" charset="utf-8"></script>
 <script src="{% static 'js/c3.js' %}"></script>
-<script src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 
 <script>
 
@@ -484,7 +484,7 @@ function strip_tags(html) {
 						</p>
 					</div>	    
 					<div style="margin-top:20px;">
-						<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d255282.1616275287!2d36.84739685!3d-1.30480355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1442993224780" width="400" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
+						<!--iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d255282.1616275287!2d36.84739685!3d-1.30480355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1442993224780" width="400" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>-->
 					</div>
 				</div>		
 				<div class="col-md-8 col-sm-8">

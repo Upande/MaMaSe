@@ -4,9 +4,9 @@
 {% block title %} <title> Mamase | Visualization </title> {% endblock title %}
 {% block css %} <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> {% endblock css %}
 {% block js_initialize%} 
-<!--
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="{% static 'js/c3.js' %}"></script>-->
+
+<script src="{% static 'js/d3.js' %}" charset="utf-8"></script>
+<script src="{% static 'js/c3.js' %}"></script>
 <script>
 
 $(document).ready(function() {
@@ -95,12 +95,45 @@ var field3 = [channel.field3]*/
 $('#channeldesc').html(channel.description);
 $('#channelname').html(channel.name);
 
+console.log(feeds.count[0].field1__count)
+
                     count=['count']
                     sum=['sum']
                     avg=['avg']
                     min=['min']
                     max=['max']
 
+                    var field_key=""
+
+
+                    for (var key in feeds) {
+
+                      if (feeds.hasOwnProperty(key)) {
+                        field_key=field+'__'+key
+                        console.log(field_key)
+
+                          for(j=0;j<count_len;j++){
+                            console.log(key+" -> "+feeds[key][j].timestamp);
+                                                    
+                            //console.log(key+" is "+eval('feeds[key][j].'+field_key))
+                            //eval('var f1=feeds[key][j].'+field_key)
+                            //eval('var '+field+' = ["'+(channel[field])+'"]')
+                            //console.log(f1)                      
+                        
+                      }
+                      
+                    }
+                  }
+
+                    /*var result = new Array();
+
+                    for(var key in feeds){
+                      for (var j=0;j<=count_len;j++){
+                        eval('var'+key+'_f1 =feeds.'+ key+'[0].'+field+'__'+key);
+                        console.log(key ="key+'_f1'")
+                      }
+                    }                   
+/*
 for (var j = 0; j < count_len; j++) {
                     n = feeds.count[j].timestamp;
                     //console.log( 'field date '+n)
@@ -131,6 +164,9 @@ for (var j = 0; j < count_len; j++) {
                    
                     
                  	}
+
+                  */
+
                  	 if (myarry.length ==0){
    					   myarry.push(created)}
 						
