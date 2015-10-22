@@ -4,9 +4,9 @@
 {% block title %} <title> Mamase | Visualization </title> {% endblock title %}
 {% block css %} <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> {% endblock css %}
 {% block js_initialize%} 
-
-<script src="{% static 'js/d3.js' %}" charset="utf-8"></script>
-<script src="{% static 'js/c3.js' %}"></script>
+<!--
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="{% static 'js/c3.js' %}"></script>-->
 <script>
 
 $(document).ready(function() {
@@ -104,21 +104,21 @@ console.log(feeds.count[0].field1__count)
                     max=['max']
 
                     var field_key=""
-
-
                     for (var key in feeds) {
 
                       if (feeds.hasOwnProperty(key)) {
                         field_key=field+'__'+key
                         console.log(field_key)
+                         
 
                           for(j=0;j<count_len;j++){
-                            console.log(key+" -> "+feeds[key][j].timestamp);
+                            //console.log(key+" -> "+feeds[key][j].timestamp);
                                                     
-                            //console.log(key+" is "+eval('feeds[key][j].'+field_key))
-                            //eval('var f1=feeds[key][j].'+field_key)
+                            console.log(key+" is "+eval('feeds[key][j].'+field_key))
+                            eval('var f1=feeds[key][j].'+field_key)
                             //eval('var '+field+' = ["'+(channel[field])+'"]')
-                            //console.log(f1)                      
+                            console.log(f1)
+                        
                         
                       }
                       

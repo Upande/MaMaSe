@@ -2,54 +2,42 @@
 <html>
 <head>
 <title>jQuery BlockUI Plugin</title>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" type="text/css" media="screen" href="../jq.css">
-<link rel="stylesheet" type="text/css" media="screen" href="block.css?v3">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-<!-- <script src="jquery.blockUI.js"></script> -->
-<script src="http://malsup.github.io/jquery.blockUI.js"></script>
-<script src="http://malsup.github.com/chili-1.7.pack.js"></script>
+
+
+ <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+ <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+ <script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+</head>
+
+<body>
+<div id="myfirstchart" style="height: 250px;"></div>
+
 <script>
 
-
-
-<script type="text/javascript"> 
+new Morris.Line({
+  // ID of the element in which to draw the chart.
+  element: 'myfirstchart',
+  // Chart data records -- each entry in this array corresponds to a point on
+  // the chart.
+  data: [
+    { year: '2008', value: 20 },
+    { year: '2009', value: 10 },
+    { year: '2010', value: 5 },
+    { year: '2011', value: 5 },
+    { year: '2012', value: 20 }
+  ],
+  // The name of the data record attribute that contains x-values.
+  xkey: 'year',
+  // A list of names of data record attributes that contain y-values.
+  ykeys: ['value'],
+  // Labels for the ykeys -- will be displayed when you hover over the
+  // chart.
+  labels: ['Value']
+});
  
-    // unblock when ajax activity stops 
-    $(document).ajaxStop($.unblockUI); 
- 
-    function test() { 
-        $.ajax({ url: 'wait.php', cache: false }); 
-    } 
- 
-    $(document).ready(function() { 
-        $('#pageDemo1').click(function() { 
-            $.blockUI(); 
-            test(); 
-        }); 
-        $('#pageDemo2').click(function() { 
-            $.blockUI({ message: '<h1><img src="busy.gif" /> Just a moment...</h1>' }); 
-            test(); 
-        }); 
-        $('#pageDemo3').click(function() { 
-            $.blockUI({ css: { backgroundColor: '#f00', color: '#fff' } }); 
-            test(); 
-        }); 
- 
-        $('#pageDemo4').click(function() { 
-            $.blockUI({ message: $('#domMessage') }); 
-            test(); 
-        }); 
-    }); 
- 
-</script> 
- 
-... 
- 
-<div id="domMessage" style="display:none;"> 
-    <h1>We are processing your request.  Please be patient.</h1> 
-</div> 
+   
 
 </script>
-</body></html>
+</body>
+</html>
