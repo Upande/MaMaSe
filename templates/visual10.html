@@ -12,6 +12,8 @@
 $.ajax({
 	type: 'GET',
 	
+	//url : "/mamase/api/feed/?channel=7&start=2015-10-01",
+
 	url : "http://api.thingspeak.com/channels/"+16151+"/feed.json?start="+dt+"&callback=",
 	dataType: "jsonp",
 	success: function(data) {
@@ -29,8 +31,10 @@ var myarry=[];
 field = "";
  for(var i=0;i<len;i++){//loop thru all fields
 
- 	field='field'+(1+i),
+ 	field='field'+(1+i),//define fields dynamically
 
+
+ 	//
       eval('var '+field+' = ["'+(channel[field])+'"]');
 
       	console.log(field +':'+channel[field])
