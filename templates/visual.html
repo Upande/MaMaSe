@@ -4,9 +4,9 @@
 {% block title %} <title> Mamase | Visualization </title> {% endblock title %}
 {% block css %} <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}"> {% endblock css %}
 {% block js_initialize%} 
-<!--
-<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src="{% static 'js/c3.js' %}"></script>-->
+<script src="{% static 'js/d3.js' %}" charset="utf-8"></script>
+<script src="{% static 'js/c3.js' %}"></script>
+<script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
 <script>
 
 $(document).ready(function() {
@@ -16,7 +16,7 @@ $(document).ready(function() {
 $.ajax({
 type: 'GET',
 //url : "http://api.thingspeak.com/channels/"+16151+"/feed.json?start="+dt+"&callback=",
-url:"/mamase/api/feed/?channel=1&start=2015-09-01&end=2015-09-10&data=daily",
+url:"/mamase/api/feed/?channel=17&start=2015-09-01&end=2015-09-10&data=daily",
 dataType: "json",
 success: function(data) {
 feeds = data.feed[0].daily
@@ -30,7 +30,7 @@ console.log(channel)
   }
 }*/
 
-console.log(channel.description)
+console.log("channel Dscription "+channel.description)
 console.log(feeds.count.length)
 
 count=feeds.count
@@ -64,7 +64,7 @@ console.log(channel_obj.length)
  
 var created = ['created']
 var myarry=[];
-
+var myarry_min=[]
 ///
 	field = "";
  for(var i=0;i<len;i++){//loop thru all fields
@@ -76,10 +76,9 @@ var myarry=[];
       //define an array to hold field values and 
       //initiate it with field name from channel metadata
      // eval('var field'+ (1+i) + '= ["'+(channel[field])+'"]');//define fields
+     
       eval('var '+field+' = ["'+(channel[field])+'"]');
       //console.log(":::::"+field)
-
-      //eval( console.log(field))
 
       //console.log(field),
   		//console.log(field +':'+channel[field])
@@ -97,43 +96,15 @@ $('#channelname').html(channel.name);
 
 console.log(feeds.count[0].field1__count)
 
-                    count=['count']
-                    sum=['sum']
-                    avg=['avg']
-                    min=['min']
-                    max=['max']
+                   var  count=['count']
+                    var sum=['sum']
+                    var avg=['avg']
+                    var min=['min']
+                    var max=['max']
 
-                    var field_key=""
-                    for (var key in feeds) {
+                   eval('var '+field+'__count = [""]');
+                   
 
-                      if (feeds.hasOwnProperty(key)) {
-                        field_key=field+'__'+key
-                        console.log(field_key)
-                         
-
-                          for(j=0;j<count_len;j++){
-                            //console.log(key+" -> "+feeds[key][j].timestamp);
-                                                    
-                            console.log(key+" is "+eval('feeds[key][j].'+field_key))
-                            eval('var f1=feeds[key][j].'+field_key)
-                            //eval('var '+field+' = ["'+(channel[field])+'"]')
-                            console.log(f1)
-                        
-                        
-                      }
-                      
-                    }
-                  }
-
-                    /*var result = new Array();
-
-                    for(var key in feeds){
-                      for (var j=0;j<=count_len;j++){
-                        eval('var'+key+'_f1 =feeds.'+ key+'[0].'+field+'__'+key);
-                        console.log(key ="key+'_f1'")
-                      }
-                    }                   
-/*
 for (var j = 0; j < count_len; j++) {
                     n = feeds.count[j].timestamp;
                     //console.log( 'field date '+n)
@@ -143,34 +114,48 @@ for (var j = 0; j < count_len; j++) {
                     	
 
                    //assign the value of the ith field to f1
-                    eval('var f1 ='+ 'feeds.count[j].'+field+'__count');
+                    eval('var count_val ='+ 'feeds.count[j].'+field+'__count');
+                    eval('var sum_val ='+ 'feeds.sum[j].'+field+'__sum');
+                    eval('var avg_val ='+ 'feeds.avg[j].'+field+'__avg');
+                    eval('var max_val ='+ 'feeds.max[j].'+field+'__max');
+                    eval('var min_val ='+ 'feeds.min[j].'+field+'__min'); 
+
+                    count.push(count_val)
+                    sum.push(sum_val)
+                    max.push(max_val)
+                    min.push(min_val)
+                    avg.push(avg_val)
+
+                   
+
+                    console.log('count')
+                    console.log(count)
                     
-
-                                   
-
-
-
-
                     //console.log("my filed")                    
                     //console.log('f1 = '+f1);
-                    //created.push(n.replace('T',' ').replace('Z',''));                   
-                    
-                    //push only defined values of f1
-                    if (f1 !=undefined){
-                    //console.log('created = '+created);
-                   eval(field+'.push(f1)');
-                   //console.log(field)
-                 }
+                    //created.push(n.replace('T',' ').replace('Z',''));                 
                    
+                    //push only defined values of f1
+                    //if (count_val !=undefined){
+                    //console.log('created = '+created);
+                   
+                   //console.log(field)
+                 //}                  
                     
-                 	}
-
-                  */
+                 	} 
+                             
 
                  	 if (myarry.length ==0){
    					   myarry.push(created)}
-						
+
+               var combined =[count,avg,sum,max,min]  
+                  eval(field+'.push(combined)');
+
+
+						    console.log("myarry")
 					     console.log(myarry)
+               console.log(myarry[3])
+               //console.log([myarry[3][1])
 
                   //push field to myarry
                  	eval('myarry.push('+field+')')
