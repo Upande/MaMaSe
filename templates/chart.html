@@ -26,9 +26,10 @@ var month_text="Jan"
 var year = 2014
 var aggragation_variable = "avg"
 var chart_type='category'
-var id =15792
+var id =17
 var dt = new Date();
 var myarry=[];
+var datatype='raw'
 
 //dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 
@@ -187,7 +188,8 @@ $('#weathervariables option').filter(function() {
 }
 //draw graph for monthly data
 function drawGraph(){
-	if (newdata[1][1]){
+	//if (newdata[1][1]){
+
 	console.log(newdata[1][1])
    	var chart = c3.generate({
                 	bindto: '#charter',
@@ -213,11 +215,11 @@ function drawGraph(){
                 });
    }
 
-else{
+/*else{
 	$("#cart_item").html("");
 	$("#charter").prepend('<img id="theImg" src="/static/assets/images/noData.png" />');
-}
-}
+}*/
+//}
 
 //Attach loading to all ajax calls
 $body = $("body");
@@ -308,29 +310,36 @@ function pullData(){
     });
 
 
+
 var now = new Date(year,month);
-  var startdate = new Date(now.getFullYear(), now.getMonth(), 1);//First day of current month
-  var enddate  = new Date(now.getFullYear(), now.getMonth()+1, 1);//First day of following month
+  var start = new Date(now.getFullYear(), now.getMonth(), 1);//First day of current month
+  var end  = new Date(now.getFullYear(), now.getMonth()+1, 1);//First day of following month
+
+  
+  var startdate = start.toISOString().replace("T"," ").replace("Z","").slice(0,19);
+  var enddate = end.toISOString().replace("T"," ").replace("Z","").slice(0,19);
 
 
-console.log("date is "+startdate+"enddate : "+enddate)
+console.log("date is "+startdate+" enddate : "+enddate)
 
 //pull data from api and (create myarry) 
 	$.ajax({
 
 		type: 'GET',
-		//http://localhost:8000/mamase/api/feed/?channel=13&start=2015-09-15&data=daily
+		//url:"/mamase/api/feed/?channel=13&start=2015-09-15&data=raw",
+		url:"/mamase/api/feed/?channel="+id+"&start="+startdate+"&end="+enddate+"&data=raw",
 		//http://api.thingspeak.com/channels/16151/feed.json?start=2015-07-24T07:47:46Z&&end=2015-07-30T07:53:59Z
-		url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+startdate+"&&end="+enddate+"&callback=",
-		dataType: "jsonp",
+		//url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+start+"&&end="+end+"&callback=",
+		dataType: "json",
 		/*beforeSend: function(){
                        $("#loaderDiv").show();
                    },*/
 		success: function(data) {
-			feeds = data.feeds
-			channel = data.channel
+			feeds = data.feed
+			channel = data.channel[0]
+			console.log(feeds)
 channel_obj=Object.keys(channel);// convert to an object
-len=channel_obj.length-9;//get length of obj
+len=channel_obj.length-5;//get length of obj
 console.log('channel obj = '+channel.field1);//display results
 ///
 
@@ -347,10 +356,10 @@ field = "";
 
 
 for (var j = 0; j < feeds.length; j++) {
-	n = feeds[j].created_at;
+	n = feeds[j].timestamp_formatted;
 
                     if(created.length<=feeds.length) {//if created is not in myarry
-                    	created.push(n.replace('T',' ').replace('Z',''));}
+                    	created.push(n);}
 
                     eval('f1 ='+ 'feeds[j].'+field);
 
@@ -527,15 +536,15 @@ function strip_tags(html) {
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
 													
 												<select id="selectstation" onchange="selectStation(this)">			
-													<option value="15792">Mulot Weather</option>
-													<option value="16511">Nairotia Weather</option>
-													<option value="16509">Bomet Weather</option>
-													<option value="16152">Governor's Camp Weather</option>
-													<option value="16145">Rekero Camp Weather</option>
-													<option value="16148">Keekorok Weather</option>			
-													<option value="16151">Mara Conservancy Weather</option>
-													<option value="16153">Mara River @ Serena</option>
-													<option value="16157">Talek River @ Fig Tree</option>
+													<option value="17">Mulot Weather</option>
+													<option value="13">Nairotia Weather</option>
+													<option value="15">Bomet Weather</option>
+													<option value="14">Governor's Camp Weather</option>
+													<option value="12">Rekero Camp Weather</option>
+													<option value="10">Keekorok Weather</option>			
+													<option value="18">Mara Conservancy Weather</option>
+													<option value="16">Mara River @ Serena</option>
+													<option value="11">Talek River @ Fig Tree</option>
 													</select> 
 
 
