@@ -154,7 +154,7 @@ for (var j = 0; j < count_len; j++) {
 
 						    console.log("myarry")
 					     console.log(myarry)
-               console.log(myarry[3])
+               //console.log(myarry[2][2]);
                //console.log([myarry[3][1])
 
                   //push field to myarry
@@ -162,6 +162,10 @@ for (var j = 0; j < count_len; j++) {
                  	//console.log('length '+myarry.length)
                                   
                  }
+
+                 console.log("myarry")
+               console.log(myarry)
+               console.log(myarry[3][1][3]);
                 
                 //console.log( 'field date '+myarry[0])
                 //console.log( 'length of myarry[0]'+myarry.length)
@@ -178,7 +182,8 @@ for (var j = 0; j < count_len; j++) {
                 data: {
 		    x: 'created',		                      
                     xFormat: '%Y-%m-%d %H:%M:%S',
-                    columns: myarry,                    
+                    columns: [created,
+                    myarry[3][1][3]]                    
                 },
                  tooltip: {
         grouped: false //one graph at a time
