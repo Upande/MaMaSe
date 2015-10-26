@@ -52,7 +52,12 @@ def getFeeds(request):
         feed_without_null.append(feed)
         
     elif data.lower() == "monthly":
-        feed_without_null = aggregateMonthlyFeedData(kwargs)
+        feed = {}
+        data = aggregateMonthlyFeedData(kwargs)
+        feed['monthly'] = ({'avg':list(data[0]),'min':list(data[3]), 'max':list(data[4]), 'count':list(data[2]), 'sum':list(data[1])})
+        feed_without_null.append(feed)
+
+        #feed_without_null = aggregateMonthlyFeedData(kwargs)
         
     ch = Channel.objects.filter(**args).values('id','name','description','latitude','longitude','field1','field2','field3','field4','field5','field6','field7','field8')
 

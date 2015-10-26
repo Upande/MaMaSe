@@ -16,10 +16,10 @@ $(document).ready(function() {
 $.ajax({
 type: 'GET',
 //url : "http://api.thingspeak.com/channels/"+16151+"/feed.json?start="+dt+"&callback=",
-url:"/mamase/api/feed/?channel=17&start=2015-09-01&end=2015-09-10&data=daily",
+url:"/mamase/api/feed/?channel=2&start=2015-09-01&end=2015-09-10&data=monthly",
 dataType: "json",
 success: function(data) {
-feeds = data.feed[0].daily
+feeds = data.feed[0].monthly
 console.log(feeds)
 channel = data.channel[0]
 console.log(channel)
@@ -42,20 +42,6 @@ max=feeds.max
 count_len=count.length
 console.log(count)
 
-//loop thru all feeds and collect aggr values
-field="";
-field_1="";
-
-/*for(var j=0;j<count.length;j++){
-	count='field'+j+'__count'	
-	//field_1=feeds_count[j].field
-	console.log(count)
-}*/
-
-//console.log(feeds.length)
-//console.log(feeds[2].field2)
-//console.log("channel 3"+channel[0].length)
-///
 channel_obj=Object.keys(channel);// convert to an object
 len=channel_obj.length-5;//get length of obj
 console.log('length of obj = '+len);//display results
@@ -64,31 +50,18 @@ console.log(channel_obj.length)
  
 var created = ['created']
 var myarry=[];
-var myarry_min=[]
+
 ///
 	field = "";
  for(var i=0;i<len;i++){//loop thru all fields
   		  		
       field='field'+(1+i),
 
-      //console.log(":::::"+channel[field])
-      
-      //define an array to hold field values and 
-      //initiate it with field name from channel metadata
-     // eval('var field'+ (1+i) + '= ["'+(channel[field])+'"]');//define fields
-     
+          
+      //define a variable field dynamically: for every field
+      //define populate first array with field name, e.g "Rain"
       eval('var '+field+' = ["'+(channel[field])+'"]');
-      //console.log(":::::"+field)
-
-      //console.log(field),
-  		//console.log(field +':'+channel[field])
-
-  		//console.log(myfields[field])
- 
-
-/*var field1 = [channel.field1]
-var field2= [channel.field2]
-var field3 = [channel.field3]*/
+      //console.log(":::::"+field)    
 
 //console.log("channel description "+channel.description)
 $('#channeldesc').html(channel.description);
@@ -129,19 +102,8 @@ for (var j = 0; j < count_len; j++) {
                    
 
                     console.log('count')
-                    console.log(count)
-                    
-                    //console.log("my filed")                    
-                    //console.log('f1 = '+f1);
-                    //created.push(n.replace('T',' ').replace('Z',''));                 
-                   
-                    //push only defined values of f1
-                    //if (count_val !=undefined){
-                    //console.log('created = '+created);
-                   
-                   //console.log(field)
-                 //}                  
-                    
+                    console.log(count)                    
+              
                  	} 
                              
 
@@ -165,16 +127,9 @@ for (var j = 0; j < count_len; j++) {
 
                  console.log("myarry")
                console.log(myarry)
-               console.log(myarry[3][1][3]);
+               console.log(myarry[3][1][2][0]);
                 
-                //console.log( 'field date '+myarry[0])
-                //console.log( 'length of myarry[0]'+myarry.length)
-
-                /*data=[]
-                for (a=0;a<myarry.length;a++){
-                	data=data.push(myarry[i])
-                	console.log('data '+data)
-                } */                        
+                                    
 
             //console.log(myarry)
             var chart = c3.generate({
@@ -183,7 +138,7 @@ for (var j = 0; j < count_len; j++) {
 		    x: 'created',		                      
                     xFormat: '%Y-%m-%d %H:%M:%S',
                     columns: [created,
-                    myarry[3][1][3]]                    
+                    myarry[3][1][0]]                    
                 },
                  tooltip: {
         grouped: false //one graph at a time

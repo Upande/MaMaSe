@@ -24,9 +24,9 @@ var time_interval = "raw"
 var month = 0
 var month_text="Jan"
 var year = 2014
-var aggragation_variable = "avg"
+var aggr_variable = "avg"
 var chart_type='category'
-var id =17
+var id =1
 var dt = new Date();
 var myarry=[];
 var datatype='raw'
@@ -66,7 +66,7 @@ var datatype='raw'
 
 	//respond's to change in aggregation function
 	function selectAggregation(selaggregation){
-		aggragation_variable=selaggregation.value
+		aggr_variable=selaggregation.value
 		//pull data from myarray
 		//call draw graph
 
@@ -119,16 +119,18 @@ var datatype='raw'
 		
 	    //change time interval  
       function timeInterval(interval) {
-    time_interval = interval.value;
-      if (time_interval == 'monthly') {
+    datatype = interval.value;
+      if (datatype == 'monthly') {
          //Disable month selection 
          $( "#month" ).prop( "disabled", true ).css('opacity',0.5);
+         
 
      } else {
          $( "#month" ).prop( "disabled", false ).css('opacity',1);
      }
      //call data from API using time_interval
      // and start date, end date and  channel
+     pullData(datatype)
         
 }
 
@@ -215,6 +217,145 @@ function drawGraph(){
                 });
    }
 
+
+function drawGraph_monthly_daily(){
+
+	
+eval('var feeds = data.feed[0].'+datatype)
+console.log(feeds)
+
+/*for (var key in feeds) {
+  if (feeds.hasOwnProperty(key)) {
+    alert(key + " -> " + feeds[key]);
+  }
+}*/
+
+console.log("channel Description "+channel.description)
+console.log(feeds.count.length)
+
+count=feeds.count
+sum=feeds.sum
+avg=feeds.average
+min=feeds.min
+max=feeds.max
+
+count_len=count.length
+console.log(count)
+
+channel_obj=Object.keys(channel);// convert to an object
+len=channel_obj.length-5;//get length of obj
+console.log('length of obj = '+len);//display results
+
+console.log(channel_obj.length)
+ 
+var created = ['created']
+var myarry=[];
+var myarry_min=[]
+///
+	field = "";
+ for(var i=0;i<len;i++){//loop thru all fields
+  		  		
+      field='field'+(1+i),
+
+          
+      //define a variable field dynamically: for every field
+      //define populate first array with field name, e.g "Rain"
+      eval('var '+field+' = ["'+(channel[field])+'"]');
+      //console.log(":::::"+field)    
+
+//console.log("channel description "+channel.description)
+$('#channeldesc').html(channel.description);
+$('#channelname').html(channel.name);
+
+console.log(feeds.count[0].field1__count)
+
+                   var  count=['count']
+                    var sum=['sum']
+                    var avg=['avg']
+                    var min=['min']
+                    var max=['max']
+
+                   eval('var '+field+'__count = [""]');
+                   
+
+for (var j = 0; j < count_len; j++) {
+                    n = feeds.count[j].timestamp;
+                    //console.log( 'field date '+n)
+
+                    if(created.length<=count_len) {//if created is shorter than myarry
+                    created.push(n)}
+                    	
+
+                   //assign the value of the ith field to f1
+                    eval('var count_val ='+ 'feeds.count[j].'+field+'__count');
+                    eval('var sum_val ='+ 'feeds.sum[j].'+field+'__sum');
+                    eval('var avg_val ='+ 'feeds.avg[j].'+field+'__avg');
+                    eval('var max_val ='+ 'feeds.max[j].'+field+'__max');
+                    eval('var min_val ='+ 'feeds.min[j].'+field+'__min'); 
+
+                    count.push(count_val)
+                    sum.push(sum_val)
+                    max.push(max_val)
+                    min.push(min_val)
+                    avg.push(avg_val)
+
+                   
+
+                    console.log('count')
+                    console.log(count)                    
+              
+                 	} 
+                             
+
+                 	 if (myarry.length ==0){
+   					   myarry.push(created)}
+
+               var combined =[count,avg,sum,max,min]  
+                  eval(field+'.push(combined)');
+
+
+						    console.log("myarry")
+					     console.log(myarry)
+               //console.log(myarry[2][2]);
+               //console.log([myarry[3][1])
+
+                  //push field to myarry
+                 	eval('myarry.push('+field+')')
+                 	//console.log('length '+myarry.length)
+                                  
+                 }
+
+                 console.log("myarry")
+               console.log(myarry)
+               console.log(myarry[3][1][2]);
+                
+                                    
+
+            //console.log(myarry)
+            var chart = c3.generate({
+                bindto: '#charter',
+                data: {
+		    x: 'created',		                      
+                    xFormat: '%Y-%m-%d %H:%M:%S',
+                    columns: [created,
+                    myarry[3][1][1]]                    
+                },
+                 tooltip: {
+        grouped: false //one graph at a time
+    },
+axis: {
+        x: {
+            type: 'timeseries',
+            tick: {
+                format: '%Y-%m-%d %H'            
+            }
+        }
+    }
+    
+            });
+        
+    
+}
 /*else{
 	$("#cart_item").html("");
 	$("#charter").prepend('<img id="theImg" src="/static/assets/images/noData.png" />');
@@ -291,6 +432,13 @@ $('#timeinterval option').filter(function() {
     return $(this).val() == time_interval; 
 }).prop('selected', true);
 
+//select the appropriate aggr in the timeinterval dropdown		
+$('#selectaggregation option').filter(function() {
+    
+    return $(this).val() == aggr_variable; 
+}).prop('selected', true);
+
+
 
 console.log("year = "+year+" month = "+month)
 
@@ -302,7 +450,7 @@ pullData(id,year,month)
 
 //Fxn to pull data from the API
 function pullData(){
-
+//Fxn to display loading image on load
 	$('#spinner').bind("ajaxSend", function() {
 	    $(this).show();
     }).bind("ajaxComplete", function() {
@@ -310,7 +458,7 @@ function pullData(){
     });
 
 
-
+//define start and end dates
 var now = new Date(year,month);
   var start = new Date(now.getFullYear(), now.getMonth(), 1);//First day of current month
   var end  = new Date(now.getFullYear(), now.getMonth()+1, 1);//First day of following month
@@ -321,13 +469,15 @@ var now = new Date(year,month);
 
 
 console.log("date is "+startdate+" enddate : "+enddate)
+//for testing
+//datatype="monthly"
 
 //pull data from api and (create myarry) 
 	$.ajax({
 
 		type: 'GET',
 		//url:"/mamase/api/feed/?channel=13&start=2015-09-15&data=raw",
-		url:"/mamase/api/feed/?channel="+id+"&start="+startdate+"&end="+enddate+"&data=raw",
+		url:"/mamase/api/feed/?channel="+id+"&start="+startdate+"&end="+enddate+"&data="+datatype,
 		//http://api.thingspeak.com/channels/16151/feed.json?start=2015-07-24T07:47:46Z&&end=2015-07-30T07:53:59Z
 		//url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+start+"&&end="+end+"&callback=",
 		dataType: "json",
@@ -335,43 +485,166 @@ console.log("date is "+startdate+" enddate : "+enddate)
                        $("#loaderDiv").show();
                    },*/
 		success: function(data) {
-			feeds = data.feed
+
 			channel = data.channel[0]
+
+			if (datatype!='raw'){
+				eval('var feeds = data.feed[0].'+datatype)
+console.log(feeds)
+
+/*for (var key in feeds) {
+  if (feeds.hasOwnProperty(key)) {
+    alert(key + " -> " + feeds[key]);
+  }
+}*/
+
+console.log("channel Description "+channel.description)
+console.log(feeds.count.length)
+
+count=feeds.count
+
+
+count_len=count.length
+console.log(count)
+
+channel_obj=Object.keys(channel);// convert to an object
+len=channel_obj.length-5;//get length of obj
+console.log('length of obj = '+len);//display results
+
+console.log(channel_obj.length)
+ 
+var created = ['created']
+//var myarry=[];
+var myarry_min=[]
+///
+	field = "";
+ for(var i=0;i<len;i++){//loop thru all fields
+  		  		
+      field='field'+(1+i),
+
+          
+      //define a variable field dynamically: for every field
+      //define populate first array with field name, e.g "Rain"
+      eval('var '+field+' = ["'+(channel[field])+'"]');
+      //console.log(":::::"+field)    
+
+//console.log("channel description "+channel.description)
+$('#channeldesc').html(channel.description);
+$('#channelname').html(channel.name);
+
+console.log(feeds.count[0].field1__count)
+
+                   var  count=['count']
+                    var sum=['sum']
+                    var avg=['avg']
+                    var min=['min']
+                    var max=['max']                  
+                   
+
+for (var j = 0; j < count_len; j++) {
+                    n = feeds.count[j].timestamp;
+                    //console.log( 'field date '+n)
+
+                    if(created.length<=count_len) {//if created is shorter than myarry
+                    created.push(n)}
+                    	
+
+                   //assign the value of the ith field to f1
+                    eval('var count_val ='+ 'feeds.count[j].'+field+'__count');
+                    eval('var sum_val ='+ 'feeds.sum[j].'+field+'__sum');
+                    eval('var avg_val ='+ 'feeds.avg[j].'+field+'__avg');
+                    eval('var max_val ='+ 'feeds.max[j].'+field+'__max');
+                    eval('var min_val ='+ 'feeds.min[j].'+field+'__min'); 
+
+                    count.push(count_val)
+                    sum.push(sum_val)
+                    max.push(max_val)
+                    min.push(min_val)
+                    avg.push(avg_val)
+
+                   
+
+                    console.log('count')
+                    console.log(count)                    
+              
+                 	} 
+                             
+
+                 	 if (myarry.length ==0){
+   					   myarry.push(created)}
+
+               var combined =[count,avg,sum,max,min]  
+                  eval(field+'.push(combined)');
+
+
+						    console.log("myarry")
+					     console.log(myarry)
+               //console.log(myarry[2][2]);
+               //console.log([myarry[3][1])
+
+                  //push field to myarry
+                 	eval('myarry.push('+field+')')
+                 	//console.log('length '+myarry.length)
+                                  
+                 }
+
+                 console.log("myarry")
+               console.log(myarry)
+               console.log(myarry[3][1][2]);
+                
+                                    
+
+            //console.log(myarry)
+            var chart = c3.generate({
+                bindto: '#charter',
+                data: {
+		    x: 'created',		                      
+                    xFormat: '%Y-%m-%d %H:%M:%S',
+                    columns: [created,
+                    myarry[3][1][1]]                    
+                },
+                 tooltip: {
+        grouped: false //one graph at a time
+    },
+axis: {
+        x: {
+            type: 'timeseries',
+            tick: {
+                format: '%Y-%m-%d %H'            
+            }
+        }
+    }
+    
+            });
+			}
+
+			else{
+			
+			channel = data.channel[0]
+			feeds = data.feed
 			console.log(feeds)
 channel_obj=Object.keys(channel);// convert to an object
 len=channel_obj.length-5;//get length of obj
 console.log('channel obj = '+channel.field1);//display results
 ///
-
 var created = ['created']
-
 ///
 field = "";
  for(var i=0;i<len;i++){//loop thru all fields
-
  	field='field'+(1+i),
  		
-
       eval('var '+field+' = ["'+(channel[field])+'"]')
-
-
 for (var j = 0; j < feeds.length; j++) {
 	n = feeds[j].timestamp_formatted;
-
                     if(created.length<=feeds.length) {//if created is not in myarry
                     	created.push(n);}
-
                     eval('f1 ='+ 'feeds[j].'+field);
-
                     eval(field+'.push(f1)');
-
                     
                 }
                    if(myarry[0] == null) {//if created is not in myarry
                    	myarry.push(created)
                    }
-
-
                    eval('myarry.push('+field+')')
                    //weather_variable="Temperature"
               }
@@ -387,8 +660,8 @@ for (var j = 0; j < feeds.length; j++) {
               //Disable non-existing weather Variables
               populateWeathervariables(myarry)
               defineNewdata(myarry)
+          }
             },
-
             /*complete: function(){
      $("#loaderDiv").hide();
   },     */
@@ -396,7 +669,6 @@ for (var j = 0; j < feeds.length; j++) {
                    
         });
 	}
-	
 
 // export only what is visible right now (filters & paginationapplied)
 $('#export_visible').click(function(event) {
@@ -536,15 +808,15 @@ function strip_tags(html) {
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
 													
 												<select id="selectstation" onchange="selectStation(this)">			
-													<option value="17">Mulot Weather</option>
-													<option value="13">Nairotia Weather</option>
-													<option value="15">Bomet Weather</option>
-													<option value="14">Governor's Camp Weather</option>
-													<option value="12">Rekero Camp Weather</option>
-													<option value="10">Keekorok Weather</option>			
-													<option value="18">Mara Conservancy Weather</option>
-													<option value="16">Mara River @ Serena</option>
-													<option value="11">Talek River @ Fig Tree</option>
+													<option value="1">Mulot Weather</option>
+													<option value="5">Nairotia Weather</option>
+													<option value="7">Bomet Weather</option>
+													<option value="6">Governor's Camp Weather</option>
+													<option value="4">Rekero Camp Weather</option>
+													<option value="3">Keekorok Weather</option>			
+													<option value="2">Mara Conservancy Weather</option>
+													<option value="8">Mara River @ Serena</option>
+													<option value="9">Talek River @ Fig Tree</option>
 													</select> 
 
 
