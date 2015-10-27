@@ -29,7 +29,7 @@ var chart_type='category'
 var id =1
 var dt = new Date();
 var myarry=[];
-var datatype='raw'
+var datatype='daily'
 
 //dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 
@@ -121,6 +121,8 @@ var datatype='raw'
       function timeInterval(interval) {
     datatype = interval.value;
     console.log("datatype selected is "+datatype)
+    
+    console.log("datatype selected is "+datatype)
       if (datatype == 'monthly') {
          //Disable month selection 
          $( "#month" ).prop( "disabled", true ).css('opacity',0.5);
@@ -144,9 +146,12 @@ function defineNewdata(){
 		console.log( "new length "+myarry.length)
 for (var i=0;i<myarry.length;i++)
               {
-              	if (myarry[i][0]==weather_variable)
+              	if (datatype='raw'& myarry[i][0]==weather_variable)
               	{
               		newdata=[myarry[0],myarry[i]]
+              	}
+              	else{
+              		newdata=[myarry[0],myarry[i][1][1]]
               	}
               }
 
@@ -195,7 +200,7 @@ $('#weathervariables option').filter(function() {
 function drawGraph(){
 	//if (newdata[1][1]){
 
-	console.log(newdata[1][1])
+	//console.log(newdata[1][1])
    	var chart = c3.generate({
                 	bindto: '#charter',
                 	data: {
@@ -433,7 +438,6 @@ for (var j = 0; j < count_len; j++) {
                     max.push(max_val)
                     min.push(min_val)
                     avg.push(avg_val)
-
                                      
               
                  	} 
@@ -455,13 +459,19 @@ for (var j = 0; j < count_len; j++) {
                  }
 
                  console.log("myarry")
-                 console.log(myarry)
+                 console.log(myarry[2][0])
+                 console.log(myarry[0])
+                 console.log("DAtatype is "+datatype)
               
                 
                                     
 
             //console.log(myarry)
-            var chart = c3.generate({
+            //plot_monthly_graph()
+            populateWeathervariables(myarry)
+              defineNewdata(myarry)
+            function plot_monthly_graph(){
+            	            var chart = c3.generate({
                 bindto: '#charter',
                 data: {
 		    x: 'created',		                      
@@ -482,6 +492,9 @@ axis: {
     }
     
             });
+
+            }
+
 			}
 
 			else{
