@@ -88,14 +88,19 @@ var mylist=[]
 
 		//change station
 		function selectStation(selstation) {
-    weather_station = selstation.value;
-    id=weather_station    
-    refreshAndloadData(id,month,year)
-	console.log("selected station is "+weather_station )
-	console.log("selected weather var is "+weather_variable)
-	
+    weather_station = selstation.value;    
+	id=weather_station   
 
+	    if (datatype=='raw'){
+	    refreshAndloadData(id,month,year)
+		console.log("selected station is "+weather_station )
+		console.log("selected weather var is "+weather_variable)
+		}
 
+		else{
+		drawGraph_monthly_daily (id,month, year, datatype)
+		}
+		
 	}
     	//change weather variable
     function weatherVariable(selweather) {
@@ -109,10 +114,13 @@ var mylist=[]
 		}
 		else
 		{
-			newdata=defineNewdata(myarry)
-			console.log(newdata)
-			myadata=define_monthly_daily_data(newdata)
-			console.log(mydata)
+			//pull appropriate weather variable data
+			defineNewdata(myarry)
+			
+			//pull the appropriate aggregation from the array
+			define_monthly_daily_data(newdata)
+					
+			//plot the data
 
 			plotMonthly_daily(mydata)
 		}
