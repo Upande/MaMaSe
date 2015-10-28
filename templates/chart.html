@@ -132,7 +132,16 @@ var mylist=[]
     console.log("selected month is "+month )
     console.log("year selected : "+year)
     //pullData(id,year,month)
-    refreshAndloadData(id,month,year)
+
+	    if (datatype=='raw'){
+	    	refreshAndloadData(id,month,year)
+	    }
+	    else{
+	    	drawGraph_monthly_daily(id,month,year,datatype)
+	    }
+    
+
+
 	}
     //change year
     function selectedYear(selyear) {
@@ -140,9 +149,7 @@ var mylist=[]
 
 	console.log("selected year is "+year )
 	console.log("selected month is "+month )
-	refreshAndloadData(id,month,year)
-
-	
+	refreshAndloadData(id,month,year)	
 
 	}
 		
@@ -272,6 +279,9 @@ function drawGraph(){
    }
 
    function drawGraph_monthly_daily(){
+
+   	definenewdate(month,year)
+
    	$.ajax({
 
 		type: 'GET',
@@ -430,6 +440,30 @@ axis: {
             });
         }
 
+ function definenewdate(month,year){
+var now = new Date(year,month);
+
+var start= new Date()
+var end = new Date()
+
+if (datatype=="monthly"){
+	start = new Date(now.getFullYear(), 0, 1);//First day of current year
+   	end  = new Date(now.getFullYear(), 11, 31);//Last Day of current year
+
+}
+else{
+	start = new Date(now.getFullYear(), now.getMonth(), 1);//First day of current month
+   	end  = new Date(now.getFullYear(), now.getMonth()+1, 1);//First day of following month
+}
+
+  startdate = start.toISOString().replace("T"," ").replace("Z","").slice(0,19);
+  enddate = end.toISOString().replace("T"," ").replace("Z","").slice(0,19);
+
+
+console.log("date is "+startdate+" enddate : "+enddate)
+myarry=[]
+}
+
 
 
 /*else{
@@ -542,16 +576,8 @@ function pullData(){
 
 
 //define start and end dates
-var now = new Date(year,month);
-  var start = new Date(now.getFullYear(), now.getMonth(), 1);//First day of current month
-  var end  = new Date(now.getFullYear(), now.getMonth()+1, 1);//First day of following month
-myarry=[]
-  
-  startdate = start.toISOString().replace("T"," ").replace("Z","").slice(0,19);
-  enddate = end.toISOString().replace("T"," ").replace("Z","").slice(0,19);
+definenewdate(month,year)
 
-
-console.log("date is "+startdate+" enddate : "+enddate)
 //for testing
 //datatype="monthly"
 
