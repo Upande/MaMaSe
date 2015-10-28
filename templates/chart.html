@@ -31,6 +31,9 @@ var dt = new Date();
 var myarry=[];
 var datatype='raw'
 
+ var startdate=""
+ var enddate =""
+
 //dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 
 	var monthly_data =  [
@@ -67,8 +70,18 @@ var datatype='raw'
 	//respond's to change in aggregation function
 	function selectAggregation(selaggregation){
 		aggr_variable=selaggregation.value
+		defineNewdata()
+
+		for (var i=0;i<myarry.length;i++)
+        {              	
+         if (myarry[i][0]==aggr_variable)
+         {
+         	plotMonthly_daily()
+         }
+
 		//pull data from myarray
 		//call draw graph
+		}
 
 	}
 
@@ -94,8 +107,9 @@ var datatype='raw'
     	//change weather variable
     function weatherVariable(selweather) {
     weather_variable = selweather.value;    
-	console.log("selected weather station is "+weather_variable )
+	console.log("selected weather variable is "+weather_variable )
 	defineNewdata(myarry)
+	drawGraph(newdata)
 	//console.log(newdata[1])
 	
 	}
@@ -115,58 +129,69 @@ var datatype='raw'
 	console.log("selected month is "+month )
 	refreshAndloadData(id,month,year)
 
+	define_plot_data()
+
 	}
 		
 	    //change time interval  
       function timeInterval(interval) {
     datatype = interval.value;
-    console.log("datatype selected is "+datatype)    
+    console.log("datatype selected is "+datatype)
+    $( "#selectaggregation" ).prop( "disabled", false ).css('opacity',1);    
     
       if (datatype == 'monthly') {
-         //Disable month selection 
+         //Disable month selection if monthly data is selected
          $( "#month" ).prop( "disabled", true ).css('opacity',0.5);
-         drawGraph_monthly_daily()
-         
 
-     } else {
-         $( "#month" ).prop( "disabled", false ).css('opacity',1);
-         if (datatype=='daily')
-         {
-         	console.log(myarry)
-         	myarry=[]
-         drawGraph_monthly_daily()	
-         }
-         else
-         {
-         	console.log(myarry)
-         	pullData(datatype)
-         }
+         //redefine start and end dates to beging n end of year
+         //to do
+		   
+		  }
+
+      else {
+         $( "#month" ).prop( "disabled", false ).css('opacity',1);         
      }
+
+
+     if (datatype =='raw')
+		  {
+		  	$( "#selectaggregation" ).prop( "disabled", true ).css('opacity',0.5);
+		  	
+		  	pullData()
+		  }
+
+	else{
      //call data from API using time_interval
      // and start date, end date and  channel
-     console.log("datatype selected is "+datatype)
 
-     
+     //pull data 
+     drawGraph_monthly_daily(datatype)
+     //define plot data based on aggr and time step
+     define_plot_data()
+ }
         
 }
-
 
 //extract weather variable from myarry
 function defineNewdata(){
 		console.log( "new length "+myarry.length)
 for (var i=0;i<myarry.length;i++)
-              {
+              {              	
               	if (myarry[i][0]==weather_variable)
               	{
+              		//select particular weather variable data 
+              		
               		newdata=[myarry[0],myarry[i]]
-              	}
-              	
+              		console.log("newdata")
+              		console.log(newdata)
+              		return newdata              		            	
               }
 
               console.log( "new length "+myarry.length)
 
-                drawGraph(newdata)
+                
             }
+        }
 
  //load existing weather variables
  function populateWeathervariables(){
@@ -234,6 +259,21 @@ function drawGraph(){
    }
 
    function drawGraph_monthly_daily(){
+   	$.ajax({
+
+		type: 'GET',
+		//url:"/mamase/api/feed/?channel=13&start=2015-09-15&data=raw",
+		url:"/mamase/api/feed/?channel="+id+"&start="+startdate+"&end="+enddate+"&data="+datatype,
+		//http://api.thingspeak.com/channels/16151/feed.json?start=2015-07-24T07:47:46Z&&end=2015-07-30T07:53:59Z
+		//url : "http://api.thingspeak.com/channels/"+id+"/feed.json?start="+start+"&&end="+end+"&callback=",
+		dataType: "json",
+		/*beforeSend: function(){
+                       $("#loaderDiv").show();
+                   },*/
+		success: function(data) {
+
+			channel = data.channel[0]
+
 	
 eval('var feeds = data.feed[0].'+datatype)
 console.log(feeds)
@@ -318,17 +358,27 @@ for (var j = 0; j < count_len; j++) {
                  }
                  console.log("myarry")
                console.log(myarry)
-               console.log(myarry[3][1][2]);
+               console.log(myarry[1])
+               console.log(myarry[2])
+               console.log(myarry[3][1][0]);
+               var mydata=[myarry[0],myarry[1][1][0]]
                 
                                     
             //console.log(myarry)
+            plotMonthly_daily(mydata)         
+        
+    
+}
+})
+}
+//Fxn to plot daily and monthly data
+   function plotMonthly_daily(mydata){
             var chart = c3.generate({
                 bindto: '#charter',
                 data: {
 		    x: 'created',		                      
                     xFormat: '%Y-%m-%d %H:%M:%S',
-                    columns: [created,
-                    myarry[3][1][1]]                    
+                    columns: mydata                   
                 },
                  tooltip: {
         grouped: false //one graph at a time
@@ -343,9 +393,7 @@ axis: {
     }
     
             });
-        
-    
-}
+        }
 
 
 
@@ -430,6 +478,7 @@ $('#selectaggregation option').filter(function() {
     
     return $(this).val() == aggr_variable; 
 }).prop('selected', true);
+$( "#selectaggregation" ).prop( "disabled", true ).css('opacity',0.5);
 
 //select the appropriate time interval in the timeinterval dropdown		
 $('#timeinterval option').filter(function() {
@@ -463,8 +512,8 @@ var now = new Date(year,month);
   var end  = new Date(now.getFullYear(), now.getMonth()+1, 1);//First day of following month
 myarry=[]
   
-  var startdate = start.toISOString().replace("T"," ").replace("Z","").slice(0,19);
-  var enddate = end.toISOString().replace("T"," ").replace("Z","").slice(0,19);
+  startdate = start.toISOString().replace("T"," ").replace("Z","").slice(0,19);
+  enddate = end.toISOString().replace("T"," ").replace("Z","").slice(0,19);
 
 
 console.log("date is "+startdate+" enddate : "+enddate)
@@ -526,6 +575,7 @@ for (var j = 0; j < feeds.length; j++) {
               //Disable non-existing weather Variables
               populateWeathervariables(myarry)
               defineNewdata(myarry)
+              drawGraph(newdata)
           
             },
             /*complete: function(){
