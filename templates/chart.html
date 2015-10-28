@@ -102,15 +102,16 @@ var mylist=[]
     weather_variable = selweather.value;    
 	console.log("selected weather variable is "+weather_variable )
 
-		if (datatype='raw'){
+		if (datatype=='raw'){
 		defineNewdata(myarry)
 		drawGraph(newdata)
 		//console.log(newdata[1])
 		}
 		else
 		{
-			defineNewdata(myarry)
-			define_monthly_daily_data(newdata)
+			newdata=defineNewdata(myarry)
+			console.log(newdata)
+			myadata=define_monthly_daily_data(newdata)
 			console.log(mydata)
 
 			plotMonthly_daily(mydata)
@@ -371,7 +372,7 @@ for (var j = 0; j < count_len; j++) {
             //console.log(myarry)
            
             defineNewdata(myarry)
-            console.log(newdata[1][1][1][0])        
+                   
             define_monthly_daily_data(newdata)
             plotMonthly_daily(mydata)
 
