@@ -29,7 +29,7 @@ var chart_type='category'
 var id =1
 var dt = new Date();
 var myarry=[];
-var datatype='daily'
+var datatype='raw'
 
 //dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 
@@ -120,25 +120,35 @@ var datatype='daily'
 	    //change time interval  
       function timeInterval(interval) {
     datatype = interval.value;
-    console.log("datatype selected is "+datatype)
+    console.log("datatype selected is "+datatype)    
     
-    console.log("datatype selected is "+datatype)
       if (datatype == 'monthly') {
          //Disable month selection 
          $( "#month" ).prop( "disabled", true ).css('opacity',0.5);
+         drawGraph_monthly_daily()
          
 
      } else {
          $( "#month" ).prop( "disabled", false ).css('opacity',1);
+         if (datatype=='daily')
+         {
+         	console.log(myarry)
+         	myarry=[]
+         drawGraph_monthly_daily()	
+         }
+         else
+         {
+         	console.log(myarry)
+         	pullData(datatype)
+         }
      }
      //call data from API using time_interval
      // and start date, end date and  channel
      console.log("datatype selected is "+datatype)
 
-     pullData(datatype)
+     
         
 }
-
 
 
 //extract weather variable from myarry
@@ -146,13 +156,11 @@ function defineNewdata(){
 		console.log( "new length "+myarry.length)
 for (var i=0;i<myarry.length;i++)
               {
-              	if (datatype='raw'& myarry[i][0]==weather_variable)
+              	if (myarry[i][0]==weather_variable)
               	{
               		newdata=[myarry[0],myarry[i]]
               	}
-              	else{
-              		newdata=[myarry[0],myarry[i][1][1]]
-              	}
+              	
               }
 
               console.log( "new length "+myarry.length)
@@ -224,6 +232,120 @@ function drawGraph(){
                 	}
                 });
    }
+
+   function drawGraph_monthly_daily(){
+	
+eval('var feeds = data.feed[0].'+datatype)
+console.log(feeds)
+/*for (var key in feeds) {
+  if (feeds.hasOwnProperty(key)) {
+    alert(key + " -> " + feeds[key]);
+  }
+}*/
+console.log("channel Description "+channel.description)
+console.log(feeds.count.length)
+count=feeds.count
+sum=feeds.sum
+avg=feeds.average
+min=feeds.min
+max=feeds.max
+count_len=count.length
+console.log(count)
+channel_obj=Object.keys(channel);// convert to an object
+len=channel_obj.length-5;//get length of obj
+console.log('length of obj = '+len);//display results
+console.log(channel_obj.length)
+ 
+var created = ['created']
+var myarry=[];
+var myarry_min=[]
+///
+	field = "";
+ for(var i=0;i<len;i++){//loop thru all fields
+  		  		
+      field='field'+(1+i),
+          
+      //define a variable field dynamically: for every field
+      //define populate first array with field name, e.g "Rain"
+      eval('var '+field+' = ["'+(channel[field])+'"]');
+      //console.log(":::::"+field)    
+//console.log("channel description "+channel.description)
+$('#channeldesc').html(channel.description);
+$('#channelname').html(channel.name);
+console.log(feeds.count[0].field1__count)
+                   var  count=['count']
+                    var sum=['sum']
+                    var avg=['avg']
+                    var min=['min']
+                    var max=['max']
+                   eval('var '+field+'__count = [""]');
+                   
+for (var j = 0; j < count_len; j++) {
+                    n = feeds.count[j].timestamp;
+                    //console.log( 'field date '+n)
+                    if(created.length<=count_len) {//if created is shorter than myarry
+                    created.push(n)}
+                    	
+                   //assign the value of the ith field to f1
+                    eval('var count_val ='+ 'feeds.count[j].'+field+'__count');
+                    eval('var sum_val ='+ 'feeds.sum[j].'+field+'__sum');
+                    eval('var avg_val ='+ 'feeds.avg[j].'+field+'__avg');
+                    eval('var max_val ='+ 'feeds.max[j].'+field+'__max');
+                    eval('var min_val ='+ 'feeds.min[j].'+field+'__min'); 
+                    count.push(count_val)
+                    sum.push(sum_val)
+                    max.push(max_val)
+                    min.push(min_val)
+                    avg.push(avg_val)
+                   
+                    console.log('count')
+                    console.log(count)                    
+              
+                 	} 
+                             
+                 	 if (myarry.length ==0){
+   					   myarry.push(created)}
+               var combined =[count,avg,sum,max,min]  
+                  eval(field+'.push(combined)');
+						    console.log("myarry")
+					     console.log(myarry)
+               //console.log(myarry[2][2]);
+               //console.log([myarry[3][1])
+                  //push field to myarry
+                 	eval('myarry.push('+field+')')
+                 	//console.log('length '+myarry.length)
+                                  
+                 }
+                 console.log("myarry")
+               console.log(myarry)
+               console.log(myarry[3][1][2]);
+                
+                                    
+            //console.log(myarry)
+            var chart = c3.generate({
+                bindto: '#charter',
+                data: {
+		    x: 'created',		                      
+                    xFormat: '%Y-%m-%d %H:%M:%S',
+                    columns: [created,
+                    myarry[3][1][1]]                    
+                },
+                 tooltip: {
+        grouped: false //one graph at a time
+    },
+axis: {
+        x: {
+            type: 'timeseries',
+            tick: {
+                format: '%Y-%m-%d %H'            
+            }
+        }
+    }
+    
+            });
+        
+    
+}
 
 
 
@@ -363,142 +485,7 @@ console.log("date is "+startdate+" enddate : "+enddate)
                    },*/
 		success: function(data) {
 
-			channel = data.channel[0]
-
-			if (datatype!='raw'){
-				eval('var feeds = data.feed[0].'+datatype)
-console.log(feeds)
-
-/*for (var key in feeds) {
-  if (feeds.hasOwnProperty(key)) {
-    alert(key + " -> " + feeds[key]);
-  }
-}*/
-
-console.log("channel Description "+channel.description)
-console.log(feeds.count.length)
-
-count=feeds.count
-
-
-count_len=count.length
-
-
-channel_obj=Object.keys(channel);// convert to an object
-len=channel_obj.length-5;//get length of obj
-console.log('length of obj = '+len);//display results
-
-console.log(channel_obj.length)
- 
-var created = ['created']
-//var myarry=[];
-var myarry_min=[]
-///
-	field = "";
- for(var i=0;i<len;i++){//loop thru all fields
-  		  		
-      field='field'+(1+i),
-
-          
-      //define a variable field dynamically: for every field
-      //define populate first array with field name, e.g "Rain"
-      eval('var '+field+' = ["'+(channel[field])+'"]');
-      //console.log(":::::"+field)    
-
-//console.log("channel description "+channel.description)
-$('#channeldesc').html(channel.description);
-$('#channelname').html(channel.name);
-
-console.log(feeds.count[0].field1__count)
-
-                   var  count=['count']
-                    var sum=['sum']
-                    var avg=['avg']
-                    var min=['min']
-                    var max=['max']                  
-                   
-
-for (var j = 0; j < count_len; j++) {
-                    n = feeds.count[j].timestamp;
-                    //console.log( 'field date '+n)
-
-                    if(created.length<=count_len) {//if created is shorter than myarry
-                    created.push(n)}
-                    	
-
-                   //assign the value of the ith field to f1
-                    eval('var count_val ='+ 'feeds.count[j].'+field+'__count');
-                    eval('var sum_val ='+ 'feeds.sum[j].'+field+'__sum');
-                    eval('var avg_val ='+ 'feeds.avg[j].'+field+'__avg');
-                    eval('var max_val ='+ 'feeds.max[j].'+field+'__max');
-                    eval('var min_val ='+ 'feeds.min[j].'+field+'__min'); 
-
-                    count.push(count_val)
-                    sum.push(sum_val)
-                    max.push(max_val)
-                    min.push(min_val)
-                    avg.push(avg_val)
-                                     
-              
-                 	} 
-                             
-
-                 	 if (myarry.length ==0){
-   					   myarry.push(created)}
-
-               var combined =[count,avg,sum,max,min]  
-                  eval(field+'.push(combined)');
-
-
-				
-
-                  //push field to myarry
-                 	eval('myarry.push('+field+')')
-                 	//console.log('length '+myarry.length)
-                                  
-                 }
-
-                 console.log("myarry")
-                 console.log(myarry[2][0])
-                 console.log(myarry[0])
-                 console.log("DAtatype is "+datatype)
-              
-                
-                                    
-
-            //console.log(myarry)
-            //plot_monthly_graph()
-            populateWeathervariables(myarry)
-              defineNewdata(myarry)
-            function plot_monthly_graph(){
-            	            var chart = c3.generate({
-                bindto: '#charter',
-                data: {
-		    x: 'created',		                      
-                    xFormat: '%Y-%m-%d %H:%M:%S',
-                    columns: [myarry[0],
-                    myarry[3][1][1]]                    
-                },
-                 tooltip: {
-        grouped: false //one graph at a time
-    },
-axis: {
-        x: {
-            type: 'timeseries',
-            tick: {
-                format: '%Y-%m-%d %H'            
-            }
-        }
-    }
-    
-            });
-
-            }
-
-			}
-
-			else{
-			
+			channel = data.channel[0]			
 			
 			feeds = data.feed
 			//console.log(feeds)
@@ -539,7 +526,7 @@ for (var j = 0; j < feeds.length; j++) {
               //Disable non-existing weather Variables
               populateWeathervariables(myarry)
               defineNewdata(myarry)
-          }
+          
             },
             /*complete: function(){
      $("#loaderDiv").hide();
