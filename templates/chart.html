@@ -26,7 +26,7 @@ var month_text="Jan"
 var year = 2014
 var aggr_variable = "avg"
 var chart_type='category'
-var id =1
+var id = 1
 var dt = new Date();
 var myarry=[];
 var datatype='daily'
@@ -644,7 +644,7 @@ function strip_tags(html) {
 						</p>
 					</div>	    
 					<div style="margin-top:20px;">
-						<!--iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d255282.1616275287!2d36.84739685!3d-1.30480355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1442993224780" width="400" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>-->
+						<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d255282.1616275287!2d36.84739685!3d-1.30480355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1442993224780" width="400" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
 					</div>
 				</div>		
 				<div class="col-md-8 col-sm-8">
@@ -656,9 +656,9 @@ function strip_tags(html) {
 							<table  class='table borderless'>
 								<thead>
 									<tr>
-										<td>
+										<!--<td>
 											SELECT:
-										</td>
+										</td>-->
 										<td>
 											Weather Station
 										</td>
@@ -675,13 +675,14 @@ function strip_tags(html) {
 											Year
 										</td>
 										<td>
+										  Aggregation
 										</td>	
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
-										<td>
-										</td>
+										<!--<td>
+										</td>-->
 										<td>
 											<div class="dropdown_station">
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
@@ -797,16 +798,6 @@ function strip_tags(html) {
 											</div>
 										</td>
 										<td>
-											<button type="button" class="btn btn-default">Generate CSV <i class="fa fa-download"></i></button>		      
-										</td>
-									</tr>
-								</tbody>
-
-								<tbody>
-									<tr>
-										<td>
-										</td>
-										<td>
 											<div class="dropdown_station">
 												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
 													
@@ -821,6 +812,17 @@ function strip_tags(html) {
 												</ul>
 											</div>
 										</td>
+
+										<!--<td>
+											<button type="button" class="btn btn-default">Generate CSV <i class="fa fa-download"></i></button>		      
+										</td>-->
+									</tr>
+								</tbody>
+
+								<tbody>
+									<tr>
+										<!--<td>
+										</td>-->
 										</tbody>
 
 
