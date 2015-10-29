@@ -149,7 +149,13 @@ var mylist=[]
 
 	console.log("selected year is "+year )
 	console.log("selected month is "+month )
-	refreshAndloadData(id,month,year)	
+		if (datatype=='raw'){
+			refreshAndloadData(id,month,year)
+		}
+		else{
+			drawGraph_monthly_daily(id,month,year,datatype)
+		}
+		
 
 	}
 		
