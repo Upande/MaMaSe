@@ -6,26 +6,31 @@
     <script type="text/javascript">
 Lat = -0.943496;
 Lon = 35.424305;
-Zoom = 9;
-
-function loadMap(Lon,Lat) { 
+Zoom = 8;
+ 
+ //define projection
 proj4326 = new OpenLayers.Projection("EPSG:4326");//WGS 84
 //proj900913 = new OpenLayers.Projection("EPSG:900913");
  
-
+init = function() {
   
-  osm = new OpenLayers.Layer.OSM("openstreetmap");
+  osm = new OpenLayers.Layer.OSM();
+  var gmap = new OpenLayers.Layer.Google('Google street maps');
   map = new OpenLayers.Map("map");
-  
-  map.addLayers([osm]);
-  map.setCenter(new OpenLayers.LonLat(Lon, Lat).transform(proj4326, map.getProjectionObject()), Zoom); 
+
+  map.addLayers([osm,gmap]);
+
+  map.setCenter(new OpenLayers.LonLat(Lon, Lat).transform(proj4326, map.getProjectionObject()), Zoom);
+  map.addControl(new OpenLayers.Control.LayerSwitcher()); 
 
 };
+
+
     </script>
  
   </head> 
  
-  <body onload="loadMap()"> 
+  <body onload="init()"> 
     <div id="map" style='width: 650px; height: 408px;'></div> 
   </body> 
 </html> 
