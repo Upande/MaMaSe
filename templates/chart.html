@@ -52,7 +52,7 @@ var mylist=[]
 //Open Layer variables
 var Lat = -0.943496;
 var Lon = 35.424305;
-var Zoom = 10;
+var Zoom = 8;
 
 var startdate=""
 var enddate =""
@@ -111,8 +111,7 @@ var enddate =""
 		//change station
 		function selectStation(selstation) {
 			weather_station = selstation.value;    
-			id=weather_station    		
-
+			id=weather_station
 
 			console.log(Lon,Lat)
 			console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
@@ -124,6 +123,7 @@ var enddate =""
 
 			Lon = channel.longitude
 			Lat=channel.latitude
+			createMarker(Lon,Lat)
 			console.log(Lon,Lat)			
 			}
 
@@ -314,8 +314,7 @@ map = new ol.Map({
     });
 
     map.addLayer(osmlayer); 
-    createMarker(Lon,Lat)
-    
+    createMarker(Lon,Lat)    
 }
 
 function createMarker(Lon,Lat){
@@ -714,7 +713,10 @@ $.ajax({
                    },*/
                    success: function(data) {
 
-                   	channel = data.channel[0]			
+                   	channel = data.channel[0]
+
+                   	Lon =channel.longitude
+                   	Lat =channel.latitude			
 
                    	feeds = data.feed
 			//console.log(feeds)
