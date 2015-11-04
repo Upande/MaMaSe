@@ -52,7 +52,7 @@ var mylist=[]
 //Open Layer variables
 var Lat = -0.943496;
 var Lon = 35.424305;
-var Zoom = 8;
+var Zoom = 10;
 
 var startdate=""
 var enddate =""
@@ -111,30 +111,38 @@ var enddate =""
 		//change station
 		function selectStation(selstation) {
 			weather_station = selstation.value;    
-			id=weather_station
-			Lon = channel.longitude
-			Lat=channel.latitude
+			id=weather_station    		
+
+
 			console.log(Lon,Lat)
-
-			//map.renderSync();
-
-			 /*map.setView(new ol.View({
-			    center: [Lon, Lat],
-			    zoom: 2
-
-			  })); */  
+			console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
 			if (datatype=='raw'){
 				refreshAndloadData(id,month,year)
 				console.log("selected station is "+weather_station )
 				console.log("selected weather var is "+weather_variable)
+
+			Lon = channel.longitude
+			Lat=channel.latitude
+			console.log(Lon,Lat)			
 			}
 
 			else{
 				drawGraph_monthly_daily (id,month, year, datatype)
 			}
 
+
+		var layers = map.getLayers();
+    	layers.pop();
+
+		map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
+    		map.getView().setZoom(Zoom);
+
+		createMarker(Lon,Lat)
+
 		}
+
+
     	//change weather variable
     	function weatherVariable(selweather) {
     		weather_variable = selweather.value;    
@@ -156,7 +164,7 @@ var enddate =""
 			//plot the data
 
 			plotMonthly_daily(mydata)
-		}
+		}		
 
 	}
     	//change month
@@ -291,36 +299,32 @@ $('#weathervariables option').filter(function() {
 
 //Load map
 function loadMap(Lon,Lat) { 
-	//WGS 84
-//proj900913 = new OpenLayers.Projection("EPSG:900913");
 
-
-//define new proj for kenya (Arc 1960 / UTM zone 36S)
-var kenyaProj = new ol.proj.Projection({
-  code: 'EPSG:21036',
-  extent: [8698794.47,100878.09, 10518334.28, 1492137.79],
-  units: 'm'
-});
-// Create latitude and longitude and convert them to default projection
-    var map = new ol.Map({
-      layers: [new ol.layer.Tile({ source: new ol.source.OSM() })],
-      target: 'map',      
-      view: new ol.View({
-      center: ol.proj.fromLonLat([Lon, Lat]),    
-        zoom: Zoom
-      })
+map = new ol.Map({
+        target:'map',        
+        view: new ol.View({
+            projection: 'EPSG:900913',
+            center: ol.proj.fromLonLat([Lon, Lat]), 
+            zoom:Zoom
+        })
+    });
+    
+    var osmlayer = new ol.layer.Tile({
+        source: new ol.source.OSM()
     });
 
-    defineVector(Lon,Lat)
-    //define location
+    map.addLayer(osmlayer); 
+    createMarker(Lon,Lat)
+    
+}
 
-function defineVector(Lon,Lat){
-    //define vector source
+function createMarker(Lon,Lat){
+	    //define vector source
     var vectorSource = new ol.source.Vector({
       //create empty vector
     });
-    
-    //create an icon and add to source vector   
+
+        //create an icon and add to source vector   
  
         var iconFeature = new ol.Feature({
           geometry: new  
@@ -329,46 +333,29 @@ function defineVector(Lon,Lat){
         population: 400100,
         rainfall: 500        
         });
+
+        //and add to source vector   
         vectorSource.addFeature(iconFeature);
    
-
-    //create the style
+    //create the icon style
     var iconStyle = new ol.style.Style({
       image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
         anchor: [0.5, 4],
         anchorXUnits: 'fraction',
         anchorYUnits: 'pixels',
-        opacity: 0.70,
+        opacity: 1,
         src: icon
       }))
     });
-
-
 
     //add the feature vector to the layer vector, and apply a style to whole layer
     var vectorLayer = new ol.layer.Vector({
       source: vectorSource,
       style: iconStyle
-    });
-
-     map.addLayer(vectorLayer);
-
-    //vectorLayer.setOpacity(.1);
-} 
-    $('#selectstation').on('change', function() {
-  alert( this.value ); // or $(this).val()
-   var layers = map.getLayers();
-   Lon=channel.longitude
-   Lat=channel.latitude
-    layers.pop();
-    defineVector(Lon,Lat)
-    //center map
-    map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
-    map.getView().setZoom(Zoom+2);
-    
-    
-});
+    });    
+    map.addLayer(vectorLayer);
 }
+
 //draw graph for monthly data
 function drawGraph(){
 	//if (newdata[1][1]){
@@ -424,6 +411,9 @@ $('#spinner').bind("ajaxSend", function() {
                    success: function(data) {
 
                    	channel = data.channel[0]
+
+                   	Lon = channel.longitude
+                   	Lat = channel.latitude
 
 
                    	eval('var feeds = data.feed[0].'+datatype)
@@ -509,9 +499,7 @@ for (var j = 0; j < count_len; j++) {
                  }
                  console.log("myarry")
                  console.log(myarry)
-                 console.log(myarry[1])
-                 console.log(myarry[2])
-                 console.log(myarry[3][1][0]);
+
                //var mydata=[myarry[0],myarry[1][1][0]]
 
 
