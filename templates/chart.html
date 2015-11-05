@@ -52,7 +52,8 @@ var mylist=[]
 //Open Layer variables
 var Lat = -0.943496;
 var Lon = 35.424305;
-var Zoom = 8;
+var Zoom = 9;
+var graph_description = 'Raw Data'
 
 var startdate=""
 var enddate =""
@@ -108,6 +109,17 @@ var enddate =""
 		pullData(id,month,year)
 	}
 
+	function refreshmap(Lon,Lat){
+				var layers = map.getLayers();
+    	layers.pop();	
+
+
+		map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
+    		map.getView().setZoom(Zoom);
+
+		createMarker(Lon,Lat)
+	}
+
 		//change station
 		function selectStation(selstation) {
 			weather_station = selstation.value;    
@@ -119,12 +131,9 @@ var enddate =""
 			if (datatype=='raw'){
 				refreshAndloadData(id,month,year)
 				console.log("selected station is "+weather_station )
-				console.log("selected weather var is "+weather_variable)
-
-			Lon = channel.longitude
-			Lat=channel.latitude
-			createMarker(Lon,Lat)
-			console.log(Lon,Lat)			
+				console.log("selected weather var is "+weather_variable)				
+				console.log(Lon,Lat)			
+						
 			}
 
 			else{
@@ -132,16 +141,7 @@ var enddate =""
 			}
 
 
-		var layers = map.getLayers();
-    	layers.pop();
-
-		map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
-    		map.getView().setZoom(Zoom);
-
-		createMarker(Lon,Lat)
-
 		}
-
 
     	//change weather variable
     	function weatherVariable(selweather) {
@@ -508,6 +508,7 @@ for (var j = 0; j < count_len; j++) {
 
             define_monthly_daily_data(newdata)
             plotMonthly_daily(mydata)
+            refreshmap(Lon,Lat)
 
 
         }
@@ -716,7 +717,7 @@ $.ajax({
                    	channel = data.channel[0]
 
                    	Lon =channel.longitude
-                   	Lat =channel.latitude			
+                   	Lat =channel.latitude                   		
 
                    	feeds = data.feed
 			//console.log(feeds)
@@ -758,6 +759,7 @@ field = "";
               populateWeathervariables(myarry)
               defineNewdata(myarry)
               drawGraph(newdata)
+              refreshmap(Lon,Lat)	
 
           },
             /*complete: function(){
@@ -844,7 +846,7 @@ $('#export_all').click(function(event) {
 					<p class="text-center" style="margin-bottom:20px;">Low cost stations in the Mara River Basin collect real time data. Here the open access data can be viewed. Click one of the channels to view data of your interest.</p>
 
 					<div class="big-title text-center fadeInDown">
-						<h1>Monthly <strong> View</strong></h1>
+						<h1 id ='graph_description'>Raw data <strong> View</strong></h1>
 					</div>
 				</div>
 			</div>
