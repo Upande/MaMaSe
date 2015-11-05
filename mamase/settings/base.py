@@ -63,6 +63,7 @@ INSTALLED_APPS = (
     'storages',
     'djcelery',
     
+    'home',
     'apps.utils',
     'apps.video',
     'apps.event',
