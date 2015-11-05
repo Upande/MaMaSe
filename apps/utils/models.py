@@ -20,7 +20,7 @@ class Channel(models.Model):
     last_entry_id = models.IntegerField(default=0)
     username = models.TextField()
     
-    #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried
+    #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried. No longer really necessarry since this is not done on the fly
     field1 = models.TextField(default="",null=True,blank=True)
     field2 = models.TextField(default="",null=True,blank=True)
     field3 = models.TextField(default="",null=True,blank=True)
@@ -32,6 +32,15 @@ class Channel(models.Model):
     
     def __unicode__(self):
         return self.name
+
+class ChannelField(models.Model):
+    tag = models.TextField()
+    field = models.TextField(default="",null=True,blank=True)
+    added = models.DateTimeField(auto_now_add=True)
+    channel = models.ForeignKey(Channel)
+
+    def __unicode__(self):
+        return self.field
 
 class Feed(models.Model):
     channel = models.ForeignKey(Channel, related_name="channels")
@@ -51,6 +60,12 @@ class Feed(models.Model):
 
     def __unicode__(self):
         return str(self.entry_id)
+
+class FeedField(models.Model):
+    reading = models.FloatField(default=0.0,null=True,blank=True)
+    channelField = models.ForeignKey(ChannelField)
+    feed = models.ForeignKey(Feed)
+    added = models.DateTimeField(auto_now_add=True)
 
 class EmailRecipient(models.Model):
     role = models.CharField(max_length = 200)
