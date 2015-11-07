@@ -64,7 +64,10 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-BROKER_URL = os.environ.get('CLOUDAMQP_URL')
+#Let us try redis. Killing two birds with one stone. For result backend and also as the broker
+#BROKER_URL = os.environ.get('CLOUDAMQP_URL')
+CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
+BROKER_URL=os.environ['REDIS_URL']
 
 STATICFILES_LOCATION = 'static'
 STATICFILES_STORAGE = 'custom_storages.StaticStorage'

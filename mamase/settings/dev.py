@@ -49,5 +49,5 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 MEDIAFILES_LOCATION = 'media'
 MEDIA_URL = 'https://mamase.s3.amazonaws.com/media/'
 
-#Use Rabbit for production
+#Use RabbitMQ for production. Heroku has provison of rabbitmq using CloudMQP
 BROKER_URL = 'amqp://upande:upandegani@localhost:5672//'
