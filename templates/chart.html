@@ -32,7 +32,7 @@
 <script src="{% static 'js/c3.js' %}"></script>
 <script>
 
-var icon= '/static/assets/images/location30.png'
+var icon= '{% static 'images/location30.png' %}'
 	var daily = []
 	var monthly = []
 	var raw=[]
@@ -45,7 +45,7 @@ var month_text="Jan"
 var year = 2014
 var aggr_variable = "avg"
 var chart_type='category'
-var id = 1
+var id =1
 var dt = new Date();
 var myarry=[];
 var datatype='raw'
@@ -595,7 +595,7 @@ function definenewdate(month,year){
 
 /*else{
 	$("#cart_item").html("");
-	$("#charter").prepend('<img id="theImg" src="/static/assets/images/noData.png" />');
+	$("#charter").prepend('<img id="theImg" src="{% static 'images/noData.png'%}" />');
 }*/
 //}
 
@@ -899,7 +899,7 @@ $('#export_all').click(function(event) {
 				<div class="col-md-12">
 					<div id="controls">
 						<table  class='table borderless'>
-							<thead>
+							<thead id="tableheader">
 								<tr>
 										<!--<td>
 											SELECT:
