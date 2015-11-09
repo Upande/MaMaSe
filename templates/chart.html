@@ -30,7 +30,7 @@
 <script src="{% static 'js/c3.js' %}"></script>
 <script>
 
-var icon= '/static/assets/images/location30.png'
+var icon= '{% static 'images/location30.png' %}'
 	var daily = []
 	var monthly = []
 	var raw=[]
@@ -584,7 +584,7 @@ function definenewdate(month,year){
 
 /*else{
 	$("#cart_item").html("");
-	$("#charter").prepend('<img id="theImg" src="/static/assets/images/noData.png" />');
+	$("#charter").prepend('<img id="theImg" src="{% static 'images/noData.png'%}" />');
 }*/
 //}
 
