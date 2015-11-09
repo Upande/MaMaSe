@@ -20,52 +20,27 @@ class Channel(models.Model):
     last_entry_id = models.IntegerField(default=0)
     username = models.TextField()
     
-    #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried. No longer really necessarry since this is not done on the fly
-    field1 = models.TextField(default="",null=True,blank=True)
-    field2 = models.TextField(default="",null=True,blank=True)
-    field3 = models.TextField(default="",null=True,blank=True)
-    field4 = models.TextField(default="",null=True,blank=True)
-    field5 = models.TextField(default="",null=True,blank=True)
-    field6 = models.TextField(default="",null=True,blank=True)
-    field7 = models.TextField(default="",null=True,blank=True)
-    field8 = models.TextField(default="",null=True,blank=True)
-    
     def __unicode__(self):
         return self.name
 
-class ChannelField(models.Model):
-    tag = models.TextField()
-    field = models.TextField(default="",null=True,blank=True)
+class Field(models.Model):
+    name = models.TextField(unique=True)
     added = models.DateTimeField(auto_now_add=True)
-    channel = models.ForeignKey(Channel)
 
     def __unicode__(self):
-        return self.field
+        return self.name
 
 class Feed(models.Model):
     channel = models.ForeignKey(Channel, related_name="channels")
     entry_id = models.IntegerField()
     timestamp = models.DateTimeField()
     lastupdate = models.DateTimeField(auto_now_add =True)
-
-    #For speed, I shall make this table not fully normalized. We shall have fields 1-9. Not very scalable but easily queried
-    field1 = models.FloatField(default=0.0,null=True,blank=True)
-    field2 = models.FloatField(default=0.0,null=True,blank=True)
-    field3 = models.FloatField(default=0.0,null=True,blank=True)
-    field4 = models.FloatField(default=0.0,null=True,blank=True)
-    field5 = models.FloatField(default=0.0,null=True,blank=True)
-    field6 = models.FloatField(default=0.0,null=True,blank=True)
-    field7 = models.FloatField(default=0.0,null=True,blank=True)
-    field8 = models.FloatField(default=0.0,null=True,blank=True)
-
+    field = models.ForeignKey(Field, related_name="fields")
+    reading = models.FloatField()
+    
     def __unicode__(self):
         return str(self.entry_id)
 
-class FeedField(models.Model):
-    reading = models.FloatField(default=0.0,null=True,blank=True)
-    channelField = models.ForeignKey(ChannelField)
-    feed = models.ForeignKey(Feed)
-    added = models.DateTimeField(auto_now_add=True)
 
 class EmailRecipient(models.Model):
     role = models.CharField(max_length = 200)
