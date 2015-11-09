@@ -43,7 +43,7 @@ var month_text="Jan"
 var year = 2014
 var aggr_variable = "avg"
 var chart_type='category'
-var id = 29
+var id = 1
 var dt = new Date();
 var myarry=[];
 var datatype='raw'
@@ -387,11 +387,15 @@ function drawGraph(){
 function drawGraph_monthly_daily(){
 
 	//Fxn to display loading image on load
-$('#spinner').bind("ajaxSend", function() {
-	$(this).show();
-}).bind("ajaxComplete", function() {
-	$(this).hide();
-});
+    $("#spinner").bind("ajaxSend", function() {
+        $(this).show();
+    }).bind("ajaxStop", function() {
+        $(this).hide();
+    }).bind("ajaxError", function() {
+        $(this).hide();
+    });
+ 
+     
 
 
 	definenewdate(month,year)
@@ -687,12 +691,15 @@ pullData(id,year,month)
 //Fxn to pull data from the API
 function pullData(){
 //Fxn to display loading image on load
-$('#spinner').bind("ajaxSend", function() {
-	$(this).show();
-}).bind("ajaxComplete", function() {
-	$(this).hide();
-});
 
+    $("#spinner").bind("ajaxSend", function() {
+        $(this).show();
+    }).bind("ajaxStop", function() {
+        $(this).hide();
+    }).bind("ajaxError", function() {
+        $(this).hide();
+    });
+     
 
 //define start and end dates
 definenewdate(month,year)
@@ -837,6 +844,10 @@ $('#export_all').click(function(event) {
 <!-- Container -->
 <div id="container">  
 	<!-- Start Chart Section -->
+
+	<div id="spinner" class="modal" style="display:none;">    
+	</div>
+
 	<div class="pricing-section" style="padding-top:60px; padding-bottom:60px;">
 		<div class="container">
 			<div class="row">
