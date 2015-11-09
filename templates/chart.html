@@ -16,6 +16,8 @@
       }
     </style>
 
+
+
 {% endblock css %}
 {% block js_initialize %} 
 <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
@@ -181,8 +183,6 @@ var enddate =""
     	drawGraph_monthly_daily(id,month,year,datatype)
     }
     
-
-
 }
     //change year
     function selectedYear(selyear) {
@@ -355,6 +355,16 @@ function createMarker(Lon,Lat){
     map.addLayer(vectorLayer);
 }
 
+//select display mode
+function selMode(mode){
+	mode = mode.value;
+	console.log(mode)
+	if (mode = station){
+		selectStation(selstation)
+	}
+	else if 
+}
+
 //draw graph for monthly data
 function drawGraph(){
 	//if (newdata[1][1]){
@@ -394,9 +404,6 @@ function drawGraph_monthly_daily(){
     }).bind("ajaxError", function() {
         $(this).hide();
     });
- 
-     
-
 
 	definenewdate(month,year)
 
@@ -456,7 +463,7 @@ field = "";
 //console.log("channel description "+channel.description)
 $('#channeldesc').html(channel.description);
 $('#channelname').html(channel.name);
-console.log(feeds.count[0].field1__count)
+
 var  count=['count']
 var sum=['sum']
 var avg=['avg']
@@ -866,10 +873,12 @@ $('#export_all').click(function(event) {
 				<div class="col-md-4 col-sm-4">
 					<div class="dropdown">
 						<p> Select Display Mode: 
-							<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-								Weather Station
-								<span class="caret"></span>
-							</button>
+						<select id="displaymode" onchange="selMode(this)">		
+						<option value="w_station">Weather Station</option>
+						<option value="depth">River Depth</option>
+						<option value="rain_temp">Rainfal and Temperature</option>
+						<option value="depth_rain">River Depth and rainfall</option>					
+						</select>							
 							<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-lis">
 								<li><a href="#">Action</a></li>
 							</ul>
