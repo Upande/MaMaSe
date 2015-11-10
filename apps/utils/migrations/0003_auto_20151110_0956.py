@@ -89,10 +89,4 @@ class Migration(migrations.Migration):
             field=models.FloatField(default=0.0),
             preserve_default=False,
         ),
-        migrations.AddField(
-            model_name='feed',
-            name='field',
-            field=models.ForeignKey(related_name='fields', default='', to='utils.Field'),
-            preserve_default=False,
-        ),
     ]
