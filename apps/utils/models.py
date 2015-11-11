@@ -37,7 +37,7 @@ class ChannelField(models.Model):
     added = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return self.channel
+        return self.channel.name + " ("+ self.field.name + ")"
     
 class Feed(models.Model):
     channelfield = models.ForeignKey(ChannelField, related_name="channels",blank=True,null=True)

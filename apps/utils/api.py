@@ -18,17 +18,17 @@ def getFeeds(request):
     
     This API request will return a very complicate data structure. It has 5 levels namely Top Leval, Time Leval, Aggregation leval, Location leval then the data points
     """
-    channel = request.GET.get('channel',None)
-    start = request.GET.get('start',None)
-    end = request.GET.get('end',None)
-    limit = request.GET.get('limit',None)
+    channel = request.GET.get('channel',None)#Select among list of channels
+    start = request.GET.get('start',None)#Data should be after this data
+    end = request.GET.get('end',None)#Data should be before this date
+    limit = request.GET.get('limit',None)#Maximum number of records to be returned
     data = request.GET.get('data','raw')#Raw,Daily or Monthly
 
     kwargs = {}
     args = {}
 
     if channel:
-        kwargs[ 'channel_id' ] = channel
+        kwargs[ 'channelfield__channel_id' ] = channel
         args['id'] = channel
         
     if start:
@@ -39,7 +39,7 @@ def getFeeds(request):
         
     feed_without_null = []
     if data.lower() == "raw":
-        feed = Feed.objects.filter(**kwargs).extra(select={'timestamp_formatted':"to_char(timestamp, 'YYYY-MM-DD HH24:MI:SS')"}).values('entry_id','channel_id','timestamp_formatted','field1','field2','field3','field4','field5','field6','field7','field8','id')    
+        feed = Feed.objects.filter(**kwargs).extra(select={'timestamp_formatted':"to_char(timestamp, 'YYYY-MM-DD HH24:MI:SS')"}).values('entry_id','channelfield_id','timestamp_formatted','reading','id')    
         
         feed = list(feed)
         
@@ -59,7 +59,7 @@ def getFeeds(request):
 
         #feed_without_null = aggregateMonthlyFeedData(kwargs)
         
-    ch = Channel.objects.filter(**args).values('id','name','description','latitude','longitude','field1','field2','field3','field4','field5','field6','field7','field8')
+    ch = Channel.objects.filter(**args).values('id','name','description','latitude','longitude')
 
     if limit:
         try:

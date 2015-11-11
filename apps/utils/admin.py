@@ -8,12 +8,12 @@ class ChannelAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 class FeedAdmin(admin.ModelAdmin):
-    fields = ['entry_id', 'channelfield','timestamp','lastupdate']
-    list_display = ['entry_id','channelfield','timestamp','lastupdate']
+    fields = ['entry_id', 'channelfield','timestamp','reading']
+    list_display = ['entry_id','channelfield','timestamp','lastupdate','reading']
     search_fields = ['channel__name','entry_id']
 
 class FieldAdmin(admin.ModelAdmin):
-    fields = ['entry_id', 'name','added']
+    fields = ['name']
     list_display = ['name','added']
     search_fields = ['name']
 
