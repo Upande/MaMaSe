@@ -30,13 +30,21 @@ class Field(models.Model):
     def __unicode__(self):
         return self.name
 
-class Feed(models.Model):
+class ChannelField(models.Model):
     channel = models.ForeignKey(Channel, related_name="channels")
+    field = models.ForeignKey(Field, related_name="field")
+    name = models.TextField()
+    added = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.channel.name + " ("+ self.field.name + ")"
+    
+class Feed(models.Model):
+    channelfield = models.ForeignKey(ChannelField, related_name="channels",blank=True,null=True)
     entry_id = models.IntegerField()
     timestamp = models.DateTimeField()
     lastupdate = models.DateTimeField(auto_now_add =True)
-    field = models.ForeignKey(Field, related_name="fields")
-    reading = models.FloatField()
+    reading = models.FloatField(default = 0.0,blank=True,null=True)
     
     def __unicode__(self):
         return str(self.entry_id)

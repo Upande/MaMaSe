@@ -11,7 +11,7 @@ from django.core import serializers
 
 from rest_framework.renderers import JSONRenderer
 
-from apps.utils.models import Channel,Feed,AggregateMonthlyFeed,AggregateDailyFeed
+from apps.utils.models import Channel,Feed,AggregateMonthlyFeed,AggregateDailyFeed,Field,ChannelField
 from apps.utils.api import aggregateMonthlyFeedData,aggregateDailyFeedData
 from apps.utils.serializers import ChannelSerializer,FeedSerializer
 
@@ -66,29 +66,27 @@ def getFeedData(data_id):
     feeds = data['feeds']
     
     channel = Channel.objects.get(data_id=data_id)
-    #Gotta find more efficient way of doing this
-    channel.field1 = ch.get("field1","")
-    channel.field2 = ch.get("field2","")
-    channel.field3 = ch.get("field3","")
-    channel.field4 = ch.get("field4","")
-    channel.field5 = ch.get("field5","")
-    channel.field6 = ch.get("field6","")
-    channel.field7 = ch.get("field7","")
-    channel.field8 = ch.get("field8","")
-    channel.save()
+    #Gotta find more efficient way of doing this. Search for field elements. Check size of returned list?
+    #No solution from thingspeak. Gotta do a try and error. At least do this when populating the channel data and just use the stored datat to pull feeds
     
+    i = 1
+    fields = []
+    while i <= 8:
+        field = "field" + str(i)
+        f = ch.get(field)
+        if f:
+           f,created = Field.objects.get_or_create(name=f)
+           c = ChannelField(channel=channel,field=f,name=field)
+           c.save()
+           fields.append(c)
+        i+= 1
+
     for item in feeds:
-        f,created = Feed.objects.get_or_create(        
-            entry_id = item['entry_id'],
-            channel = channel,
-            defaults={'field1':item.get('field1',None),
-                      'field2':item.get('field2',None),
-                      'field3':item.get('field3',None),
-                      'field4':item.get('field4',None),
-                      'field5':item.get('field5',None),
-                      'field6':item.get('field6',None),
-                      'field7':item.get('field7',None),
-                      'field8':item.get('field8',None),
+        for i in fields:
+            f,created = Feed.objects.get_or_create(        
+                entry_id = item['entry_id'],
+                channelfield = i,
+                defaults={i.name:item.get(i.name,None),
                       'timestamp':item.get('created_at',None),
                       'entry_id':item.get('entry_id',None),
                   }

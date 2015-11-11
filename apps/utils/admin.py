@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .models import Channel,Feed,LoggerData,EmailRecipient,Email,AggregateMonthlyFeed,AggregateDailyFeed,Field
-# Register your models here.
+from .models import Channel,Feed,LoggerData,EmailRecipient,Email,AggregateMonthlyFeed,AggregateDailyFeed,Field,ChannelField
 
 class ChannelAdmin(admin.ModelAdmin):
     fields = ['name', 'description','latitude','longitude','elevation','created_at','data_id']
@@ -9,13 +8,18 @@ class ChannelAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 class FeedAdmin(admin.ModelAdmin):
-    fields = ['entry_id', 'channel','timestamp','lastupdate']
-    list_display = ['entry_id','channel','timestamp','lastupdate']
+    fields = ['entry_id', 'channelfield','timestamp','reading']
+    list_display = ['entry_id','channelfield','timestamp','lastupdate','reading']
     search_fields = ['channel__name','entry_id']
 
 class FieldAdmin(admin.ModelAdmin):
-    fields = ['entry_id', 'name','added']
+    fields = ['name']
     list_display = ['name','added']
+    search_fields = ['name']
+
+class ChannelFieldAdmin(admin.ModelAdmin):
+    fields = ['field', 'channel','name','added']
+    list_display = ['field','channel','name','added']
     search_fields = ['name']
     
 class EmailRecipientAdmin(admin.ModelAdmin):
@@ -46,5 +50,6 @@ admin.site.register(LoggerData,LoggerDataAdmin)
 admin.site.register(EmailRecipient,EmailRecipientAdmin)
 admin.site.register(Email,EmailAdmin)
 admin.site.register(Field,FieldAdmin)
+admin.site.register(ChannelField,ChannelFieldAdmin)
 admin.site.register(AggregateDailyFeed,AggregateDailyFeedAdmin)
 admin.site.register(AggregateMonthlyFeed,AggregateMonthlyFeedAdmin)
