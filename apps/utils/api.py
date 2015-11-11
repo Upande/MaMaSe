@@ -22,7 +22,8 @@ def getFeeds(request):
     start = request.GET.get('start',None)#Data should be after this data
     end = request.GET.get('end',None)#Data should be before this date
     limit = request.GET.get('limit',None)#Maximum number of records to be returned
-    data = request.GET.get('data','raw')#Raw,Daily or Monthly
+    data = request.GET.get('data','raw')#Raw,Daily or Monthly. Defaults to raw
+    field = request.GET.get('field',None)#Data should be before this date
 
     kwargs = {}
     args = {}
@@ -31,36 +32,39 @@ def getFeeds(request):
         kwargs[ 'channelfield__channel_id' ] = channel
         args['id'] = channel
         
+    if field:
+        kwargs['channelfield__field_id'] = field
+
     if start:
         kwargs[ 'timestamp__gte' ] = start
 
     if end:
         kwargs[ 'timestamp__lte' ] = end
-        
+
+    feed = {}
     feed_without_null = []
     if data.lower() == "raw":
-        feed = Feed.objects.filter(**kwargs).extra(select={'timestamp_formatted':"to_char(timestamp, 'YYYY-MM-DD HH24:MI:SS')"}).values('entry_id','channelfield_id','timestamp_formatted','reading','id')    
+        feed_without_null = aggregateRawData(kwargs)
         
-        feed = list(feed)
-        
-        feed_without_null = removeNullValue(feed)
-
     elif data.lower() == "daily":
-        feed = {}
         data = aggregateDailyFeedData(kwargs)
         feed['daily'] = ({'avg':list(data[0]),'min':list(data[3]), 'max':list(data[4]), 'count':list(data[2]), 'sum':list(data[1])})
         feed_without_null.append(feed)
         
     elif data.lower() == "monthly":
-        feed = {}
         data = aggregateMonthlyFeedData(kwargs)
         feed['monthly'] = ({'avg':list(data[0]),'min':list(data[3]), 'max':list(data[4]), 'count':list(data[2]), 'sum':list(data[1])})
         feed_without_null.append(feed)
-
-        #feed_without_null = aggregateMonthlyFeedData(kwargs)
         
-    ch = Channel.objects.filter(**args).values('id','name','description','latitude','longitude')
-
+    ch = Channel.objects.filter(**args)
+    
+    channels = []
+    for i in ch:
+        values = i.channels.values('field__name','name').distinct()
+        valuesdict = {'id':i.id,'name':i.name,'desciption':i.description,'latitude':i.latitude,'longitude':i.longitude}
+        valuesdict['fields'] = list(values)
+        channels.append(valuesdict)
+                    
     if limit:
         try:
             limit = int(limit)
@@ -68,7 +72,7 @@ def getFeeds(request):
         except:
             pass
 
-    channel_without_null = removeEmptyString(ch)
+    channel_without_null = channels #removeEmptyString(ch)
         
         
     return JsonResponse(dict(channel=channel_without_null,feed=feed_without_null))
@@ -120,6 +124,36 @@ def getAllData(request):
     data['daily'] = ({'avg':daily_avg,'min':daily_min, 'max':daily_max, 'count':daily_cnt, 'sum':daily_sum})
     data['monthly'] = ({'avg':month_avg,'min':month_min, 'max':month_max, 'count':month_cnt, 'sum':month_sum})
     return JsonResponse(data)
+
+def aggregateRawData(kwargs):
+    '''
+    Initially I would just pass the raw query to the API. But that does not suffice since we separated channel and field as items we can filter by.
+    Now we shall have to group the data and bundle elements of the same  entryid together.
+    '''
+    feed = Feed.objects.filter(**kwargs).extra(select={'timestamp_formatted':"to_char(timestamp, 'YYYY-MM-DD HH24:MI:SS')"}).values('entry_id','channelfield__channel_id','channelfield__name','timestamp_formatted','reading','id').order_by('entry_id')    
+    
+    feed = list(feed)
+    
+    #Could call the removeNullValue method but would rather just clean up everything in one loop. But there will be no nulls per se. Given we now only store data on known fields
+    #Create tracker variable and group by entry id
+    entryid_tracker = None
+    data = []
+    
+    for item in feed:
+        if item['entry_id'] == entryid_tracker: #We already have a record for this entry. Append the field data
+            data[-1]['fields'].append({item['channelfield__name']: item['reading']})
+        else:            
+            f = [{item['channelfield__name']:item['reading']}]
+            item.pop('reading')#Remove unneded fields
+            item.pop('id')
+            item.pop('channelfield__name')
+
+            item['fields'] = f
+            data.append(item)
+            entryid_tracker = item['entry_id']
+
+    return data
+
 
 def aggregateDailyFeedData(kwargs):
     d_avg = Feed.objects.filter(**kwargs).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-DD 12:00:00')"}).values('channelfield__channel','channelfield__field','channelfield__name','timestamp').annotate(Avg('reading'))
@@ -173,8 +207,6 @@ def aggregateMonthlyFeedData(kwargs):
     
     #So the above works great. Like a charm. But it is not sorted by channels. I might have to do a loop on all channels and get data for that specific channel and return that as a dictionary
     #A loop might be unavoidable but it shall not be more than 10. (Number of channels) and that is acceptable by my books.
-
-
     
     #Have this as two processes. Calculate and store result as JSON string. Do a query and get latest json string
     

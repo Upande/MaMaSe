@@ -86,9 +86,8 @@ def getFeedData(data_id):
             f,created = Feed.objects.get_or_create(        
                 entry_id = item['entry_id'],
                 channelfield = i,
-                defaults={i.name:item.get(i.name,None),
+                defaults={'reading':item.get(i.name,None),
                       'timestamp':item.get('created_at',None),
-                      'entry_id':item.get('entry_id',None),
                   }
         )
         print f
