@@ -355,14 +355,26 @@ function createMarker(Lon,Lat){
     map.addLayer(vectorLayer);
 }
 
+function addDepthcontrols(){
+ $("#controls").append("<li>list item</li>");
+}
+function addStationcontrols(){
+
+}
+function addRaintempcontrols(){
+
+}
+
 //select display mode
-function selMode(mode){
-	mode = mode.value;
+function selMode(modevalue){
+	var mode = modevalue.value;
+	
 	console.log(mode)
-	if (mode = station){
-		selectStation(selstation)
-	}
-	else if 
+	$("#controls_div").remove();
+	if (mode=='depth') {
+
+		addDepthcontrols()
+	}	 
 }
 
 //draw graph for monthly data
@@ -888,7 +900,7 @@ $('#export_all').click(function(event) {
 						<div class="col-md-12">
 						<div id="map">
 						</div>
-						<!--iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d255282.1616275287!2d36.84739685!3d-1.30480355!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1442993224780" width="400" height="400" frameborder="0" style="border:0" allowfullscreen></iframe-->
+					
 					</div>
 				</div>
 			</div>		
@@ -898,6 +910,7 @@ $('#export_all').click(function(event) {
 				</div>
 				<div class="col-md-12">
 					<div id="controls">
+						<div id = "controls_div">
 						<table  class='table borderless'>
 							<thead id="tableheader">
 								<tr>
@@ -929,8 +942,7 @@ $('#export_all').click(function(event) {
 										<!--<td>
 									</td>-->
 									<td>
-										<div class="dropdown_station">
-											<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
+										<div class="dropdown_station">									
 
 											<select id="selectstation" onchange="selectStation(this)">			
 												<option value="1">Mulot Weather</option>
@@ -950,35 +962,12 @@ $('#export_all').click(function(event) {
 								</td>
 								<td>
 									<div class="dropdown_weather">
-												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-													Rainfall
-													<span class="caret"></span>
-												</button>
-												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
-													<li><a href="#">Temperature</a></li>
-													<li><a href="#">Pressure</a></li>-->
-													<select id="weathervariables" onchange="weatherVariable(this)">
-
-													<!--<option value="Rain">Rain</option>
-													<option value="Barometric Pressure">Barometric Pressure</option>
-													<option value="Air Temperature">Air Temperature</option>
-													<option value="Wind Direction">Wind Direction</option>
-													<option value="Wind Speed">Wind Speed</option>
-												</select>--> 
-
 												
+													<select id="weathervariables" onchange="weatherVariable(this)">											
 											</div>
 										</td>	
 										<td>
-											<div class="dropdown_interval">
-												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-													Interval
-													<span class="caret"></span>
-												</button>
-												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list" onchange="timeInterval(this)">
-													<li><a value="weekly" href="#">Weekly</a></li>
-													<li><a value="monthly" href="#">Monthly</a></li>
-													<li><a value="raw" href="#">Raw Data</a></li>-->
+											<div class="dropdown_interval">											
 
 
 													<select id="timeinterval" onchange="timeInterval(this)">			
@@ -991,24 +980,7 @@ $('#export_all').click(function(event) {
 											</td>
 											<td>
 												<div class="dropdown_month">
-												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-													Month
-													<span class="caret"></span>
-												</button>
-												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
-													<li><a href="#">Jan</a></li>
-													<li><a href="#">Feb</a></li>
-													<li><a href="#">Mar</a></li>
-													<li><a href="#">Apr</a></li>
-													<li><a href="#">May</a></li>
-													<li><a href="#">Jun</a></li>
-													<li><a href="#">Jul</a></li>
-													<li><a href="#">Aug</a></li>
-													<li><a href="#">Sep</a></li>
-													<li><a href="#">Oct</a></li>
-													<li><a href="#">Nov</a></li>
-													<li><a href="#">Dec</a></li>
-												</ul>-->
+												
 												<select id="month" onchange="selectedMonth(this)">		
 													<option value="1">Jan</option>
 													<option value="2">Feb</option>
@@ -1027,14 +999,7 @@ $('#export_all').click(function(event) {
 										</td>
 										<td>
 											<div class="dropdown_year">
-												<!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-													Year
-													<span class="caret"></span>
-												</button>
-												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-list">
-													<li><a href="#">2015</a></li>
-													<li><a href="#">2014</a></li>
-												</ul>-->
+												
 												<select id="year" onchange="selectedYear(this)">			
 													<option value="2014">2014</option>
 													<option value="2015">2015</option>
@@ -1069,6 +1034,7 @@ $('#export_all').click(function(event) {
 
 
 							</table>
+							</div>
 						</div>
 					</div>
 					<div class="col-md-12">
