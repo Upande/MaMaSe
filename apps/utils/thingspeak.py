@@ -76,8 +76,8 @@ def getFeedData(data_id):
         f = ch.get(field)
         if f:
            f,created = Field.objects.get_or_create(name=f)
-           c = ChannelField(channel=channel,field=f,name=field)
-           c.save()
+           c = ChannelField.objects.get_or_create(channel=channel,field=f,name=field)
+           #c.save()
            fields.append(c)
         i+= 1
 

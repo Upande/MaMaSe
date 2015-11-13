@@ -83,6 +83,7 @@ class AggregateDailyFeed(models.Model):
     lastupdate = models.DateTimeField(auto_now_add =True)
     timestamp = models.DateTimeField()#This has to be midday on the specific day
     channel = models.ForeignKey(Channel, related_name="daily_channels")
+    channelfield = models.ForeignKey(ChannelField, related_name="daily_channelfields",blank=True,null=True)
     aggregation = models.CharField(max_length=15,choices=AGGREGATE_TYPES,default="Count")
     
 class AggregateMonthlyFeed(models.Model):
@@ -98,4 +99,5 @@ class AggregateMonthlyFeed(models.Model):
     lastupdate = models.DateTimeField(auto_now_add =True)
     timestamp = models.DateTimeField()#This has to be midmonth
     channel = models.ForeignKey(Channel, related_name="monthly_channels")
+    channelfield = models.ForeignKey(ChannelField, related_name="monthly_channelfields",blank=True,null=True)
     aggregation = models.CharField(max_length=15,choices=AGGREGATE_TYPES,default="Count")
