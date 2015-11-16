@@ -96,7 +96,7 @@ var enddate =""
 	//respond's to change in aggregation function
 	function selectAggregation(selaggregation){
 		aggr_variable=selaggregation.value
-		console.log("selected aggr is "+aggr_variable)
+		//console.log("selected aggr is "+aggr_variable)
 		//defineNewdata(myarry)
 
 		define_monthly_daily_data(newdata)
@@ -127,14 +127,14 @@ var enddate =""
 			weather_station = selstation.value;    
 			id=weather_station
 
-			console.log(Lon,Lat)
-			console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+			//console.log(Lon,Lat)
+			//console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
 			if (datatype=='raw'){
 				refreshAndloadData(id,month,year)
-				console.log("selected station is "+weather_station )
-				console.log("selected weather var is "+weather_variable)				
-				console.log(Lon,Lat)			
+				//console.log("selected station is "+weather_station )
+				//console.log("selected weather var is "+weather_variable)				
+				//console.log(Lon,Lat)			
 						
 			}
 
@@ -172,8 +172,8 @@ var enddate =""
     	//change month
     	function selectedMonth(selmonth) {
     		month = selmonth.value-1;
-    		console.log("selected month is "+month )
-    		console.log("year selected : "+year)
+    		//console.log("selected month is "+month )
+    		//console.log("year selected : "+year)
     //pullData(id,year,month)
 
     if (datatype=='raw'){
@@ -188,8 +188,8 @@ var enddate =""
     function selectedYear(selyear) {
     	year = selyear.value;
 
-    	console.log("selected year is "+year )
-    	console.log("selected month is "+month )
+    	//console.log("selected year is "+year )
+    	//console.log("selected month is "+month )
     	if (datatype=='raw'){
     		refreshAndloadData(id,month,year)
     	}
@@ -241,21 +241,21 @@ var enddate =""
 
 //extract weather variable from myarry
 function defineNewdata(){
-	console.log( "new length "+myarry.length)
+	//console.log( "new length "+myarry.length)
 	for (var i=0;i<myarry.length;i++)
 	{              	
 		if (myarry[i][0]==weather_variable)
 		{
               		//select particular weather variable data 
-              		console.log(myarry)
+              		//console.log(myarry)
               		newdata=[]
               		newdata=[myarry[0],myarry[i]]
-              		console.log("newdata")
-              		console.log(newdata)
+              		//console.log("newdata")
+              		//console.log(newdata)
               		return newdata              		            	
               	}
 
-              	console.log( "new length "+myarry.length)
+              	//console.log( "new length "+myarry.length)
 
               }
           }
@@ -266,8 +266,10 @@ function defineNewdata(){
  	var myoption=""
  	//create a list of existing fields, e.g rain, temp, humidity etc
  	mylist=[]
+	console.log(myarry);
  	for ( var i=1; i<myarry.length;i++){
  		myoption=myarry[i][0]
+
  		mylist.push(myoption)
 	//console.log(mylist)
 	$('#weathervariables').append($('<option>', {
@@ -369,7 +371,7 @@ function addRaintempcontrols(){
 function selMode(modevalue){
 	var mode = modevalue.value;
 	
-	console.log(mode)
+	//console.log(mode)
 	$("#controls_div").remove();
 	if (mode=='depth') {
 
@@ -381,7 +383,7 @@ function selMode(modevalue){
 function drawGraph(){
 	//if (newdata[1][1]){
 			   
-			   console.log(newdata);
+	//		   console.log(newdata);
 	var chart = c3.generate({
 		bindto: '#charter',
 		data: {
@@ -439,25 +441,22 @@ function drawGraph_monthly_daily(){
 
 
                    	eval('var feeds = data.feed[0].'+datatype)
-                   	console.log(feeds)
 /*for (var key in feeds) {
   if (feeds.hasOwnProperty(key)) {
     alert(key + " -> " + feeds[key]);
   }
 }*/
-console.log("channel Description "+channel.description)
-console.log(feeds.count.length)
 count=feeds.count
 sum=feeds.sum
 avg=feeds.average
 min=feeds.min
 max=feeds.max
 count_len=count.length
-console.log(count)
+//console.log(count)
 channel_obj=Object.keys(channel);// convert to an object
 len=channel_obj.length-5;//get length of obj
-console.log('length of obj = '+len);//display results
-console.log(channel_obj.length)
+//console.log('length of obj = '+len);//display results
+//console.log(channel_obj.length)
 
 var created = ['created']
 myarry=[];
@@ -501,8 +500,8 @@ for (var j = 0; j < count_len; j++) {
                    min.push(min_val)
                    avg.push(avg_val)
                    
-                   console.log('count')
-                   console.log(count)                    
+                   //console.log('count')
+                   //console.log(count)                    
 
                } 
 
@@ -510,8 +509,8 @@ for (var j = 0; j < count_len; j++) {
                	myarry.push(created)}
                	var combined =[count,avg,sum,max,min]  
                	eval(field+'.push(combined)');
-               	console.log("myarry")
-               	console.log(myarry)
+               	//console.log("myarry")
+               	//console.log(myarry)
                //console.log(myarry[2][2]);
                //console.log([myarry[3][1])
                   //push field to myarry
@@ -519,8 +518,8 @@ for (var j = 0; j < count_len; j++) {
                  	//console.log('length '+myarry.length)
 
                  }
-                 console.log("myarry")
-                 console.log(myarry)
+                 //console.log("myarry")
+                 //console.log(myarry)
 
                //var mydata=[myarry[0],myarry[1][1][0]]
 
@@ -546,8 +545,8 @@ function define_monthly_daily_data(newdata){
 		{
 			mydata = [myarry[0],newdata[1][1][i]]
 
-			console.log('newdata')
-			console.log(mydata)
+			//console.log('newdata')
+			//console.log(mydata)
 			return mydata		
 		}
 	}
@@ -599,7 +598,7 @@ function definenewdate(month,year){
    enddate = end.toISOString().replace("T"," ").replace("Z","").slice(0,19);
 
 
-   console.log("date is "+startdate+" enddate : "+enddate)
+   //console.log("date is "+startdate+" enddate : "+enddate)
    myarry=[]
 }
 
@@ -748,17 +747,19 @@ $.ajax({
 channel_obj=Object.keys(channel);// convert to an object
 //len=channel_obj.length-5;//get length of obj. I assume -5 is so that only channels are left?
 len = channel.fields.length
-console.log('channel obj = '+channel.field1);//display results
+//console.log('channel obj = '+channel.field1);//display results
 ///
 var created = ['created']
 ///
 field = "";
  for(var i=0;i<len;i++){//loop thru all fields
  	fieldname=channel.fields[i].field__name //Whereas the fields have specific names, they have labels on thingspeak. This shall be used to access data from the api e.g field1
-			       console.log(fieldname)
+			       //console.log(fieldname)
 			       field =  channel.fields[i].name 
-	eval('var '+ channel.fields[i].name+' = ["'+channel.fields[i].field__name+'"];')
+	eval('var '+ field +' = ["'+fieldname+'"];')
 			       
+			 //      console.log(" Field name ..........")
+	//eval('console.log('+ field +');')
  			       //eval('var '+field+' = ["'+(channel[field])+'"]')
 			       
  	for (var j = 0; j < feeds.length; j++) {
@@ -773,10 +774,11 @@ field = "";
                    if(myarry[0] == null) {//if created is not in myarry
                    	myarry.push(created)
                    }
-                   eval('myarry.push("'+fieldname+'")')
+						     eval('console.log('+ field +');')
+                   eval('myarry.push("'+field+'")')
                    //weather_variable="Temperature"
                }
-               console.log("length= "+myarry.length)
+               //console.log("length= "+myarry.length)
               /*
               for (var i=0,j=0;i<myarry.length;i++)
               {
