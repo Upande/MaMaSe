@@ -60,7 +60,7 @@ def getFeeds(request):
     
     channels = []
     for i in ch:
-        values = i.channels.values('field__name','name').distinct()
+        values = i.channels.values('field__name','name','id').distinct()
         valuesdict = {'id':i.id,'name':i.name,'desciption':i.description,'latitude':i.latitude,'longitude':i.longitude}
         valuesdict['fields'] = list(values)
         channels.append(valuesdict)
@@ -138,20 +138,38 @@ def aggregateRawData(kwargs):
     #Create tracker variable and group by entry id
     entryid_tracker = None
     data = []
+    field_readings = {}
     
     for item in feed:
         if item['entry_id'] == entryid_tracker: #We already have a record for this entry. Append the field data
-            data[-1]['fields'].append({item['channelfield__name']: item['reading']})
+            field_readings[item['channelfield__name']]= item['reading']
+            
+            #data.append(item)
+            #data[-1]['fields'].append({item['channelfield__name']: item['reading']})
         else:            
-            f = [{item['channelfield__name']:item['reading']}]
+            '''
+            At this point, we have moved from one entry_id to another. During the loop we have been bundling all data of one entry id into the field readings dict
+            We now need to appen that to the field readings dict and empty it for the next entry id. As such we remove the unneeded fields but backup reading and channel name
+            since they are needed to create the dict. We then add the dict as is into the data list and start the loop again.
+            '''
+            r = item['reading']
+            cfn = item['channelfield__name']
             item.pop('reading')#Remove unneded fields
             item.pop('id')
             item.pop('channelfield__name')
-
-            item['fields'] = f
+            
+            item['fields'] = field_readings
             data.append(item)
-            entryid_tracker = item['entry_id']
+            
+            field_readings = {}
+            field_readings[cfn] = r
 
+            entryid_tracker = item['entry_id']
+        try:
+            data[-1]['fields'] = field_readings
+        except:
+            print "No data found during that time"
+            
     return data
 
 
