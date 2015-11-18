@@ -18,7 +18,7 @@ class FieldAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 class ChannelFieldAdmin(admin.ModelAdmin):
-    fields = ['field', 'channel','name','added']
+    fields = ['field', 'channel','name']
     list_display = ['field','channel','name','added']
     search_fields = ['name']
     
