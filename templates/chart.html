@@ -61,7 +61,7 @@ var graph_description = 'Raw Data'
 
 var startdate=""
 var enddate =""
-
+var dataset = []
 //dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 
 	var monthly_data =  [
@@ -77,22 +77,22 @@ var enddate =""
 	];
 	var daily_data=[
 	[ "Mulot", 2,7, 12, 3, 7, 11, 20, 2,33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6,31, 37, 21, 22, 23, 33,7, 6],
-	[ "Kerook", 33, 34, 23, 26, 21, 11, 20, 2,33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6,31, 37, 21, 22, 23, 33, 7, 6],
-	[ "Govener's Camp",  21, 31, 22, 26, 25, 37,33, 34, 23, 26, 21, 11, 20, 2,33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6,31, 37],
-	[ "Mara Conservancy", 21, 22, 23, 33,21, 31,22,26,25,37,33,34,23,26,21,11,20,2,33,34,23,26,21,22,23,25,37,32,31,37,34,23,26,25],
+	[ "Kerook", 33, 34, 23, 26, 21, 11, 20, 2,33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6,31, 37,21,22,23,33,7,6],
+	[ "Govener's Camp",21,31,22,26,25,37,33,34,23,26,21,11, 20, 2,33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6,31, 37],
+	[ "Mara Conservancy", 21, 22,23,33,21,31,22,26,25,37,33,34,23,26,21,11,20,2,33,34,23,26,21,22,23,25,37,32,31,37,34,23,26,25],
 	[ "Bomet", 25,37,32,31,37,21,22,23,33,21,31,22,26,25,37,33,20,2,33,34,23,26,21,22,23,25,37,32,31,21,22,23,33,34,23,26],
-	[ "Narotia", 25,37,32,31,21,22,23,33,21,31,22,26,25,37,33,34,23,26,21,11,20,2,33,34,23,26,21, 22, 23, 25, 37, 32, 31, 34, 23, 26],
-	[ "Rekaro", 21,22,23,33,21,31,22,26,25,37,33, 34,23,26,21,11,20,2,33,34,23,26,21,22,23,25,37,32,31,21,22, 23, 33, 34, 23, 26],
+	[ "Narotia", 25,37,32,31,21,22,23,33,21,31,22,26,25,37,33,34,23,26,21,11,20,2,33,34,23,26,21, 22,23,25,37,32,31,34,23,26],
+	[ "Rekaro", 21,22,23,33,21,31,22,26,25,37,33, 34,23,26,21,11,20,2,33,34,23,26,21,22,23,25,37,32,31,21,22,23,33,34,23,26],
 	[ "Talek", 25,37,32,31,37,21,2,7,12,3,7,11,20,2,33,34,23,26,21,22,23,25,37,32,31,37, 3, 6,31, 37, 21, 26],
 	[ "Mara River",21,2,7,12,3,7,11,20,2,33,34,23,26,21,22,23,25,37,32,31,37,3,6,31,37,21,0,37,21,22,23, 26],
 	];
 	var raw_data=[
-	["Mara Conservancy", 21, 22,23,33,21,31,22,26,25,37,33,34,23,26,21,11,20,2,33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 34, 23, 26, 25],
+	["Mara Conservancy",21,22,23,33,21,31,22,26,25,37,33,34,23,26,21,11,20,2,33,34,23,26,21,22,23,25,37,32,31,37,34,23,26,25],
 	];
 	var time1=['station',1,	2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]
 	var xaxis = ['station','Jan','Feb','Mar','Apr','May','June','Jul','Aug','Sep','Oct','Nov','Dec'];   
 		
-	dataset=monthly_data
+	//dataset=monthly_data
 
 
 	//respond's to change in aggregation function
@@ -272,27 +272,27 @@ function populateDatatables(selID){
 		dataType: "json",
 	        success: function(data) {
 			 monthlyData = data.feed[0].monthly
-       channels = data.channel[0]
+       channels = data.channel
        console.log(channels)
-       dt_dataset = []
-      for (var x=0;  x <= channels.length; x++){
-        eval('var '+channels[x].id+' = ['+channels[x].name+',0,0,0,0,0,0,0,0,0,0,0,0]') 
-        eval('dt_dataset.push('+channels[x].id +')')
+      for (var x=0;x < channels.length; x++){
+        eval('dataset.push(["'+channels[x].name+'",0,0,0,0,0,0,0,0,0,0,0,0])');
       }
+
        eval('tabledata = monthlyData.'+aggr_variable)
-       console.log(dt_dataset)
-      for (var i=0;i<=tabledata.length;i++){
-        for (var j=0;j<= dt_dataset.length; j++)
+
+      for (var i=0;i<tabledata.length;i++){
+        for (var j=0;j<dataset.length; j++)
         {
-          if (dt_dataset[j][0] == tabledata.channelfield__channel)
+          if (dataset[j][0] == tabledata[i].channelfield__channel__name)
           {
             m = moment(tabledata.timestamp,'YYYY-MM-DD').month() + 1
-            eval('dt_dataset[j][m] = tabledata.reading__'+aggr_variable)
+            eval('dataset[j][m] = tabledata[i].reading__'+aggr_variable)
           }
         }
       }
-      console.log(dt_dataset)
-
+      datatset = dataset.join(", ")
+      console.log(dataset)
+      drawDatatable(dataset)
 }});
 }
 
@@ -641,7 +641,39 @@ function definenewdate(month,year){
    myarry=[]
 }
 
+function drawDatatable(dataset) {
+  var table = $('#charttable').DataTable( {
+       dom: 'Bfrtip',
+       buttons: [
+       'csvHtml5',
+       'copyHtml5',
+       'excelHtml5',
+       ],
 
+       data: dataset,
+       columns: [
+       { title: "Station Name"},
+       { title: "Jan"},
+       { title: "Feb"},
+       { title: "Mar"},
+       { title: "Apr"},
+       { title: "May"},
+       { title: "Jun"},
+       { title: "Jul"},
+       { title: "Aug"},
+       { title: "Sep"},
+       { title: "Oct"},
+       { title: "Nov"},
+       { title: "Dec"}
+       ],
+       });
+
+    var xaxis = ['station','Jan','Feb','Mar','Apr','May','June','Jul','Aug','Sep','Oct','Nov','Dec']    
+    dataset.push(xaxis);
+
+    //get current date
+    var dt = new Date();
+  }
 
 /*else{
 	$("#cart_item").html("");
@@ -662,44 +694,15 @@ $(document).ready(function(){
 
 	//load map
 	loadMap(Lon,Lat)
-
+  drawDatatable(dataset);
 	//select the appropriate year in the year dropdown
 	$('#year option').filter(function() {
 
 		return $(this).text() == year; 
 	}).prop('selected', true);
 
-	var table = $('#charttable').DataTable( {
-		   dom: 'Bfrtip',
-		   buttons: [
-		   'csvHtml5',
-		   'copyHtml5',
-		   'excelHtml5',
-		   ],
 
-		   data: dataset,
-		   columns: [
-		   { title: "Station Name"},
-		   { title: "Jan"},
-		   { title: "Feb"},
-		   { title: "Mar"},
-		   { title: "Apr"},
-		   { title: "May"},
-		   { title: "Jun"},
-		   { title: "Jul"},
-		   { title: "Aug"},
-		   { title: "Sep"},
-		   { title: "Oct"},
-		   { title: "Nov"},
-		   { title: "Dec"}
-		   ],
-		   });
 
-		var xaxis = ['station','Jan','Feb','Mar','Apr','May','June','Jul','Aug','Sep','Oct','Nov','Dec']    
-		dataset.push(xaxis);
-
-		//get current date
-		var dt = new Date();
 //split date to year and month
 year=dt.getFullYear();
 month=dt.getMonth();
