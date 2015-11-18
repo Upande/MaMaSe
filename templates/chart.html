@@ -292,7 +292,9 @@ function populateDatatables(selID){
       }
       datatset = dataset.join(", ")
       console.log(dataset)
-      drawDatatable(dataset)
+
+      table.clear().rows.add(dataset).draw();
+      //drawDatatable(dataset)
 }});
 }
 
@@ -642,7 +644,35 @@ function definenewdate(month,year){
 }
 
 function drawDatatable(dataset) {
-  var table = $('#charttable').DataTable( {
+  }
+
+/*else{
+	$("#cart_item").html("");
+	$("#charter").prepend('<img id="theImg" src="{% static 'images/noData.png'%}" />');
+}*/
+//}
+
+//Attach loading to all ajax calls
+$body = $("body");
+
+$(document).on({
+	ajaxStart: function() { $body.addClass("loading");    },
+	ajaxStop: function() { $body.removeClass("loading"); }    
+});
+
+$(document).ready(function(){
+	var asInitVals = new Array();
+
+	//load map
+	loadMap(Lon,Lat)
+  //drawDatatable(dataset);
+	//select the appropriate year in the year dropdown
+	$('#year option').filter(function() {
+
+		return $(this).text() == year; 
+	}).prop('selected', true);
+
+var table = $('#charttable').DataTable( {
        dom: 'Bfrtip',
        buttons: [
        'csvHtml5',
@@ -673,35 +703,6 @@ function drawDatatable(dataset) {
 
     //get current date
     var dt = new Date();
-  }
-
-/*else{
-	$("#cart_item").html("");
-	$("#charter").prepend('<img id="theImg" src="{% static 'images/noData.png'%}" />');
-}*/
-//}
-
-//Attach loading to all ajax calls
-$body = $("body");
-
-$(document).on({
-	ajaxStart: function() { $body.addClass("loading");    },
-	ajaxStop: function() { $body.removeClass("loading"); }    
-});
-
-$(document).ready(function(){
-	var asInitVals = new Array();
-
-	//load map
-	loadMap(Lon,Lat)
-  drawDatatable(dataset);
-	//select the appropriate year in the year dropdown
-	$('#year option').filter(function() {
-
-		return $(this).text() == year; 
-	}).prop('selected', true);
-
-
 
 //split date to year and month
 year=dt.getFullYear();
