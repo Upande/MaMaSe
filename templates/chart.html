@@ -1,4 +1,4 @@
-7~{% extends "base.html" %}
+{% extends "base.html" %}
 
 {% load static %}
 {% block title %} <title> Mamase | Visualization </title> {% endblock title %}
@@ -22,7 +22,7 @@
 {% block js_initialize %} 
 <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/1.1.0/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.1.0/js/buttons.html5.min.js"></script>-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
 <script src='http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false' type='text/javascript'></script> 
@@ -282,6 +282,7 @@ function populateDatatables(selID){
         {
           if (dataset[j][0] == tabledata[i].channelfield__channel__name)
           {
+				       //Get the value of the month and add one since it jan is represented as 0
             m = moment(tabledata.timestamp,'YYYY-MM-DD').month() + 1
             eval('dataset[j][m] = tabledata[i].reading__'+aggr_variable)
           }
