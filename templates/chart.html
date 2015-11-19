@@ -62,6 +62,8 @@ var graph_description = 'Raw Data'
 var startdate=""
 var enddate =""
 var dataset = []
+var chart 
+var table //Initialize table
 //dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 
 	var monthly_data =  [
@@ -249,15 +251,11 @@ function defineNewdata(){
 		if (myarry[i][0]==weather_variable)
 		{
               		//select particular weather variable data 
-              		//console.log(myarry)
               		newdata=[]
               		newdata=[myarry[0],myarry[i]]
-              		//console.log("newdata")
-              		//console.log(newdata)
+
               		return newdata              		            	
               	}
-
-              	//console.log( "new length "+myarry.length)
 
               }
           }
@@ -273,7 +271,6 @@ function populateDatatables(selID){
 	        success: function(data) {
 			 monthlyData = data.feed[0].monthly
        channels = data.channel
-       console.log(channels)
       for (var x=0;x < channels.length; x++){
         eval('dataset.push(["'+channels[x].name+'",0,0,0,0,0,0,0,0,0,0,0,0])');
       }
@@ -304,14 +301,12 @@ function populateDatatables(selID){
  	var myoption=""
  	//create a list of existing fields, e.g rain, temp, humidity etc
  	mylist=[]
-	//console.log(myarry);
  	for ( var i=1; i<myarry.length;i++){
  		myoption=myarry[i][0]
 	        myid = variable_ids[i-1]
 
  		mylist.push(myoption)
-	//console.log(mylist)
-	//console.log(myid)
+
 	$('#weathervariables').append($('<option>', {
 		value: myoption,
 		text: myoption,
@@ -424,8 +419,7 @@ function selMode(modevalue){
 function drawGraph(){
 	//if (newdata[1][1]){
 			   
-	//		   console.log(newdata);
-	var chart = c3.generate({
+	chart = c3.generate({
 		bindto: '#charter',
 		data: {
 			x: 'created',
@@ -672,7 +666,7 @@ $(document).ready(function(){
 		return $(this).text() == year; 
 	}).prop('selected', true);
 
-var table = $('#charttable').DataTable( {
+table = $('#charttable').DataTable( {
        dom: 'Bfrtip',
        buttons: [
        'csvHtml5',
