@@ -65,6 +65,8 @@ var enddate =""
 var dataset = []
 var chart 
 var table //Initialize table
+var coordinates = []
+var coordinate_names = []
 //dt.setHours(dt.getHours()-84)//Time is in hours. 3.5 days ago
 
 var monthly_data =  [
@@ -261,6 +263,20 @@ function defineNewdata(){
               }
             }
 
+function getChannelCoordnates(){
+  $.ajax({
+    type: 'GET',
+    url:"/mamase/channel/",
+    dataType: "json",
+    success: function(data) {
+      for (var x=0;x<data.length;x++)
+      {
+        coordinate_names.push(data[x].name)
+        coordinates.push([data[x].latitude,data[x].longitude])
+      }
+    }
+  });
+}
 //Get monthly data for chosen field and populate it on datatables
 function populateDatatables(selID){
   styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
@@ -376,6 +392,21 @@ function createMarker(Lon,Lat){
 
         //and add to source vector   
         vectorSource.addFeature(iconFeature);
+        features = [vectorSource]
+
+        //This function will load other points to the vector
+        for (var x =0;x<coordinates.length;x++)
+          {
+            var coordinatesource = new ol.source.Vector({ });
+            var coordinateicon = new ol.Feature({
+              geometry: new  
+              ol.geom.Point(ol.proj.transform(coordinates[x], 'EPSG:4326',   'EPSG:3857')),
+              name: coordinate_names[x]        
+            });
+            coordinatesource.addFeature(coordinateicon);
+            features.push(coordinatesource) 
+            console.log(coordinateicon)
+          }
 
     //create the icon style
     var iconStyle = new ol.style.Style({
@@ -394,6 +425,10 @@ function createMarker(Lon,Lat){
       style: iconStyle
     });    
     map.addLayer(vectorLayer);
+  }
+
+function createOtherMarkerPoints(vectorSource)
+  {
   }
 
   function addDepthcontrols(){
@@ -662,6 +697,7 @@ $(document).ready(function(){
 
 	//load map
 	loadMap(Lon,Lat)
+  getChannelCoordnates()
   //drawDatatable(dataset);
 	//select the appropriate year in the year dropdown
 	$('#year option').filter(function() {
@@ -670,7 +706,7 @@ $(document).ready(function(){
 	}).prop('selected', true);
 
 table = $('#charttable').DataTable( {
-       dom: 'Bfrtip',
+       //dom: 'Bfrtip',
        buttons: [
        'csvHtml5',
        'copyHtml5',

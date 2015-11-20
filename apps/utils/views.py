@@ -97,9 +97,8 @@ def email(request):
         try:
             validate_email(email)
         except ValidationError:
-            args['error_message'] = "Error! Invalid email address!"            
+            args['error_message'] = "Error! Invalid email address!"  
             return render(request, 'contact.html', args)
-        
 
         if message != None and name != None:
             #Check who the email is intended for
