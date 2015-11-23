@@ -73,6 +73,9 @@ class ChartView(TemplateView):
 class AboutView(TemplateView):
     template_name = "about.html"
 
+class ProjectManView(TemplateView):
+    template_name = "projectman.html"
+
 class ContactView(TemplateView):
     template_name = "contact.html"
         

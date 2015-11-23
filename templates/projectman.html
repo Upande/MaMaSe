@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} <title> Mamase | Project Management </title> {% endblock title %}
+{% block css %} {% endblock css %}
+{% block js %}{% endblock %}
+{% block body_class %}project-management{% endblock %}
+
+{% block content %}
+<!-- Start About Section -->
+<!-- Start Content -->
+<div id="content">
+  <div class="container">
+    <div class="page-content">
+      <div class="row">	
+	<div class="col-md-4">
+	  <!-- Classic Heading -->
+	  <h4 class="classic-title"><span>Welcome to The Project Management Module</span></h4>
+	  <!-- Nav Tabs -->
+	  <ul class="nav nav-tabs">
+            <li class=""><a href="#tab1" data-toggle="tab"><i class="icon-calender"></i>Google Calender</a></li>
+            <li class="actove"><a href="#tab2" data-toggle="tab"><i class="icon-dropbox"></i>Dropbox</a></li>
+	  </ul>
+	  
+	  <!-- Tab Panels -->
+	  <div class="tab-content">
+	    <!-- Tab Content 1. Google Calender -->
+	    <div class="tab-pane fade" id="tab1">
+              <p>Welcome to Samuel Magondu's Calender.</p>
+	      <div>
+		<iframe src="https://www.google.com/calendar/embed?src=samuel%40upande.com&ctz=Africa/Nairobi" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+	      </div>
+	    </div>
+
+	    <!-- Tab Content 2  Dropbox-->
+	    <div class="tab-pane fade" id="tab2">
+	      <div>
+		<iframe src ="https://www.dropbox.com/sh/d9ulw65twvxrrhi/AACHsXLlXUSan4Zx4hGC8BDja?lst"  width="777px" height="777px"   scrolling="yes"  >
+		  <p>Your browser does not support iframes.</p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+      </div>  
+    </div>
+  </div>
+</div>
+<!-- End content -->
+
+{% endblock content %}
