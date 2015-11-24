@@ -7,7 +7,7 @@ class ChannelSerializer(serializers.ModelSerializer):
     #feeds = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Channel
-        fields = ('id', 'data_id', 'name', 'description', 'latitude', 'longitude','created_at','updated_at','elevation','last_entry_id','username','field1','field2','field3','field4','field5','field6','field7','field8')
+        fields = ('id', 'data_id', 'name', 'description', 'latitude', 'longitude','created_at','updated_at','elevation','last_entry_id','username')
         depth = 1
 
         def to_representation(self, instance):
@@ -39,7 +39,7 @@ class ChannelSerializer(serializers.ModelSerializer):
 class FeedSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feed
-        fields = ('id', 'entry_id', 'channel', 'added','field1','field2','field3','field4','field5','field6','field7','field8')
+        fields = ('id','entry_id','channel','added')
         depth = 1
 
         def to_representation(self, instance):

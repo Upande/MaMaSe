@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 
-from apps.utils.views import IndexView,ContactView,AboutView,ChartView,MeView
+from apps.utils.views import IndexView,ContactView,AboutView,ChartView,MeView,ProjectManView
 urlpatterns = patterns(
     '',
     url(r'^ts/$', 'apps.utils.views.logThingspeakData', name='visual-ts'),
@@ -8,6 +8,7 @@ urlpatterns = patterns(
     url(r'^chart$', ChartView.as_view(), name='chart'),
     url(r'^me$', MeView.as_view(), name='me'),
     url(r'^about$', AboutView.as_view(), name='about'),
+    url(r'^project$', ProjectManView.as_view(), name='projectman'),
     url(r'^contact/$', ContactView.as_view(), name='contact-us'),
     url(r'^email/$','apps.utils.views.email', name='email'),
     url(r'^knowledge/$','apps.utils.views.knowledge', name='knowledge'),

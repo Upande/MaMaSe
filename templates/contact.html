@@ -35,7 +35,11 @@
 	  </div>-->
 	  <div class="form-group">
 	    <div class="controls">
+	      {% if error_message %}
+	      <input type="text" placeholder="Name" name="name" value="{{name}}">
+	      {% else %}
 	      <input type="text" placeholder="Name" name="name">
+	      {% endif %}
 	    </div>
 	  </div>
 	  <div class="form-group">

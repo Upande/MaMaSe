@@ -73,6 +73,9 @@ class ChartView(TemplateView):
 class AboutView(TemplateView):
     template_name = "about.html"
 
+class ProjectManView(TemplateView):
+    template_name = "projectman.html"
+
 class ContactView(TemplateView):
     template_name = "contact.html"
         
@@ -97,9 +100,8 @@ def email(request):
         try:
             validate_email(email)
         except ValidationError:
-            args['error_message'] = "Error! Invalid email address!"            
+            args['error_message'] = "Error! Invalid email address!"  
             return render(request, 'contact.html', args)
-        
 
         if message != None and name != None:
             #Check who the email is intended for
