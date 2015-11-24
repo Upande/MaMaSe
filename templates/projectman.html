@@ -1,8 +1,67 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %} <title> Mamase | Project Management </title> {% endblock title %}
+{% block title %} <title>Mamase | Project Management</title> {% endblock title %}
 {% block css %} {% endblock css %}
-{% block js %}{% endblock %}
+{% block js %}
+<script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="pz8j4jppxqot03u"></script>
+<script type="text/javascript">
+
+if (document.getElementById('preview-link').checked) {
+ linktype_option = document.getElementById('preview-link').value;
+}
+else if (document.getElementById('direct-link').checked) {
+ linktype_option = document.getElementById('direct-link').value;
+}
+console.log(linktype_option)
+//multiselect-checkbox
+
+multiselect_option = document.getElementById('multiselect-checkbox').value;
+
+//multiselect_option = false
+//linktype_option="preview"
+
+var x = document.getElementById("linktyperow").value;
+
+options = {
+
+    // Required. Called when a user selects an item in the Chooser.
+    success: function(files) {
+        html = ""
+        console.log(files)
+        for (i=0;i<files.length;i++)
+		     {
+		     html = html + '<a href="'+files[i].link+'">'+files[i].name+'</a><br>'
+		     }
+		     $('#demo-urls').html(html);
+		     //alert("Here's the file link: " + files[0].link)
+    },
+
+    // Optional. Called when the user closes the dialog without selecting a file
+    // and does not include any parameters.
+    cancel: function() {
+
+    },
+
+    // Optional. "preview" (default) is a preview link to the document for sharing,
+    // "direct" is an expiring link to download the contents of the file. For more
+    // information about link types, see Link types below.
+    linkType: linktype_option, //"preview", // or "direct"
+
+    // Optional. A value of false (default) limits selection to a single file, while
+    // true enables multiple file selection.
+    multiselect: multiselect_option, // or true
+
+    // Optional. This is a list of file extensions. If specified, the user will
+    // only be able to select files with these extensions. You may also specify
+    // file types, such as "video" or "images" in the list. For more information,
+    // see File types below. By default, all extensions are allowed.
+    //extensions: ['*'],
+};
+
+var button = Dropbox.createChooseButton(options);
+document.getElementById("dropboxframe").appendChild(button);
+</script>
+{% endblock %}
 {% block body_class %}project-management{% endblock %}
 
 {% block content %}
@@ -12,15 +71,14 @@
   <div class="container">
     <div class="page-content">
       <div class="row">	
-	<div class="col-md-4">
+	<div class="col-md-12">
 	  <!-- Classic Heading -->
 	  <h4 class="classic-title"><span>Welcome to The Project Management Module</span></h4>
 	  <!-- Nav Tabs -->
 	  <ul class="nav nav-tabs">
             <li class="active"><a href="#tab1" data-toggle="tab"><i class="icon-calender"></i>Google Calender</a></li>
             <li class=""><a href="#tab2" data-toggle="tab"><i class="icon-dropbox"></i>Dropbox</a></li>
-	  </ul>
-	  
+	  </ul>	  
 	  <!-- Tab Panels -->
 	  <div class="tab-content">
 	    <!-- Tab Content 1. Google Calender -->
@@ -34,9 +92,36 @@
 	    <!-- Tab Content 2  Dropbox-->
 	    <div class="tab-pane fade" id="tab2">
 	      <div>
-		<iframe src ="https://www.dropbox.com/sh/d9ulw65twvxrrhi/AACHsXLlXUSan4Zx4hGC8BDja?lst"  width="777px" height="777px"   scrolling="yes"  >
-		  <p>Your browser does not support iframes.</p>
+	      <table id="chooser-demo-tbl" class="table table-bordered">
+		<tbody><tr>
+		    <td>Options:</td>
+		    <td>
+		      <div id="checkbox-container">
+			<input type="checkbox" id="multiselect-checkbox">
+			<label for="multiselect-checkbox">Enable multiselect</label>
+		      </div>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>Link type:</td>
+		    <td id="linktyperow">
+		      <input type="radio" checked="" id="preview-link" value="preview" name="link-type"><label for="preview-link">Preview link</label>
+		      <input type="radio" id="direct-link" value="direct" name="link-type"><label for="direct-link">Direct link</label>
+		    </td>
+		  </tr>
+		  <tr>
+		    <td>Chooser button:</td>
+		    <td id="dropboxframe"></td>
+		  </tr>
+		  <tr>
+		    <td>Returns:</td>
+		    <td>
+		      <div id="demo-urls">Choose something from Dropbox to see the return value</div>
+		    </td>
+		  </tr>
+	      </tbody></table>
 	      </div>
+	      <div id="dropboxframe"> </div>
 	    </div>
 	  </div>
 	</div>
