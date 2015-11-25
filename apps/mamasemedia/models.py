@@ -39,9 +39,11 @@ class LinkFields(models.Model):
 #Media links or item          
 class MediaLink(LinkFields):
     title = models.CharField(max_length=255, help_text="Link title")
+    caption = RichTextField(blank=True)
 
     panels = [
         FieldPanel('title'),        
+        FieldPanel('caption', classname="full"),
         MultiFieldPanel(LinkFields.panels, "Link"),
     ]
 
