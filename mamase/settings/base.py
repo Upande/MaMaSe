@@ -65,6 +65,7 @@ INSTALLED_APPS = (
     'boto',
     'djcelery',
     
+    'home',
     'apps.utils',
     'apps.video',
     'apps.event',
@@ -156,7 +157,6 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Wagtail settings
-
 WAGTAIL_SITE_NAME = "mamase"
 
 
