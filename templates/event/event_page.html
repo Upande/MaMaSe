@@ -32,8 +32,7 @@
 						<div class="post-type"><i class="fa fa-picture-o"></i></div>
 						<h2><a href="#">{{ self.title }}</a></h2>
 						<ul class="post-meta">
-							<li>By <a href="#">Magondu</a></li>
-							<li>{{ self.start_date }}</li>
+							<li>{{self.venue}} || {{ self.date }}</li>
 							<li>
 								{% for tag in self.tags.all %}
 								<a href="#?tag={{tag}}"> {{tag}} </a> 
@@ -46,14 +45,13 @@
 								<div class="post-type"><i class="fa fa-quote-left"></i></div>
 								<div class="qoute-box">
 									<a href="#">
-										<h2>{{ self.intro|safe }}</h2>
-										<div class="qoute-author">Magondu</div>
+										<h2>Abstract: {{ self.abstract|safe }}</h2>
 									</a>
 								</div>
 							</div>
 						</div>
 
-						<p> {{ self.body|richtext }}</p>	
+						<p> {{ self.report|richtext }}</p>	
 
 					</div>
 					<!-- Start comments section-->
