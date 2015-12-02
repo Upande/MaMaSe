@@ -65,20 +65,17 @@ INSTALLED_APPS = (
     'boto',
     'djcelery',
     
-    'home',
+    'apps.knowledgeplatform',
+    'apps.mamasemedia',
+    'apps.partners',
+    'apps.testapp',
     'apps.utils',
+    'apps.search',
     'apps.video',
     'apps.event',
     'apps.news',
-    'apps.quiz',
-    'apps.mamasemedia',
-    'apps.true_false',
-    'apps.multichoice',
-    'apps.essay',
-    'apps.partners',
-    'apps.testapp',
     'apps.gis',
-    'apps.search',
+    'home',
 )
 
 MIDDLEWARE_CLASSES = (

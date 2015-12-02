@@ -100,8 +100,7 @@ class NewsPage(Page):
         FieldPanel('intro'),
         FieldPanel('body', classname="full"),
         DocumentChooserPanel('link_document'),
-    ]
-    
+    ]    
 
 NewsPage.promote_panels = Page.promote_panels +[
     FieldPanel('tags'),
