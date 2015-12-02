@@ -78,8 +78,10 @@ class EventPage(Page):
         FieldPanel('venue',classname="full" ),
         FieldPanel('abstract', classname="full"),
         FieldPanel('report', classname="full"),
-        DocumentChooserPanel('document'),
-        ImageChooserPanel('main_image'),
+        InlinePanel('media_items', label="Media"),
+        InlinePanel('document_items', label="Document"),
+#        DocumentChooserPanel('document'),
+#        ImageChooserPanel('main_image'),
     ]
 
 EventPage.promote_panels = Page.promote_panels +[
@@ -143,13 +145,84 @@ class EventIndexPage(Page):
         context['events'] = events
         return context
 
-#class Attendee(models.Model):
-#    event = models.ForeignKey(EventPage)
-#    user = models.ForeignKey(User)
-#    tickets = models.IntegerField(default=1)
-#    date = models.DateTimeField(auto_now_add = True)
+class MediaLinkFields(models.Model):
+    embedded_link = models.URLField("Embedded link", blank=True)
+    image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
 
-#class watchlist(models.Model):
-#    event = models.ForeignKey(EventPage)
-#    user = models.ForeignKey(User)
-#    date = models.DateTimeField(auto_now_add = True)
+    @property
+    def link(self):
+        if self.image:
+            return self.image.file.url
+        else:
+            return self.embedded_link
+
+    panels = [
+        ImageChooserPanel('image'),
+        FieldPanel('embedded_link'),
+    ]
+
+    class Meta:
+        abstract = True
+
+class MediaLink(MediaLinkFields):
+    title = models.CharField(max_length=255, help_text="Link title")
+    caption = RichTextField(blank=True)
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('caption', classname="full"),
+        MultiFieldPanel(MediaLinkFields.panels, "Link"),
+    ]
+
+    class Meta:
+        abstract = True
+
+class MediaPageRelatedLink(Orderable, MediaLink):
+    page = ParentalKey('EventPage', related_name='media_items')
+
+class DocumentLinkFields(models.Model):
+    embedded_link = models.URLField("Embedded link", blank=True)
+    document = models.ForeignKey(
+        'wagtaildocs.Document',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+'
+    )
+
+    @property
+    def link(self):
+        if self.document:
+            return self.document.file.url
+        else:
+            return self.embedded_link
+
+    panels = [
+        DocumentChooserPanel('document'),
+        FieldPanel('embedded_link'),
+    ]
+
+    class Meta:
+        abstract = True
+
+class DocumentLink(DocumentLinkFields):
+    title = models.CharField(max_length=255, help_text="Link title")
+    note = RichTextField(blank=True)
+
+    panels = [
+        FieldPanel('title'),
+        FieldPanel('note', classname="full"),
+        MultiFieldPanel(DocumentLinkFields.panels, "Link"),
+    ]
+
+    class Meta:
+        abstract = True
+
+class DocumentPageRelatedLink(Orderable, DocumentLink):
+    page = ParentalKey('EventPage', related_name='document_items')
