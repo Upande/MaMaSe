@@ -241,7 +241,7 @@ def storeAggregatedData():
         currentdaily = AggregateDailyFeed.objects.filter(channelfield=item).order_by('-timestamp').first()    
         
         if not currentmonthly: 
-            mdata = aggregateMonthlyFeedData({'channelfield__channel':item})
+            mdata = aggregateMonthlyFeedData({'channelfield':item})
 
             month_avg = list(mdata[0])
             month_sum = list(mdata[1])
@@ -270,7 +270,7 @@ def storeAggregatedData():
                 x.save()            
 
         elif not currentdaily:
-            ddata = aggregateDailyFeedData({'channelfield__channel':item})
+            ddata = aggregateDailyFeedData({'channelfield':item})
             
             daily_avg = list(ddata[0])
             daily_sum = list(ddata[1])
