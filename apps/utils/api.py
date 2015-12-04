@@ -6,7 +6,7 @@ from django.db.models import Avg,Max,Min,Sum,Count
 from django.http import JsonResponse
 from django.db import connection
 
-from apps.utils.models import Channel,Feed,AggregateMonthlyFeed,AggregateDailyFeed
+from apps.utils.models import Channel,Feed,AggregateMonthlyFeed,AggregateDailyFeed,ChannelField
 from util.scripts.timing_decorator import time_usage
 
 def getFeeds(request):
