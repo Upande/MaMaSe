@@ -234,7 +234,7 @@ def storeAggregatedData():
     
     #I am tired. Forgive my poorly arranged code. I pray I come back and fix all this later. 
 
-    chf = ChannelFields.objects.all()
+    chf = ChannelField.objects.all()
     for item in chf:
 
         currentmonthly = AggregateMonthlyFeed.objects.filter(channelfield=item).order_by('-timestamp').first()
