@@ -1,93 +1,69 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <link rel="stylesheet" href="http://openlayers.org/en/v3.5.0/css/ol.css" type="text/css">
-    <style>
-      .map {
-        height: 400px;
-        width: 500%;
-      }
-    </style>
-    <script src="http://openlayers.org/en/v3.5.0/build/ol.js" type="text/javascript"></script>
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    
-    <title>OpenLayers 3 example</title>
-  </head>
-  <body>
-    <h2>My Map</h2>
-    <div id="map" class="map"></div>
+<html>
+<head>
+    <script src="http://openlayers.org/en/v3.10.1/build/ol.js"></script>
     <script type="text/javascript">
-        
-       ///This script makes the map
-       
-    var iconGeometry = new ol.geom.Point([637125.42195, 8172199.19090669]);
+        var map, mappingLayer, vectorLayer, selectMarkerControl, selectedFeature;
 
-var wmsLayer = new ol.layer.Tile({
-            source: new ol.source.OSM()
-        });
+        function onFeatureSelect(feature) {
+            selectedFeature = feature;
+            popup = new OpenLayers.Popup.FramedCloud("tempId", feature.geometry.getBounds().getCenterLonLat(),
+                                     null,
+                                     selectedFeature.attributes.salutation + " from Lat:" + selectedFeature.attributes.Lat + " Lon:" + selectedFeature.attributes.Lon,
+                                     null, true);
+            feature.popup = popup;
+            map.addPopup(popup);
+        }
 
-        var view = new ol.View({
-            center: [637125.42195, 8172199.19090669],
-            zoom: 14
-        });
-        var iconFeature = new ol.Feature({
-            geometry: iconGeometry,
-            name: 'Null Island',
-            population: 4000,
-            rainfall: 500
-        });
+        function onFeatureUnselect(feature) {
+            map.removePopup(feature.popup);
+            feature.popup.destroy();
+            feature.popup = null;
+        }   
 
-        var iconStyle = new ol.style.Style({
-            image: new ol.style.Icon(({
-                anchor: [0.5, 4],
-                anchorXUnits: 'fraction',
-                anchorYUnits: 'pixels',
-                opacity: 0.5,
-                src: 'https://evernote.com/media/img/getting_started/skitch/android/android-location_icon.png'
-            }))
-        });
+        function init(){
+            map = new ol.Map( 'map');
+            mappingLayer = new ol.source.OSM("Simple OSM Map");
 
-        iconFeature.setStyle(iconStyle);
+            map.addLayer(mappingLayer);
+            vectorLayer = new ol.source.Vector("Vector Layer", {projection: "EPSG:4326"}); 
+            selectMarkerControl = new vectorSource.addFeature(vectorLayer, {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
+            map.addControl(selectMarkerControl);
 
-        var vectorSource = new ol.source.Vector({
-            features: [iconFeature]
-        });
+            selectMarkerControl.activate();
+            map.addLayer(vectorLayer);
+            map.setCenter(
+                new OpenLayers.LonLat(0, 0).transform(
+                    new OpenLayers.Projection("EPSG:4326"),
+                    map.getProjectionObject())
 
-        var vectorLayer = new ol.layer.Vector({
-            source: vectorSource
-        });
+                , 1
+            );    
+        }
 
-        iconStyle = [
-    new ol.style.Style({
-        image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
-            anchor: [0.5, 1],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'fraction',
-            src: '/static/img/marker-icon.png',
-        }))
-    }),
-    new ol.style.Style({
-        text: new ol.style.Text({
-            text: "Wow such label",
-            offsetY: -25,
-            fill: new ol.style.Fill({
-                color: '#fff'
-            })
-        })
-    })
-];
+        function placeRandomMarker(){
+            var randomLat = Math.floor((Math.random()*180)-90);
+            var randomLon = Math.floor((Math.random()*180)-90);
+            var randomLonLat = new OpenLayers.Geometry.Point( randomLon, randomLat);
+            randomLonLat.transform("EPSG:4326", map.getProjectionObject());
+            var randomFeature = new OpenLayers.Feature.Vector(randomLonLat,
+                                    { salutation: "hello world", Lon : randomLon, Lat : randomLat});
+            vectorLayer.addFeatures(randomFeature);
+            var popup = new OpenLayers.Popup.FramedCloud("tempId", new OpenLayers.LonLat( randomLon, randomLat).transform("EPSG:4326", map.getProjectionObject()),
+                       null,
+                       randomFeature.attributes.salutation + " from Lat:" + randomFeature.attributes.Lat + " Lon:" + randomFeature.attributes.Lon,
+                       null, true);
+            randomFeature.popup = popup;
+            map.addPopup(popup); 
+        }
 
-        var map = new ol.Map({
-            layers: [wmsLayer, vectorLayer],
-            target: 'map',
-            view: view,
-            //controls: []
-        });
-
-        map.on('singleclick', function (evt) {
-            iconGeometry.setCoordinates(evt.coordinate);
-        });
 
     </script>
-  </body>
+
+
+</head>
+<body onload="init()">
+
+<div id="map" style="height:600px; width: 1000px;"></div>
+<button onclick="placeRandomMarker()">Place Marker</button>
+</body>
 </html>
