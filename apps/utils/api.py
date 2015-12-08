@@ -377,11 +377,11 @@ def storeAggregatedData():
                 print "Updating todays records for channel " + item.name
                 data = aggregateDailyFeedData({'channelfield':item,'timestamp__gte':today})
                 
-                dc = AggregateDailyFeed.objects.filter(aggregation = "COUNT",channel=item).order_by('-timestamp').first()
-                da = AggregateDailyFeed.objects.filter(aggregation = "AVG",channel=item).order_by('-timestamp').first()
-                ds = AggregateDailyFeed.objects.filter(aggregation = "SUM",channel=item).order_by('-timestamp').first()
-                dma = AggregateDailyFeed.objects.filter(aggregation = "MAX",channel=item).order_by('-timestamp').first()
-                dmi = AggregateDailyFeed.objects.filter(aggregation = "MIN",channel=item).order_by('-timestamp').first()
+                dc = AggregateDailyFeed.objects.filter(aggregation = "COUNT",channel=item.channel,channelfield=item).order_by('-timestamp').first()
+                da = AggregateDailyFeed.objects.filter(aggregation = "AVG",channel=item.channel,channelfield=item).order_by('-timestamp').first()
+                ds = AggregateDailyFeed.objects.filter(aggregation = "SUM",channel=item.channel,channelfield=item).order_by('-timestamp').first()
+                dma = AggregateDailyFeed.objects.filter(aggregation = "MAX",channel=item.channel,channelfield=item).order_by('-timestamp').first()
+                dmi = AggregateDailyFeed.objects.filter(aggregation = "MIN",channel=item.channel,channelfield=item).order_by('-timestamp').first()
                 
                 da.data = list(data[0])
                 da.lastupdate = datetime.datetime.now()

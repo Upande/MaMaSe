@@ -35,13 +35,13 @@ class LoggerDataAdmin(admin.ModelAdmin):
     list_display = ['raw_data','added']
 
 class AggregateMonthlyFeedAdmin(admin.ModelAdmin):
-    fields = ['data','channel','aggregation','timestamp']
-    list_display = ['data','lastupdate','channel','aggregation','timestamp']
+    fields = ['data','channel','aggregation','channelfield','timestamp']
+    list_display = ['data','lastupdate','channel','aggregation','channelfield','timestamp']
     search_fields = ['channel__name','aggregation']
 
 class AggregateDailyFeedAdmin(admin.ModelAdmin):
-    fields = ['data','channel','aggregation','timestamp']
-    list_display = ['data','lastupdate','channel','aggregation','timestamp']
+    fields = ['data','channel','aggregation','channelfield','timestamp']
+    list_display = ['data','lastupdate','channel','aggregation','channelfield','timestamp']
     search_fields = ['channel__name','aggregation']
 
 admin.site.register(Channel,ChannelAdmin)
