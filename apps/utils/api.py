@@ -198,7 +198,7 @@ def aggregateMonthlyFeedData(kwargs):
     
     m_avg = Feed.objects.filter(**kwargs).extra({'date':month_filter}).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-15 00:00:00')"}).values('channelfield__field','channelfield__channel__name','channelfield__name','timestamp').annotate(  Avg('reading'),)
     
-    m_max = Feed.objects.filter(**kwargs).extra({'date':month_filter}).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-15 00:00:00')"}).values('channelfield__field','channelfield__channel__name','channelfield__name','timestamp').annotate( Avg('reading'),)
+    m_max = Feed.objects.filter(**kwargs).extra({'date':month_filter}).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-15 00:00:00')"}).values('channelfield__field','channelfield__channel__name','channelfield__name','timestamp').annotate(Max('reading'),)
     
     m_min = Feed.objects.filter(**kwargs).extra({'date':month_filter}).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-15 00:00:00')"}).values('channelfield__field','channelfield__channel__name','channelfield__name','timestamp').annotate( Min('reading'),)
     
@@ -315,7 +315,7 @@ def storeAggregatedData():
             
             print "In channel loop. Now checking " + item.name
             if timestampmonth == m:
-                data = aggregateMonthlyFeedData({'channelfield__channel':item,'timestamp__gte':thismonth,'timestamp__lte':nextmonth})
+                data = aggregateMonthlyFeedData({'channelfield':item,'timestamp__gte':thismonth,'timestamp__lte':nextmonth})
                                                 
                 mc = AggregateMonthlyFeed.objects.filter(aggregation = "COUNT",channel=item.channel,channelfield = item).order_by('-timestamp').first()
                 ma = AggregateMonthlyFeed.objects.filter(aggregation = "AVG",channel=item.channel,channelfield = item).order_by('-timestamp').first()
@@ -345,7 +345,7 @@ def storeAggregatedData():
                 mmi.save()
                 
             else:
-                data = aggregateMonthlyFeedData({'channelfield__channel':item,'timestamp__gte':thismonth,'timestamp__lte':nextmonth})
+                data = aggregateMonthlyFeedData({'channelfield':item,'timestamp__gte':thismonth,'timestamp__lte':nextmonth})
             
                 month_avg = list(data[0])
                 month_sum = list(data[1])
@@ -375,7 +375,7 @@ def storeAggregatedData():
                                                 
             if timestampday == d:
                 print "Updating todays records for channel " + item.name
-                data = aggregateDailyFeedData({'channelfield__channel':item,'timestamp__gte':today})
+                data = aggregateDailyFeedData({'channelfield':item,'timestamp__gte':today})
                 
                 dc = AggregateDailyFeed.objects.filter(aggregation = "COUNT",channel=item).order_by('-timestamp').first()
                 da = AggregateDailyFeed.objects.filter(aggregation = "AVG",channel=item).order_by('-timestamp').first()
@@ -405,7 +405,7 @@ def storeAggregatedData():
                 dmi.save()
                 
             else:
-                data = aggregateDailyFeedData({'channelfield__channel':item,'timestamp__gte':today})
+                data = aggregateDailyFeedData({'channelfield':item,'timestamp__gte':today})
                                               
                 daily_avg = list(data[0])
                 daily_sum = list(data[1])
