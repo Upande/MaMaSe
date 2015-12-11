@@ -1,6 +1,3 @@
-  $(document).ready(function($) {
-
-      window.onload = function(e) {
 
           var icon = '{{ STATIC_URL | images/location30.png }}'
           var daily = []
@@ -807,6 +804,10 @@
 
 
 
+
+  $(document).ready(function($) {
+
+      window.onload = function(e) {
 
           //// export only what is visible right now (filters & paginationapplied)
           $('#export_visible').click(function(event) {
