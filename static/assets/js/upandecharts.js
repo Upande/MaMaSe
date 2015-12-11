@@ -118,7 +118,7 @@
           function weatherVariable(selweather) {
               weather_variable = selweather.value;
               weather_variable_id = selweather[selweather.selectedIndex].id;
-              console.log(weather_variable_id)
+
               populateDatatables(weather_variable_id)
 
               if (datatype == 'raw') {
@@ -193,13 +193,13 @@
               if (datatype == 'raw') {
                   $("#selectaggregation").prop("disabled", true).css('opacity', 0.5);
 
-                  pullData()
+                  pullData(id,year,month)
               } else {
                   ////call data from API using time_interval
                   //// and start date, end date and  channel
 
                   ////pull data 
-                  drawGraph_monthly_daily(datatype)
+                  drawGraph_monthly_daily(id, month, year, datatype)
                       ////define plot data based on aggr and time step
                       ////define_monthly_daily_data()
               }
@@ -255,7 +255,6 @@
                   url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&data=monthly",
                   dataType: "json",
                   success: function(data) {
-                      console.log(data)
                       dataset = []
                       monthlyData = data.feed[0].monthly
                       channels = data.channel
@@ -275,7 +274,6 @@
                               }
                           }
                       }
-                      console.log(dataset)
                       datatset = dataset.join(", ")
 
                       table.clear().rows.add(dataset).draw();
@@ -467,7 +465,7 @@
 
 
 
-          function drawGraph_monthly_daily() {
+          function drawGraph_monthly_daily(id, month, year, datatype) {
 
               ////Fxn to display loading image on load
               $("#spinner").bind("ajaxSend", function() {
@@ -487,7 +485,6 @@
                   dataType: "json",
 
                   success: function(data) {
-
                       console.log(data)
                       channel = data.channel[0]
 
@@ -511,13 +508,23 @@
                       var myarry_min = []
                           ///
                       field = "";
+
+
                       for (var i = 0; i < len; i++) { //loop thru all fields
 
-                          field = 'field' + (1 + i),
+                          var fieldname = channel.fields[i].field__name ////Whereas the fields have specific names, they have labels on thingspeak. This shall be used to access data from the api e.g field1
+
+                          var field = channel.fields[i].name
+                          var fieldid = channel.fields[i].field__id
+                          variable_ids.push(fieldid)
+                          eval('var ' + field + ' = ["' + fieldname + '"];')
+
+                          //field = 'field' + (1 + i),
 
                               ////define a variable field dynamically: for every field
                               ////define populate first array with field name, e.g "Rain"
-                              eval('var ' + field + ' = ["' + (channel[field]) + '"]');
+                              //eval('var ' + field + ' = ["' + (channel.fields[i].field) + '"]');
+                              console.log(feeds)
 
                           $('#channeldesc').html(channel.description);
                           $('#channelname').html(channel.name);
@@ -537,11 +544,11 @@
                               }
 
                               ////assign the value of the ith field to f1
-                              eval('var count_val =' + 'feeds.count[j].' + field + '__count');
-                              eval('var sum_val =' + 'feeds.sum[j].' + field + '__sum');
-                              eval('var avg_val =' + 'feeds.avg[j].' + field + '__avg');
-                              eval('var max_val =' + 'feeds.max[j].' + field + '__max');
-                              eval('var min_val =' + 'feeds.min[j].' + field + '__min');
+                              eval('var count_val =' + 'feeds.count[j].' + 'reading' + '__count');
+                              eval('var sum_val =' + 'feeds.sum[j].' + 'reading' + '__sum');
+                              eval('var avg_val =' + 'feeds.avg[j].' + 'reading' + '__avg');
+                              eval('var max_val =' + 'feeds.max[j].' + 'reading' + '__max');
+                              eval('var min_val =' + 'feeds.min[j].' + 'reading' + '__min');
                               count.push(count_val)
                               sum.push(sum_val)
                               max.push(max_val)
