@@ -60,7 +60,7 @@ def getFeeds(request):
     
     channels = []
     for i in ch:
-        values = i.channels.values('field__name','name','id').distinct()
+        values = i.channels.values('field__name','name','id','field__id').distinct()
         valuesdict = {'id':i.id,'name':i.name,'desciption':i.description,'latitude':i.latitude,'longitude':i.longitude}
         valuesdict['fields'] = list(values)
         channels.append(valuesdict)

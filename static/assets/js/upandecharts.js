@@ -117,7 +117,10 @@
           ////change weather variable
           function weatherVariable(selweather) {
               weather_variable = selweather.value;
-              populateDatatables(selweather[selweather.selectedIndex].id)
+              weather_variable_id = selweather[selweather.selectedIndex].id;
+              console.log(weather_variable_id)
+              populateDatatables(weather_variable_id)
+
               if (datatype == 'raw') {
                   defineNewdata(myarry)
                   drawGraph(newdata)
@@ -252,6 +255,7 @@
                   url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&data=monthly",
                   dataType: "json",
                   success: function(data) {
+                      console.log(data)
                       dataset = []
                       monthlyData = data.feed[0].monthly
                       channels = data.channel
@@ -266,10 +270,12 @@
                               if (dataset[j][0] == tabledata[i].channelfield__channel__name) {
                                   //Get the value of the month and add one since it jan is represented as 0
                                   m = moment(tabledata.timestamp, 'YYYY-MM-DD').month() + 1
-                                  eval('dataset[j][m] = tabledata[i].reading__' + aggr_variable)
+
+                                  eval('dataset[j][m] = roundoff(tabledata[i].reading__' + aggr_variable+')')
                               }
                           }
                       }
+                      console.log(dataset)
                       datatset = dataset.join(", ")
 
                       table.clear().rows.add(dataset).draw();
@@ -482,6 +488,7 @@
 
                   success: function(data) {
 
+                      console.log(data)
                       channel = data.channel[0]
 
                       Lon = channel.longitude
@@ -708,7 +715,8 @@
                           var fieldname = channel.fields[i].field__name ////Whereas the fields have specific names, they have labels on thingspeak. This shall be used to access data from the api e.g field1
 
                           var field = channel.fields[i].name
-                          var fieldid = channel.fields[i].id
+                          //var fieldid = channel.fields[i].id
+                          var fieldid = channel.fields[i].field__id
                           variable_ids.push(fieldid)
                           eval('var ' + field + ' = ["' + fieldname + '"];')//Confilicting variables?
 
@@ -719,9 +727,10 @@
                                   created.push(n);
                               }
                               try {
-                                  eval('var f1 =' + 'feeds[j].fields[0].' + field);
+                                  eval('var f1 =' + 'feeds[j].fields.' + field);
                               } catch (err) {
 
+                                console.log(err)
                                   var f1 = 0
                               }
                               eval(field + '.push(f1)');
@@ -802,7 +811,9 @@
           }
 
 
-
+          function roundoff(num) 
+  { return Math.round(num * 100) / 100  ;
+  }
 
 
   $(document).ready(function($) {
