@@ -1,5 +1,4 @@
   $(document).ready(function($) {
-      "use strict";
 
       window.onload = function(e) {
 
@@ -65,7 +64,6 @@
           ];
           var time1 = ['station', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
           var xaxis = ['station', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
 
 
           //// ----- Selet Aggregation Type
@@ -492,7 +490,6 @@
                       Lon = channel.longitude
                       Lat = channel.latitude
 
-
                       eval('var feeds = data.feed[0].' + datatype)
                       count = feeds.count
                       sum = feeds.sum
@@ -660,92 +657,7 @@
               });
 
               $(document).ready(function() {
-                  var asInitVals = new Array();
-
-                  loadMap(Lon, Lat)
-                  getChannelCoordnates()
-
-                  $('#year option').filter(function() {
-
-                      return $(this).text() == year;
-                  }).prop('selected', true);
-
-                  table = $('#charttable').DataTable({
-                      buttons: [
-                          'csvHtml5',
-                          'copyHtml5',
-                          'excelHtml5',
-                      ],
-                      data: dataset,
-                      columns: [{
-                          title: "Station Name"
-                      }, {
-                          title: "Jan"
-                      }, {
-                          title: "Feb"
-                      }, {
-                          title: "Mar"
-                      }, {
-                          title: "Apr"
-                      }, {
-                          title: "May"
-                      }, {
-                          title: "Jun"
-                      }, {
-                          title: "Jul"
-                      }, {
-                          title: "Aug"
-                      }, {
-                          title: "Sep"
-                      }, {
-                          title: "Oct"
-                      }, {
-                          title: "Nov"
-                      }, {
-                          title: "Dec"
-                      }],
-                  });
-
-                  ////get current date
-                  var dt = new Date();
-
-                  ////split date to year and month
-                  year = dt.getFullYear();
-                  month = dt.getMonth();
-
-                  ////select the appropriate year in the year dropdown
-                  $('#year option').filter(function() {
-
-                      return $(this).text() == year;
-                  }).prop('selected', true);
-
-                  ////select the appropriate month in the month dropdown
-                  $('#month option').filter(function() {
-
-                      return $(this).val() == month + 1;
-                  }).prop('selected', true);
-
-                  ////select the appropriate timeinterval in the timeinterval dropdown    
-                  $('#timeinterval option').filter(function() {
-
-                      return $(this).val() == time_interval;
-                  }).prop('selected', true);
-
-                  ////select the appropriate aggr in the timeinterval dropdown    
-                  $('#selectaggregation option').filter(function() {
-
-                      return $(this).val() == aggr_variable;
-                  }).prop('selected', true);
-                  $("#selectaggregation").prop("disabled", true).css('opacity', 0.5);
-
-                  ////select the appropriate time interval in the timeinterval dropdown   
-                  $('#timeinterval option').filter(function() {
-
-                      return $(this).val() == datatype;
-                  }).prop('selected', true);
-
-                  //load data
-                  pullData(id, year, month)
+                  
 
               });
           }
@@ -794,15 +706,14 @@
                       var len = channel.fields.length
                       var created = ['created']
                           ///
-                      field = "";
+                      var field = "";
                       for (var i = 0; i < len; i++) { ////loop thru all fields
                           var fieldname = channel.fields[i].field__name ////Whereas the fields have specific names, they have labels on thingspeak. This shall be used to access data from the api e.g field1
 
                           var field = channel.fields[i].name
                           var fieldid = channel.fields[i].id
                           variable_ids.push(fieldid)
-                          eval('var ' + field + ' = ["' + fieldname + '"];')
-
+                          eval('var ' + field + ' = ["' + fieldname + '"];')//Confilicting variables?
 
                           for (var j = 0; j < feeds.length; j++) {
 
@@ -816,7 +727,7 @@
 
                                   var f1 = 0
                               }
-                              eval("var "+ field + '.push(f1)');
+                              eval(field + '.push(f1)');
 
                           }
                           if (myarry[0] == null) { ////if created is not in myarry
@@ -828,6 +739,7 @@
                       }
 
                       ////Disable non-existing weather Variables
+                      loadMap(Lon,Lat)
                       populateWeathervariables(myarry)
                       defineNewdata(myarry)
                       drawGraph(newdata)
@@ -911,6 +823,95 @@
               event.preventDefault();
               table2csv(oTable, 'full', 'table.display');
           })
+
+
+
+          ///Initialization stuff
+
+          var asInitVals = new Array();
+
+          //loadMap(Lon, Lat)
+          getChannelCoordnates()
+
+          $('#year option').filter(function() {
+
+               return $(this).text() == year;
+                  }).prop('selected', true);
+
+          table = $('#charttable').DataTable({
+                      buttons: [
+                          'csvHtml5',
+                          'copyHtml5',
+                          'excelHtml5',
+                      ],
+                      data: dataset,
+                      columns: [{
+                          title: "Station Name"
+                      }, {
+                          title: "Jan"
+                      }, {
+                          title: "Feb"
+                      }, {
+                          title: "Mar"
+                      }, {
+                          title: "Apr"
+                      }, {
+                          title: "May"
+                      }, {
+                          title: "Jun"
+                      }, {
+                          title: "Jul"
+                      }, {
+                          title: "Aug"
+                      }, {
+                          title: "Sep"
+                      }, {
+                          title: "Oct"
+                      }, {
+                          title: "Nov"
+                      }, {
+                          title: "Dec"
+                      }],
+                  });
+
+                  ////get current date
+                  var dt = new Date();
+
+                  ////split date to year and month
+                  year = dt.getFullYear();
+                  month = dt.getMonth();
+
+                  ////select the appropriate year in the year dropdown
+                  $('#year option').filter(function() {
+
+                      return $(this).text() == year;
+                  }).prop('selected', true);
+
+                  ////select the appropriate month in the month dropdown
+                  $('#month option').filter(function() {
+
+                      return $(this).val() == month + 1;
+                  }).prop('selected', true);
+
+                  ////select the appropriate timeinterval in the timeinterval dropdown    
+                  $('#timeinterval option').filter(function() {
+
+                      return $(this).val() == time_interval;
+                  }).prop('selected', true);
+
+                  ////select the appropriate aggr in the timeinterval dropdown    
+                  $('#selectaggregation option').filter(function() {
+
+                      return $(this).val() == aggr_variable;
+                  }).prop('selected', true);
+                  $("#selectaggregation").prop("disabled", true).css('opacity', 0.5);
+
+                  ////select the appropriate time interval in the timeinterval dropdown   
+                  $('#timeinterval option').filter(function() {
+
+                      return $(this).val() == datatype;
+                  }).prop('selected', true);
+
 
           //load data
           pullData(id,year,month)

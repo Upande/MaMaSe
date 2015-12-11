@@ -1,4 +1,7 @@
-{% extends "base.html" %} {% load static %} {% load compress %} {% block title %}
+{% extends "base.html" %} 
+{% load static %} 
+{% load compress %} 
+{% block title %}
 <title> Mamase | Visualization </title> {% endblock title %} {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/loadpage.css' %}">
@@ -21,9 +24,7 @@
 <script src="http://openlayers.org/en/v3.10.1/build/ol.js" type="text/javascript"></script>
 <script src="{% static 'js/d3.js' %}" charset="utf-8"></script>
 <script src="{% static 'js/c3.js' %}"></script>
-{% compress js %}
-<script src="{% static 'js/upandecharts.js'%}"></script>
-{% endcompress %} 
+
   {% endblock js_initialize %} 
 
 {% block body_class %}visual-index{% endblock %} {% block content %}
@@ -120,7 +121,7 @@
                                             </td>
                                             <td>
                                                 <div class="dropdown_interval">
-                                                    <select id="timeinterval" onchange="timeInterval(this)" ClientIDMode="Static">
+                                                    <select id="timeinterval" onchange="timeInterval(this)">
                                                         <option value="daily">Daily</option>
                                                         <option value="monthly">Monthly</option>
                                                         <option value="raw">Raw Data</option>
@@ -189,4 +190,9 @@
     <!-- Place at bottom of page -->
 </div>
 <!-- End Container -->
-{% endblock content %} {% block partners %}{% endblock %}
+{% endblock content %} 
+{% block js %}
+{% compress js %}
+<script src="{% static 'js/upandecharts.js'%}"></script>
+{% endcompress %} 
+{% endblock %}
