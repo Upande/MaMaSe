@@ -513,7 +513,7 @@
                       for (var i = 0; i < len; i++) { //loop thru all fields
 
                           var fieldname = channel.fields[i].field__name ////Whereas the fields have specific names, they have labels on thingspeak. This shall be used to access data from the api e.g field1
-
+                          var fieldlabel = channel.fields[i].name
                           var field = channel.fields[i].name
                           var fieldid = channel.fields[i].field__id
                           variable_ids.push(fieldid)
@@ -524,8 +524,8 @@
                               ////define a variable field dynamically: for every field
                               ////define populate first array with field name, e.g "Rain"
                               //eval('var ' + field + ' = ["' + (channel.fields[i].field) + '"]');
-                              console.log(feeds)
-
+                              //console.log(feeds)
+                          
                           $('#channeldesc').html(channel.description);
                           $('#channelname').html(channel.name);
 
@@ -542,18 +542,22 @@
                               if (created.length <= count_len) { ////if created is shorter than myarry
                                   created.push(n)
                               }
-
                               ////assign the value of the ith field to f1
-                              eval('var count_val =' + 'feeds.count[j].' + 'reading' + '__count');
-                              eval('var sum_val =' + 'feeds.sum[j].' + 'reading' + '__sum');
-                              eval('var avg_val =' + 'feeds.avg[j].' + 'reading' + '__avg');
-                              eval('var max_val =' + 'feeds.max[j].' + 'reading' + '__max');
-                              eval('var min_val =' + 'feeds.min[j].' + 'reading' + '__min');
-                              count.push(count_val)
-                              sum.push(sum_val)
-                              max.push(max_val)
-                              min.push(min_val)
-                              avg.push(avg_val)
+                              ///Check if the item in the loop is of the same type e.g field1
+                              if (fieldlabel == feeds.count[j].channelfield__name)
+                              {
+                                eval('var count_val =' + 'feeds.count[j].' + 'reading' + '__count');
+                                eval('var sum_val =' + 'feeds.sum[j].' + 'reading' + '__sum');
+                                eval('var avg_val =' + 'feeds.avg[j].' + 'reading' + '__avg');
+                                eval('var max_val =' + 'feeds.max[j].' + 'reading' + '__max');
+                                eval('var min_val =' + 'feeds.min[j].' + 'reading' + '__min');
+                                count.push(count_val)
+                                sum.push(sum_val)
+                                max.push(max_val)
+                                min.push(min_val)
+                                avg.push(avg_val)
+                              }
+                              //else do nothing
 
                           }
 
