@@ -537,15 +537,16 @@
                           eval('var ' + field + '__count = [""]');
 
                           for (var j = 0; j < count_len; j++) {
-                              n = feeds.count[j].timestamp;
-
-                              if (created.length <= count_len) { ////if created is shorter than myarry
-                                  created.push(n)
-                              }
+                              
                               ////assign the value of the ith field to f1
                               ///Check if the item in the loop is of the same type e.g field1
                               if (fieldlabel == feeds.count[j].channelfield__name)
                               {
+                                n = feeds.count[j].timestamp;
+
+                              if (created.length <= count_len) { ////if created is shorter than myarry
+                                  created.push(n)
+                              }
                                 eval('var count_val =' + 'feeds.count[j].' + 'reading' + '__count');
                                 eval('var sum_val =' + 'feeds.sum[j].' + 'reading' + '__sum');
                                 eval('var avg_val =' + 'feeds.avg[j].' + 'reading' + '__avg');
@@ -593,7 +594,7 @@
 
                   if (newdata[1][1][i][0] == aggr_variable) {
                       mydata = [myarry[0], newdata[1][1][i]]
-
+                      console.log(mydata)
                       return mydata
                   }
               }
