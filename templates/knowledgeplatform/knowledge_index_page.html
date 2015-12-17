@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+{% load disqus_tags %}
+{% load static %}
+
+{% block body_class %}template-blogpage{% endblock %}
+
+{% block content %}
+
+<!-- Start Content -->
+<div id="content">
+  <div class="container">
+    <div class="row blog-page">
+      
+      <!-- Start Blog Posts -->
+      <div class="col-md-9 blog-box">
+	
+	<!-- Start Post -->
+	<div class="blog-post image-post">
+	  <!-- Post Thumb -->
+	  <div class="post-head">
+	    
+	  </div>
+	  <!-- Post Content -->
+	  <div class="post-content">
+	    <div class="post-type"><i class="fa fa-picture-o"></i></div>
+	    <h2><a href="#">{{ self.title }}</a></h2>
+	    <ul class="post-meta">
+	    </ul>	    
+	    <p>
+	      {{self.intro|richtext }}
+	      {% if self.pages %}
+              <!-- Post 1 -->
+              {% for item in self.pages %}
+              <div class="col-md-4 col-sm-6 service-box service-icon-left">
+		<div class="service-icon">
+		  <i class="fa fa-magic icon-mini-effect icon-effect-2 gray-icon"></i>
+		  </div>
+		<div class="service-content">
+		  <h4><a href="{{ item.url }}">{{item.title}}</a></h4>
+		  <p>Page created by  <strong class="accent-color">{{item.author}}</strong></p>
+		  <p>Created:  <strong class="accent-color">{{item.post_date}}</strong></p>
+		  </div>
+		</div>
+	      
+	      <!--<div class="col-md-6">
+                <div class="post-row">
+                  <div class="left-meta-post">
+                    {% if item.date %}
+                    <div class="post-date">
+                      <span class="day">{{ item.date.day }}</span>
+                      <span class="month">{{ item.date| date:"M"  }}</span>
+                    </div>
+                    {% endif %}
+                    <div class="post-type"><i class="fa fa-picture-o"></i></div>
+                  </div>
+                  <h3 class="post-title">
+                    <a href="{{ item.url }}">{{item.title}}</a>
+                  </h3>
+                  <div class="post-content">
+                    <p>{{ item.intro |richtext }} <a class="read-more" href="{{ item.url }}"></a></p>
+                  </div>
+                </div>
+              </div>-->
+              {% endfor %}
+              {% endif %}
+	    </p>	
+	    
+	  </div>
+	  <!-- Start comments section-->
+	</div>
+	<!-- End comments section -->
+      </div>
+      <!-- End Post -->
+      <!-- End Blog Posts -->
+      
+      {% block sidebar %}	
+      {% include 'news/news_sidebar.html' %}
+      {% endblock%}
+      
+    </div>
+  </div>
+</div>
+<!-- End Content -->
+
+{% endblock %}
+{% block partners %}{% endblock %}
+
