@@ -70,3 +70,10 @@ img.img-responsive.carousel {
 .borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th {
     border: none;
 }
+  .richtext li {
+    display: list-item !important; }
+  .richtext ul li {
+    list-style-type: disc !important; }
+  .richtext ol li {
+    list-style-type: decimal !important; }
+  

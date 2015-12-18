@@ -18,7 +18,7 @@
                             <li>By <a href="#">{{self.author}}</a></li>
                             <li>{{ self.date }}</li>
                             {% if self.tags %}
-                            <li>            
+                            <li>
                                 {% for tag in self.tags.all %}
                                 <a href="{% slugurl 'news' %}?tag={{tag}}"> {{tag}} </a> {% endfor %}
                             </li>
@@ -28,18 +28,17 @@
                     </div>
                     <!-- Start comments section-->
                     <div>
-                        <div class="blog-post style="border-bottom: none;"">
+                        <div class="blog-post" style="border-bottom: none;">
                             <div class="widget widget-categories">
                             </div>
                         </div>
                         <!-- End comments section -->
                     </div>
-                     </div> </div>
-                    <!-- End Post -->
-                    <!-- End Blog Posts -->
-                    {% block sidebar %} {% include 'news/news_sidebar.html' %} {% endblock%}
                 </div>
             </div>
+            {% block sidebar %} {% include 'news/news_sidebar.html' %} {% endblock%}
         </div>
-        <!-- End Content -->
-        {% endblock %} {% block partners %}{% endblock %}
+    </div>
+</div>
+<!-- End Content -->
+{% endblock %} {% block partners %}{% endblock %}
