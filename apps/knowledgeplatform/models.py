@@ -23,7 +23,6 @@ class KnowledgePage(Page):
     author = models.CharField(max_length=255)
     date = models.DateField("Post date")
     body = StreamField([
-        ('heading', blocks.CharBlock(classname="full title")),
         ('paragraph', blocks.RichTextBlock()),
         ('urls', blocks.URLBlock()),
         ('image', ImageChooserBlock()),
