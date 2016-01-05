@@ -12,7 +12,7 @@
           var year = 2014
           var aggr_variable = "avg"
           var chart_type = 'category'
-          var id = 29
+          var id = 1
           var dt = new Date();
           var myarry = [];
           var datatype = 'raw'
