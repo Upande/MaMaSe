@@ -712,8 +712,13 @@
 
                       var channel = data.channel[0]
 
-                      Lon = channel.longitude
+                      try {
+ 		      Lon = channel.longitude
                       Lat = channel.latitude
+                      } catch (err) {			  
+                          console.log(err)
+                          alert("no data found");
+                      }
 
                       var feeds = data.feed
 
