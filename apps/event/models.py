@@ -112,7 +112,7 @@ class EventIndexPage(Page):
         # Get list of live event pages that are descendants of this page
         event = EventPage.objects.live().descendant_of(self) 
         # Order by most recent date first
-        event = event.order_by('-start_date')
+        event = event.order_by('-date')
 
         return event
 
