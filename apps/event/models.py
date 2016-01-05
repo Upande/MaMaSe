@@ -25,7 +25,7 @@ class EventPageTag(TaggedItemBase):
 
 class EventPage(Page):
     date = models.DateField("Event date", default=datetime.datetime.now)
-    venue = RichTextField(blank=True)
+    venue = models.TextField(blank=True)
     abstract = RichTextField(blank=True)
     report = RichTextField(blank=True)
     category = models.ForeignKey('news.CategoryPage', null=True, blank=True ,related_name='+',on_delete=models.SET_NULL )
