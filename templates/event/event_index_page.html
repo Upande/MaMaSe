@@ -39,7 +39,7 @@
 											<img class="img-thumbnail image-text" style="float:left; width:150px;" alt="" src="{{item.main_image.file.url}}" >
 										</a>
 									</div>
-									<h5 class="post-title">{{item.start_date}} {% if item.end_date %} - {{item.end_date}}</h5> {% else%} </h5> {% endif %}
+									<h5 class="post-title">{% if item.date %} {{item.date}}</h5> {% else%} </h5> {% endif %}
 									<h3 class="post-title"> 
 										<a href="{{ item.url }}">{{item.title| title}}</a>
 									</h3>
