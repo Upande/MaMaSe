@@ -48,7 +48,6 @@
 	      {% if self.media_items %}
 	      {% for item in self.media_items.all %}
 	      <a class="lightbox" title="{{item.title}}" href="{{item.image.url}}">
-		<div class="thumb-overlay"><i class="fa fa-arrows-alt"></i></div>
 		{% image item.image width-400 %}
 	      </a>
 	      {% endfor %}
