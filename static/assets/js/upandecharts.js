@@ -1,5 +1,5 @@
 
-          var icon = '{{ STATIC_URL | images/location30.png }}'
+          var icon = 'https://s3.amazonaws.com/mamase/static/images/location30.png'
           var daily = []
           var monthly = []
           var raw = []
