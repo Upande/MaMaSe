@@ -140,6 +140,7 @@
 
 
           table = $('#charttable').DataTable({
+	              dom: 'Bfrtip',
                       buttons: [
                           'csvHtml5',
                           'copyHtml5',
