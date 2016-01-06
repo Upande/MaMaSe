@@ -1,4 +1,10 @@
-{% extends "base.html" %} {% load wagtailcore_tags wagtailimages_tags %} {% load disqus_tags %} {% load static %} {% block body_class %}template-blogpage{% endblock %} {% block content %}
+{% extends "base.html" %} {% load wagtailcore_tags wagtailimages_tags %} {% load disqus_tags %} {% load static %} 
+{% block body_class %}template-blogpage{% endblock %} {% block content %}
+{% block js_initialize %}
+<script>
+
+</script>
+{% endblock %}
 <!-- Start Content -->
 <div id="content">
     <div class="container">
@@ -24,7 +30,21 @@
                             </li>
                             {% endif %}
                         </ul>
-                        <p> {{ self.body }}</p>
+                        <p> {{ self.description }}</p>
+                        <p> {{ self.forwhom }}</p>
+                        <p> {{ self.objectives }}</p>
+                        <p> {{ self.software }}</p>
+                        <p> {{ self.books }}</p>
+                        <p> {{ self.lecturer }}</p>
+                        <p> {{ self.acknowledgements }}</p>
+                        <p> {{ self.shortcourses }}</p>
+                        <p> {{ self.schedule }}</p>
+			{% if self.document %}
+			<iframe src = "{{self.document.url}}" width='700' height='500' allowfullscreen webkitallowfullscreen></iframe>
+			{% endif %}
+                        <p> {{ self.slides }}</p>
+                        <p> {{ self.thanks }}</p>
+                        <p> {{ self.traning }}</p>
                     </div>
                     <!-- Start comments section-->
                     <div>
