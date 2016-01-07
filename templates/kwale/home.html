@@ -1,7 +1,4 @@
-
-
-
-
+{% load static %}
 <!DOCTYPE html>
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]><html lang="en" class="no-js"> <![endif]-->
@@ -24,25 +21,25 @@
   <meta name="author" content="Upande">
 
   <!-- Mamase favicon -->
-  <link rel="icon" type="image/png" href="static/margo/images/favicon.ico" />
+  <link rel="icon" type="image/png" href="{% static 'kwale/static/margo/images/favicon.ico' %}" />
 
   <!-- Bootstrap CSS  -->
-  <link rel="stylesheet" href="static/margo/css/bootstrap.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="{% static 'kwale/static/margo/css/bootstrap.css' %}" type="text/css" media="screen">
 
   <!-- Font Awesome CSS -->
-  <link rel="stylesheet" href="static/margo/css/font-awesome.css" type="text/css" media="screen">
+  <link rel="stylesheet" href="{% static 'kwale/static/margo/css/font-awesome.css' %}" type="text/css" media="screen">
 
   <!-- Margo CSS Styles  -->
-  <link rel="stylesheet" type="text/css" href="static/margo/css/style.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="{% static 'kwale/static/margo/css/style.css' %}" media="screen">
 
   <!-- Responsive CSS Styles  -->
-  <link rel="stylesheet" type="text/css" href="static/margo/css/responsive.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="{% static 'kwale/static/margo/css/responsive.css' %}" media="screen">
 
   <!-- Css3 Transitions Styles  -->
-  <link rel="stylesheet" type="text/css" href="static/margo/css/animate.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="{% static 'kwale/static/margo/css/animate.css' %}" media="screen">
 
   <!-- Color CSS Styles  -->
-  <link rel="stylesheet" type="text/css" href="static/margo/css/blue.css" title="blue" media="screen" />
+  <link rel="stylesheet" type="text/css" href="{% static 'kwale/static/margo/css/blue.css' %}" title="blue" media="screen" />
   <!-- Caption Style -->
 
   <style> 
@@ -88,22 +85,22 @@
 
   <!-- Additional css not needed globally -->
 
-  <link rel="stylesheet" type="text/css" href="static/css/c3.css"> 
+  <link rel="stylesheet" type="text/css" href="{% static 'kwale/static/css/c3.css' %}"> 
 
   <!-- Margo JS  -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="static/margo/js/jquery.migrate.js"></script>
-  <script type="text/javascript" src="static/margo/js/modernizrr.js"></script>
-  <script type="text/javascript" src="static/margo/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="static/margo/js/jquery.fitvids.js"></script>
-  <script type="text/javascript" src="static/margo/js/jquery.isotope.min.js"></script>
-  <script type="text/javascript" src="static/margo/js/jquery.textillate.js"></script>
-  <script type="text/javascript" src="static/margo/js/jquery.nicescroll.min.js"></script>
-  <script type="text/javascript" src="static/margo/js/script.js"></script>
-  <script type="text/javascript" language="javascript" src="static/bxslider/jquery.bxslider.min.js"></script>
+  <script type="text/javascript" src="{% static 'kwale/static/margo/js/jquery.migrate.js' %}"></script>
+  <script type="text/javascript" src="{% static 'kwale/static/margo/js/modernizrr.js' %}"></script>
+  <script type="text/javascript" src="{% static 'kwale/static/margo/js/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'kwale/static/margo/js/jquery.fitvids.js' %}"></script>
+  <script type="text/javascript" src="{% static 'kwale/static/margo/js/jquery.isotope.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'kwale/static/margo/js/jquery.textillate.js' %}"></script>
+  <script type="text/javascript" src="{% static 'kwale/static/margo/js/jquery.nicescroll.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'kwale/static/margo/js/script.js' %}"></script>
+  <script type="text/javascript" language="javascript" src="{% static 'kwale/static/bxslider/jquery.bxslider.min.js' %}"></script>
 
   <!-- Custom upande CSS. Added by Magondu -->
-  <link rel="stylesheet" type="text/css" href="static/css/upande.css" />
+  <link rel="stylesheet" type="text/css" href="{% static 'kwale/static/css/upande.css' %}" />
 
   <!--Additional js that require to be initialized before the body -->
 
@@ -111,17 +108,16 @@
   <!-- bxslider used in the gallery page -->
 
   <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-  <script src="static/js/c3.js"></script>
 
   <!-- bxslider css -->
-  <link rel="stylesheet" type="text/css" href="static/bxslider/jquery.bxslider.css" />
-
+  <link rel="stylesheet" type="text/css" href="{% static 'kwale/static/bxslider/jquery.bxslider.css' %}" />
+ 
   <!--[if IE 8]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
 </head>
 
-<body class="" style="background-image: url(static/margo/images/patterns/3.png)">
+<body class="" style="background-image: url({% static 'kwale/static/margo/images/patterns/3.png' %})">
 
 
 
@@ -138,13 +134,13 @@
            <div class="col-md-5" style="padding:0px;">
             <div class="row" style="height:120px; margin:auto;">
               <a class="navbar-brand" href="#">
-                <img alt="" src="static/images/ACC_Logo_Header_main_300.png">
+                <img alt="" src="{% static 'kwale/static/images/ACC_Logo_Header_main_300.png' %}">
               </a>
             </div>
           </div>
           <div class="col-md-6">
            <div class="big-title text-center animated fadeInDown delay-01" style="padding-top:20px">
-               <img alt="" src="static/images/kwalelogo.png">
+               <img alt="" src="{% static 'kwale/static/images/kwalelogo.png' %}">
           </div>
         </div>
         <div class="col-md-1" style="padding:0px;">
@@ -185,15 +181,15 @@
       <!-- Start Navigation List -->
       <ul class="nav navbar-nav navbar-left">
         <li>
-          <a class="" href="home.html">Home</a>
+          <a class="" href="{% url 'khome' %}">Home</a>
           <ul class="dropdown">
           </ul>
         </li>
         <li>
-          <a class="" href="maps.html" >Maps</a>
+          <a class="" href="{% url 'kmap' %}" >Maps</a>
         </li>
         <li>
-          <a href="reports.html">Report and Analysis</a>
+          <a href="{% url 'kreport' %}">Report and Analysis</a>
         </li>
         <li>
         </li>
@@ -229,21 +225,21 @@
     <!-- Carousel inner -->
     <div class="carousel-inner container" style="padding-left:0; padding-right:0; width:97.5%;">
       <div class="item active">
-       <img class="img-responsive carousel" src="static/images/mamase_banner_image_1.jpg" alt="slider" style="margin:auto">
+       <img class="img-responsive carousel" src="{% static 'kwale/static/images/mamase_banner_image_1.jpg' %}" alt="slider" style="margin:auto">
        <div class="slider-content">
          <div class="col-md-12 text-center"></div>
        </div>
      </div>
      <!-- Carousel item end -->
      <div class="item">
-       <img class="img-responsive carousel" src="static/images/mamase_banner_image_2.jpg" alt="slider">
+       <img class="img-responsive carousel" src="{% static 'kwale/static/images/mamase_banner_image_2.jpg' %}" alt="slider">
        <div class="slider-content">
          <div class="col-md-12 text-center"></div>
        </div>
      </div>
      <!--/ Carousel item end -->
      <div class="item">
-       <img class="img-responsive" src="static/margo/images/map_of_mara_stations.png" alt="slider">
+       <img class="img-responsive" src="{% static 'kwale/static/margo/images/map_of_mara_stations.png' %}" alt="slider">
        <div class="slider-content">
          <div class="col-md-12 text-center">
            <div class="animated">
@@ -253,7 +249,7 @@
      </div>
      <!--/ Carousel item end -->
      <div class="item">
-       <img class="img-responsive carousel" src="static/images/mamase_banner_image_3.jpg" alt="slider" style="height: 372px;">
+       <img class="img-responsive carousel" src="{% static 'kwale/static/images/mamase_banner_image_3.jpg' %}" alt="slider" style="height: 372px;">
        <div class="slider-content">
          <div class="col-md-12 text-center">
            <div class="animated"></div>
@@ -289,7 +285,7 @@
   <div class="widget-upande" style="background-color: ; height:416px; background-color: #FFF; color: black; border: solid;border-color: #92C01F;">
     <h4>Map</h4>		     
     <a target="_blank" href="Maps.html" >
-      <img style="height:314px;width:360px;" frameborder="0" src="static/margo/images/kwale.png">
+      <img style="height:314px;width:360px;" frameborder="0" src="{% static 'kwale/static/margo/images/kwale.png' %}">
     </a>      		  	
     <div class="upande-fa-button"> 
       <a target="_blank" href="Maps.html" >
@@ -304,7 +300,7 @@
   <div class="widget-upande" style="background-color: ; height:416px; background-color: #FFF; color: black; border: solid;border-color: #87CEFA;">
     <h4>Reports & Analysis</h4>		     
     <a target="_blank" href="reports.html" >
-      <img style="height:314px;width:360px;" frameborder="0" src="static/margo/images/analysis.png">
+      <img style="height:314px;width:360px;" frameborder="0" src="{% static 'kwale/static/margo/images/analysis.png' %}">
     </a>      		  	
     <div class="upande-fa-button"> 
       <a target="_blank" href="reports.html" >

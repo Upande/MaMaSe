@@ -1,9 +1,0 @@
-<html>
-<head>
-  
-</head>
-
-<body onload="init()">
-  <div <iframe width="100%" height="520" frameborder="0" src="https://luchirio.cartodb.com/viz/f1b3fe7c-9f21-11e5-9bf4-0e674067d321/embed_map" allowfullscreen webkitallowfullscreen mozallowfullscreen oallowfullscreen msallowfullscreen></iframe>'></div>
-</body>
-</html>
