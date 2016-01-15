@@ -1,9 +1,10 @@
-from django.shortcuts import render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.shortcuts import render
 
 from wagtail.wagtailcore.models import Page
 from wagtail.wagtailsearch.models import Query, EditorsPick
 
+from django.views.generic.base import TemplateView
 
 def search(request):
     search_query = request.GET.get('query', None)
@@ -37,3 +38,6 @@ def search(request):
         'search_results': search_results,
         'search_picks': search_picks,
     })
+
+class AdvancedSearchView(TemplateView):
+    template_name = "search/advanced_search.html"

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load wagtailcore_tags %}
+
+{% block title %}<title>MaMaSe| Search{% if search_results %} results{% endif %} </title>{% endblock %}
+
+{% block content %}
+
+<div id="content">
+	<div class="container">
+		<div class="row sidebar-page">
+
+			<!-- Page Content -->
+			<div class="col-md-9 page-content">
+
+				<div class="row">
+					<div class="col-md-12">                                                                                                          
+						<!-- Classic Heading -->
+						<h4 class="classic-title"><span>Advanced Search</span> </h4>       
+						<div class="latest-posts-classic">  
+							<form role="form" class="contact-form" id="advanced-search" method="post">
+								<h5>Find pages with .....</h5>
+								<div class="form-group">
+									<div class="controls">
+									   <input type="text" placeholder="Exactly these words" name="exact">	
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="controls">
+										<input type="text" placeholder="All these words" name="all">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="controls">
+										<input type="text" placeholder="Any of these words" name="any">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="controls">
+										<input placeholder="Added by this user" name="user"></input>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="controls">
+										<input type="text" placeholder="Created on" name="created">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="controls">
+										<input type="text" placeholder="Type of content" name="created">
+									</div>
+								</div>
+								<button type="submit" id="submit" class="btn-system btn-large">Send</button><div id="success" style="color:#34495e;"></div>
+							</form>                          
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+{% block partners%}{% endblock %}
