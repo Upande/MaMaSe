@@ -4,7 +4,9 @@
 {% load static %}
 {% block body_class %}contact-us{% endblock %}
 {% block title %} <title> Mamase | Contact Us </title> {% endblock title %}
-
+{% block css %}
+<link href="http://emotionloop.github.io/visualCaptcha-frontend-core/dist/visualcaptcha.css" media="all" rel="stylesheet">
+{% endblock %}
 {% block content %}
 
 <!-- Start Content -->
@@ -18,11 +20,17 @@
 	<!-- Classic Heading -->
 	<h4 class="classic-title"><span>Contact Us</span></h4>
 	<div>
-	  <span class="label label-success">{{success_message}}</span>
-	  <span class="label label-danger">{{error_message}}</span>
+	  {% for message in messages %}
+	  {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+	  <span class="label label-danger">{{message}}</span>
+	  {% elif message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+	  <span class="label label-success">{{message}}</span>	  
+	  {% endif %}
+	  {% endfor %}
 	</div>
+	<div id="status-message"></div>
 	<!-- Start Contact Form -->
-	<form role="form" class="contact-form" id="contact-form" method="post" action="{% url 'email' %}">
+	<form role="form" class="contact-form" id="contact-form" method="post" action="{% url 'try' %}">
 	  {% csrf_token %}
 	  <!--<div class="form-group">
 	    <label for="recipient">Who do we send this email to?</label>
@@ -58,6 +66,10 @@
 	      <textarea rows="7"  placeholder="Message" name="message"></textarea>
 	    </div>
 	  </div>
+	  <div class="form-group">	    
+	    <div id="sample-captcha"></div>
+            <a href="#" id="check-is-filled" class='info-btn'>Check if visualCaptcha is filled</a>
+	  </div>
 	  <button type="submit" id="submit" class="btn-system btn-large">Send</button><div id="success" style="color:#34495e;"></div>
 	</form>
 	<!-- End Contact Form -->
@@ -72,5 +84,7 @@
 <!-- End content -->
 
 {% endblock content %}
-
-{% block partners%} {% endblock %}
+{% block js %}
+<script src="http://emotionloop.github.io/visualCaptcha-frontend-core/dist/visualcaptcha.vanilla.js"></script>
+<script src="{% static 'js/captcha.js' %}"></script>
+{% endblock %}

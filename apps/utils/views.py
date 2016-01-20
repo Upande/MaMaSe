@@ -1,18 +1,22 @@
 import json
 
-from django.shortcuts import render,render_to_response,RequestContext
-from django.http import JsonResponse,HttpResponseRedirect
+from django.shortcuts import render,render_to_response,RequestContext,redirect
+from django.http import JsonResponse,HttpResponseRedirect,HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
+from django.contrib.messages import error,info
 from django.conf import settings
+
 
 from .models import LoggerData,Channel,Feed,EmailRecipient,Email
 from .emailSender import send_email
 from . import thingspeak 
 
-
+from rest_framework.renderers import JSONRenderer
+from visualcaptcha import Captcha, Session
 
 def logThingspeakData(request):
     data = thingspeak.parseAPIContent()
@@ -96,7 +100,6 @@ def page_not_found_view(request):
     return render(request,"404.html")
     
 def email(request):
-    args = {}
     if request.method == "POST":
         name  = request.POST.get('name',None)
         email  = request.POST.get('email',None)
@@ -109,9 +112,9 @@ def email(request):
         try:
             validate_email(email)
         except ValidationError:
-            args['error_message'] = "Error! Invalid email address!"  
-            return render(request, 'contact.html', args)
-
+            error(request, "Email address not valid!")
+            return HttpResponseRedirect(reverse('contact-us'))
+        print "Here"
         if message != None and name != None:
             #Check who the email is intended for
             sent_email = Email(sender = name,email=email,subject = subject,message = message)
@@ -124,15 +127,16 @@ def email(request):
             html_message = create_email_message(email,message,name)
             
                     
+
             #Create the html message to be sent via email
             status = send_email(html_message,settings.EMAIL_HOST_USER,to_list,subject)
 
         if status:
-            args['success_message'] = "Success! We have received your email and will respond ASAP. "
+            info(request, "Success! We have received your email and will respond ASAP.")
         else:
-            args['error_message'] = "Error! An error occured. Please try again. "
-            
-        return render(request, 'contact.html', args)
+            error(request, "An error occurned. Please try again.")
+        
+        return HttpResponseRedirect(reverse('contact-us'))
     else:
         return HttpResponseRedirect(reverse('contact-us'))
 
@@ -150,3 +154,143 @@ def create_email_message(email,message,name):
 
 def knowledge(request):
     return render_to_response('knowledge_platform.html', locals(), context_instance=RequestContext(request))
+
+def start(request, howMany):
+    visualCaptcha = Captcha(Session(request.session))
+
+    visualCaptcha.generate(howMany)
+    jsonFrontendData = JSONRenderer().render(visualCaptcha.getFrontendData())
+    response = HttpResponse(content=jsonFrontendData)
+    response['Access-Control-Allow-Origin'] = '*'
+
+    return response
+
+
+def getImage(request, index):
+    visualCaptcha = Captcha(Session(request.session))
+
+    headers = {}
+    result = visualCaptcha.streamImage(
+        headers, index, request.GET.get('retina'))
+
+    if result is False:
+        return HttpResponse(result, headers, 404)
+
+    return HttpResponse(result, headers)
+
+
+def getAudio(request, audioType='mp3'):
+    visualCaptcha = Captcha(Session(request.session))
+
+    headers = {}
+    result = visualCaptcha.streamAudio(headers, audioType)
+
+    if result is False:
+        return HttpResponse(result, headers, 404)
+
+    return HttpResponse(result, headers)
+
+
+@csrf_exempt
+def trySubmission(request):
+    visualCaptcha = Captcha(Session(request.session))
+
+    frontendData = visualCaptcha.getFrontendData()
+
+    # If an image field name was submitted, try to validate it
+    if request.POST.get(frontendData['imageFieldName'], None) is not None:
+        if visualCaptcha.validateImage(request.POST[frontendData['imageFieldName']]):
+            
+            name  = request.POST.get('name',None)
+            email  = request.POST.get('email',None)
+            subject  = request.POST.get('subject',None)
+            message  = request.POST.get('message',None)
+            
+            status = False
+            html_message = ""
+        
+            try:
+                validate_email(email)
+            except ValidationError:
+                error(request, "Email address not valid!")
+                return HttpResponseRedirect(reverse('contact-us'))
+            if message != None and name != None:
+            #Check who the email is intended for
+                sent_email = Email(sender = name,email=email,subject = subject,message = message)
+                sent_email.save()
+
+                er = EmailRecipient.objects.all()
+
+                to_list = er.values_list('email',flat=True)
+                
+                html_message = create_email_message(email,message,name)                    
+
+            #Create the html message to be sent via email
+                status = send_email(html_message,settings.EMAIL_HOST_USER,to_list,subject)
+
+                if status:
+                    info(request, "Success! We have received your email and will respond ASAP.")
+                else:
+                    error(request, "An error occurned. Please try again.")
+                    
+                return HttpResponseRedirect(reverse('contact-us'))
+            else:
+                error(request,'Please fill in all the fields')
+                return HttpResponseRedirect(reverse('contact-us'))
+            
+            #response = HttpResponse(status=200)
+            #return redirect('/mamase/contact/?status=validImage')
+        else:
+            response = HttpResponse(status=403)
+            return redirect('/mamase/contact/?status=failedImage')
+    elif request.POST.get(frontendData['audioFieldName'], None) is not None:
+        # We set lowercase to allow case-insensitivity , but it's
+        # actually optional
+        if visualCaptcha.validateAudio(request.POST[frontendData['audioFieldName']].lower()):
+            name  = request.POST.get('name',None)
+            email  = request.POST.get('email',None)
+            subject  = request.POST.get('subject',None)
+            message  = request.POST.get('message',None)
+            
+            status = False
+            html_message = ""
+        
+            try:
+                validate_email(email)
+            except ValidationError:
+                error(request, "Email address not valid!")
+                return HttpResponseRedirect(reverse('contact-us'))
+            if message != None and name != None:
+            #Check who the email is intended for
+                sent_email = Email(sender = name,email=email,subject = subject,message = message)
+                sent_email.save()
+
+                er = EmailRecipient.objects.all()
+
+                to_list = er.values_list('email',flat=True)
+                
+                html_message = create_email_message(email,message,name)                    
+
+            #Create the html message to be sent via email
+                status = send_email(html_message,settings.EMAIL_HOST_USER,to_list,subject)
+
+                if status:
+                    info(request, "Success! We have received your email and will respond ASAP.")
+                else:
+                    error(request, "An error occurned. Please try again.")
+                    
+                return HttpResponseRedirect(reverse('contact-us'))
+            else:
+                error(request,'Please fill in all the fields')
+                return HttpResponseRedirect(reverse('contact-us'))
+
+            #response = HttpResponse(status=200)
+            #return redirect('/mamase/contact/?status=validAudio')
+        else:
+            response = HttpResponse(status=403)
+            return redirect('/mamase/contact/?status=failedAudio')
+    else:
+        response = HttpResponse(status=500)
+        return redirect('/mamase/contact/?status=failedPost')
+
+    return response

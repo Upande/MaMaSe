@@ -1,8 +1,14 @@
 from django.conf.urls import patterns, include, url
 
-from apps.utils.views import IndexView,ContactView,AboutView,ChartView,MeView,ProjectManView
+from apps.utils.views import IndexView,ContactView,AboutView,ChartView,MeView,ProjectManView,start,getAudio,getImage,trySubmission
 urlpatterns = patterns(
     '',
+    url(r'^contact/start/(?P<howMany>[0-9]+)$', start),
+    url(r'^contact/audio/?$', getAudio ),
+    url(r'^contact/audio/(?P<audioType>\w+)$', getAudio),
+    url(r'^contact/image/(?P<index>[0-9]+)$', getImage),
+    url(r'^contact/try$', trySubmission, name='try'),
+
     url(r'^ts/$', 'apps.utils.views.logThingspeakData', name='visual-ts'),
     url(r'^live$', IndexView.as_view(), name='visual'),
     url(r'^chart$', ChartView.as_view(), name='chart'),
