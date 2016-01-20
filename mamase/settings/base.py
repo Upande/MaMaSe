@@ -65,19 +65,17 @@ INSTALLED_APPS = (
     'boto',
     'djcelery',
     
+    'apps.knowledgeplatform',
+    'apps.mamasemedia',
+    'apps.partners',
+    'apps.testapp',
     'apps.utils',
+    'apps.search',
     'apps.video',
     'apps.event',
     'apps.news',
-    'apps.quiz',
-    'apps.mamasemedia',
-    'apps.true_false',
-    'apps.multichoice',
-    'apps.essay',
-    'apps.partners',
-    'apps.testapp',
     'apps.gis',
-    'apps.search',
+    'home',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -156,7 +154,6 @@ STATICFILES_DIRS = (
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Wagtail settings
-
 WAGTAIL_SITE_NAME = "mamase"
 
 
@@ -272,3 +269,7 @@ LOGGING = {
 djcelery.setup_loader()
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 CELERY_SEND_TASK_ERROR_EMAILS = True
+
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.template.TemplateFilter',
+]

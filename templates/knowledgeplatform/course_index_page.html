@@ -1,0 +1,36 @@
+{% extends "base.html" %} {% load wagtailcore_tags wagtailimages_tags %} {% load disqus_tags %} {% load static %} {% block body_class %}template-blogpage{% endblock %} {% block content %}
+<!-- Start Content -->
+<div id="content">
+    <div class="container">
+        <div class="row sidebar-page">
+            <!-- Start Blog Posts -->
+            <div class="col-md-9 page-content">
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Classic Heading -->
+                        <h4 class="classic-title"><span>Course Platform </span></h4>
+                        <div class="latest-posts-classic">
+                            <p>
+                                {{self.intro|richtext }}
+                            </p>
+                            {% if self.pages %} {% for item in self.pages %}
+                            <div class="col-md-6 col-sm-6 service-box service-icon-left">
+                                <div class="service-icon" style="padding: 2px;">
+                                    {% image item.course_image width-100 %}
+                                </div>
+                                <div class="service-content">
+                                    <h4><a href="{{ item.url }}">{{item.title}}</a></h4>
+                                    <p>Page created by <strong class="accent-color">{{item.author}}</strong> on {{item.date}}</p>
+                                </div>
+                            </div>
+                            {% endfor %} {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% block sidebar %} {% include 'news/news_sidebar.html' %} {% endblock%}
+        </div>
+    </div>
+</div>
+<!-- End Content -->
+{% endblock %} {% block partners %}{% endblock %}

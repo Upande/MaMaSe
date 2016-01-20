@@ -70,6 +70,15 @@ class MeView(TemplateView):
 class ChartView(TemplateView):
     template_name = "chart.html"
 
+class KwaleHomeView(TemplateView):
+    template_name = "kwale/home.html"
+
+class KwaleMapView(TemplateView):
+    template_name = "kwale/maps.html"
+
+class KwaleReportView(TemplateView):
+    template_name = "kwale/reports.html"
+
 class AboutView(TemplateView):
     template_name = "about.html"
 

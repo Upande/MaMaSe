@@ -1,28 +1,39 @@
 {% extends "base.html" %}
-
 {% load wagtailcore_tags wagtailimages_tags %}
 {% load disqus_tags %}
 {% load static %}
-
 {% block body_class %}template-mediapage{% endblock %}
 
+{% block js %}
+<script type="text/javascript" src="{% static 'js/nivo-lightbox.min.js' %}"></script>
+{% endblock %}
 {% block content %}
 
-<!-- Container -->
+<!-- Header -->
+<div class="page-banner">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+	<h2>Gallery</h2>
+	<p>{{ self.name }}</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Start Content -->
 <div id="content">
-  <div class="container">
-    <div class="row portfolio-page">
-      
+  <div class="container">    
+    <div class="row portfolio-page portfolio-4column">      
       <!-- Start Recent Projects Carousel -->
       <ul id="portfolio-list" data-animated="fadeIn">
 	{% for item in self.media_items.all %}
 	<li>
-	  <img src="{{item.link}}" alt="{{item.title}}" />
+	  {% image item.image fill-300x300 %}
+	  <!--<img src="{{item.link}}" alt="{{item.title}}" />-->
 	  <div class="portfolio-item-content">
 	    <span class="header">{{item.title}}</span>
-	    <p class="body">{{item.title}}</p>
+	    <p class="body">{{item.caption|richtext}}</p>
 	  </div>
 	  <a href="{{item.link}}"><i class="more">+</i></a>
 	</li>
@@ -37,4 +48,3 @@
 
 <!-- End Container -->
 {% endblock %}
-{% block partners %}{% endblock %}

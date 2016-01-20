@@ -9,79 +9,74 @@
 
 <!-- Start Content -->
 <div id="content">
-	<div class="containe0r">
-		<div class="row blog-page">
-
-			<!-- Start Blog Posts -->
-			<div class="col-md-9 blog-box">
-
-				<!-- Start Post -->
-				<div class="blog-post image-post">
-					<!-- Post Thumb -->
-					<div class="post-head">
-						{% if self.main_image %}
-						<a class="lightbox" title="This is an image title" href="images/blog-01.jpg">
-							<div class="thumb-overlay"><i class="fa fa-arrows-alt"></i></div>
-							{% image self.main_image width-400 %}
-						</a>
-						{% endif %}
-
-					</div>
-					<!-- Post Content -->
-					<div class="post-content">
-						<div class="post-type"><i class="fa fa-picture-o"></i></div>
-						<h2><a href="#">{{ self.title }}</a></h2>
-						<ul class="post-meta">
-							<li>By <a href="#">Magondu</a></li>
-							<li>{{ self.start_date }}</li>
-							<li>
-								{% for tag in self.tags.all %}
-								<a href="#?tag={{tag}}"> {{tag}} </a> 
-								{% endfor %}
-							</li>
-						</ul>
-						<div class="blog-post quote-post">
-							<!-- Post Content -->
-							<div class="post-content">
-								<div class="post-type"><i class="fa fa-quote-left"></i></div>
-								<div class="qoute-box">
-									<a href="#">
-										<h2>{{ self.intro|safe }}</h2>
-										<div class="qoute-author">Magondu</div>
-									</a>
-								</div>
-							</div>
-						</div>
-
-						<p> {{ self.body|richtext }}</p>	
-
-					</div>
-					<!-- Start comments section-->
-					<!--<div>
-					  <div class="blog-post ">
-							<div class="widget widget-categories">                                                                                                                                             
-								<h4>Comments <span class="head-line"></span></h4>	      
-							</div>
-						</div>
-					</div>
-					</div>-->
-
-					<!-- End comments section -->
-
-				</div>
-				<!-- End Post -->
-				<!-- End Blog Posts -->
-			</div>
-
-			<!--Sidebar-->
-			{% block sidebar %}	
-			{% include 'event/event_sidebar.html' %}
-			{% endblock%}
-			<!--End sidebar-->
-
-
+  <div class="containe0r">
+    <div class="row blog-page">
+      
+      <!-- Start Blog Posts -->
+      <div class="col-md-9 blog-box">
+	
+	<!-- Start Post -->
+	<div class="blog-post image-post">
+	  <!-- Post Content -->
+	  <div class="post-content">
+	    <div class="post-type"><i class="fa fa-picture-o"></i></div>
+	    <h2><a href="#">{{ self.title }}</a></h2>
+	    <ul class="post-meta">
+	      <li>{{ self.venue }} || {{ self.date }}</li>
+	      <li>
+		{% for tag in self.tags.all %}
+		<a href="#?tag={{tag}}"> {{tag}} </a> 
+		{% endfor %}
+	      </li>
+	    </ul>
+	    <div class="blog-post quote-post">
+	      <!-- Post Content -->
+	      <div class="post-content">
+		<div class="post-type"><i class="fa fa-quote-left"></i></div>
+		<div class="qoute-box">
+		  <a href="#">
+		    <h2>Abstract: {{ self.abstract|safe }}</h2>
+		  </a>
 		</div>
+	      </div>
+	    </div>
+	    
+	    <p> {{ self.report|richtext }}</p>	
+	    <!-- Post Thumb -->
+	    <div class="post-head">
+	      <h2>Images</h2>
+	      {% if self.media_items %}
+	      {% for item in self.media_items.all %}
+	      <a class="lightbox" title="{{item.title}}" href="{{item.image.url}}">
+		{% image item.image width-400 %}
+	      </a>
+	      {% endfor %}
+	      {% endif %}	      
+	  </div>
+	    <!-- Post Thumb -->
+	    <div class="post-head">
+	      <h2>Documents</h2>
+	      {% if self.document_items %}
+	      {% for item in self.document_items.all %}
+	      <p><a href="{{item.document.url}}">{{item.document.title}}</a></p>
+	      {% endfor %}
+	      {% endif %}	      
+	  </div>
+	  </div>	  
 	</div>
+	<!-- End Post -->
+	<!-- End Blog Posts -->
+      </div>
+      
+      <!--Sidebar-->
+      {% block sidebar %}	
+      {% include 'event/event_sidebar.html' %}
+      {% endblock%}
+      <!--End sidebar-->
+      
+      
+    </div>
+  </div>
 </div>
 <!-- End Content -->
 

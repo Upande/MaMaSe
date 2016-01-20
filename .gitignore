@@ -2,6 +2,7 @@
 *~
 *#
 *.#
+
 apps/testapp/migrations/
 celerybeat.pid
 

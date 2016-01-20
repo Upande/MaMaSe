@@ -274,10 +274,10 @@ axis: {
         <div class="container">
 	  
 	  <div class="col-md-12" style="padding:0px;">
-	    <div class="col-md-5" style="padding:0px;">
+	    <div class="col-md-2" style="padding:0px;">
               <div class="row" style="height:120px; margin:auto;">
 		<a class="navbar-brand" href="{{ BASE_URL }}">
-		  <img alt="" src="{% static "margo/images/mamase_logo_full.png" %}">
+		  <img alt="" src="{% static "images/mamase-logo.png" %}">
 		</a>
               </div>
             </div>
@@ -286,14 +286,32 @@ axis: {
 		<h4 style="color:#34A8DF">Improving water safety and security in the Mara River Basin</h4>
 	      </div>
 	    </div>
-	    <div class="col-md-1" style="padding:0px;">
+	    <div class="col-md-2" style="padding:0px;">
+              <div class="row" style="height:120px; margin:auto;">
+		<a class="navbar-brand" href="{{ BASE_URL }}">
+		  <img alt="" src="{% static "images/mamase-logo-icon-flipped.png" %}">
+		</a>
+              </div>
+            </div>
+	    {% if request.user.is_authenticated %}
+	    <div class="col-md-2" style="padding:0px;">
+              <ul class="nav navbar-nav navbar-right">
+		<li>
+                  <a href="{% url 'wagtailadmin_home' %}">Welcome {{request.user.username}}</a>
+		</li>
+              </ul>
+	    </div>
+
+	    {% else %}
+	    <div class="col-md-2" style="padding:0px;">
               <ul class="nav navbar-nav navbar-right">
 		<li>
                   <a href="{% url 'wagtailadmin_home' %}">Login</a>
 		</li>
               </ul>
-      </div>
-    </div>
+	    </div>
+	    {% endif %}
+	  </div>
         </div>
       </div>
       <!-- Start  Logo & Naviagtion  -->
@@ -327,10 +345,27 @@ axis: {
                   <li> <a href="{% slugurl 'challenges' %}">Challenges</a> </li>
                   <li> <a href="{% slugurl 'solutions' %}">Solutions</a> </li>
                   <li> <a href="{% slugurl 'result-areas' %}">Result areas</a> </li>     
+                  <li> <a href="{% slugurl 'material' %}">Materials</a> </li>     
+                  <li> <a href="{% slugurl 'events' %}">Events</a> </li>
+		  <li>
+                    <a href="#" >Media </a>
+                    <ul class="dropdown">
+                      <li> <a href="{% slugurl 'tgallery' %}">Gallery</a> </li>
+                      <li> <a href="{% slugurl 'videos' %}">Clips</a> </li>
+                    </ul>
+		  </li>
+		  <li><a href="{% url 'contact-us' %}" >Contact Us</a></li>
                 </ul>
               </li>
+
               <li>
-                <a href="{% url 'visual' %}">Live Data Stream</a>
+                <a href="{% slugurl 'news' %}">News</a>
+                <ul class="dropdown">
+                </ul>
+              </li> 
+
+              <li>
+                <a href="{% url 'chart' %}">Live Data Stream</a>
                 <ul class="dropdown">
                 </ul>
               </li> 
@@ -339,23 +374,34 @@ axis: {
                 <ul class="dropdown">
                 </ul>
               </li>
+
               <li>
-                <a href="{% url 'knowledge' %}">Knowledge Platform</a>
+                <a target="_blank" href="http://toolbox.afromaison.net/">Toolbox</a>
                 <ul class="dropdown">
                 </ul>
               </li>
+
               <li>
-                <a href="#" >Media </a>
+                <a href="#">Knowledge Platform</a>
                 <ul class="dropdown">
-                  <li> <a href="{% slugurl 'tgallery' %}">Gallery</a> </li>
-                  <li> <a href="{% slugurl 'videos' %}">Videos</a> </li>
+                  <li> <a href="{% slugurl 'knowledge-platform' %}">Courses</a> </li>
+                  <li> <a href="#">Presentations</a> </li>
+                  <li> <a href="#">Reports</a> </li>
+                  <li> <a href="#">Publications</a> </li>
+                  <li> <a href="#">KEC</a> </li>
                 </ul>
               </li>
-              <li>
+	      
+	      {% if request.user.is_authenticated %}
+	      <li>
+                <a href="{% slugurl 'projectman' %}">Project Management</a>
                 <ul class="dropdown">
                 </ul>
               </li>
-              <li><a href="{% url 'contact-us' %}" >Contact Us</a>
+	      {% endif %}
+              <li>
+                <ul class="dropdown">
+                </ul>
               </li>
             </ul>
             <!-- End Navigation List -->
@@ -544,7 +590,7 @@ axis: {
 <!-- Start Footer Section -->
 <footer style="padding-top:20px">
 	<div class="container" style="background-color:#222222;">
-		<a href="http://upande.com" class ="copyright-section col-sm-12" style="color:#34A8DF; font-weight:bold; text-align:center;">&copy; 2015 Upande Limited</a>
+		<a href="http://upande.com" class ="copyright-section col-sm-12" style="color:#34A8DF; font-weight:bold; text-align:center;">&copy; 2016 Upande Limited</a>
 	</div> 
 </footer>
 <!-- End Footer Section -->
@@ -562,9 +608,9 @@ axis: {
 		<div class="dot2"></div>
 	</div>
 </div>
-</body>
 <!-- Additional js not needed globally -->
 {% block js %}{% endblock %}
+</body>
 
 </script>
 <!-- Google Analytics code -->

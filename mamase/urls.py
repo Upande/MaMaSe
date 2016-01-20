@@ -8,6 +8,9 @@ from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
 from apps.news.views import CommView
+from apps.utils.views import KwaleHomeView
+from apps.utils.views import KwaleMapView
+from apps.utils.views import KwaleReportView
 #from apps.testapp.views import TView
 #from apps import *
 
@@ -19,9 +22,13 @@ urlpatterns = [
     url(r'^django-admin/', include(admin.site.urls)),
     url(r'^admin/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
-    url(r'^search/$', 'apps.search.views.search', name='search'),
+    url(r'^search/', include('apps.search.urls')),
+#    url(r'^search/$', 'apps.search.views.search', name='search'),
     url(r'^mamase/', include('apps.utils.urls')),
     url(r'^communications/$', CommView.as_view(), name="communications"),
+    url(r'^khome/$', KwaleHomeView.as_view(), name="khome"),
+    url(r'^kmap/$', KwaleMapView.as_view(), name="kmap"),
+    url(r'^kreport/$', KwaleReportView.as_view(), name="kreport"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^knowledge/', include('apps.quiz.urls')),
     url(r'^$', include('apps.partners.urls')),
