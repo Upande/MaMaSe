@@ -1,0 +1,39 @@
+	{% extends "base.html" %}
+
+	{% load static %}
+	{% load wagtailcore_tags %}
+
+	{% block title %}<title>MaMaSe| Search{% if search_results %} results{% endif %} </title>{% endblock %}
+
+	{% block content %}
+
+	<div id="content">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">                                                 
+					<!-- Classic Heading -->
+					<h4 class="classic-title"><span>Search results</span> </h4>  
+					{% if search_results %}
+					{% for result in search_results %}      
+					<div class="col-md-11 service-box service-icon-left-more">
+						<div class="service-content">
+							<h4><a href="{% pageurl result.specific %}">{{ result.specific }}</a></h4>
+							{{ result.specific.search_description|safe }}
+						</div>
+						<div class="service-content" style="padding-left: 5px;">
+							<h6> {{ result.specific.latest_revision_created_at }}</h6>
+						</div>
+					</div>  
+					{% endfor %}
+					{% else %}
+					<div class="col-md-11 service-box service-icon-left-more">
+        				<h5>No results found</h5>
+        			</div>
+    				{% endif %}					                 
+				</div>
+			</div>
+		</div>
+	</div>
+
+	{% endblock %}
+	{% block partners%}{% endblock %}
