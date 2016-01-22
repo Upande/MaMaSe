@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 
 from wagtail.wagtailcore.models import Page
-from wagtail.wagtailsearch.models import Query, EditorsPick
+from wagtail.wagtailsearch.models import Query
+from wagtail.contrib.wagtailsearchpromotions.models import SearchPromotion
 
 from django.views.generic.base import TemplateView
 
@@ -23,7 +24,7 @@ def search(request):
         search_picks = query.editors_picks.all()
     else:
         search_results = Page.objects.none()
-        search_picks = EditorsPick.objects.none()
+        search_picks = SearchPromotion.objects.none()
 
     # Pagination
     paginator = Paginator(search_results, 10)
@@ -56,7 +57,8 @@ def advancedsearch(request):
     else:
         search_results = Page.objects.live()
         
-    #Cascaded search will not work. I shall need to create one query that does a comprehensive search. 
+    #Cascaded search will not work. I shall need to create one query that does a comprehensive search. Use kwargs?
+    
     if any_:
         search_results = search_results.search(any_,operator="or")
         query = Query.get(any_)
@@ -80,7 +82,7 @@ def advancedsearch(request):
     
     if not all_ or not any_:
         search_results = Page.objects.none()
-        search_picks = EditorsPick.objects.none()
+        search_picks = SearchPromotion.objects.none()
 
     # Pagination
     paginator = Paginator(search_results, 10)

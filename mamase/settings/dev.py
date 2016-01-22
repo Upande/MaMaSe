@@ -13,7 +13,7 @@ MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
 
-INSTALLED_APPS += ('kombu.transport.django',)
+INSTALLED_APPS += ['kombu.transport.django',]
 
 try:
     from .local import *

@@ -29,7 +29,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 
 AUTH_USER_MODEL = 'auth.User'
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.sites',
     'django.contrib.auth',
@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'compressor',
     'modelcluster',
     
+    'wagtail.contrib.wagtailsearchpromotions',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
     'wagtail.wagtailsearch',
@@ -68,7 +69,6 @@ INSTALLED_APPS = (
     'apps.knowledgeplatform',
     'apps.mamasemedia',
     'apps.partners',
-    'apps.testapp',
     'apps.utils',
     'apps.search',
     'apps.video',
@@ -76,11 +76,10 @@ INSTALLED_APPS = (
     'apps.news',
     'apps.gis',
     'home',
-)
+]
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     'django.middleware.common.BrokenLinkEmailsMiddleware',
-
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -92,7 +91,7 @@ MIDDLEWARE_CLASSES = (
 
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
-)
+]
 
 ROOT_URLCONF = 'mamase.urls'
 
@@ -141,21 +140,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATICFILES_FINDERS = (
+STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
-)
+]
 
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/assets'),
-)
+]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "mamase"
-
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,                                                                                                    
@@ -186,12 +184,12 @@ EMAIL_PORT = 587
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 
-FIXTURE_DIRS = (
+FIXTURE_DIRS = [
    'apps/news/fixures/',
    'apps/videos/fixures/',
    'apps/utils/fixures/',
    'apps/testapp/fixures/',
-)
+]
 
 LOGGING = {
     'version': 1,
@@ -273,3 +271,5 @@ CELERY_SEND_TASK_ERROR_EMAILS = True
 COMPRESS_JS_FILTERS = [
     'compressor.filters.template.TemplateFilter',
 ]
+
+ATOMIC_REBUILD=True
