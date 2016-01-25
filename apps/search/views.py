@@ -2,9 +2,12 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
 from django.shortcuts import render
 
-from wagtail.wagtailcore.models import Page
-from wagtail.wagtailsearch.models import Query
 from wagtail.contrib.wagtailsearchpromotions.models import SearchPromotion
+from wagtail.wagtailsearch.backends import get_search_backend
+from wagtail.wagtailsearch.models import Query
+from wagtail.wagtailcore.models import Page
+from wagtail.wagtailimages.models import Image
+from wagtail.wagtaildocs.models import Document
 
 from django.views.generic.base import TemplateView
 
@@ -46,6 +49,7 @@ def advancedsearch(request):
     any_ = request.GET.get('any', None)
     user = request.GET.get('user', None)
     type_ = request.GET.get('type', None)
+    date = request.GET.get('date', None)
     page = request.GET.get('page', 1)
 
     if user:
@@ -56,34 +60,46 @@ def advancedsearch(request):
             search_results = Page.objects.live()
     else:
         search_results = Page.objects.live()
-        
-    #Cascaded search will not work. I shall need to create one query that does a comprehensive search. Use kwargs?
-    
+            
+    args = []
+    kwargs = {}
+
     if any_:
-        search_results = search_results.search(any_,operator="or")
-        query = Query.get(any_)
+        args.append(any_)
+        kwargs['operator'] = 'or'
+    elif all_:
+        args.append(all_)
+        kwargs['operator'] = 'and'
+    else:
+        args.append('')
+        kwargs['operator'] = 'or'
 
-        # Record hit
-        query.add_hit()
-
-        # Get search picks
-        search_picks = query.editors_picks.all()
-
-    if all_:
-        search_results = search_results.search(all_,operator="and")
-        query = Query.get(all_)
-
-        # Record hit
-        query.add_hit()
-    
     if type_:
         if type_.lower() == "documents":
-            search
-    
-    if not all_ or not any_:
-        search_results = Page.objects.none()
-        search_picks = SearchPromotion.objects.none()
+            if date:
+                args.append(Document.objects.filter(created_at_gte=date))
+            else:
+                args.append(Document)
+        elif type_.lower() == "images":
+            if date:
+                args.append(Images.objects.filter(created_at_gte=date))
+            else:
+                args.append(Images)
+        elif type_.lower() == "articles":
+            if date:
+                args.append(Page.objects.filter(created_at_gte=date))
+            else:
+                args.append(Page)
+        else:
+            pass
+            
+        
+    print kwargs
+    print args
 
+    s = get_search_backend()
+    search_results = s.search(*args,**kwargs)
+    
     # Pagination
     paginator = Paginator(search_results, 10)
     try:

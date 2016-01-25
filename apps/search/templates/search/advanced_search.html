@@ -4,7 +4,9 @@
 	{% load wagtailcore_tags %}
 
 	{% block title %}<title>MaMaSe| Search{% if search_results %} results{% endif %} </title>{% endblock %}
-
+	 {% block css %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/datepicker3.css' %}"> 
+    {% endblock %}
 	{% block content %}
 
 	<div id="content">
@@ -13,7 +15,7 @@
 				<div class="col-md-12">                                                 
 					<!-- Classic Heading -->
 					<h4 class="classic-title"><span>Advanced Search</span> </h4>        
-					<form role="form" class="contact-form" id="contact-form" method="get" action="{% url 'results' %}">
+					<form role="form" class="contact-form" id="contact-form" method="get" action="{% url 'avresults' %}">
 						<h5>Find pages with .....</h5>
 						<div class="form-group">
 							<div class="controls">
@@ -33,9 +35,9 @@
 						</div>
 						<div class="form-group">
 							<div class="controls">
-								<input type="text" placeholder="Created on" name="created">
+								<input type="text" placeholder="Creation after...." name="date" id="daterange-btn"></input>
 							</div>
-						</div>
+						</div>	
 						<div class="form-group">
 							<label for="seltype">Select Content type:</label>
 							<select class="form-control" id="seltype" name="type">
@@ -56,4 +58,19 @@
 	</div>
 
 	{% endblock %}
-	{% block partners%}{% endblock %}
+	{% block js%}
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
+<script src="{% static 'js/bootstrap-datepicker.js	' %}"></script>
+	<script type="text/javascript">
+	$(function () {
+        //Date range as a button
+        $('#daterange-btn').datepicker(
+            {
+            	format: 'mm/dd/yyyy',
+            	startDate: '-10y',
+      });
+        });
+    
+</script>
+	{% endblock %}
+{% block js_initialize %}{% endblock js_initialize %}

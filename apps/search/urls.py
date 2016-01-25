@@ -7,4 +7,5 @@ urlpatterns = patterns(
     url(r'^basic/$', 'apps.search.views.search', name='basicsearch'),
     url(r'^advanced/$', AdvancedSearchView.as_view(), name='advancedsearch'),
     url(r'^results/$', ResultsView.as_view(), name='results'),
+    url(r'^advancedresults/$', 'apps.search.views.advancedsearch', name='avresults'),
 )
