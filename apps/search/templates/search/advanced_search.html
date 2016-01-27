@@ -10,7 +10,10 @@
 	{% block content %}
 
 	<div id="content">
-		<div class="container">
+		<div class="page-banner"></div>
+	</div>
+	<div id="content">
+		<div class="container">			
 			<div class="row">
 				<div class="col-md-12">                                                 
 					<!-- Classic Heading -->
@@ -22,11 +25,11 @@
 								<input type="text" placeholder="All these words" name="all">
 							</div>
 						</div>
-						<div class="form-group">
+						<!--<div class="form-group">
 							<div class="controls">
 								<input type="text" placeholder="Any of these words" name="any">
 							</div>
-						</div>
+						</div>-->
 
 						<div class="form-group">
 							<div class="controls">
@@ -41,7 +44,7 @@
 						<div class="form-group">
 							<label for="seltype">Select Content type:</label>
 							<select class="form-control" id="seltype" name="type">
-								<option>All</option>
+								<!--<option>All</option>-->
 								<option>Articles</option>
 								<option>Documents</option>
 								<option>Images</option>
@@ -66,7 +69,7 @@
         //Date range as a button
         $('#daterange-btn').datepicker(
             {
-            	format: 'mm/dd/yyyy',
+            	format: 'yyyy-mm-dd',
             	startDate: '-10y',
       });
         });

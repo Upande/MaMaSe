@@ -45,8 +45,8 @@ def search(request):
     })
 
 def advancedsearch(request):
-    all_ = request.GET.get('all', None)
-    any_ = request.GET.get('any', None)
+    search_query = request.GET.get('all', None)
+    #any_ = request.GET.get('any', None)
     user = request.GET.get('user', None)
     type_ = request.GET.get('type', None)
     date = request.GET.get('date', None)
@@ -64,42 +64,48 @@ def advancedsearch(request):
     args = []
     kwargs = {}
 
-    if any_:
-        args.append(any_)
-        kwargs['operator'] = 'or'
-    elif all_:
-        args.append(all_)
-        kwargs['operator'] = 'and'
-    else:
-        args.append('')
-        kwargs['operator'] = 'or'
-
+    s = get_search_backend()
+    
+    #if any_:
+    #    args.append(any_)
+    #    kwargs['operator'] = 'or'
+    #if search_query:
+    #    args.append(search_query)
+    #    kwargs['operator'] = 'and'
+    #else:
+    #    args.append('')
+    #    kwargs['operator'] = 'or'
+    
+    operator = 'or'
     if type_:
         if type_.lower() == "documents":
             if date:
-                args.append(Document.objects.filter(created_at_gte=date))
+                search_results = s.search(search_query,Document.objects.filter(first_published_at__gte=date),operator=operator)
             else:
-                args.append(Document)
+                search_results = s.search(search_query,'or',Document,operator=operator)
         elif type_.lower() == "images":
             if date:
-                args.append(Images.objects.filter(created_at_gte=date))
+                search_results = s.search(search_query,Images.objects.filter(first_published_at__gte=date),operator=operator)
             else:
-                args.append(Images)
+                search_results = s.search(search_query,Images,operator=operator)
         elif type_.lower() == "articles":
             if date:
-                args.append(Page.objects.filter(created_at_gte=date))
+                search_results = s.search(search_query,Page.objects.filter(first_published_at__gte=date),operator=operator)
+                query = Query.get(search_query)
+                # Record hit
+                query.add_hit()
+
+                # Get search picks
+                search_picks = query.editors_picks.all()
+
             else:
-                args.append(Page)
+                search_results = s.search(search_query,Page,operator=operator)
         else:
-            pass
-            
+            search_results = s.search(search_query,Page,operator=operator)         
         
     print kwargs
     print args
 
-    s = get_search_backend()
-    search_results = s.search(*args,**kwargs)
-    
     # Pagination
     paginator = Paginator(search_results, 10)
     try:
@@ -109,10 +115,10 @@ def advancedsearch(request):
     except EmptyPage:
         search_results = paginator.page(paginator.num_pages)
 
-    return render(request, 'search/search_results.html', {
+    return render(request, 'search/results.html', {
         'search_query': search_query,
         'search_results': search_results,
-        'search_picks': search_picks,
+        #'search_picks': search_picks,
     })
 
 class AdvancedSearchView(TemplateView):
