@@ -295,20 +295,38 @@ axis: {
             </div>
 	    {% if request.user.is_authenticated %}
 	    <div class="col-md-2" style="padding:0px;">
+        <div class="col-md-12">
               <ul class="nav navbar-nav navbar-right">
 		<li>
                   <a href="{% url 'wagtailadmin_home' %}">Welcome {{request.user.username}}</a>
 		</li>
+    </ul>
+    </div>
+    <div class="col-md-12">
+    <ul class="nav navbar-nav navbar-right">
+    <li>
+                  <a href="{% url 'advancedsearch' %}">Advanced Search</a>
+    </li>
               </ul>
+              </div>
 	    </div>
 
 	    {% else %}
 	    <div class="col-md-2" style="padding:0px;">
+      <div class="col-md-12">
               <ul class="nav navbar-nav navbar-right">
 		<li>
                   <a href="{% url 'wagtailadmin_home' %}">Login</a>
 		</li>
               </ul>
+              </div>
+              <div class="col-md-12">
+    <ul class="nav navbar-nav navbar-right">
+    <li>
+                  <a href="{% url 'advancedsearch' %}">Advanced Search</a>
+    </li>
+              </ul>
+              </div>
 	    </div>
 	    {% endif %}
 	  </div>
