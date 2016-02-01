@@ -40,6 +40,9 @@ AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
 AWS_PRELOAD_METADATA = False
 
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_HEADERS = {
+    'Access-Control-Allow-Origin': '*'
+}
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
 MEDIAFILES_LOCATION = 'media'
@@ -74,3 +77,4 @@ BROKER_URL=os.environ['REDIS_URL']
 STATICFILES_LOCATION = 'static'
 STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+COMPRESS_STORAGE = STATICFILES_STORAGE 
