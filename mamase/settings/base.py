@@ -273,3 +273,7 @@ COMPRESS_JS_FILTERS = [
 ]
 
 ATOMIC_REBUILD=True
+
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.MD5PasswordHasher',
+]

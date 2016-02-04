@@ -28,7 +28,20 @@ DATABASES = {
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
         'PORT': '5432', 
+    },
+    'testingdb': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mamase_test', 
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',
+        'PORT': '5432', 
+        'TEST':{
+            'MIRROR': 'default',
+        }
     }
+
+    
 }
 
 
