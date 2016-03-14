@@ -33,14 +33,18 @@
 	    <div class="post-type"><i class="fa fa-picture-o"></i></div>
 	    <h2><a href="#">{{ self.title }}</a></h2>
 	    <ul class="post-meta">
-	      <li>By <a href="#">{{self.owner.username}}</a></li>
+	      <li>By <a href="#">{{self.owner.first_name}} {{self.owner.last_name}}</a></li>
 	      <li>{{ self.date }}</li>
+	      {% if self.tags.all %}
 	      <li>
 		{% for tag in self.tags.all %}
 		<a href="{% slugurl 'news' %}?tag={{tag}}"> {{tag}} </a> 
 		{% endfor %}
 	      </li>
+	      {% endif %}
+	      {% if disqus_num_replies %}
 	      <li><a href="#">{% disqus_num_replies %}</a></li>
+	      {% endif %}
 	    </ul>	    
 	    <p> {{ self.body|richtext }}</p>	
 	    
