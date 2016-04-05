@@ -44,7 +44,7 @@ class Feed(models.Model):
     entry_id = models.IntegerField()
     timestamp = models.DateTimeField()
     lastupdate = models.DateTimeField(auto_now_add =True)
-    reading = models.FloatField(default = 0.0,blank=True,null=True)
+    reading = models.FloatField(default = 0.0,blank=True,null=True)#Some like SDate and STime are not float fields
     
     def __unicode__(self):
         return str(self.entry_id)
