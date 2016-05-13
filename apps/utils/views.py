@@ -74,15 +74,6 @@ class MeView(TemplateView):
 class ChartView(TemplateView):
     template_name = "chart.html"
 
-class KwaleHomeView(TemplateView):
-    template_name = "kwale/home.html"
-
-class KwaleMapView(TemplateView):
-    template_name = "kwale/maps.html"
-
-class KwaleReportView(TemplateView):
-    template_name = "kwale/reports.html"
-
 class AboutView(TemplateView):
     template_name = "about.html"
 
@@ -114,7 +105,6 @@ def email(request):
         except ValidationError:
             error(request, "Email address not valid!")
             return HttpResponseRedirect(reverse('contact-us'))
-        print "Here"
         if message != None and name != None:
             #Check who the email is intended for
             sent_email = Email(sender = name,email=email,subject = subject,message = message)

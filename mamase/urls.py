@@ -8,11 +8,6 @@ from wagtail.wagtaildocs import urls as wagtaildocs_urls
 from wagtail.wagtailcore import urls as wagtail_urls
 
 from apps.news.views import CommView
-from apps.utils.views import KwaleHomeView
-from apps.utils.views import KwaleMapView
-from apps.utils.views import KwaleReportView
-#from apps import *
-
 
 handler404 = 'apps.utils.views.page_not_found_view'
 handler500 = 'apps.utils.views.error_view'
@@ -24,9 +19,6 @@ urlpatterns = [
     url(r'^search/', include('apps.search.urls')),
     url(r'^mamase/', include('apps.utils.urls')),
     url(r'^communications/$', CommView.as_view(), name="communications"),
-    url(r'^khome/$', KwaleHomeView.as_view(), name="khome"),
-    url(r'^kmap/$', KwaleMapView.as_view(), name="kmap"),
-    url(r'^kreport/$', KwaleReportView.as_view(), name="kreport"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^', include('apps.partners.urls')),
     url(r'^gis/', include('apps.gis.urls')),
