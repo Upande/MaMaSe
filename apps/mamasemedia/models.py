@@ -39,11 +39,11 @@ class LinkFields(models.Model):
 #Media links or item          
 class MediaLink(LinkFields):
     title = models.CharField(max_length=255, help_text="Link title")
-    caption = RichTextField(blank=True)
+    caption = models.CharField(max_length=255, null=True,help_text="Image Caption")
 
     panels = [
         FieldPanel('title'),        
-        FieldPanel('caption', classname="full"),
+        FieldPanel('caption'),
         MultiFieldPanel(LinkFields.panels, "Link"),
     ]
 
@@ -63,4 +63,14 @@ class MediaPage(Page):
         FieldPanel('name', classname="full"),
         FieldPanel('author', classname="full"),
         InlinePanel('media_items', label="Media Item"),
+    ]
+
+class MediaIndexPage(Page):
+    description = RichTextField(blank=True)
+    date_created = models.DateField(auto_now_add=True)
+    name = models.CharField(max_length=255)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('name', classname="full"),
+        FieldPanel('author', classname="full"),
     ]

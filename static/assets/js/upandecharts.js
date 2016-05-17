@@ -32,7 +32,7 @@
           var table
           var coordinates = []
           var coordinate_names = []
-
+          var osmlayer
 
           var monthly_data = [
               ["Mulot", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
@@ -84,14 +84,16 @@
 
 
           function refreshmap(Lon, Lat) {
-              var layers = map.getLayers();
-              layers.pop();
+            //map.clearMarkers();
+            //map.removeAllFeatures();
+            //map.removeLayer(osmlayer)
+             // var layers = map.getLayers();
+              //layers.pop();
 
-
-              map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
-              map.getView().setZoom(Zoom);
-
-              createMarker(Lon, Lat)
+              //map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
+              //map.getView().setZoom(Zoom);
+              loadMap(Lon, Lat)
+              //createMarker(Lon, Lat)
           }
 
 
@@ -423,7 +425,7 @@
                   })
               });
 
-              var osmlayer = new ol.layer.Tile({
+              osmlayer = new ol.layer.Tile({
                   source: new ol.source.OSM()
               });
 
@@ -479,10 +481,11 @@
               });
 
               ////add the feature vector to the layer vector, and apply a style to whole layer
-              var vectorLayer = new ol.layer.Vector({
+              osmlayer = new ol.layer.Vector({
                   source: vectorSource,
                   style: iconStyle
               });
+
               map.addLayer(vectorLayer);
           }
 
