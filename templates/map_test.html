@@ -1,0 +1,189 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% load compress %} 
+{% block title %}
+<title> Mamase | Map Test </title> {% endblock title %} {% block css %}
+<link rel="stylesheet" href="http://openlayers.org/en/v3.10.1/css/ol.css" type="text/css">
+<style>
+.map {
+    height: 100%x;
+    width: 100%;
+}
+</style>
+{% endblock css %} {% block js_initialize %}
+<script src="http://openlayers.org/en/v3.10.1/build/ol.js" type="text/javascript"></script>
+
+  {% endblock js_initialize %} 
+
+{% block body_class %}visual-index{% endblock %} {% block content %}
+<!-- Container -->
+<div id="container">
+    <!-- Start Chart Section -->
+    <div id="spinner" class="modal" style="display:none;">
+    </div>
+    <div class="pricing-section" style="padding-top:60px; padding-bottom:60px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Text -->
+                    <p class="text-center" style="margin-bottom:20px;">Testing to see why map will not  clear</p>
+                    <div class="big-title text-center fadeInDown">
+                        <h1 id='graph_description'>Map <strong> View</strong></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row pricing-tables">
+                <div class="col-md-12 col-sm-12">
+                    <div class="dropdown">
+                        <p> Select Town:
+                            <select id="displaymode" onchange="changeTown(this.value)">
+                                <option value="nairobi">Nairobi</option>
+                                <option value="thika">Thika</option>
+                                <option value="kiambu">Kiambu</option>
+                                <option value="machakos">Machakos</option>
+                            </select>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-lis">
+                                <li><a href="#">Action</a></li>
+                            </ul>
+                        </p>
+                    </div>
+                    <div style="margin-top:20px;">
+                        <div class="col-md-12">
+                            <div id="map">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Chart Section -->
+</div>
+<div class="modal">
+    <!-- Place at bottom of page -->
+</div>
+<!-- End Container -->
+{% endblock content %} 
+{% block js %}
+{% compress js %}
+<script type="text/javascript">
+          var Lat = 1.2921; 
+          var Lon = 36.8219;
+          var Zoom = 10;
+          var icon = 'https://s3.amazonaws.com/mamase/static/images/location30.png'
+          var coordinates = []
+
+          var nairobi = [1.2921,36.8219]
+          var thika = [1.0388, 37.0834]
+          var kiambu = [1.1748,36.8304]
+          var machakos = [1.5177, 37.2634]
+
+          function changeTown(name){
+            console.log(name)
+            if (name == "nairobi"){
+                changeMap(nairobi[0],nairobi[1])
+                //console.log("In Nairobi")
+            }
+            else if (name == "thika"){
+                changeMap(thika[0],thika[1])
+                //console.log("In Thika")
+            }
+            else if (name == "kiambu"){
+                changeMap(kiambu[0],kiambu[1])
+                //console.log("In Kiambu")
+            }
+            else if (name == "machakos"){
+                changeMap(machakos[0],machakos[1])
+                //console.log("In Machakos")
+            }
+
+          }
+          function changeMap(Lat,Lon){
+            //stat = map.removeLayer(vectorLayer)
+            //console.log(stat)
+            //console.log(vectorLayer)
+              var layers = map.getLayers();
+              console.log(map)
+              layers.pop();
+
+              map.getView().setCenter(ol.proj.transform([Lon, Lat],'EPSG:4326', 'EPSG:3857'));
+              map.getView().setZoom(Zoom);
+
+              createMarker(Lat, Lon)
+          }
+    function loadMap(Lat, Lon) {
+
+              map = new ol.Map({
+                  target: 'map',
+                  view: new ol.View({
+                      projection: 'EPSG:900913',
+                      center: ol.proj.fromLonLat([Lon, Lat]),
+                      zoom: Zoom
+                  })
+              });
+
+              var osmlayer = new ol.layer.Tile({
+                  source: new ol.source.OSM()
+              });
+
+              map.addLayer(osmlayer);
+              createMarker(Lat, Lon)
+          }
+
+          function createMarker(Lon, Lat) {
+              ////define vector source
+              var vectorSource = new ol.source.Vector({
+                  ////create empty vector
+              });
+              console.log("creating marker")
+              ////create an icon and add to source vector   
+
+              var iconFeature = new ol.Feature({
+                  geometry: new
+                  ol.geom.Point(ol.proj.transform([Lat, Lon], 'EPSG:4326', 'EPSG:3857')),
+                  name: 'Null Island ',
+                  population: 400100,
+                  rainfall: 500
+              });
+
+              ////and add to source vector   
+              vectorSource.addFeature(iconFeature);
+              features = [vectorSource]
+
+              ////This function will load other points to the vector
+              /*for (var x = 0; x < coordinates.length; x++) {
+                  var coordinatesource = new ol.source.Vector({});
+                  var coordinateicon = new ol.Feature({
+                      geometry: new
+                      ol.geom.Point(ol.proj.transform(coordinates[x], 'EPSG:4326', 'EPSG:3857')),
+                      name: coordinate_names[x]
+                  });
+                  coordinatesource.addFeature(coordinateicon);
+                  features.push(coordinatesource)
+              }*/
+
+              ////create the icon style
+              var iconStyle = new ol.style.Style({
+                  image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
+                      anchor: [0.5, 4],
+                      anchorXUnits: 'fraction',
+                      anchorYUnits: 'pixels',
+                      opacity: 1,
+                      src: icon
+                  }))
+              });
+
+              ////add the feature vector to the layer vector, and apply a style to whole layer
+              var vectorLayer = new ol.layer.Vector({
+                 source: vectorSource,
+                  style: iconStyle
+              });
+              //console.log(vectorSource)
+              map.addLayer(vectorLayer);
+          }
+
+          loadMap(Lat, Lon)
+</script>
+<!--<script src="{% static 'js/upandecharts.js'%}"></script>-->
+{% endcompress %} 
+{% endblock %}

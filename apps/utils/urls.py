@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 
 from .views import (IndexView,ContactView,
                     AboutView,ChartView,
-                    MeView,ProjectManView,
+                    MapView,ProjectManView,
                     start,getAudio,
                     getImage,trySubmission,
                     logThingspeakData,
@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^ts/$', logThingspeakData, name='visual-ts'),
     url(r'^live$', IndexView.as_view(), name='visual'),
     url(r'^chart$', ChartView.as_view(), name='chart'),
-    url(r'^me$', MeView.as_view(), name='me'),
+    url(r'^map$', MapView.as_view(), name='map'),
     url(r'^about$', AboutView.as_view(), name='about'),
     url(r'^project$', ProjectManView.as_view(), name='projectman'),
     url(r'^contact/$', ContactView.as_view(), name='contact-us'),

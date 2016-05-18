@@ -24,6 +24,8 @@
           var Lon = 35.424305;
           var Zoom = 9;
           var graph_description = 'Raw Data'
+          var map
+          var vectorLayer
 
           var startdate = ""
           var enddate = ""
@@ -32,7 +34,7 @@
           var table
           var coordinates = []
           var coordinate_names = []
-          var osmlayer
+
 
           var monthly_data = [
               ["Mulot", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
@@ -84,16 +86,17 @@
 
 
           function refreshmap(Lon, Lat) {
-            //map.clearMarkers();
-            //map.removeAllFeatures();
-            //map.removeLayer(osmlayer)
-             // var layers = map.getLayers();
-              //layers.pop();
+            //stat = map.removeLayer(vectorLayer)
+            //console.log(stat)
+            //console.log(vectorLayer)
+              var layers = map.getLayers();
+              console.log(map)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+              layers.pop();
 
-              //map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
-              //map.getView().setZoom(Zoom);
-              loadMap(Lon, Lat)
-              //createMarker(Lon, Lat)
+              map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
+              map.getView().setZoom(Zoom);
+
+              createMarker(Lon, Lat)
           }
 
 
@@ -142,7 +145,7 @@
 
 
           table = $('#charttable').DataTable({
-	              dom: 'Bfrtip',
+                dom: 'Bfrtip',
                       buttons: [
                           'csvHtml5',
                           'copyHtml5',
@@ -425,7 +428,7 @@
                   })
               });
 
-              osmlayer = new ol.layer.Tile({
+              var osmlayer = new ol.layer.Tile({
                   source: new ol.source.OSM()
               });
 
@@ -481,11 +484,11 @@
               });
 
               ////add the feature vector to the layer vector, and apply a style to whole layer
-              osmlayer = new ol.layer.Vector({
-                  source: vectorSource,
+              var vectorLayer = new ol.layer.Vector({
+                 source: vectorSource,
                   style: iconStyle
               });
-
+              //console.log(vectorSource)
               map.addLayer(vectorLayer);
           }
 
@@ -568,7 +571,6 @@
                   dataType: "json",
 
                   success: function(data) {
-                      console.log(data)
                       channel = data.channel[0]
 
                       Lon = channel.longitude
@@ -796,9 +798,9 @@
                       var channel = data.channel[0]
 
                       try {
- 		      Lon = channel.longitude
+          Lon = channel.longitude
                       Lat = channel.latitude
-                      } catch (err) {			  
+                      } catch (err) {       
                           console.log(err)
                           alert("no data found");
                       }
