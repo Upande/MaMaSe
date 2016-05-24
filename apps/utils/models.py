@@ -45,9 +45,12 @@ class Feed(models.Model):
     timestamp = models.DateTimeField()
     lastupdate = models.DateTimeField(auto_now_add =True)
 
-    #Some like SDate and STime are not float fields
-    reading = models.CharField(max_length = 50,default = '0.0',blank=True,null=True)
-    
+    #Check if input is a float. If not, store in sreading
+    reading = models.FloatField(default = 0.0,blank=True,null=True)
+
+    #Some like SDate and STime are not float fields. Store them here
+    sreading = models.CharField(max_length = 50,default = '0.0',blank=True,null=True)
+
     def __unicode__(self):
         return str(self.entry_id)
 

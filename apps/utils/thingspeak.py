@@ -85,13 +85,23 @@ def getFeedData(data_id):
     for item in feeds:
         for i in fields:
             try:
-                f,created = Feed.objects.get_or_create(        
-                    entry_id = item['entry_id'],
-                    channelfield = i,
-                    defaults={'reading':item.get(i.name,None),
-                              'timestamp':item.get('created_at',None),
-                          }
-                )
+                try:
+                    float(i.name)
+                    f,created = Feed.objects.get_or_create(        
+                        entry_id = item['entry_id'],
+                        channelfield = i,
+                        defaults={'reading':item.get(i.name,None),
+                                  'timestamp':item.get('created_at',None),
+                            }
+                    )
+                except:
+                    f,created = Feed.objects.get_or_create(        
+                        entry_id = item['entry_id'],
+                        channelfield = i,
+                        defaults={'sreading':item.get(i.name,None),
+                                  'timestamp':item.get('created_at',None),
+                            }
+                    )
             except Exception,e:
                 print "An error %s occured" %e
                 traceback.print_exc() 
