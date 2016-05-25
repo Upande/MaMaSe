@@ -72,5 +72,5 @@ class MediaIndexPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel('name', classname="full"),
-        FieldPanel('author', classname="full"),
+        FieldPanel('description', classname="full"),
     ]
