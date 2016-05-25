@@ -57,20 +57,27 @@ class MediaPage(Page):
     description = RichTextField(blank=True)
     author = models.CharField(max_length=255)
     date_created = models.DateField(auto_now_add=True)
-    name = models.CharField(max_length=255)
+    #name = models.CharField(max_length=255)
 
     content_panels = Page.content_panels + [
-        FieldPanel('name', classname="full"),
+        #FieldPanel('name', classname="full"),
         FieldPanel('author', classname="full"),
+        FieldPanel('description', classname="full"),
         InlinePanel('media_items', label="Media Item"),
     ]
 
 class MediaIndexPage(Page):
     description = RichTextField(blank=True)
     date_created = models.DateField(auto_now_add=True)
-    name = models.CharField(max_length=255)
+    #name = models.CharField(max_length=255)
+
+    @property
+    def albums(self):
+        # Get list of live news pages that are descendants of this page
+        a = MediaPage.objects.live().descendant_of(self)
+        return a
 
     content_panels = Page.content_panels + [
-        FieldPanel('name', classname="full"),
+        #FieldPanel('name', classname="full"),
         FieldPanel('description', classname="full"),
     ]
