@@ -66,5 +66,5 @@ docs/_build/
 # PyBuilder
 target/
 
-#Open Layer lib. too large to be push
-static/assets/ol3
+#Ignore collected static files
+static

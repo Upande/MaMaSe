@@ -176,13 +176,13 @@ def aggregateRawData(kwargs):
 def aggregateDailyFeedData(kwargs):
     d_avg = Feed.objects.filter(**kwargs).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-DD 12:00:00')"}).values('channelfield__channel','channelfield__field','channelfield__name','timestamp').annotate(Avg('reading'))
 
-    d_sum = Feed.objects.filter(**kwargs).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-DD 12:00:00')"}).values('channelfield__channel','channelfield__field','channelfield__name','timestamp').annotate( Sum('reading'),    )
+    d_sum = Feed.objects.filter(**kwargs).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-DD 12:00:00')"}).values('channelfield__channel','channelfield__field','channelfield__name','timestamp').annotate( Sum('reading'),)
     
-    d_min = Feed.objects.filter(**kwargs).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-DD 12:00:00')"}).values('channelfield__channel','channelfield__field','channelfield__name','timestamp').annotate( Min('reading'),   )
+    d_min = Feed.objects.filter(**kwargs).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-DD 12:00:00')"}).values('channelfield__channel','channelfield__field','channelfield__name','timestamp').annotate( Min('reading'),)
 
-    d_max = Feed.objects.filter(**kwargs).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-DD 12:00:00')"}).values('channelfield__channel','channelfield__field','channelfield__name','timestamp').annotate(Max('reading'), )
+    d_max = Feed.objects.filter(**kwargs).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-DD 12:00:00')"}).values('channelfield__channel','channelfield__field','channelfield__name','timestamp').annotate(Max('reading'),)
 
-    d_count = Feed.objects.filter(**kwargs).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-DD 12:00:00')"}).values('channelfield__channel','channelfield__field','channelfield__name','timestamp').annotate(Count('reading'), )
+    d_count = Feed.objects.filter(**kwargs).extra(select={'timestamp':"to_char(timestamp, 'YYYY-MM-DD 12:00:00')"}).values('channelfield__channel','channelfield__field','channelfield__name','timestamp').annotate(Count('reading'),)
     
     d_count = removeZeroValue(d_count)
     d_avg = removeNullValue(d_avg)
@@ -367,11 +367,11 @@ def storeAggregatedData():
 
                 if month_min:
                     mmi = AggregateMonthlyFeed(data = month_min,channel = item.channel,channelfield = item,aggregation = 'MIN',timestamp = midmonth)
-                    mma.save()
+                    mmi.save()
 
                 if month_max:
                     mma = AggregateMonthlyFeed(data = month_max,channel = item.channel,channelfield = item,aggregation = 'MAX',timestamp = midmonth)                    
-                    mmi.save()
+                    mma.save()
                                                 
             if timestampday == d:
                 print "Updating todays records for channel " + item.name

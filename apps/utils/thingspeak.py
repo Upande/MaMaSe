@@ -1,4 +1,5 @@
 from celery import task
+import traceback
 import requests
 import datetime
 import string
@@ -34,7 +35,7 @@ def getChannel():
     channels = data['channels']
     
     for item in channels:
-        c,created = Channel.objects.get_or_create(data_id = item['id'], defaults={'username':item['username'],
+        c,created = Channel.objects.get_or_create(data_id = item['id'], defaults={#'username':item['username'],
                                                                                   'elevation':item['elevation'],
                                                                                   'description': item['description'],
                                                                                   'name':item['name'],
@@ -83,15 +84,27 @@ def getFeedData(data_id):
 
     for item in feeds:
         for i in fields:
-            f,created = Feed.objects.get_or_create(        
-                entry_id = item['entry_id'],
-                channelfield = i,
-                defaults={'reading':item.get(i.name,None),
-                      'timestamp':item.get('created_at',None),
-                  }
-        )
-        print f
-        print created
+            try:
+                try:
+                    float(i.name)
+                    f,created = Feed.objects.get_or_create(        
+                        entry_id = item['entry_id'],
+                        channelfield = i,
+                        defaults={'reading':item.get(i.name,None),
+                                  'timestamp':item.get('created_at',None),
+                            }
+                    )
+                except:
+                    f,created = Feed.objects.get_or_create(        
+                        entry_id = item['entry_id'],
+                        channelfield = i,
+                        defaults={'sreading':item.get(i.name,None),
+                                  'timestamp':item.get('created_at',None),
+                            }
+                    )
+            except Exception,e:
+                print "An error %s occured" %e
+                traceback.print_exc() 
 
 class JSONResponse(HttpResponse):
     """

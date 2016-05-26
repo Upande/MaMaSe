@@ -3,9 +3,16 @@
 {% load disqus_tags %}
 {% load static %}
 {% block body_class %}template-mediapage{% endblock %}
-
+{% block title %}
+<title> Mamase | Gallery </title> {% endblock title %}
+{% block css %}
+<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+<link rel="stylesheet" href="{% static 'css/bootstrap-image-gallery.min.css' %}">
+{% endblock css%}
 {% block js %}
-<script type="text/javascript" src="{% static 'js/nivo-lightbox.min.js' %}"></script>
+<!--<script type="text/javascript" src="{% static 'js/nivo-lightbox.min.js' %}"></script>-->
+<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<script src="{% static 'js/bootstrap-image-gallery.js' %}"></script>
 {% endblock %}
 {% block content %}
 
@@ -14,35 +21,63 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6">
-	<h2>Gallery</h2>
-	<p>{{ self.name }}</p>
-      </div>
-    </div>
-  </div>
+       <h2>{{ self.title }}</h2>
+       <p>Created by <b>{{self.author}}</b></p>
+     </div>
+   </div>
+ </div>
 </div>
 
 <!-- Start Content -->
 <div id="content">
-  <div class="container">    
-    <div class="row portfolio-page portfolio-4column">      
-      <!-- Start Recent Projects Carousel -->
-      <ul id="portfolio-list" data-animated="fadeIn">
-	{% for item in self.media_items.all %}
-	<li>
-	  {% image item.image fill-300x300 %}
-	  <!--<img src="{{item.link}}" alt="{{item.title}}" />-->
-	  <div class="portfolio-item-content">
-	    <span class="header">{{item.title}}</span>
-	    <p class="body">{{item.caption|richtext}}</p>
-	  </div>
-	  <a href="{{item.link}}"><i class="more">+</i></a>
-	</li>
-	{% endfor %}
-      </ul>
-      <!-- End Portfolio Items -->
-      
+  <div class="container">
+    <div id="blueimp-gallery" class="blueimp-gallery">
+      <!-- The container for the modal slides -->
+      <div class="slides"></div>
+      <!-- Controls for the borderless lightbox -->
+      <h3 class="title"></h3>
+      <a class="prev">‹</a>
+      <a class="next">›</a>
+      <a class="close">×</a>
+      <a class="play-pause"></a>
+      <ol class="indicator"></ol>
+      <div class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" aria-hidden="true">&times;</button>
+              <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body next"></div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default pull-left prev">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+                Previous
+              </button>
+              <button type="button" class="btn btn-primary next">
+                Next
+                <i class="glyphicon glyphicon-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="row portfolio-page portfolio-4column" id="links">      
+      <!-- Start Gallery -->
+      <p>{{self.description| richtext }}</p>
+    </br>
+    {% for item in self.media_items.all %}
+
+    {% image item.image height-100 as tmp_photo %}
+    <a href="{{item.link}}" title="{{item.caption}}" data-gallery>
+      <img src="{{tmp_photo.url}}" alt="{{item.title}}">
+    </a>
+    {% endfor %}
+    <!-- End Gallery -->
+    
   </div>
+</div>
 </div>
 <!-- End Content -->
 
