@@ -1,16 +1,19 @@
 from django.contrib import admin
 
-from .models import Channel,Feed,LoggerData,EmailRecipient,Email,AggregateMonthlyFeed,AggregateDailyFeed,Field,ChannelField
+from .models import (Channel,Feed,LoggerData,
+                     EmailRecipient,Email,AggregateMonthlyFeed,
+                     AggregateDailyFeed,Field,ChannelField,
+                 )
 
 class ChannelAdmin(admin.ModelAdmin):
-    fields = ['name', 'description','latitude','longitude','elevation','created_at','data_id']
-    list_display=['name','description','latitude','longitude','elevation','created_at','data_id']
+    fields = ['name', 'description','latitude','longitude','elevation','created_at','data_id','type']
+    list_display=['name','description','latitude','longitude','elevation','created_at','data_id','type']
     search_fields = ['name']
 
 class FeedAdmin(admin.ModelAdmin):
-    fields = ['entry_id', 'channelfield','timestamp','reading']
-    list_display = ['entry_id','channelfield','timestamp','lastupdate','reading']
-    search_fields = ['channel__name','entry_id']
+    fields = ['entry_id', 'channelfield','timestamp','reading','sreading']
+    list_display = ['entry_id','channelfield','timestamp','lastupdate','reading','sreading']
+    search_fields = ['channelfield__channel__name','entry_id']
 
 class FieldAdmin(admin.ModelAdmin):
     fields = ['name']
