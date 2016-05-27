@@ -67,4 +67,7 @@ docs/_build/
 target/
 
 #Ignore collected static files
-static
+./static
+
+#Ignore manage.py. For celery
+./manage.py
