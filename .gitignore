@@ -67,4 +67,4 @@ docs/_build/
 target/
 
 #Ignore collected static files
-static
+./static
