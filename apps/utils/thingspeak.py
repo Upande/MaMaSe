@@ -121,7 +121,11 @@ class JSONResponse(HttpResponse):
 @csrf_exempt
 def returnChannelData(request):
     if request.method == 'GET':
-        channels = Channel.objects.all()
+        type_ = request.GET.get('type', None)
+        if type_:
+            channels = Channel.objects.filter(type = type_.upper())    
+        else:
+            channels = Channel.objects.all()
         cserializer = ChannelSerializer(channels, many=True)
         return JSONResponse(cserializer.data)
 

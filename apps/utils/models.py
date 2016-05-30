@@ -12,8 +12,8 @@ class Channel(models.Model):
     CHANNEL_TYPES = (
         ('WEATHER_STATION', 'Weather Station'),
         ('RIVER_DEPTH', 'River Depth'),
-        ('RAINFALL_TEMP', 'Rainfall and Temp'),
-        ('DEPTH_TEMP', 'River Depth and Temp'),
+        ('RAIN_TEMP', 'Rainfall and Temp'),
+        ('DEPTH_RAIN', 'River Depth and Rainfall'),
     )
     data_id = models.IntegerField(unique=True)
     name = models.TextField()
