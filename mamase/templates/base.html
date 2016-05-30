@@ -382,11 +382,19 @@ field = "";
           </ul>
         </li> 
 
+        {% if request.user.is_authenticated %}
         <li>
-          <a href="{% url 'chart' %}">Live Data Stream</a>
+          <a>Live Data Stream</a>
           <ul class="dropdown">
+              <li> <a href="{% url 'visual' %}">Old View</a> </li>
+              <li> <a href="{% url 'chart' %}">New View</a> </li>
           </ul>
         </li> 
+        {% else %}
+        <li>
+          <a href="{% url 'visual' %}">Live Data Stream</a>
+        </li>
+        {% endif %}
         <li>
           <a target="_blank" href="http://maps.mamase.org/">Mara Geoportal</a>
           <ul class="dropdown">
