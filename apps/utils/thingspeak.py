@@ -84,18 +84,17 @@ def getFeedData(data_id):
 
     for item in feeds:
         for i in fields:
-            try:
-                if channel.type == "WEATHER_STATION":                    
-                    float(i.name)
+            try:                
+                if channel.type == "WEATHER_STATION": 
                     f,created = Feed.objects.get_or_create(        
                         entry_id = item['entry_id'],
                         channelfield = i,
                         defaults={'reading':item.get(i.name,None),
-                                    'sreading':None,
+                                   'sreading':None,
                                   'timestamp':item.get('created_at',None),
                             }
                     )
-                else:
+                elif channel.type == "RIVER_DEPTH":
                     f,created = Feed.objects.get_or_create(        
                         entry_id = item['entry_id'],
                         channelfield = i,
@@ -104,6 +103,8 @@ def getFeedData(data_id):
                                   'timestamp':item.get('created_at',None),
                             }
                     )
+                else:
+                    print "Unrecognized channel type"
             except Exception,e:
                 print "An error %s occured" %e
                 traceback.print_exc() 
