@@ -84,24 +84,27 @@ def getFeedData(data_id):
 
     for item in feeds:
         for i in fields:
-            try:
-                try:
-                    float(i.name)
+            try:                
+                if channel.type == "WEATHER_STATION": 
                     f,created = Feed.objects.get_or_create(        
                         entry_id = item['entry_id'],
                         channelfield = i,
                         defaults={'reading':item.get(i.name,None),
+                                   'sreading':None,
                                   'timestamp':item.get('created_at',None),
                             }
                     )
-                except:
+                elif channel.type == "RIVER_DEPTH":
                     f,created = Feed.objects.get_or_create(        
                         entry_id = item['entry_id'],
                         channelfield = i,
                         defaults={'sreading':item.get(i.name,None),
+                                  'reading':None,
                                   'timestamp':item.get('created_at',None),
                             }
                     )
+                else:
+                    print "Unrecognized channel type"
             except Exception,e:
                 print "An error %s occured" %e
                 traceback.print_exc() 
@@ -118,7 +121,11 @@ class JSONResponse(HttpResponse):
 @csrf_exempt
 def returnChannelData(request):
     if request.method == 'GET':
-        channels = Channel.objects.all()
+        type_ = request.GET.get('type', None)
+        if type_:
+            channels = Channel.objects.filter(type = type_.upper())    
+        else:
+            channels = Channel.objects.all()
         cserializer = ChannelSerializer(channels, many=True)
         return JSONResponse(cserializer.data)
 

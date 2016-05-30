@@ -9,6 +9,12 @@ class LoggerData(models.Model):
     active = models.BooleanField(default=True)
 
 class Channel(models.Model):
+    CHANNEL_TYPES = (
+        ('WEATHER_STATION', 'Weather Station'),
+        ('RIVER_DEPTH', 'River Depth'),
+        ('RAIN_TEMP', 'Rainfall and Temp'),
+        ('DEPTH_RAIN', 'River Depth and Rainfall'),
+    )
     data_id = models.IntegerField(unique=True)
     name = models.TextField()
     description = models.TextField()
@@ -19,7 +25,10 @@ class Channel(models.Model):
     elevation = models.TextField()
     last_entry_id = models.IntegerField(default=0)
     username = models.TextField()
-    
+        
+    #To differentiate between depth sensors and other sensors
+    type = models.CharField(max_length = 50,choices=CHANNEL_TYPES,default="Weather Station")
+
     def __unicode__(self):
         return self.name
 
