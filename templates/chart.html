@@ -1,6 +1,5 @@
 {% extends "base.html" %} 
 {% load static %} 
-{% load compress %} 
 {% block title %}
 <title> Mamase | Visualization </title> {% endblock title %} {% block css %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/c3.css' %}">
@@ -192,7 +191,5 @@
 <!-- End Container -->
 {% endblock content %} 
 {% block js %}
-{% compress js %}
 <script src="{% static 'js/upandecharts.js'%}"></script>
-{% endcompress %} 
 {% endblock %}

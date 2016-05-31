@@ -42,7 +42,7 @@ def getChannel():
                                                                                   'longitude':item['longitude'],
                                                                                   'latitude':item['latitude'],
                                                                                   'created_at':item['created_at'],
-                                                                                  'last_entry_id':item['last_entry_id'],
+                                                                                  'last_entry_id':item['last_entry_id'],                                                                                  
                                                                               }
                                               )
         
