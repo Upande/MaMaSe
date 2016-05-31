@@ -40,7 +40,7 @@ class CoursePage(Page):
         related_name='+',
         on_delete=models.SET_NULL,
     )
-    slides = RichTextField("Books", blank=True)
+    slides = RichTextField("Slides of Lectures", blank=True)
     thanks = RichTextField("Thanks", blank=True)
     training = RichTextField("Tailor Made Trainings", blank=True)
     
@@ -62,11 +62,10 @@ class CoursePage(Page):
         FieldPanel('books', classname="full"),
         FieldPanel('lecturer', classname="full"),
         FieldPanel('shortcourses', classname="full"),
-        FieldPanel('books', classname="full"),
-        DocumentChooserPanel('document'),
+        #DocumentChooserPanel('document'),
         FieldPanel('slides', classname="full"),
         FieldPanel('thanks', classname="full"),
-        FieldPanel('training', classname="full"),
+        #FieldPanel('training', classname="full"),
     ]
 
 class CourseIndexPage(Page):

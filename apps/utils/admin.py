@@ -7,7 +7,7 @@ from .models import (Channel,Feed,LoggerData,
 
 class ChannelAdmin(admin.ModelAdmin):
     fields = ['name', 'description','latitude','longitude','elevation','created_at','data_id','type']
-    list_display=['name','description','latitude','longitude','elevation','created_at','data_id','type']
+    list_display=['name','description','latitude','longitude','elevation','created_at','data_id','type' ]
     search_fields = ['name']
 
 class FeedAdmin(admin.ModelAdmin):
