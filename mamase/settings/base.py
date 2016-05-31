@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'apps.event',
     'apps.news',
     'apps.gis',
+    'apps.testapp',
     'home',
 ]
 
