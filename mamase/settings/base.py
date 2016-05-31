@@ -75,10 +75,12 @@ INSTALLED_APPS = [
     'apps.event',
     'apps.news',
     'apps.gis',
+    'home',
+    
+    #Adding the three apps below for backward compatibility
     'apps.testapp',
     'apps.gallery',
     'apps.galleryapp',
-    'home',
 ]
 
 MIDDLEWARE_CLASSES = [
