@@ -61,11 +61,12 @@ class CoursePage(Page):
         FieldPanel('software', classname="full"),
         FieldPanel('books', classname="full"),
         FieldPanel('lecturer', classname="full"),
+        FieldPanel('acknowledgement', classname="full"),
         FieldPanel('shortcourses', classname="full"),
         #DocumentChooserPanel('document'),
         FieldPanel('slides', classname="full"),
         FieldPanel('thanks', classname="full"),
-        #FieldPanel('training', classname="full"),
+        FieldPanel('training', classname="full"),
     ]
 
 class CourseIndexPage(Page):
