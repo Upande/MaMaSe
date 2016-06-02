@@ -358,7 +358,7 @@ field = "";
         </li>
         <li>
           <a class="{% if node.path == request.path %}active{% endif %}" href="{% url 'about' %}" >About</a>
-          <ul class="dropdown">
+          <ul class="dropdown" style="list-style: none; padding:0px">
             <li> <a href="{% slugurl 'partners' %}">Partners</a> </li>     
             <li> <a href="{% slugurl 'challenges' %}">Challenges</a> </li>
             <li> <a href="{% slugurl 'solutions' %}">Solutions</a> </li>
@@ -367,7 +367,7 @@ field = "";
             <!--<li> <a href="{% slugurl 'events' %}">Events</a> </li>-->
             <li>
               <a href="#" >Media </a>
-              <ul class="dropdown">
+              <ul class="dropdown" style="list-style: none; padding:0px">
                 <li> <a href="{% slugurl 'gallery' %}">Gallery</a> </li>
                 <li> <a href="{% slugurl 'videos' %}">Clips</a> </li>
               </ul>
@@ -385,7 +385,7 @@ field = "";
         {% if request.user.is_authenticated %}
         <li>
           <a>Live Data Stream</a>
-          <ul class="dropdown">
+          <ul class="dropdown" style="list-style: none; padding:0px">
               <li> <a href="{% url 'visual' %}">Old View</a> </li>
               <li> <a href="{% url 'chart' %}">New View</a> </li>
           </ul>
@@ -409,7 +409,7 @@ field = "";
 
         <li>
           <a href="#">Knowledge Platform</a>
-          <ul class="dropdown">
+          <ul class="dropdown" style="list-style: none; padding:0px">
             <li> <a href="{% slugurl 'knowledge-platform' %}">Courses</a> </li>
             <li> <a href="#">Presentations</a> </li>
             <li> <a href="#">Reports</a> </li>
@@ -550,7 +550,7 @@ field = "";
       <div class="col-md-4 col-sm-4" style="height: 416px">
         <div class="widget-upande" style="background-color: #FFF; color: black; border: solid;border-color: #34A8DF;">
           <h4>News</h4>
-          <ul class="icons-list-upande">
+          <ul class="icons-list-upande" style="list-style: none;">
             {% for item in news_items %}
             <li style="height: 100px;">
             </i><a href ="{{item.url}}"> {{item.title}}</a>
@@ -619,7 +619,7 @@ field = "";
     <div class="col-md-3 col-xs-12">
       <div class="footer-widget social-widget">
         <h4>Follow Us<span class="head-line"></span></h4>
-        <ul class="social-icons">
+        <ul class="social-icons" style="list-style: none; padding:0px">
           <li>
             <a class="facebook" href="https://www.facebook.com/Mau-Mara-Serengeti-Sustainable-Water-Initiative-1599919950258438/"><i class="fa fa-facebook"></i></a>
           </li>
