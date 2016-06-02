@@ -1,3 +1,5 @@
+{% load wagtailcore_tags %}
+{% load wagtailadmin_tags %}
 <!--Sidebar-->
 <div class="col-md-3 sidebar right-sidebar" style=" border-left: 1px solid #eee;">	
 	<!-- Categories Widget -->
@@ -6,7 +8,7 @@
 		<ul>
 			{% for categ in self.categories %}
 			<li>
-				<a href="{{request.path}}?category={{categ.name}}">{{categ.name}}</a>
+				<a href="{% slugurl 'knowledge-platform' %}?category={{categ.title}}">{{categ.title}}</a>
 			</li>
 			{% endfor %}
 		</ul>
