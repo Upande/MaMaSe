@@ -420,7 +420,7 @@ field = "";
 
         {% if request.user.is_authenticated %}
         <li>
-          <a href="{% slugurl 'projectman' %}">Project Management</a>
+          <a href="{% url 'projectman' %}">Project Management</a>
           <ul class="dropdown">
           </ul>
         </li>
