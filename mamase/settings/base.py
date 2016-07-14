@@ -75,9 +75,9 @@ INSTALLED_APPS = [
     'apps.event',
     'apps.news',
     'apps.gis',
-    'apps.testapp',
+#    'apps.testapp',
     'apps.gallery',
-    'apps.galleryapp',
+#    'apps.galleryapp',
     'home',
 ]
 
