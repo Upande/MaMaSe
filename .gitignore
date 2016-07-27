@@ -1,4 +1,3 @@
-*.pyc
 *~
 *#
 *.#
@@ -71,3 +70,5 @@ target/
 
 #Ignore manage.py. For celery
 ./manage.py
+
+celerybeat.pid
