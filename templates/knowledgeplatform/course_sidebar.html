@@ -1,3 +1,5 @@
+{% load wagtailcore_tags %}
+{% load wagtailadmin_tags %}
 <!--Sidebar-->
 <div class="col-md-3 sidebar right-sidebar" style=" border-left: 1px solid #eee;">	
 	<!-- Categories Widget -->
@@ -6,7 +8,7 @@
 		<ul>
 			{% for categ in self.categories %}
 			<li>
-				<a href="{{request.path}}?category={{categ.name}}">{{categ.name}}</a>
+				<a href="{% slugurl 'knowledge-platform' %}?category={{categ.title}}">{{categ.title}}</a>
 			</li>
 			{% endfor %}
 		</ul>
@@ -14,32 +16,22 @@
 
 	<!-- Popular Posts widget -->
 	<div class="widget widget-popular-posts">
-		<h4>Latest News <span class="head-line"></span></h4>
+		<h4>Latest Courses <span class="head-line"></span></h4>
 		<ul>
-			{% for n in news|slice:":4" %}
+			{% for c in courses|slice:":4" %}
 			<li style="list-style: none;">
 				<div class="widget-thumb">
-					<a href="{{n.url}}"><img src="{{n.main_image.file.url}}" alt="{{n.main_image.title}}" /></a>
+					<a href="{{c.url}}"><img src="{{c.main_image.file.url}}" alt="{{c.main_image.title}}" /></a>
 				</div>
 				<div class="widget-content">
-					<h5><a href="{{n.url}}">{{n.title}}</a></h5>
-					<span>{{n.date}}</span>
+					<h5><a href="{{c.url}}">{{n.title}}</a></h5>
+					<span>{{c.date}}</span>
 				</div>
 				<div class="clearfix"></div>
 			</li>
 			{% endfor %}
 		</ul>
 	</div>
-
-	<!-- Tags Widget -->
-	<!-- <div class="widget widget-tags">
-		<h4>Tags <span class="head-line"></span></h4>
-		<div class="tagcloud">
-			{% for tag in tags %}
-			<a href="{{request.path}}?tag={{tag}}">{{ tag }}</a>
-			{% endfor %}
-		</div>
-	</div> -->
 
 </div>
 <!--End sidebar-->

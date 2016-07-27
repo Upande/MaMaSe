@@ -30,21 +30,32 @@
                             </li>
                             {% endif %}
                         </ul>
-                        <p> {{ self.description }}</p>
-                        <p> {{ self.forwhom }}</p>
-                        <p> {{ self.objectives }}</p>
-                        <p> {{ self.software }}</p>
-                        <p> {{ self.books }}</p>
-                        <p> {{ self.lecturer }}</p>
-                        <p> {{ self.acknowledgements }}</p>
-                        <p> {{ self.shortcourses }}</p>
-                        <p> {{ self.schedule }}</p>
+                        <h6>Description</h6>
+                        <p> {{ self.description | richtext }}</p>
+                        <h6>From Whom?</h6>
+                        <p> {{ self.forwhom | richtext}}</p>
+                        <h6>Objectives</h6>
+                        <p> {{ self.objectives | richtext}}</p>
+                        <h6>Software</h6>
+                        <p> {{ self.software | richtext }}</p>
+                        <h6>Books</h6>
+                        <p> {{ self.books | richtext }}</p>
+                        <h6>Lecturer</h6>
+                        <p> {{ self.lecturer | richtext}}</p>  
+                        <h6>Acknowledgements</h6>
+                        <p> {{ self.acknowledgements | richtext}}</p>
+                        <h6>Short Courses</h6>
+                        <p> {{ self.shortcourses | richtext}}</p>
+                        <h6>Schedule</h6>
+                        <p> {{ self.schedule | richtext}}</p>
 			{% if self.document %}
 			<iframe src = "{{self.document.url}}" width='700' height='500' allowfullscreen webkitallowfullscreen></iframe>
 			{% endif %}
-                        <p> {{ self.slides }}</p>
-                        <p> {{ self.thanks }}</p>
-                        <p> {{ self.traning }}</p>
+                        <h6>Slides</h6>
+                        <p> {{ self.slides | richtext}}</p>
+                        <h6>Thanks!</h6>
+                        <p> {{ self.thanks | richtext}}</p>           
+                        <p> {{ self.traning  | richtext}}</p>
                     </div>
                     <!-- Start comments section-->
                     <div>
@@ -56,7 +67,7 @@
                     </div>
                 </div>
             </div>
-            {% block sidebar %} {% include 'news/news_sidebar.html' %} {% endblock%}
+            {% block sidebar %} {% include 'knowledgeplatform/course_sidebar.html' %} {% endblock%}
         </div>
     </div>
 </div>
