@@ -344,10 +344,12 @@ var monthlyData = []
                 monthlyData = data.feed[0].monthly
                 channels = data.channel
                 for (var x = 0; x < channels.length; x++) {
-                  eval('dataset.push(["' + channels[x].name + '",0,0,0,0,0,0,0,0,0,0,0,0])');
+                  eval('dataset.push(["' + channels[x].name + '",null,null,null,null,null,null,null,null,null,null,null,null])');
                 }
 
                 eval('tabledata = monthlyData.' + aggr_variable)
+                console.log(tabledata);
+                console.log(dataset)
 
                 for (var i = 0; i < tabledata.length; i++) {
                   for (var j = 0; j < dataset.length; j++) {
