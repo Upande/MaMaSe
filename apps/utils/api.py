@@ -24,6 +24,7 @@ def getFeeds(request):
     limit = request.GET.get('limit',None)#Maximum number of records to be returned
     data = request.GET.get('data','raw')#Raw,Daily or Monthly. Defaults to raw
     field = request.GET.get('field',None)#Data should be before this date
+    station_type = request.GET.get('stationtype',None)#Is it a weatherstation or river depth etc
 
     kwargs = {}
     args = {}
@@ -40,6 +41,9 @@ def getFeeds(request):
 
     if end:
         kwargs[ 'timestamp__lte' ] = end
+
+    if station_type:
+        args['type'] = station_type.upper()
 
     feed = {}
     feed_without_null = []

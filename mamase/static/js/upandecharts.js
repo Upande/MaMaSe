@@ -331,16 +331,13 @@ var monthlyData = []
                 }
 
 
-
-
-
           ////Get monthly data for chosen field and populate it on datatables
           function populateDatatables(selID) {
             styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
             enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
             $.ajax({
               type: 'GET',
-              url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&data=monthly",
+              url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&stationtype="+ station_type + "&data=monthly",
               dataType: "json",
               success: function(data) {
                 dataset = []
