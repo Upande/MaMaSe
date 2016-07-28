@@ -348,16 +348,13 @@ var monthlyData = []
                 }
 
                 eval('tabledata = monthlyData.' + aggr_variable)
-                console.log(tabledata);
-                console.log(dataset)
 
                 for (var i = 0; i < tabledata.length; i++) {
                   for (var j = 0; j < dataset.length; j++) {
                     if (dataset[j][0] == tabledata[i].channelfield__channel__name) {
                                   //Get the value of the month and add one since it jan is represented as 0
-                                  m = moment(tabledata.timestamp, 'YYYY-MM-DD').month() + 1
-
-                                  eval('dataset[j][m] = roundoff(tabledata[i].reading__' + aggr_variable+')')
+                                  m = moment(tabledata[i].timestamp, 'YYYY-MM-DD').month() + 1
+                                  eval('dataset[j][m] = roundoff(tabledata[i].reading__' + aggr_variable+')')                                  
                                 }
                               }
                             }
