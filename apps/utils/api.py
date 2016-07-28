@@ -167,11 +167,11 @@ def aggregateRawData(kwargs):
     Now we shall have to group the data and bundle elements of the same
     entryid together.
     '''
-    feed = Feed.objects.filter(**kwargs)
-    .extra(select={'timestamp_formatted': "to_char(timestamp, 'YYYY-MM-DD HH24:MI:SS')"})
-    .values('entry_id', 'channelfield__channel_id',
-            'channelfield__name', 'timestamp_formatted',
-            'reading', 'id').order_by('entry_id')
+    feed = (Feed.objects.filter(**kwargs)
+            .extra(select={'timestamp_formatted': "to_char(timestamp, 'YYYY-MM-DD HH24:MI:SS')"})
+            .values('entry_id', 'channelfield__channel_id',
+                    'channelfield__name', 'timestamp_formatted',
+                    'reading', 'id').order_by('entry_id'))
 
     feed = list(feed)
 
@@ -219,30 +219,35 @@ def aggregateRawData(kwargs):
 
 
 def aggregateDailyFeedData(kwargs):
-    d_avg = Feed.objects.filter(**kwargs)
-    .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-DD 12:00:00')"})
-    .values('channelfield__channel', 'channelfield__field', 'channelfield__name', 'timestamp')
-    .annotate(Avg('reading'))
+    d_avg = (Feed.objects.filter(**kwargs)
+             .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-DD 12:00:00')"})
+             .values('channelfield__channel', 'channelfield__field',
+                     'channelfield__name', 'timestamp')
+             .annotate(Avg('reading')))
 
-    d_sum = Feed.objects.filter(**kwargs)
-    .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-DD 12:00:00')"})
-    .values('channelfield__channel', 'channelfield__field', 'channelfield__name', 'timestamp')
-    .annotate(Sum('reading'),)
+    d_sum = (Feed.objects.filter(**kwargs)
+             .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-DD 12:00:00')"})
+             .values('channelfield__channel', 'channelfield__field',
+                     'channelfield__name', 'timestamp')
+             .annotate(Sum('reading'),))
 
-    d_min = Feed.objects.filter(**kwargs)
-    .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-DD 12:00:00')"})
-    .values('channelfield__channel', 'channelfield__field', 'channelfield__name', 'timestamp')
-    .annotate(Min('reading'),)
+    d_min = (Feed.objects.filter(**kwargs)
+             .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-DD 12:00:00')"})
+             .values('channelfield__channel', 'channelfield__field',
+                     'channelfield__name', 'timestamp')
+             .annotate(Min('reading'),))
 
-    d_max = Feed.objects.filter(**kwargs)
-    .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-DD 12:00:00')"})
-    .values('channelfield__channel', 'channelfield__field', 'channelfield__name', 'timestamp')
-    .annotate(Max('reading'),)
+    d_max = (Feed.objects.filter(**kwargs)
+             .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-DD 12:00:00')"})
+             .values('channelfield__channel', 'channelfield__field',
+                     'channelfield__name', 'timestamp')
+             .annotate(Max('reading'),))
 
-    d_count = Feed.objects.filter(**kwargs)
-    .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-DD 12:00:00')"})
-    .values('channelfield__channel', 'channelfield__field', 'channelfield__name', 'timestamp')
-    .annotate(Count('reading'),)
+    d_count = (Feed.objects.filter(**kwargs)
+               .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-DD 12:00:00')"})
+               .values('channelfield__channel', 'channelfield__field',
+                       'channelfield__name', 'timestamp')
+               .annotate(Count('reading'),))
 
     d_count = removeZeroValue(d_count)
     d_avg = removeNullValue(d_avg)
@@ -256,31 +261,46 @@ def aggregateDailyFeedData(kwargs):
 def aggregateMonthlyFeedData(kwargs):
     month_filter = connection.ops.date_trunc_sql('month', 'timestamp')
     #Let aggregate Monthly data
-    m_avg = Feed.objects.filter(**kwargs)
-    .extra({'date': month_filter})
-    .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-15 00:00:00')"})
-    .values('channelfield__field', 'channelfield__channel__name', 'channelfield__name', 'timestamp')
-    .annotate(Avg('reading'),).order_by('timestamp', 'channelfield__field')
+    m_avg = (Feed.objects.filter(**kwargs)
+             .extra({'date': month_filter})
+             .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-15 00:00:00')"})
+             .values('channelfield__field', 'channelfield__channel__name',
+                     'channelfield__name', 'timestamp')
+             .annotate(Avg('reading'),)
+             .order_by('timestamp', 'channelfield__field')
+             )
 
-    m_max = Feed.objects.filter(**kwargs).extra({'date': month_filter})
-    .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-15 00:00:00')"})
-    .values('channelfield__field', 'channelfield__channel__name', 'channelfield__name', 'timestamp')
-    .annotate(Max('reading'),).order_by('timestamp', 'channelfield__field')
+    m_max = (Feed.objects.filter(**kwargs).extra({'date': month_filter})
+             .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-15 00:00:00')"})
+             .values('channelfield__field', 'channelfield__channel__name',
+                     'channelfield__name', 'timestamp')
+             .annotate(Max('reading'),)
+             .order_by('timestamp', 'channelfield__field')
+             )
 
-    m_min = Feed.objects.filter(**kwargs).extra({'date': month_filter})
-    .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-15 00:00:00')"})
-    .values('channelfield__field', 'channelfield__channel__name', 'channelfield__name', 'timestamp')
-    .annotate(Min('reading'),).order_by('timestamp', 'channelfield__field')
+    m_min = (Feed.objects.filter(**kwargs).extra({'date': month_filter})
+             .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-15 00:00:00')"})
+             .values('channelfield__field', 'channelfield__channel__name',
+                     'channelfield__name', 'timestamp')
+             .annotate(Min('reading'),)
+             .order_by('timestamp', 'channelfield__field')
+             )
 
-    m_sum = Feed.objects.filter(**kwargs).extra({'date': month_filter})
-    .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-15 00:00:00')"})
-    .values('channelfield__field', 'channelfield__channel__name', 'channelfield__name', 'timestamp')
-    .annotate(Sum('reading'),).order_by('timestamp', 'channelfield__field')
+    m_sum = (Feed.objects.filter(**kwargs).extra({'date': month_filter})
+             .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-15 00:00:00')"})
+             .values('channelfield__field', 'channelfield__channel__name',
+                     'channelfield__name', 'timestamp')
+             .annotate(Sum('reading'),)
+             .order_by('timestamp', 'channelfield__field')
+             )
 
-    m_count = Feed.objects.filter(**kwargs).extra({'date': month_filter})
-    .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-15 00:00:00')"})
-    .values('channelfield__field', 'channelfield__channel__name', 'channelfield__name', 'timestamp')
-    .annotate(Count('reading'),).order_by('timestamp', 'channelfield__field')
+    m_count = (Feed.objects.filter(**kwargs).extra({'date': month_filter})
+               .extra(select={'timestamp': "to_char(timestamp, 'YYYY-MM-15 00:00:00')"})
+               .values('channelfield__field', 'channelfield__channel__name',
+                       'channelfield__name', 'timestamp')
+               .annotate(Count('reading'),)
+               .order_by('timestamp', 'channelfield__field')
+               )
 
     m_count = removeZeroValue(m_count)
     m_avg = removeNullValue(m_avg)
@@ -448,23 +468,31 @@ def storeAggregatedData():
                                                  'timestamp__gte': thismonth,
                                                  'timestamp__lte': nextmonth})
 
-                mc = AggregateMonthlyFeed.objects.filter(aggregation="COUNT",
-                                                         channel=item.channel,
-                                                         channelfield=item)
-                .order_by('-timestamp').first()
-                ma = AggregateMonthlyFeed.objects.filter(aggregation="AVG",
-                                                         channel=item.channel,
-                                                         channelfield=item).order_by('-timestamp').first()
-                ms = AggregateMonthlyFeed.objects.filter(aggregation="SUM",
-                                                         channel=item.channel,
-                                                         channelfield=item).order_by('-timestamp').first()
-                mma = AggregateMonthlyFeed.objects.filter(aggregation="MAX",
+                mc = (AggregateMonthlyFeed.objects.filter(aggregation="COUNT",
                                                           channel=item.channel,
-                                                          channelfield=item).order_by('-timestamp').first()
-                mmi = AggregateMonthlyFeed.objects.filter(aggregation="MIN",
+                                                          channelfield=item)
+                      .order_by('-timestamp').first()
+                      )
+                ma = (AggregateMonthlyFeed.objects.filter(aggregation="AVG",
                                                           channel=item.channel,
-                                                          channelfield=item).order_by('-timestamp').first()
+                                                          channelfield=item)
+                      .order_by('-timestamp').first())
 
+                ms = (AggregateMonthlyFeed.objects.filter(aggregation="SUM",
+                                                          channel=item.channel,
+                                                          channelfield=item)
+                      .order_by('-timestamp').first()
+                      )
+                mma = (AggregateMonthlyFeed.objects.filter(aggregation="MAX",
+                                                           channel=item.channel,
+                                                           channelfield=item)
+                       .order_by('-timestamp').first()
+                       )
+                mmi = (AggregateMonthlyFeed.objects.filter(aggregation="MIN",
+                                                           channel=item.channel,
+                                                           channelfield=item)
+                       .order_by('-timestamp').first()
+                       )
                 ma.data = list(data[0])
                 ma.lastupdate = datetime.datetime.now()
 
@@ -542,21 +570,31 @@ def storeAggregatedData():
                 data = aggregateDailyFeedData({'channelfield': item,
                                                'timestamp__gte': today})
 
-                dc = AggregateDailyFeed.objects.filter(aggregation="COUNT",
-                                                       channel=item.channel,
-                                                       channelfield=item).order_by('-timestamp').first()
-                da = AggregateDailyFeed.objects.filter(aggregation="AVG",
-                                                       channel=item.channel,
-                                                       channelfield=item).order_by('-timestamp').first()
-                ds = AggregateDailyFeed.objects.filter(aggregation="SUM",
-                                                       channel=item.channel,
-                                                       channelfield=item).order_by('-timestamp').first()
-                dma = AggregateDailyFeed.objects.filter(aggregation="MAX",
+                dc = (AggregateDailyFeed.objects.filter(aggregation="COUNT",
                                                         channel=item.channel,
-                                                        channelfield=item).order_by('-timestamp').first()
-                dmi = AggregateDailyFeed.objects.filter(aggregation="MIN",
+                                                        channelfield=item)
+                      .order_by('-timestamp').first()
+                      )
+                da = (AggregateDailyFeed.objects.filter(aggregation="AVG",
                                                         channel=item.channel,
-                                                        channelfield=item).order_by('-timestamp').first()
+                                                        channelfield=item)
+                      .order_by('-timestamp').first()
+                      )
+                ds = (AggregateDailyFeed.objects.filter(aggregation="SUM",
+                                                        channel=item.channel,
+                                                        channelfield=item)
+                      .order_by('-timestamp').first()
+                      )
+                dma = (AggregateDailyFeed.objects.filter(aggregation="MAX",
+                                                         channel=item.channel,
+                                                         channelfield=item)
+                       .order_by('-timestamp').first()
+                       )
+                dmi = (AggregateDailyFeed.objects.filter(aggregation="MIN",
+                                                         channel=item.channel,
+                                                         channelfield=item)
+                       .order_by('-timestamp').first()
+                       )
 
                 da.data = list(data[0])
                 da.lastupdate = datetime.datetime.now()
