@@ -40,16 +40,18 @@ def getChannel():
         return
     channels = data['channels']
     for item in channels:
-        c, created = Channel.objects.get_or_create(data_id=item['id'],
-                                                   defaults={'elevation': item['elevation'],
-                                                             'description': item['description'],
-                                                             'name': item['name'],
-                                                             'longitude': item['longitude'],
-                                                             'latitude': item['latitude'],
-                                                             'created_at': item['created_at'],
-                                                             'last_entry_id': item['last_entry_id'],
-                                                             }
-                                                   )
+        c, created = (Channel.objects
+                      .get_or_create(data_id=item['id'],
+                                     defaults={'elevation': item['elevation'],
+                                               'description': item['description'],
+                                               'name': item['name'],
+                                               'longitude': item['longitude'],
+                                               'latitude': item['latitude'],
+                                               'created_at': item['created_at'],
+                                               'last_entry_id': item['last_entry_id'],
+                                               }
+                                     )
+                      )
 
 
 def parseAPIContent():
@@ -72,7 +74,8 @@ def getFeedData(data_id):
     #Gotta find more efficient way of doing this. Search for field elements.
     #Check size of returned list?
     #No solution from thingspeak. Gotta do a try and error.
-    #At least do this when populating the channel data and just use the stored data to pull feeds
+    #At least do this when populating the channel data and just use the stored
+    #data to pull feeds
 
     i = 1
     fields = []
@@ -81,7 +84,9 @@ def getFeedData(data_id):
         f = ch.get(field)
         if f:
             f, created = Field.objects.get_or_create(name=f)
-            c, created = ChannelField.objects.get_or_create(channel=channel, field=f, name=field)
+            c, created = ChannelField.objects.get_or_create(channel=channel,
+                                                            field=f,
+                                                            name=field)
             #c.save()
             fields.append(c)
         i += 1
@@ -267,73 +272,90 @@ def addClassicData(request):
 
         if daily_avg:
             for item in daily_avg:
-                da, created = AggregateDailyFeed.objects.get_or_create(timestamp=item['timestamp'],
-                                                                       aggregation='AVG',
-                                                                       channel=c,
-                                                                       defaults={'data': item, })
+                da, created = (AggregateDailyFeed.objects
+                               .get_or_create(timestamp=item['timestamp'],
+                                              aggregation='AVG',
+                                              channel=c,
+                                              defaults={'data': item, })
+                               )
 
         if daily_sum:
             for item in daily_sum:
-                ds, created = AggregateDailyFeed.objects.get_or_create(timestamp=item['timestamp'],
-                                                                       aggregation='SUM',
-                                                                       channel=c,
-                                                                       defaults={'data': item, })
+                ds, created = (AggregateDailyFeed.objects
+                               .get_or_create(timestamp=item['timestamp'],
+                                              aggregation='SUM',
+                                              channel=c,
+                                              defaults={'data': item, })
+                               )
 
         if daily_cnt:
             for item in daily_cnt:
-                dc, created = AggregateDailyFeed.objects.get_or_create(timestamp=item['timestamp'],
-                                                                       aggregation='COUNT',
-                                                                       channel=c,
-                                                                       defaults={'data': item, })
+                dc, created = (AggregateDailyFeed.objects
+                               .get_or_create(timestamp=item['timestamp'],
+                                              aggregation='COUNT',
+                                              channel=c,
+                                              defaults={'data': item, })
+                               )
 
         if daily_min:
             for item in daily_min:
-                dmi, created = AggregateDailyFeed.objects.get_or_create(timestamp=item['timestamp'],
-                                                                        aggregation='MIN',
-                                                                        channel=c,
-                                                                        defaults={'data': item, })
+                dmi, created = (AggregateDailyFeed.objects
+                                .get_or_create(timestamp=item['timestamp'],
+                                               aggregation='MIN',
+                                               channel=c,
+                                               defaults={'data': item, })
+                                )
 
         if daily_max:
             for item in daily_max:
-                dma, created = AggregateDailyFeed.objects.get_or_create(timestamp=item['timestamp'],
-                                                                        aggregation='MAX',
-                                                                        channel=c,
-                                                                        defaults={'data': item, })
+                dma, created = (AggregateDailyFeed.objects
+                                .get_or_create(timestamp=item['timestamp'],
+                                               aggregation='MAX',
+                                               channel=c,
+                                               defaults={'data': item, })
+                                )
 
         if month_avg:
             for item in month_avg:
-                ma, created = AggregateMonthlyFeed.objects.get_or_create(timestamp=item['timestamp'],
-                                                                         aggregation='AVG',
-                                                                         channel=c,
-                                                                         defaults={'data': item, })
+                ma, created = (AggregateMonthlyFeed.objects
+                               .get_or_create(timestamp=item['timestamp'],
+                                              aggregation='AVG',
+                                              channel=c,
+                                              defaults={'data': item, })
+                               )
 
         if month_sum:
             for item in month_sum:
-                ms, created = AggregateMonthlyFeed.objects.get_or_create(timestamp=item['timestamp'],
-                                                                         aggregation='SUM',
-                                                                         channel=c,
-                                                                         defaults={'data': item, })
-
+                ms, created = (AggregateMonthlyFeed.objects
+                               .get_or_create(timestamp=item['timestamp'],
+                                              aggregation='SUM',
+                                              channel=c,
+                                              defaults={'data': item, })
+                               )
         if month_cnt:
             for item in month_cnt:
-                mc, created = AggregateMonthlyFeed.objects.get_or_create(timestamp=item['timestamp'],
-                                                                         aggregation='COUNT',
-                                                                         channel=c,
-                                                                         defaults={'data': item, })
-
+                mc, created = (AggregateMonthlyFeed.objects
+                               .get_or_create(timestamp=item['timestamp'],
+                                              aggregation='COUNT',
+                                              channel=c,
+                                              defaults={'data': item, })
+                               )
         if month_min:
             for item in month_min:
-                mmi, created = AggregateMonthlyFeed.objects.get_or_create(timestamp=item['timestamp'],
-                                                                          aggregation='MIN',
-                                                                          channel=c,
-                                                                          defaults={'data': item, })
-
+                mmi, created = (AggregateMonthlyFeed.objects
+                                .get_or_create(timestamp=item['timestamp'],
+                                               aggregation='MIN',
+                                               channel=c,
+                                               defaults={'data': item, })
+                                )
         if month_max:
             for item in month_max:
-                mma, created = AggregateMonthlyFeed.objects.get_or_create(timestamp=item['timestamp'],
-                                                                          aggregation='MAX',
-                                                                          channel=c,
-                                                                          defaults={'data': item, })
+                mma, created = (AggregateMonthlyFeed.objects
+                                .get_or_create(timestamp=item['timestamp'],
+                                               aggregation='MAX',
+                                               channel=c,
+                                               defaults={'data': item, })
+                                )
 
     return HttpResponse("Done")
 

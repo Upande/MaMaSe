@@ -333,13 +333,14 @@ def storeAggregatedData():
     #Need to remove the None/null's from the data
     '''
 
-    #I am tired. Forgive my poorly arranged code. I pray I come back and fix all this later. 
+    #I am tired. Forgive my poorly arranged code. I pray I come back and fix all this later.
 
     chf = ChannelField.objects.all()
     for item in chf:
-
-        currentmonthly = AggregateMonthlyFeed.objects.filter(channelfield=item).order_by('-timestamp').first()
-        currentdaily = AggregateDailyFeed.objects.filter(channelfield=item).order_by('-timestamp').first()
+        currentmonthly = (AggregateMonthlyFeed.objects.filter(channelfield=item)
+                          .order_by('-timestamp').first())
+        currentdaily = (AggregateDailyFeed.objects.filter(channelfield=item)
+                        .order_by('-timestamp').first())
 
         if not currentmonthly:
             mdata = aggregateMonthlyFeedData({'channelfield': item})

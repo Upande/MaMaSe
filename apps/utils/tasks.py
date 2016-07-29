@@ -10,6 +10,7 @@ from apps.utils.api import storeAggregatedData
 
 logger = get_task_logger(__name__)
 
+
 #Run the task every 15 mins
 @periodic_task(run_every=(crontab(hour="*", minute="*/5", day_of_week="*")))
 def refreshThingspeakData():
@@ -17,9 +18,10 @@ def refreshThingspeakData():
     return parseAPIContent()
     logger.info("Refresh finished")
 
+
 #Run the task every 15 mins
 @periodic_task(run_every=(crontab(hour="*", minute="*/5", day_of_week="*")))
 def storecalculatedData():
-    logger.info("Start storage of data")    
+    logger.info("Start storage of data")
     return storeAggregatedData()
     logger.info("Storage  finished")

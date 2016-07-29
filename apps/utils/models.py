@@ -3,10 +3,12 @@ from jsonfield import JSONField
 import datetime
 # Create your models here.
 
+
 class LoggerData(models.Model):
     raw_data = JSONField()
     added = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+
 
 class Channel(models.Model):
     CHANNEL_TYPES = (
@@ -18,19 +20,21 @@ class Channel(models.Model):
     data_id = models.IntegerField(unique=True)
     name = models.TextField()
     description = models.TextField()
-    latitude  = models.FloatField()
-    longitude  = models.FloatField()
+    latitude = models.FloatField()
+    longitude = models.FloatField()
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField(auto_now_add=True)
     elevation = models.TextField()
     last_entry_id = models.IntegerField(default=0)
     username = models.TextField()
-        
+
     #To differentiate between depth sensors and other sensors
-    type = models.CharField(max_length = 50,choices=CHANNEL_TYPES,default="Weather Station")
+    type = models.CharField(max_length=50, choices=CHANNEL_TYPES,
+                            default="Weather Station")
 
     def __unicode__(self):
         return self.name
+
 
 class Field(models.Model):
     name = models.TextField(unique=True)
@@ -39,6 +43,7 @@ class Field(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class ChannelField(models.Model):
     channel = models.ForeignKey(Channel, related_name="channels")
     field = models.ForeignKey(Field, related_name="field")
@@ -46,45 +51,49 @@ class ChannelField(models.Model):
     added = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
-        return self.channel.name + " ("+ self.field.name + ")"
-    
+        return self.channel.name + " (" + self.field.name + ")"
+
+
 class Feed(models.Model):
-    channelfield = models.ForeignKey(ChannelField, related_name="channels",blank=True,null=True)
+    channelfield = models.ForeignKey(ChannelField, related_name="channels",
+                                     blank=True, null=True)
     entry_id = models.IntegerField()
     timestamp = models.DateTimeField()
-    lastupdate = models.DateTimeField(auto_now_add =True)
+    lastupdate = models.DateTimeField(auto_now_add=True)
 
     #Check if input is a float. If not, store in sreading
-    reading = models.FloatField(default = 0.0,blank=True,null=True)
+    reading = models.FloatField(default=0.0, blank=True, null=True)
 
     #Some like SDate and STime are not float fields. Store them here
-    sreading = models.CharField(max_length = 50,default = '0.0',blank=True,null=True)
+    sreading = models.CharField(max_length=50, default='0.0',
+                                blank=True, null=True)
 
     def __unicode__(self):
         return str(self.entry_id)
 
 
 class EmailRecipient(models.Model):
-    role = models.CharField(max_length = 200)
-    name = models.CharField(max_length = 200)
-    email = models.CharField(max_length = 200)
-    active = models.BooleanField(default = True)
+    role = models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return self.name + " (" + self.email + ")"
 
+
 class Email(models.Model):
-    sender = models.CharField(max_length = 200)
-    email = models.CharField(max_length = 200)
-    subject = models.CharField(max_length = 255)
+    sender = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    subject = models.CharField(max_length=255)
     message = models.TextField()
     sent = models.DateTimeField(auto_now_add=True)
-    
+
     def __unicode__(self):
         return self.sender + " (" + self.email + ")"
 
+
 class AggregateDailyFeed(models.Model):
-    
     AGGREGATE_TYPES = (
         ('COUNT', 'Count'),
         ('SUM', 'Sum'),
@@ -93,13 +102,17 @@ class AggregateDailyFeed(models.Model):
         ('AVG', 'Avg'),
     )
 
-    data = JSONField(blank=True,null=True)
-    lastupdate = models.DateTimeField(auto_now_add =True)
-    timestamp = models.DateTimeField()#This has to be midday on the specific day
+    data = JSONField(blank=True, null=True)
+    lastupdate = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField()  # This has to be midday on the specific day
     channel = models.ForeignKey(Channel, related_name="daily_channels")
-    channelfield = models.ForeignKey(ChannelField, related_name="daily_channelfields",blank=True,null=True)
-    aggregation = models.CharField(max_length=15,choices=AGGREGATE_TYPES,default="Count")
-    
+    channelfield = models.ForeignKey(ChannelField,
+                                     related_name="daily_channelfields",
+                                     blank=True, null=True)
+    aggregation = models.CharField(max_length=15, choices=AGGREGATE_TYPES,
+                                   default="Count")
+
+
 class AggregateMonthlyFeed(models.Model):
     AGGREGATE_TYPES = (
         ('COUNT', 'Count'),
@@ -109,9 +122,12 @@ class AggregateMonthlyFeed(models.Model):
         ('AVG', 'Avg'),
     )
 
-    data = JSONField(blank=True,null=True)
-    lastupdate = models.DateTimeField(auto_now_add =True)
-    timestamp = models.DateTimeField()#This has to be midmonth
+    data = JSONField(blank=True, null=True)
+    lastupdate = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateTimeField()  # This has to be midmonth
     channel = models.ForeignKey(Channel, related_name="monthly_channels")
-    channelfield = models.ForeignKey(ChannelField, related_name="monthly_channelfields",blank=True,null=True)
-    aggregation = models.CharField(max_length=15,choices=AGGREGATE_TYPES,default="Count")
+    channelfield = models.ForeignKey(ChannelField,
+                                     related_name="monthly_channelfields",
+                                     blank=True, null=True)
+    aggregation = models.CharField(max_length=15, choices=AGGREGATE_TYPES,
+                                   default="Count")
