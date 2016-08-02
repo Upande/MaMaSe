@@ -278,7 +278,7 @@ def trySubmission(request):
 
                 html_message = create_email_message(email, message, name)
 
-            #Create the html message to be sent via email
+                #Create the html message to be sent via email
                 status = send_email(html_message, settings.EMAIL_HOST_USER,
                                     to_list, subject)
 

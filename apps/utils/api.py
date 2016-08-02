@@ -5,6 +5,7 @@ import json
 from django.db.models import Avg, Max, Min, Sum, Count
 from django.http import JsonResponse
 from django.db import connection
+from django.db.models import Q
 
 from apps.utils.models import (Channel,
                                Feed, AggregateMonthlyFeed,
@@ -53,6 +54,10 @@ def getFeeds(request):
 
     if station_type:
         args['type'] = station_type.upper()
+
+    if station_type == "rain_temp":
+        #kwargs['channelfield__field__name'] = "Temperature" + "Rain"
+        pass
 
     feed = {}
     feed_without_null = []

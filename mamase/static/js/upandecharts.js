@@ -1,5 +1,6 @@
 
 var icon = 'https://s3.amazonaws.com/mamase/static/images/location30.png'
+var icon1 = 'https://s3.amazonaws.com/mamase/static/images/location1.jpg'
 var daily = []
 var monthly = []
 var raw = []
@@ -25,7 +26,7 @@ var monthlyData = []
 
           var Lat = -0.943496;
           var Lon = 35.424305;
-          var Zoom = 9;
+          var Zoom = 8;
           var graph_description = 'Raw Data'
           var map
           var vectorLayer
@@ -89,11 +90,7 @@ var monthlyData = []
 
 
           function refreshmap(Lon, Lat) {
-            //stat = map.removeLayer(vectorLayer)
-            //console.log(stat)
-            //console.log(vectorLayer)
-            var layers = map.getLayers();
-              //console.log(map)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+            var layers = map.getLayers();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
               layers.pop();
 
               map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
@@ -324,7 +321,7 @@ var monthlyData = []
                     success: function(data) {
                       for (var x = 0; x < data.length; x++) {
                         coordinate_names.push(data[x].name)
-                        coordinates.push([data[x].latitude, data[x].longitude])
+                        coordinates.push([data[x].longitude,data[x].latitude])
                       }
                     }
                   });
@@ -436,17 +433,13 @@ var monthlyData = []
           }
 
 
-
-
-
           function createMarker(Lon, Lat) {
               ////define vector source
               var vectorSource = new ol.source.Vector({
                   ////create empty vector
                 });
 
-              ////create an icon and add to source vector   
-
+              ////create an icon and add to source vector
               var iconFeature = new ol.Feature({
                 geometry: new
                 ol.geom.Point(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857')),
@@ -457,18 +450,20 @@ var monthlyData = []
 
               ////and add to source vector   
               vectorSource.addFeature(iconFeature);
-              features = [vectorSource]
+              //features = [vectorSource]
 
+              var coordinatesource = new ol.source.Vector({});
               ////This function will load other points to the vector
-              for (var x = 0; x < coordinates.length; x++) {
-                var coordinatesource = new ol.source.Vector({});
+              for (var x = 0; x < coordinates.length; x++) {  
+                
                 var coordinateicon = new ol.Feature({
                   geometry: new
                   ol.geom.Point(ol.proj.transform(coordinates[x], 'EPSG:4326', 'EPSG:3857')),
                   name: coordinate_names[x]
                 });
                 coordinatesource.addFeature(coordinateicon);
-                features.push(coordinatesource)
+                //vectorSource.addFeature(coordinateicon);
+                //features.push(coordinatesource)
               }
 
               ////create the icon style
@@ -482,13 +477,34 @@ var monthlyData = []
                 }))
               });
 
+              ////create the icon style
+              var coordinateStyle = new ol.style.Style({
+                image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
+                  anchor: [0.5, 4],
+                  anchorXUnits: 'fraction',
+                  anchorYUnits: 'pixels',
+                  opacity: 0.75,
+                  src: icon1
+                }))
+              });
+
+
               ////add the feature vector to the layer vector, and apply a style to whole layer
               var vectorLayer = new ol.layer.Vector({
                source: vectorSource,
                style: iconStyle
              });
-              //console.log(vectorSource)
+
+            var coordinatesLayer = new ol.layer.Vector({
+               source: coordinatesource,
+               style: coordinateStyle,
+             });
+              //vectorLayer.addFeatures(features);
+
               map.addLayer(vectorLayer);
+              map.addLayer(coordinatesLayer);
+
+
             }
 
 
@@ -678,7 +694,6 @@ var monthlyData = []
 
               if (newdata[1][1][i][0] == aggr_variable) {
                 mydata = [myarry[0], newdata[1][1][i]]
-                console.log(mydata)
                 return mydata
               }
             }
