@@ -33,8 +33,8 @@ def getFeeds(request):
     end = request.GET.get('end', None)  # Data should be before this date
     limit = request.GET.get('limit', None)  # Maximum number of records
     data = request.GET.get('data', 'raw')  # Raw,Daily or Monthly. Default(raw)
-    field = request.GET.get('field', None)  # Data should be before this date
-    station_type = request.GET.get('stationtype', None)  # Is it a w.station etc
+    field = request.GET.get('field', None)  # A specific field e.g temp
+    station_type = request.GET.get('stationtype', "WEATHER_STATION")  # Is it a w.station etc
 
     kwargs = {}
     args = {}

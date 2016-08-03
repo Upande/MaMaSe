@@ -1,6 +1,6 @@
 
 var icon = 'https://s3.amazonaws.com/mamase/static/images/location30.png'
-var icon1 = 'https://s3.amazonaws.com/mamase/static/images/location1.jpg'
+var icon1 = 'https://s3.amazonaws.com/mamase/static/images/red_marker.png'
 var daily = []
 var monthly = []
 var raw = []
@@ -452,9 +452,38 @@ var monthlyData = []
               vectorSource.addFeature(iconFeature);
               //features = [vectorSource]
 
-              var coordinatesource = new ol.source.Vector({});
+              
+
+              ////create the icon style
+              var iconStyle = new ol.style.Style({
+                image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
+                  anchor: [0.5, 4],
+                  anchorXUnits: 'fraction',
+                  anchorYUnits: 'pixels',
+                  opacity: 1,
+                  src: icon1
+                }))
+              });
+
+
+
+              ////add the feature vector to the layer vector, and apply a style to whole layer
+              var vectorLayer = new ol.layer.Vector({
+               source: vectorSource,
+               style: iconStyle
+             });
+
+              coordinatesLayer = addMarkersToMap();
+              map.addLayer(vectorLayer);
+              map.addLayer(coordinatesLayer);
+            }
+
+
+
+          function addMarkersToMap(){
+            var coordinatesource = new ol.source.Vector({});
               ////This function will load other points to the vector
-              for (var x = 0; x < coordinates.length; x++) {  
+            for (var x = 0; x < coordinates.length; x++) {  
                 
                 var coordinateicon = new ol.Feature({
                   geometry: new
@@ -466,48 +495,23 @@ var monthlyData = []
                 //features.push(coordinatesource)
               }
 
-              ////create the icon style
-              var iconStyle = new ol.style.Style({
-                image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
-                  anchor: [0.5, 4],
-                  anchorXUnits: 'fraction',
-                  anchorYUnits: 'pixels',
-                  opacity: 1,
-                  src: icon
-                }))
-              });
-
-              ////create the icon style
+                            ////create the icon style
               var coordinateStyle = new ol.style.Style({
                 image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
                   anchor: [0.5, 4],
                   anchorXUnits: 'fraction',
                   anchorYUnits: 'pixels',
                   opacity: 0.75,
-                  src: icon1
+                  src: icon
                 }))
               });
 
-
-              ////add the feature vector to the layer vector, and apply a style to whole layer
-              var vectorLayer = new ol.layer.Vector({
-               source: vectorSource,
-               style: iconStyle
-             });
-
-            var coordinatesLayer = new ol.layer.Vector({
+              var coordinatesLayer = new ol.layer.Vector({
                source: coordinatesource,
                style: coordinateStyle,
              });
-              //vectorLayer.addFeatures(features);
-
-              map.addLayer(vectorLayer);
-              map.addLayer(coordinatesLayer);
-
-
-            }
-
-
+              return coordinatesLayer;
+          }
 
 
 
