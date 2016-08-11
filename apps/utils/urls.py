@@ -6,7 +6,7 @@ from .views import (IndexView,ContactView,
                     start,getAudio,
                     getImage,trySubmission,
                     logThingspeakData,
-                    email,knowledge,
+                    email,knowledge,RainTempView
 )
 
 from .thingspeak import returnChannelData,returnFeedData,addClassicData
@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^ts/$', logThingspeakData, name='visual-ts'),
     url(r'^live$', IndexView.as_view(), name='visual'),
     url(r'^chart$', ChartView.as_view(), name='chart'),
+    url(r'^chartrt$', RainTempView.as_view(), name='chartrt'),
     url(r'^map$', MapView.as_view(), name='map'),
     url(r'^about$', AboutView.as_view(), name='about'),
     url(r'^project$', ProjectManView.as_view(), name='projectman'),

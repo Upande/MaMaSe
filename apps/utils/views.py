@@ -83,6 +83,9 @@ class ProjectManView(TemplateView):
 
 class ContactView(TemplateView):
     template_name = "contact.html"
+
+class RainTempView(TemplateView):
+    template_name = "chartRT.html"
         
         
 def error_view(request):

@@ -122,8 +122,10 @@ class JSONResponse(HttpResponse):
 def returnChannelData(request):
     if request.method == 'GET':
         type_ = request.GET.get('type', None)
-        if type_:
-            channels = Channel.objects.filter(type = type_.upper())    
+        if type_ == 'WEATHER_STATION' or type_=='RIVER_DEPTH':
+            channels = Channel.objects.filter(type = type_.upper())   
+        elif type_ == 'rain_temp':
+            channels = Channel.objects.filter(type = 'WEATHER_STATION')
         else:
             channels = Channel.objects.all()
         cserializer = ChannelSerializer(channels, many=True)
