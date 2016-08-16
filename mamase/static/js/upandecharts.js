@@ -145,12 +145,12 @@ var monthlyData = []
 
 
             table = $('#charttable').DataTable({
-              dom: 'Bfrtip',
-              buttons: [
-              'csvHtml5',
-              'copyHtml5',
-              'excelHtml5',
-              ],
+              //dom: 'Bfrtip',
+              //buttons: [
+              //'csvHtml5',
+              //'copyHtml5',
+              //'excelHtml5',
+              //],
               data: dataset,
               columns: [{
                 title: "Station Name"
