@@ -4,6 +4,7 @@ var icon1 = 'https://s3.amazonaws.com/mamase/static/images/red_marker.png'
 var daily = []
 var monthly = []
 var raw = []
+var weather_station_name = ""
 var weather_station = "Mulot Weather"
 var weather_variable = "Rain"
 var weather_variable_id = 1
@@ -30,6 +31,26 @@ var monthlyData = []
           var graph_description = 'Raw Data'
           var map
           var vectorLayer
+          var container = document.getElementById('popup');
+          var content = document.getElementById('popup-content');
+          var closer = document.getElementById('popup-closer');
+
+          closer.onclick = function() {
+            overlay.setPosition(undefined);
+            closer.blur();
+            return false;
+          };
+
+          /**
+           * Create an overlay to anchor the popup to the map.
+           */
+          var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */ ({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+              duration: 250
+            }
+          }));
 
           var startdate = ""
           var enddate = ""
@@ -188,6 +209,8 @@ var monthlyData = []
           ////change station
           function selectStation(selstation) {
             weather_station = selstation.value;
+            weather_station_name = selstation.selectedOptions[0]['label'];
+            console.log(weather_station_name)
             id = weather_station
 
             if (datatype == 'raw') {
@@ -417,11 +440,25 @@ var monthlyData = []
 
             map = new ol.Map({
               target: 'map',
+              overlays: [overlay],  
               view: new ol.View({
                 projection: 'EPSG:900913',
                 center: ol.proj.fromLonLat([Lon, Lat]),
                 zoom: Zoom
               })
+            });
+            /**
+             * Add a click handler to the map to render the popup.
+             */
+            map.on('singleclick', function(evt) {
+              var name = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+                return feature.get('name');
+              });
+              if (name){
+                var coordinate = evt.coordinate;
+                content.innerHTML = name;
+                overlay.setPosition(coordinate);
+              }              
             });
 
             var osmlayer = new ol.layer.Tile({
@@ -443,9 +480,7 @@ var monthlyData = []
               var iconFeature = new ol.Feature({
                 geometry: new
                 ol.geom.Point(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857')),
-                name: 'Null Island ',
-                population: 400100,
-                rainfall: 500
+                name: weather_station_name,                
               });
 
               ////and add to source vector   
@@ -470,7 +505,7 @@ var monthlyData = []
               ////add the feature vector to the layer vector, and apply a style to whole layer
               var vectorLayer = new ol.layer.Vector({
                source: vectorSource,
-               style: iconStyle
+               style: iconStyle,
              });
 
               coordinatesLayer = addMarkersToMap();
@@ -484,8 +519,8 @@ var monthlyData = []
             var coordinatesource = new ol.source.Vector({});
               ////This function will load other points to the vector
             for (var x = 0; x < coordinates.length; x++) {  
-                
-                var coordinateicon = new ol.Feature({
+                if ( coordinates[x][0] != Lon && coordinates[x][1] != Lat ) {
+                  var coordinateicon = new ol.Feature({
                   geometry: new
                   ol.geom.Point(ol.proj.transform(coordinates[x], 'EPSG:4326', 'EPSG:3857')),
                   name: coordinate_names[x]
@@ -493,15 +528,16 @@ var monthlyData = []
                 coordinatesource.addFeature(coordinateicon);
                 //vectorSource.addFeature(coordinateicon);
                 //features.push(coordinatesource)
+                }                
               }
 
                             ////create the icon style
               var coordinateStyle = new ol.style.Style({
                 image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
-                  anchor: [0.7, 5],
+                  anchor: [0.5, 4],
                   anchorXUnits: 'fraction',
                   anchorYUnits: 'pixels',
-                  opacity: 0.75,
+                  opacity: 0.8,
                   src: icon
                 }))
               });
@@ -512,8 +548,6 @@ var monthlyData = []
              });
               return coordinatesLayer;
           }
-
-
 
           ////To add controls for depth
           function addDepthcontrols() {
@@ -891,11 +925,14 @@ var monthlyData = []
               //Load data for the first item in the list
               id = data[data.length-1]['id']
 
+              ///set the weather_station as the first variables
+              weather_station_name = data[data.length-1]['name']
+
               //For some weird reason, seems the ID does not change when calling pull data.
               //Call it after this function
               
               for (var i = data.length - 1; i >= 0; i--) {
-                option += '<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
+                option += '<option label="'+data[i]['name']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
               }
 
               stationselect.innerHTML = option;
@@ -957,7 +994,7 @@ var monthlyData = []
                   ////split date to year and month
                   year = dt.getFullYear();
                   month = dt.getMonth();
-
+                  
                   ////select the appropriate year in the year dropdown
                   $('#year option').filter(function() {
 
