@@ -1,6 +1,5 @@
 
 var icon = 'https://s3.amazonaws.com/mamase/static/images/location30.png'
-var icon1 = 'https://s3.amazonaws.com/mamase/static/images/red_marker.png'
 var daily = []
 var monthly = []
 var raw = []
@@ -26,7 +25,7 @@ var monthlyData = []
 
           var Lat = -0.943496;
           var Lon = 35.424305;
-          var Zoom = 8;
+          var Zoom = 9;
           var graph_description = 'Raw Data'
           var map
           var vectorLayer
@@ -62,6 +61,31 @@ var monthlyData = []
           ["Talek", 25, 37, 32, 31, 37, 21, 2, 7, 12, 3, 7, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37, 21, 26],
           ["Mara River", 21, 2, 7, 12, 3, 7, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37, 21, 0, 37, 21, 22, 23, 26],
           ];
+
+          var mulot = [
+            ['created','2016-01-23 14:28:00','2016-02-24 14:28:00','2016-03-25 14:28:00','2016-04-24 14:28:00','2016-05-24 14:28:00','2016-06-24 14:28:00','2016-07-24 14:28:00','2016-08-24 14:28:00','2016-09-24 14:28:00','2016-10-24 14:28:00','2016-11-24 14:28:00','2016-12-24 14:28:00'],
+            ['Rainfall', 2, 3, 7,5,8,9,1,6,12,15,7,9],
+            ['Temperature', 2, 6, 9,13,4,6,9,8,5,10,15,7]
+          ];
+          var mara = [
+            ['created','2016-01-23 14:28:00','2016-02-24 14:28:00','2016-03-25 14:28:00','2016-04-24 14:28:00','2016-05-24 14:28:00','2016-06-24 14:28:00','2016-07-24 14:28:00','2016-08-24 14:28:00','2016-09-24 14:28:00','2016-10-24 14:28:00','2016-11-24 14:28:00','2016-12-24 14:28:00'],
+            ['Rainfall', 2,3,6,8,10,9,1,6,12,11,7,15],
+            ['Temperature', 4,6,13,13,8,6,9,8,12,10,15,3]
+          ];
+          var rekero = [
+            ['created','2016-01-23 14:28:00','2016-02-24 14:28:00','2016-03-25 14:28:00','2016-04-24 14:28:00','2016-05-24 14:28:00','2016-06-24 14:28:00','2016-07-24 14:28:00','2016-08-24 14:28:00','2016-09-24 14:28:00','2016-10-24 14:28:00','2016-11-24 14:28:00','2016-12-24 14:28:00'],
+            ['Rainfall', 4,7,10,8,10,5,7,6,12,11,9,3],
+            ['Temperature', 4,7,9,11,8,6,9,8,10,10,6,3]
+          ];
+
+          var bomet = [
+            ['created','2016-01-23 14:28:00','2016-02-24 14:28:00','2016-03-25 14:28:00','2016-04-24 14:28:00','2016-05-24 14:28:00','2016-06-24 14:28:00','2016-07-24 14:28:00','2016-08-24 14:28:00','2016-09-24 14:28:00','2016-10-24 14:28:00','2016-11-24 14:28:00','2016-12-24 14:28:00'],
+            ['Rainfall', 4,8,10,2,10,5,7,7,12,5,9,3],
+            ['Temperature', 4,7,9,3,8,6,3,8,5,10,2,3]
+          ];
+
+          var newdata = mara;
+
           var raw_data = [
           ["Mara Conservancy", 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 34, 23, 26, 25],
           ];
@@ -81,16 +105,18 @@ var monthlyData = []
           ////Unload data before loading new data
           function refreshAndloadData() {
             myarry = []
-            newdata = [];
+            //newdata = [];
             pullData(id, month, year)
           }
 
 
 
-
-
           function refreshmap(Lon, Lat) {
-            var layers = map.getLayers();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+            //stat = map.removeLayer(vectorLayer)
+            //console.log(stat)
+            //console.log(vectorLayer)
+            var layers = map.getLayers();
+              //console.log(map)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
               layers.pop();
 
               map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
@@ -153,7 +179,7 @@ var monthlyData = []
               ],
               data: dataset,
               columns: [{
-                title: "Station Name"
+                title: ""
               }, {
                 title: "Jan"
               }, {
@@ -187,16 +213,29 @@ var monthlyData = []
           function selectStation(selstation) {
             weather_station = selstation.value;
             id = weather_station
-
-            if (datatype == 'raw') {
-              refreshAndloadData(id, month, year)
-            } else {
-              drawGraph_monthly_daily(id, month, year, datatype)
+            if (id=='mulot'){
+              newdata = mulot;
+              drawGraph(newdata);
+            }else if (id=='mara'){
+              newdata = mara;
+              drawGraph(newdata);
+            }else if (id=='rekero'){
+              newdata = rekero;
+              drawGraph(newdata);
+            }else {
+              newdata = bomet;
+              drawGraph(newdata);
             }
+
+            //if (datatype == 'raw') {
+              //refreshAndloadData(id, month, year)
+            //} else {
+              //drawGraph_monthly_daily(id, month, year, datatype)
+              //console.log(selstation);
+              //console.log(mulot);
+              //drawGraph(mulot)
+           // }
           }
-
-
-
 
 
           ////change weather variable
@@ -311,6 +350,8 @@ var monthlyData = []
 
 
 
+
+
                 function getChannelCoordnates() {
                   $.ajax({
                     type: 'GET',
@@ -319,95 +360,67 @@ var monthlyData = []
                     success: function(data) {
                       for (var x = 0; x < data.length; x++) {
                         coordinate_names.push(data[x].name)
-                        coordinates.push([data[x].longitude,data[x].latitude])
+                        coordinates.push([data[x].latitude, data[x].longitude])
                       }
                     }
                   });
                 }
 
 
+
+
+
           ////Get monthly data for chosen field and populate it on datatables
           function populateDatatables(selID) {
-            styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
-            enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
-            $.ajax({
-              type: 'GET',
-              url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&stationtype="+ station_type + "&data=monthly",
-              dataType: "json",
-              success: function(data) {
-                dataset = []
-                monthlyData = data.feed[0].monthly
-                channels = data.channel
-                for (var x = 0; x < channels.length; x++) {
-                  eval('dataset.push(["' + channels[x].name + '",null,null,null,null,null,null,null,null,null,null,null,null])');
-                }
-
-                eval('tabledata = monthlyData.' + aggr_variable)
-
-                for (var i = 0; i < tabledata.length; i++) {
-                  for (var j = 0; j < dataset.length; j++) {
-                    if (dataset[j][0] == tabledata[i].channelfield__channel__name) {
+            //for (var i = 0; i < tabledata.length; i++) {
+                 for (var j = 0; j < newdata.length; j++) {
+                   //if (newdata[j][0] == newdata[i].channelfield__channel__name) {
                                   //Get the value of the month and add one since it jan is represented as 0
-                                  m = moment(tabledata[i].timestamp, 'YYYY-MM-DD').month() + 1
-                                  eval('dataset[j][m] = roundoff(tabledata[i].reading__' + aggr_variable+')')                                  
-                                }
-                              }
+                                //m = moment(tabledata.timestamp, 'YYYY-MM-DD').month() + 1
+
+                                 //eval('dataset[j][m] = roundoff(tabledata[i].reading__' + aggr_variable+')')
+                              //}
+                             // }
                             }
-                            datatset = dataset.join(", ")
+                           dataset = newdata.slice(1)
+                           console.log(dataset);
+                           table.clear().rows.add(dataset).draw();
 
-                            table.clear().rows.add(dataset).draw();
+                         //}
+                      
+            //styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
+            //enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
+            //$.ajax({
+            //  type: 'GET',
+            //  url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&data=monthly",
+            //  dataType: "json",
+            //  success: function(data) {
+            //    dataset = []
+            //    monthlyData = data.feed[0].monthly
+            //    channels = data.channel
+            //    for (var x = 0; x < channels.length; x++) {
+            //      eval('dataset.push(["' + channels[x].name + '",0,0,0,0,0,0,0,0,0,0,0,0])');
+            //    }
+//
+            //    eval('tabledata = monthlyData.' + aggr_variable)
+//
+             //   for (var i = 0; i < tabledata.length; i++) {
+               //   for (var j = 0; j < dataset.length; j++) {
+            //        if (dataset[j][0] == tabledata[i].channelfield__channel__name) {
+                                  //Get the value of the month and add one since it jan is represented as 0
+             //                     m = moment(tabledata.timestamp, 'YYYY-MM-DD').month() + 1
 
-                          }
-                        });
+             //                     eval('dataset[j][m] = roundoff(tabledata[i].reading__' + aggr_variable+')')
+               //                 }
+              //                }
+             //               }
+               //             datatset = dataset.join(", ")
+             //               console.log(dataset);
+              //              table.clear().rows.add(dataset).draw();
+//
+               //           }
+               //         });
           }
-
-
-
-
-
-          ////load existing weather variables
-          function populateWeathervariables(myarry) {
-              $('#weathervariables').empty() //empty weather variable list
-              var myoption = ""
-                  ////create a list of existing fields, e.g rain, temp, humidity etc
-                  mylist = []
-                  for (var i = 1; i < myarry.length; i++) {
-                    myoption = myarry[i][0]
-                    myid = variable_ids[i - 1]
-
-                    mylist.push(myoption)
-
-                    $('#weathervariables').append($('<option>', {
-                      value: myoption,
-                      text: myoption,
-                      id: myid
-                    }));
-
-                  }
-
-              ////check whether current weather_variable in present in mylist
-              ////if it does not, change weather_variable value to that of the first item in mylist
-              var check = $.inArray(weather_variable, mylist)
-              if (check == -1) {
-
-                var e = document.getElementById("weathervariables");
-
-                var strUser = e.options[e.selectedIndex].value;
-                weather_variable = strUser
-
-              }
-              ////select the appropriate text in the weather dropdown 
-              var weather_text = weather_variable;
-              $('#weathervariables option').filter(function() {
-
-                return $(this).text() == weather_text;
-              }).prop('selected', true);
-
-            }
-
-
-
-
 
 
           ////Load map
@@ -431,13 +444,17 @@ var monthlyData = []
           }
 
 
+
+
+
           function createMarker(Lon, Lat) {
               ////define vector source
               var vectorSource = new ol.source.Vector({
                   ////create empty vector
                 });
 
-              ////create an icon and add to source vector
+              ////create an icon and add to source vector   
+
               var iconFeature = new ol.Feature({
                 geometry: new
                 ol.geom.Point(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857')),
@@ -448,9 +465,19 @@ var monthlyData = []
 
               ////and add to source vector   
               vectorSource.addFeature(iconFeature);
-              //features = [vectorSource]
+              features = [vectorSource]
 
-              
+              ////This function will load other points to the vector
+              for (var x = 0; x < coordinates.length; x++) {
+                var coordinatesource = new ol.source.Vector({});
+                var coordinateicon = new ol.Feature({
+                  geometry: new
+                  ol.geom.Point(ol.proj.transform(coordinates[x], 'EPSG:4326', 'EPSG:3857')),
+                  name: coordinate_names[x]
+                });
+                coordinatesource.addFeature(coordinateicon);
+                features.push(coordinatesource)
+              }
 
               ////create the icon style
               var iconStyle = new ol.style.Style({
@@ -459,57 +486,20 @@ var monthlyData = []
                   anchorXUnits: 'fraction',
                   anchorYUnits: 'pixels',
                   opacity: 1,
-                  src: icon1
+                  src: icon
                 }))
               });
-
-
 
               ////add the feature vector to the layer vector, and apply a style to whole layer
               var vectorLayer = new ol.layer.Vector({
                source: vectorSource,
                style: iconStyle
              });
-
-              coordinatesLayer = addMarkersToMap();
+              //console.log(vectorSource)
               map.addLayer(vectorLayer);
-              map.addLayer(coordinatesLayer);
             }
 
 
-
-          function addMarkersToMap(){
-            var coordinatesource = new ol.source.Vector({});
-              ////This function will load other points to the vector
-            for (var x = 0; x < coordinates.length; x++) {  
-                
-                var coordinateicon = new ol.Feature({
-                  geometry: new
-                  ol.geom.Point(ol.proj.transform(coordinates[x], 'EPSG:4326', 'EPSG:3857')),
-                  name: coordinate_names[x]
-                });
-                coordinatesource.addFeature(coordinateicon);
-                //vectorSource.addFeature(coordinateicon);
-                //features.push(coordinatesource)
-              }
-
-                            ////create the icon style
-              var coordinateStyle = new ol.style.Style({
-                image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
-                  anchor: [0.5, 4],
-                  anchorXUnits: 'fraction',
-                  anchorYUnits: 'pixels',
-                  opacity: 0.75,
-                  src: icon
-                }))
-              });
-
-              var coordinatesLayer = new ol.layer.Vector({
-               source: coordinatesource,
-               style: coordinateStyle,
-             });
-              return coordinatesLayer;
-          }
 
 
 
@@ -530,6 +520,9 @@ var monthlyData = []
             if (station_type == 'river_depth') {
               addDepthcontrols()
             }
+            else if (station_type == 'rain_temp') {
+              console.log('Rain Temp')
+            }
             create_channel_items();
           }
 
@@ -546,7 +539,16 @@ var monthlyData = []
                     x: 'created',
                     xFormat: '%Y-%m-%d %H:%M:%S',
                     columns: newdata,
+                    type: 'bar',
+                    types: {
+                      Temperature: 'line'
+                    }
                   },
+                  bar: {
+                    width: {
+                        ratio: 0.35 // this makes bar width 50% of length between ticks
+                        }
+                    },
                   tooltip: {
                       grouped: false //tooltip for one graph at a time
                     },
@@ -675,7 +677,7 @@ var monthlyData = []
 
                           }
 
-                          populateWeathervariables(myarry)
+                          //populateWeathervariables(myarry)
                           defineNewdata(myarry)
 
                           define_monthly_daily_data(newdata)
@@ -696,6 +698,7 @@ var monthlyData = []
 
               if (newdata[1][1][i][0] == aggr_variable) {
                 mydata = [myarry[0], newdata[1][1][i]]
+                console.log(mydata)
                 return mydata
               }
             }
@@ -787,92 +790,91 @@ var monthlyData = []
           function pullData(id,year,month) {
               ////Fxn to display loading image on load
 
-              $("#spinner").bind("ajaxSend", function() {
-                $(this).show();
-              }).bind("ajaxStop", function() {
-                $(this).hide();
-              }).bind("ajaxError", function() {
-                $(this).hide();
-              });
+            //  $("#spinner").bind("ajaxSend", function() {
+             //   $(this).show();
+            //  }).bind("ajaxStop", function() {
+             //   $(this).hide();
+             // }).bind("ajaxError", function() {
+             //   $(this).hide();
+             // });
 
 
               ////define start and end dates
-              definenewdate(month, year);
+             // definenewdate(month, year);
 
               ////for testing
               ////datatype="monthly"
 
               ////pull data from api and (create myarry) 
-              $.ajax({
+            //  $.ajax({
 
-                type: 'GET',
+             //   type: 'GET',
 
-                url: "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype,
-                dataType: "json",
-                success: function(data) {
+            //    url: "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype,
+            //    dataType: "json",
+            //    success: function(data) {
 
-                  var channel = data.channel[0]
+            //      var channel = data.channel[0]
 
-                  try {
-                    Lon = channel.longitude
-                    Lat = channel.latitude
-                  } catch (err) {       
-                    console.log(err)
-                    alert("no data found");
-                  }
-
-                  var feeds = data.feed
+               //   try {
+               //     Lon = channel.longitude
+               //     Lat = channel.latitude
+               //   } catch (err) {       
+               //     console.log(err)
+              //      alert("no data found");
+                //  }
+                //  var feeds = data.feed
 
                       //channel_obj = Object.keys(channel); //// convert to an object
 
-                      var len = channel.fields.length
-                      var created = ['created']
+                 //     var len = channel.fields.length
+                 //     var created = ['created']
                           ///
-                          var field = "";
-                      for (var i = 0; i < len; i++) { ////loop thru all fields
-                          var fieldname = channel.fields[i].field__name ////Whereas the fields have specific names, they have labels on thingspeak. This shall be used to access data from the api e.g field1
+                 //         var field = "";
+                  //    for (var i = 0; i < len; i++) { ////loop thru all fields
+                  //        var fieldname = channel.fields[i].field__name ////Whereas the fields have specific names, they have labels on thingspeak. This shall be used to access data from the api e.g field1
 
-                          var field = channel.fields[i].name
+                    //      var field = channel.fields[i].name
                           //var fieldid = channel.fields[i].id
-                          var fieldid = channel.fields[i].field__id
-                          variable_ids.push(fieldid)
-                          eval('var ' + field + ' = ["' + fieldname + '"];')//Confilicting variables?
+                     //     var fieldid = channel.fields[i].field__id
+                     //     variable_ids.push(fieldid)
+                     //     eval('var ' + field + ' = ["' + fieldname + '"];')//Confilicting variables?
 
-                          for (var j = 0; j < feeds.length; j++) {
+                      //    for (var j = 0; j < feeds.length; j++) {
 
-                            var n = feeds[j].timestamp_formatted;
-                              if (created.length <= feeds.length) { ////if created is not in myarry
-                                created.push(n);
-                              }
-                              try {
-                                eval('var f1 =' + 'feeds[j].fields.' + field);
-                              } catch (err) {
+                      //      var n = feeds[j].timestamp_formatted;
+                      //        if (created.length <= feeds.length) { ////if created is not in myarry
+                      //          created.push(n);
+                      //        }
+                        //      try {
+                       //         eval('var f1 =' + 'feeds[j].fields.' + field);
+                       //       } catch (err) {
 
-                                console.log(err)
-                                var f1 = 0
-                              }
-                              eval(field + '.push(f1)');
+                         //       console.log(err)
+                         //       var f1 = 0
+                         //     }
+                         //     eval(field + '.push(f1)');
 
-                            }
-                          if (myarry[0] == null) { ////if created is not in myarry
-                            myarry.push(created)
-                          }
+                         //   }
+                         // if (myarry[0] == null) { ////if created is not in myarry
+                         //   myarry.push(created)
+                        //  }
 
-                          eval('myarry.push(' + field + ')')
+                         // eval('myarry.push(' + field + ')')
                               ////weather_variable="Temperature"
-                            }
+                           // }
 
                       ////Disable non-existing weather Variables
                       //loadMap(Lon,Lat)
-                      populateWeathervariables(myarry)
+                      //populateWeathervariables(myarry)
                       defineNewdata(myarry)
                       drawGraph(newdata)
                       refreshmap(Lon, Lat)
                       populateDatatables(weather_variable_id)
 
-                    },
+                   // },
 
-                  });
+                 // });
             }
 
             function create_channel_items(){
@@ -880,31 +882,31 @@ var monthlyData = []
               //By default start with weather stations
               //Load data for the first weather station
 
-              $.ajax({
+             // $.ajax({
 
-                type: 'GET',
+               // type: 'GET',
 
-                url: "/mamase/channel/?type="+ station_type,
-                dataType: "json",
-                success: function(data) {
-                  var stationselect = document.getElementById('selectstation');
-                  option = '';
+               // url: "/mamase/channel/?type="+ station_type,
+               // dataType: "json",
+               // success: function(data) {
+              //    var stationselect = document.getElementById('selectstation');
+              //    option = '';
 
               //Load data for the first item in the list
-              id = data[data.length-1]['id']
+              //id = data[data.length-1]['id']
 
               //For some weird reason, seems the ID does not change when calling pull data.
               //Call it after this function
               
-              for (var i = data.length - 1; i >= 0; i--) {
-                option += '<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
-              }
+              //for (var i = data.length - 1; i >= 0; i--) {
+             //   option += '<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
+             // }
 
-              stationselect.innerHTML = option;
-              pullData(id,year,month);
-            }
+            //  stationselect.innerHTML = option;
+             // pullData(id,year,month);
+           // }
 
-          });              
+         // });              
             }
             function strip_tags(html) {
               var tmp = document.createElement("div");
