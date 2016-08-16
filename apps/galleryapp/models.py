@@ -16,7 +16,7 @@ from wagtail.wagtaildocs.edit_handlers import DocumentChooserPanel
 #import thumbs
 
 
-class Gallery(Page):
+class GalleryApp(Page):
     #gallery_slug = models.SlugField(max_length=50)
     name = models.CharField(max_length=55)
     description = models.TextField(blank=True)
@@ -30,24 +30,24 @@ class Gallery(Page):
     def __unicode__(self):
         return(self.name)
 
-    def save(self, *args, **kwargs):
+def save(self, *args, **kwargs):
         self.gallery_slug = slugify(self.name)
-        super(Gallery, self).save(*args, **kwargs) # Call the "real" save() method.
+        super(GalleryApp, self).save(*args, **kwargs) # Call the "real" save() method.
 
-Gallery.content_panels = Page.content_panels + [
+GalleryApp.content_panels = Page.content_panels + [
        FieldPanel('name'),
        FieldPanel('description'),
     ]
 
 
-class Image(Page):
+class ImageApp(Page):
 #    image_slug = models.SlugField(max_length=50)
     name =  models.CharField(max_length=50)
     image = models.ImageField(upload_to='MaMaSeGalleries',blank=True,null=True)
     description = models.TextField(blank=True)
 #    date_created = models.DateTimeField(auto_now_add=True)
 #    date_modified = models.DateTimeField(auto_now=True)
-    gallery = models.ForeignKey(Gallery, on_delete=models.SET_NULL, null=True)
+    gallery = models.ForeignKey(GalleryApp, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         ordering = ['name']
@@ -59,7 +59,7 @@ class Image(Page):
         self.image_slug = slugify(self.name)
         super(Image, self).save(*args, **kwargs) # Call the "real" save() method.
 
-Image.content_panels = Page.content_panels + [
+ImageApp.content_panels = Page.content_panels + [
        FieldPanel('name'),
        ImageChooserPanel('image'),
        FieldPanel('description'),

@@ -78,13 +78,7 @@
                                                 Weather Station
                                             </td>
                                             <td>
-                                                Weather Variable
-                                            </td>
-                                            <td>
                                                 Time Interval
-                                            </td>
-                                            <td>
-                                                Month
                                             </td>
                                             <td>
                                                 Year
@@ -99,24 +93,20 @@
                                             <td>
                                                 <div class="dropdown_station">
                                                     <select id="selectstation" onchange="selectStation(this)">
-                                                        <option value="1">Mulot Weather</option>
-                                                        <option value="5">Nairotia Weather</option>
-                                                        <option value="7">Bomet Weather</option>
-                                                        <option value="6">Governor's Camp Weather</option>
-                                                        <option value="4">Rekero Camp Weather</option>
-                                                        <option value="3">Keekorok Weather</option>
-                                                        <option value="2">Mara Conservancy Weather</option>
-                                                        <option value="8">Mara River @ Serena</option>
-                                                        <option value="9">Talek River @ Fig Tree</option>
+                                                        <option value="mulot">Mulot Weather</option>
+                                                        <!--option value="5">Nairotia Weather</option-->
+                                                        <option value="bomet">Bomet Weather</option>
+                                                        <!--option value="6">Governor's Camp Weather</option-->
+                                                        <option value="rekero">Rekero Camp Weather</option>
+                                                        <option value="keerok">Keekorok Weather</option>
+                                                        <option value="mara">Mara Conservancy Weather</option>
+                                                        <!--option value="8">Mara River @ Serena</option-->
+                                                        <!--option value="9">Talek River @ Fig Tree</option-->
                                                     </select>
                                                     </ul>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div class="dropdown_weather">
-                                                    <select id="weathervariables" onchange="weatherVariable(this)">
-                                                </div>
-                                            </td>
+                                        
                                             <td>
                                                 <div class="dropdown_interval">
                                                     <select id="timeinterval" onchange="timeInterval(this)">
@@ -126,24 +116,7 @@
                                                     </select>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div class="dropdown_month">
-                                                    <select id="month" onchange="selectedMonth(this)">
-                                                        <option value="1">Jan</option>
-                                                        <option value="2">Feb</option>
-                                                        <option value="3">Mar</option>
-                                                        <option value="4">Apr</option>
-                                                        <option value="5">May</option>
-                                                        <option value="6">Jun</option>
-                                                        <option value="7">Jul</option>
-                                                        <option value="8">Aug</option>
-                                                        <option value="9">Sep</option>
-                                                        <option value="10">Oct</option>
-                                                        <option value="11">Nov</option>
-                                                        <option value="12">Dec</option>
-                                                    </select>
-                                                </div>
-                                            </td>
+                                            
                                             <td>
                                                 <div class="dropdown_year">
                                                     <select id="year" onchange="selectedYear(this)">
@@ -190,5 +163,5 @@
 <!-- End Container -->
 {% endblock content %} 
 {% block js %}
-<script src="{% static 'js/upandecharts.js'%}"></script>
+<script src="{% static 'js/upandechartsRT.js'%}"></script>
 {% endblock %}

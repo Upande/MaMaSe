@@ -12,7 +12,7 @@ celery==3.1.23
 colorama==0.3.6
 dj-database-url==0.3.0
 dj-static==0.0.6
-Django==1.9.6
+Django==1.9.7
 django-appconf==1.0.1
 django-bower==5.0.4
 django-celery==3.1.17
@@ -21,7 +21,7 @@ django-disqus==0.5
 django-filer==1.2.0
 django-filter==0.12.0
 django-model-utils==2.4
-django-modelcluster==1.1
+django-modelcluster==2.0
 django-mptt==0.8.4
 django-polymorphic==0.8.1
 django-storages==1.1.8
@@ -36,7 +36,7 @@ elasticsearch==2.2.0
 funcsigs==0.4
 future==0.15.2
 gunicorn==19.4.5
-html5lib==1.0b8
+html5lib==0.9999999
 Jinja2==2.8
 jmespath==0.9.0
 jsonfield==1.0.3
@@ -72,7 +72,7 @@ supervisor==3.2.0
 Unidecode==0.4.19
 urllib3==1.14
 visualcaptcha==0.0.6
-wagtail==1.4.5
+wagtail==1.5
 watchdog==0.8.3
 whitenoise==2.0.6
 Willow==0.3.1

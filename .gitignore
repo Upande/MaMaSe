@@ -1,10 +1,8 @@
-*.pyc
 *~
 *#
 *.#
 
 apps/testapp/migrations/
-celerybeat.pid
 
 media/
 media_old/
@@ -71,3 +69,4 @@ target/
 
 #Ignore manage.py. For celery
 ./manage.py
+./celerybeat.pid
