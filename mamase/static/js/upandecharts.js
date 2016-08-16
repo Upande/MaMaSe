@@ -228,7 +228,7 @@ var monthlyData = []
           ////change month
           function selectedMonth(selmonth) {
             month = selmonth.value - 1;
-
+            
             if (datatype == 'raw') {
               refreshAndloadData(id, month, year)
             } else {
@@ -278,7 +278,7 @@ var monthlyData = []
                 if (datatype == 'raw') {
                   $("#selectaggregation").prop("disabled", true).css('opacity', 0.5);
 
-                  pullData(id,year,month)
+                  pullData(id,month,year)
                 } else {
                   ////call data from API using time_interval
                   //// and start date, end date and  channel
@@ -626,7 +626,6 @@ var monthlyData = []
                               ////define a variable field dynamically: for every field
                               ////define populate first array with field name, e.g "Rain"
                               //eval('var ' + field + ' = ["' + (channel.fields[i].field) + '"]');
-                              //console.log(feeds)
 
                               $('#channeldesc').html(channel.description);
                               $('#channelname').html(channel.name);
@@ -736,18 +735,20 @@ var monthlyData = []
 
 
           function definenewdate(month, year) {
+            if (datatype == "monthly") {  
+              var start = moment([year]).format('YYYY-MM-DD');
+              var end = moment([year]).add(1, "year").format('YYYY-MM-DD'); 
 
-
-            if (datatype == "monthly") {
-              var start = moment().startOf('year').format('YYYY-MM-DD')
-              var end = moment().endOf('year').format('YYYY-MM-DD')
+              //var start = moment().startOf('year').format('YYYY-MM-DD')
+              //var end = moment().endOf('year').format('YYYY-MM-DD')
 
             } else {
-              var start = moment().startOf('month').format('YYYY-MM-DD')
-              var end = moment().endOf('month').format('YYYY-MM-DD')
+              var start = moment([year, month]).format('YYYY-MM-DD');
+              var end = moment([year, month]).add(1,"month").format('YYYY-MM-DD')
+              //var start = moment().startOf('month').format('YYYY-MM-DD')
+              //var end = moment().endOf('month').format('YYYY-MM-DD')
 
-
-            }
+            }            
 
             startdate = start;
             enddate = end;
@@ -784,7 +785,7 @@ var monthlyData = []
 
 
           ////Fxn to pull data from the API
-          function pullData(id,year,month) {
+          function pullData(id,month,year) {
               ////Fxn to display loading image on load
 
               $("#spinner").bind("ajaxSend", function() {
@@ -901,7 +902,7 @@ var monthlyData = []
               }
 
               stationselect.innerHTML = option;
-              pullData(id,year,month);
+              pullData(id,month,year);
             }
 
           });              
