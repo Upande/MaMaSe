@@ -6,13 +6,10 @@ from .views import (IndexView, ContactView,
                     start, getAudio,
                     getImage, trySubmission,
                     logThingspeakData,
-<<<<<<< HEAD
-                    email, knowledge,
+                    email,knowledge,
+                    RainTempView
                     )
-=======
-                    email,knowledge,RainTempView
-)
->>>>>>> 9e8a09a55f42d98c017438773ed25c1e06fc6ffb
+
 
 from .thingspeak import returnChannelData, returnFeedData, addClassicData
 from .api import getFeeds, getAllData

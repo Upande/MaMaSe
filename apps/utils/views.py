@@ -91,14 +91,11 @@ class ProjectManView(TemplateView):
 class ContactView(TemplateView):
     template_name = "contact.html"
 
-<<<<<<< HEAD
 
-=======
 class RainTempView(TemplateView):
     template_name = "chartRT.html"
         
-        
->>>>>>> 9e8a09a55f42d98c017438773ed25c1e06fc6ffb
+
 def error_view(request):
     return render(request, "500.html")
 
