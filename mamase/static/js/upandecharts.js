@@ -679,6 +679,7 @@ var monthlyData = []
 
                           define_monthly_daily_data(newdata)
                           plotMonthly_daily(mydata)
+                          populateDatatables(weather_variable_id)
 
                         }
                       })
@@ -739,15 +740,9 @@ var monthlyData = []
               var start = moment([year]).format('YYYY-MM-DD');
               var end = moment([year]).add(1, "year").format('YYYY-MM-DD'); 
 
-              //var start = moment().startOf('year').format('YYYY-MM-DD')
-              //var end = moment().endOf('year').format('YYYY-MM-DD')
-
             } else {
               var start = moment([year, month]).format('YYYY-MM-DD');
               var end = moment([year, month]).add(1,"month").format('YYYY-MM-DD')
-              //var start = moment().startOf('month').format('YYYY-MM-DD')
-              //var end = moment().endOf('month').format('YYYY-MM-DD')
-
             }            
 
             startdate = start;
