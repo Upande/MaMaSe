@@ -4,7 +4,8 @@ var icon1 = 'https://s3.amazonaws.com/mamase/static/images/red_marker.png'
 var daily = []
 var monthly = []
 var raw = []
-var weather_station = "Mulot Weather"
+var weather_station_name = ""
+var weather_station = ""
 var weather_variable = "Rain"
 var weather_variable_id = 1
 var time_interval = "raw"
@@ -30,6 +31,26 @@ var monthlyData = []
           var graph_description = 'Raw Data'
           var map
           var vectorLayer
+          var container = document.getElementById('popup');
+          var content = document.getElementById('popup-content');
+          var closer = document.getElementById('popup-closer');
+
+          closer.onclick = function() {
+            overlay.setPosition(undefined);
+            closer.blur();
+            return false;
+          };
+
+          /**
+           * Create an overlay to anchor the popup to the map.
+           */
+          var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */ ({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+              duration: 250
+            }
+          }));
 
           var startdate = ""
           var enddate = ""
@@ -38,6 +59,7 @@ var monthlyData = []
           var table
           var coordinates = []
           var coordinate_names = []
+          var coordinate_ids = []
 
 
           var monthly_data = [
@@ -90,13 +112,15 @@ var monthlyData = []
 
 
           function refreshmap(Lon, Lat) {
-            var layers = map.getLayers();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
-              layers.pop();
+            $('#map').empty()
+            loadMap(Lon,Lat)
+            //var layers = map.getLayers();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+            //  layers.pop();
 
-              map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
-              map.getView().setZoom(Zoom);
+            //  map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
+            //  map.getView().setZoom(Zoom);
 
-              createMarker(Lon, Lat)
+            //  createMarker(Lon, Lat)
             }
 
 
@@ -186,6 +210,7 @@ var monthlyData = []
           ////change station
           function selectStation(selstation) {
             weather_station = selstation.value;
+            weather_station_name = selstation.selectedOptions[0]['label'];
             id = weather_station
 
             if (datatype == 'raw') {
@@ -195,6 +220,23 @@ var monthlyData = []
             }
           }
 
+
+        ////change station
+        function selectStationFromMap(station_id,station_name) {
+            //Set Id and Name of current station to the selected station
+            weather_station = station_id;
+            weather_station_name = station_name;
+            id = weather_station
+
+            //Change the selected item to the selected on
+            $('#selectstation').val(station_id);
+            
+            if (datatype == 'raw') {
+              refreshAndloadData(id, month, year)
+            } else {
+              drawGraph_monthly_daily(id, month, year, datatype)
+            }
+          }
 
 
 
@@ -314,12 +356,13 @@ var monthlyData = []
                 function getChannelCoordnates() {
                   $.ajax({
                     type: 'GET',
-                    url: "/mamase/channel/",
+                    url: "/mamase/channel/?type="+ station_type,
                     dataType: "json",
                     success: function(data) {
                       for (var x = 0; x < data.length; x++) {
                         coordinate_names.push(data[x].name)
                         coordinates.push([data[x].longitude,data[x].latitude])
+                        coordinate_ids.push(data[x].id)
                       }
                     }
                   });
@@ -415,11 +458,27 @@ var monthlyData = []
 
             map = new ol.Map({
               target: 'map',
+              overlays: [overlay],  
               view: new ol.View({
                 projection: 'EPSG:900913',
                 center: ol.proj.fromLonLat([Lon, Lat]),
                 zoom: Zoom
               })
+            });
+            /**
+             * Add a click handler to the map to render the popup.
+             */
+            map.on('singleclick', function(evt) {
+              var feature_id
+              var name = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+                feature_id = feature.get('id')
+                return feature.get('name');
+              });
+              if (name){
+                var coordinate = evt.coordinate;
+                content.innerHTML = '<p>You are viewing:</p><code><a href="javascript.void(0);" onclick="selectStationFromMap(\''+feature_id+'\',\''+name+'\');return false;">' + name +'</a></code>';
+                overlay.setPosition(coordinate);
+              }              
             });
 
             var osmlayer = new ol.layer.Tile({
@@ -441,9 +500,8 @@ var monthlyData = []
               var iconFeature = new ol.Feature({
                 geometry: new
                 ol.geom.Point(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857')),
-                name: 'Null Island ',
-                population: 400100,
-                rainfall: 500
+                name: weather_station_name,
+                id: weather_station,         
               });
 
               ////and add to source vector   
@@ -468,7 +526,7 @@ var monthlyData = []
               ////add the feature vector to the layer vector, and apply a style to whole layer
               var vectorLayer = new ol.layer.Vector({
                source: vectorSource,
-               style: iconStyle
+               style: iconStyle,
              });
 
               coordinatesLayer = addMarkersToMap();
@@ -482,15 +540,17 @@ var monthlyData = []
             var coordinatesource = new ol.source.Vector({});
               ////This function will load other points to the vector
             for (var x = 0; x < coordinates.length; x++) {  
-                
-                var coordinateicon = new ol.Feature({
+                if ( coordinates[x][0] != Lon && coordinates[x][1] != Lat ) {
+                  var coordinateicon = new ol.Feature({
                   geometry: new
                   ol.geom.Point(ol.proj.transform(coordinates[x], 'EPSG:4326', 'EPSG:3857')),
-                  name: coordinate_names[x]
+                  name: coordinate_names[x],
+                  id: coordinate_ids[x],
                 });
                 coordinatesource.addFeature(coordinateicon);
                 //vectorSource.addFeature(coordinateicon);
                 //features.push(coordinatesource)
+                }                
               }
 
                             ////create the icon style
@@ -499,7 +559,7 @@ var monthlyData = []
                   anchor: [0.5, 4],
                   anchorXUnits: 'fraction',
                   anchorYUnits: 'pixels',
-                  opacity: 0.75,
+                  opacity: 0.8,
                   src: icon
                 }))
               });
@@ -510,8 +570,6 @@ var monthlyData = []
              });
               return coordinatesLayer;
           }
-
-
 
           ////To add controls for depth
           function addDepthcontrols() {
@@ -679,6 +737,7 @@ var monthlyData = []
 
                           define_monthly_daily_data(newdata)
                           plotMonthly_daily(mydata)
+                          populateDatatables(weather_variable_id)
 
                         }
                       })
@@ -739,15 +798,9 @@ var monthlyData = []
               var start = moment([year]).format('YYYY-MM-DD');
               var end = moment([year]).add(1, "year").format('YYYY-MM-DD'); 
 
-              //var start = moment().startOf('year').format('YYYY-MM-DD')
-              //var end = moment().endOf('year').format('YYYY-MM-DD')
-
             } else {
               var start = moment([year, month]).format('YYYY-MM-DD');
               var end = moment([year, month]).add(1,"month").format('YYYY-MM-DD')
-              //var start = moment().startOf('month').format('YYYY-MM-DD')
-              //var end = moment().endOf('month').format('YYYY-MM-DD')
-
             }            
 
             startdate = start;
@@ -893,12 +946,16 @@ var monthlyData = []
 
               //Load data for the first item in the list
               id = data[data.length-1]['id']
+              weather_station = data[data.length-1]['id']
+
+              ///set the weather_station as the first variables
+              weather_station_name = data[data.length-1]['name']
 
               //For some weird reason, seems the ID does not change when calling pull data.
               //Call it after this function
               
               for (var i = data.length - 1; i >= 0; i--) {
-                option += '<option value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
+                option += '<option label="'+data[i]['name']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
               }
 
               stationselect.innerHTML = option;
@@ -960,7 +1017,7 @@ var monthlyData = []
                   ////split date to year and month
                   year = dt.getFullYear();
                   month = dt.getMonth();
-
+                  
                   ////select the appropriate year in the year dropdown
                   $('#year option').filter(function() {
 
