@@ -94,7 +94,7 @@ class ContactView(TemplateView):
 
 class RainTempView(TemplateView):
     template_name = "chartRT.html"
-        
+
 
 def error_view(request):
     return render(request, "500.html")

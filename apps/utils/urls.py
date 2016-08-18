@@ -6,7 +6,7 @@ from .views import (IndexView, ContactView,
                     start, getAudio,
                     getImage, trySubmission,
                     logThingspeakData,
-                    email,knowledge,
+                    email, knowledge,
                     RainTempView
                     )
 

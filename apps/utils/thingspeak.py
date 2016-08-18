@@ -134,10 +134,10 @@ def returnChannelData(request):
     if request.method == 'GET':
         type_ = request.GET.get('type', None)
 
-        if type_ == 'WEATHER_STATION' or type_=='RIVER_DEPTH':
-            channels = Channel.objects.filter(type = type_.upper())   
+        if type_ == 'WEATHER_STATION' or type_ == 'RIVER_DEPTH':
+            channels = Channel.objects.filter(type=type_.upper())
         elif type_ == 'rain_temp':
-            channels = Channel.objects.filter(type = 'WEATHER_STATION')
+            channels = Channel.objects.filter(type='WEATHER_STATION')
 
         else:
             channels = Channel.objects.all()
@@ -253,8 +253,8 @@ def addClassicData(request):
             )
 
         #Start aggregating the data
-        ddata = aggregateDailyFeedData({'channel': c})
-        mdata = aggregateMonthlyFeedData({'channel': c})
+        ddata = aggregateDailyFeedData({'channelfield__channel_id': c})
+        mdata = aggregateMonthlyFeedData({'channelfield__channel_id': c})
 
         daily_avg = list(ddata[0])
         daily_sum = list(ddata[1])
