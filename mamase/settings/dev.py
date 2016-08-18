@@ -13,7 +13,7 @@ MEDIA_URL = '/media/'
 
 STATIC_URL = '/static/'
 
-INSTALLED_APPS += ['kombu.transport.django',]
+INSTALLED_APPS += ['kombu.transport.django', ]
 
 try:
     from .local import *
@@ -23,48 +23,35 @@ except ImportError:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mamase', 
+        'NAME': 'mamase',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
-        'PORT': '5432', 
+        'PORT': '5432',
     },
     'testingdb': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mamase_test', 
+        'NAME': 'mamase_test',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
-        'PORT': '5432', 
-        'TEST':{
+        'PORT': '5432',
+        'TEST': {
             'MIRROR': 'default',
         }
     }
 
-    
 }
 
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {
-       'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',                                                                
-        'URLS': ['http://localhost:9200/'], #,                                                                                                                         
-       'INDEX': 'mamase',
-       'TIMEOUT': 5,
+        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',
+        'URLS': ['http://localhost:9200/'],
+        'INDEX': 'mamase',
+        'TIMEOUT': 5,
     }
 }
-
-#AWS_QUERYSTRING_AUTH = False
-#AWS_PRELOAD_METADATA = False
-#AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-#AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
-#AWS_STORAGE_BUCKET_NAME = os.environ['S3_BUCKET_NAME']
-
-#DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-#MEDIAFILES_LOCATION = 'media'
-
-#MEDIA_URL = 'https://mamase.s3.amazonaws.com/media/'
-#MEDIA_URL = '/media/'
 
 #Use RabbitMQ for production. Heroku has provison of rabbitmq using CloudMQP
 BROKER_URL = 'amqp://upande:upandegani@localhost:5672//'

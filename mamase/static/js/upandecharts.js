@@ -347,7 +347,13 @@ var monthlyData = []
 
                       return newdata
                     }
+                    //Implement an all view
+                    else if (weather_variable == 'all'){
+                      newdata = []
+                      newdata = myarry
 
+                      return newdata
+                    }
                   }
                 }
 
@@ -371,37 +377,42 @@ var monthlyData = []
 
           ////Get monthly data for chosen field and populate it on datatables
           function populateDatatables(selID) {
-            styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
-            enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
-            $.ajax({
-              type: 'GET',
-              url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&stationtype="+ station_type + "&data=monthly",
-              dataType: "json",
-              success: function(data) {
-                dataset = []
-                monthlyData = data.feed[0].monthly
-                channels = data.channel
-                for (var x = 0; x < channels.length; x++) {
-                  eval('dataset.push(["' + channels[x].name + '",null,null,null,null,null,null,null,null,null,null,null,null])');
-                }
+            if (selID != 'all'){
+              styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
+              enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
+              $.ajax({
+                type: 'GET',
+                url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&stationtype="+ station_type + "&data=monthly",
+                dataType: "json",
+                success: function(data) {
+                  dataset = []
+                  monthlyData = data.feed[0].monthly
+                  channels = data.channel
+                  for (var x = 0; x < channels.length; x++) {
+                    eval('dataset.push(["' + channels[x].name + '",null,null,null,null,null,null,null,null,null,null,null,null])');
+                  }
 
-                eval('tabledata = monthlyData.' + aggr_variable)
+                  eval('tabledata = monthlyData.' + aggr_variable)
 
-                for (var i = 0; i < tabledata.length; i++) {
-                  for (var j = 0; j < dataset.length; j++) {
-                    if (dataset[j][0] == tabledata[i].channelfield__channel__name) {
-                                  //Get the value of the month and add one since it jan is represented as 0
-                                  m = moment(tabledata[i].timestamp, 'YYYY-MM-DD').month() + 1
-                                  eval('dataset[j][m] = roundoff(tabledata[i].reading__' + aggr_variable+')')                                  
+                  for (var i = 0; i < tabledata.length; i++) {
+                    for (var j = 0; j < dataset.length; j++) {
+                      if (dataset[j][0] == tabledata[i].channelfield__channel__name) {
+                                    //Get the value of the month and add one since it jan is represented as 0
+                                    m = moment(tabledata[i].timestamp, 'YYYY-MM-DD').month() + 1
+                                    eval('dataset[j][m] = roundoff(tabledata[i].reading__' + aggr_variable+')')                                  
+                                  }
                                 }
                               }
+                              datatset = dataset.join(", ")
+
+                              table.clear().rows.add(dataset).draw();
+
                             }
-                            datatset = dataset.join(", ")
-
-                            table.clear().rows.add(dataset).draw();
-
-                          }
-                        });
+                          });
+            }
+            else{
+              table.clear().draw();
+            }
           }
 
 
@@ -411,7 +422,12 @@ var monthlyData = []
           ////load existing weather variables
           function populateWeathervariables(myarry) {
               $('#weathervariables').empty() //empty weather variable list
-              var myoption = ""
+               $('#weathervariables').append($('<option>', {
+                      value: 'all',
+                      text: 'All',
+                      id: 'all'
+                    }));
+                  
                   ////create a list of existing fields, e.g rain, temp, humidity etc
                   mylist = []
                   for (var i = 1; i < myarry.length; i++) {
