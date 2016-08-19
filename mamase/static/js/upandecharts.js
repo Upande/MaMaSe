@@ -603,10 +603,13 @@ var monthlyData = []
             station_type = modevalue.value
 
             //$("#controls_div").remove();
-            if (station_type == 'river_depth') {
-              addDepthcontrols()
+            if (station_type != 'weather_station') {
+              alert("No data at the moment");
+              //addDepthcontrols()
             }
-            create_channel_items();
+            else{
+                //create_channel_items(); //Not sure what this does. Best disable for now
+            }
           }
 
 
