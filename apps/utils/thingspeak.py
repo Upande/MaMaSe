@@ -18,7 +18,10 @@ from apps.utils.models import (Channel,
                                AggregateDailyFeed,
                                Field, ChannelField)
 
-from apps.utils.api import aggregateMonthlyFeedData, aggregateDailyFeedData
+from apps.utils.api import (aggregateMonthlyFeedData,
+                            aggregateDailyFeedData,
+                            storeAggregatedData)
+
 from apps.utils.serializers import ChannelSerializer, FeedSerializer
 
 
@@ -63,8 +66,13 @@ def parseAPIContent():
     return True
 
 
-def getFeedData(data_id):
+def getFeedData(data_id, start=None, results=None):
     url = "https://thingspeak.com/channels/"+str(data_id)+"/feed.json"
+    if start:
+        if not results:
+            results = 8000
+        url = "https://thingspeak.com/channels/"+str(data_id)+"/feed.json?results="+str(results)+"&start="+str(start)
+
     data = getAPIData(url)
     if not data:
         return
@@ -83,6 +91,7 @@ def getFeedData(data_id):
         field = "field" + str(i)
         f = ch.get(field)
         if f:
+            print channel
             f, created = Field.objects.get_or_create(name=f)
             c, created = ChannelField.objects.get_or_create(channel=channel,
                                                             field=f,
@@ -134,10 +143,10 @@ def returnChannelData(request):
     if request.method == 'GET':
         type_ = request.GET.get('type', None)
 
-        if type_ == 'WEATHER_STATION' or type_=='RIVER_DEPTH':
-            channels = Channel.objects.filter(type = type_.upper())   
+        if type_ == 'WEATHER_STATION' or type_ == 'RIVER_DEPTH':
+            channels = Channel.objects.filter(type=type_.upper())
         elif type_ == 'rain_temp':
-            channels = Channel.objects.filter(type = 'WEATHER_STATION')
+            channels = Channel.objects.filter(type='WEATHER_STATION')
 
         else:
             channels = Channel.objects.all()
@@ -179,6 +188,7 @@ def returnFeedDataOld(request):
 def addClassicData(request):
     results = request.GET.get('records', None)
     start = request.GET.get('start', None)
+    end = request.GET.get('end', None)
 
     if not results and not start:
         results = 8000
@@ -187,179 +197,8 @@ def addClassicData(request):
     ch = Channel.objects.all()
 
     for c in ch:
-        url = "https://thingspeak.com/channels/"+str(c.data_id)+"/feed.json?results="+str(results)+"&start="+str(start)
-        data = getAPIData(url)
-
-        print url
-        #print data
-
-        if not data:
-            print "No data found"
-            continue
-
-        feeds = data['feeds']
-
-        for item in feeds:
-            #Some weird values show up. Like 101.0=270
-            #So I need to strip that out.
-
-            field1 = item.get('field1', None)
-            if field1:
-                field1 = clean(field1)
-
-            field2 = item.get('field2', None)
-            if field2:
-                field2 = clean(field2)
-
-            field3 = item.get('field3', None)
-            if field3:
-                field3 = clean(field3)
-
-            field4 = item.get('field4', None)
-            if field4:
-                field4 = clean(field4)
-
-            field5 = item.get('field5', None)
-            if field5:
-                field5 = clean(field5)
-
-            field6 = item.get('field6', None)
-            if field6:
-                field6 = clean(field6)
-
-            field7 = item.get('field7', None)
-            if field7:
-                field7 = clean(field7)
-
-            field8 = item.get('field8', None)
-            if field8:
-                field8 = clean(field8)
-
-            f, created = Feed.objects.get_or_create(
-                entry_id=item['entry_id'],
-                channel=c,
-
-                defaults={'field1': field1,
-                          'field2': field2,
-                          'field3': field3,
-                          'field4': field4,
-                          'field5': field5,
-                          'field6': field6,
-                          'field7': field7,
-                          'field8': field8,
-                          'timestamp': item.get('created_at', None),
-                          'entry_id': item.get('entry_id', None),
-                          }
-            )
-
-        #Start aggregating the data
-        ddata = aggregateDailyFeedData({'channel': c})
-        mdata = aggregateMonthlyFeedData({'channel': c})
-
-        daily_avg = list(ddata[0])
-        daily_sum = list(ddata[1])
-        daily_cnt = list(ddata[2])
-        daily_min = list(ddata[3])
-        daily_max = list(ddata[4])
-
-        month_avg = list(mdata[0])
-        month_sum = list(mdata[1])
-        month_cnt = list(mdata[2])
-        month_min = list(mdata[3])
-        month_max = list(mdata[4])
-
-        print daily_avg
-        print daily_sum
-        print daily_cnt
-        print daily_min
-        print daily_max
-
-        if daily_avg:
-            for item in daily_avg:
-                da, created = (AggregateDailyFeed.objects
-                               .get_or_create(timestamp=item['timestamp'],
-                                              aggregation='AVG',
-                                              channel=c,
-                                              defaults={'data': item, })
-                               )
-
-        if daily_sum:
-            for item in daily_sum:
-                ds, created = (AggregateDailyFeed.objects
-                               .get_or_create(timestamp=item['timestamp'],
-                                              aggregation='SUM',
-                                              channel=c,
-                                              defaults={'data': item, })
-                               )
-
-        if daily_cnt:
-            for item in daily_cnt:
-                dc, created = (AggregateDailyFeed.objects
-                               .get_or_create(timestamp=item['timestamp'],
-                                              aggregation='COUNT',
-                                              channel=c,
-                                              defaults={'data': item, })
-                               )
-
-        if daily_min:
-            for item in daily_min:
-                dmi, created = (AggregateDailyFeed.objects
-                                .get_or_create(timestamp=item['timestamp'],
-                                               aggregation='MIN',
-                                               channel=c,
-                                               defaults={'data': item, })
-                                )
-
-        if daily_max:
-            for item in daily_max:
-                dma, created = (AggregateDailyFeed.objects
-                                .get_or_create(timestamp=item['timestamp'],
-                                               aggregation='MAX',
-                                               channel=c,
-                                               defaults={'data': item, })
-                                )
-
-        if month_avg:
-            for item in month_avg:
-                ma, created = (AggregateMonthlyFeed.objects
-                               .get_or_create(timestamp=item['timestamp'],
-                                              aggregation='AVG',
-                                              channel=c,
-                                              defaults={'data': item, })
-                               )
-
-        if month_sum:
-            for item in month_sum:
-                ms, created = (AggregateMonthlyFeed.objects
-                               .get_or_create(timestamp=item['timestamp'],
-                                              aggregation='SUM',
-                                              channel=c,
-                                              defaults={'data': item, })
-                               )
-        if month_cnt:
-            for item in month_cnt:
-                mc, created = (AggregateMonthlyFeed.objects
-                               .get_or_create(timestamp=item['timestamp'],
-                                              aggregation='COUNT',
-                                              channel=c,
-                                              defaults={'data': item, })
-                               )
-        if month_min:
-            for item in month_min:
-                mmi, created = (AggregateMonthlyFeed.objects
-                                .get_or_create(timestamp=item['timestamp'],
-                                               aggregation='MIN',
-                                               channel=c,
-                                               defaults={'data': item, })
-                                )
-        if month_max:
-            for item in month_max:
-                mma, created = (AggregateMonthlyFeed.objects
-                                .get_or_create(timestamp=item['timestamp'],
-                                               aggregation='MAX',
-                                               channel=c,
-                                               defaults={'data': item, })
-                                )
+        getFeedData(c.data_id, start, results)
+        storeAggregatedData(c.id, start, end)
 
     return HttpResponse("Done")
 

@@ -7,7 +7,7 @@ var raw = []
 var weather_station_name = ""
 var weather_station = ""
 var weather_variable = "Rain"
-var weather_variable_id = 1
+var weather_variable_id = 'all'
 var time_interval = "raw"
 var month = 0
 var month_text = "Jan"
@@ -339,22 +339,24 @@ var monthlyData = []
 
           ////extract weather variable from myarry
           function defineNewdata() {
-            for (var i = 0; i < myarry.length; i++) {
-              if (myarry[i][0] == weather_variable) {
+            //Implement an all view
+            if (weather_variable == 'all'){
+              newdata = []
+              newdata = myarry
+
+              return newdata
+            }
+            else {
+              for (var i = 0; i < myarry.length; i++) {
+                  if (myarry[i][0] == weather_variable) {
                       ////select particular weather variable data 
                       newdata = []
                       newdata = [myarry[0], myarry[i]]
 
                       return newdata
                     }
-                    //Implement an all view
-                    else if (weather_variable == 'all'){
-                      newdata = []
-                      newdata = myarry
-
-                      return newdata
-                    }
                   }
+                 }
                 }
 
 
@@ -915,11 +917,11 @@ var monthlyData = []
                                 created.push(n);
                               }
                               try {
-                                eval('var f1 =' + 'feeds[j].fields.' + field);
+                                eval('var f1 =' + 'feeds[j].fields.' + field);                                
+                                if (f1 === undefined){f1=null;}//Removing undefined data
                               } catch (err) {
-
                                 console.log(err)
-                                var f1 = 0
+                                var f1 = null
                               }
                               eval(field + '.push(f1)');
 
@@ -927,7 +929,6 @@ var monthlyData = []
                           if (myarry[0] == null) { ////if created is not in myarry
                             myarry.push(created)
                           }
-
                           eval('myarry.push(' + field + ')')
                               ////weather_variable="Temperature"
                             }
