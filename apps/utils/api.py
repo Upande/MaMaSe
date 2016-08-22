@@ -92,7 +92,8 @@ def getFeeds(request):
         valuesdict = {'id': i.id, 'name': i.name,
                       'desciption': i.description,
                       'latitude': i.latitude,
-                      'longitude': i.longitude}
+                      'longitude': i.longitude,
+                      'river': i.river}
         valuesdict['fields'] = list(values)
         channels.append(valuesdict)
 

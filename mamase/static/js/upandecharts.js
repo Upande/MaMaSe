@@ -114,13 +114,6 @@ var monthlyData = []
           function refreshmap(Lon, Lat) {
             $('#map').empty()
             loadMap(Lon,Lat)
-            //var layers = map.getLayers();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
-            //  layers.pop();
-
-            //  map.getView().setCenter(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857'));
-            //  map.getView().setZoom(Zoom);
-
-            //  createMarker(Lon, Lat)
             }
 
 
@@ -370,8 +363,13 @@ var monthlyData = []
                       for (var x = 0; x < data.length; x++) {
                         coordinate_names.push(data[x].name)
                         coordinates.push([data[x].longitude,data[x].latitude])
-                        coordinate_ids.push(data[x].id)
+                        coordinate_ids.push(data[x].id)                        
                       }
+                      //load data
+                      loadMap(Lon,Lat);          
+                      //Load the channels dropdown before calling the data. 
+                      //This should only be loaded during initialization or when display mode changes          
+                      create_channel_items();//Also runs pull data
                     }
                   });
                 }
@@ -589,11 +587,22 @@ var monthlyData = []
               return coordinatesLayer;
           }
 
-          ////To add controls for depth
-          function addDepthcontrols() {
-            $("#controls").append("<li>list item</li>");
+          ////To add controls for river depth
+          function loadRiverDepthView() {            
+            $("#controls_div").hide();
+            $("#river_depth_control_div").show();
+            getChannelCoordnates();
           }
 
+
+
+
+          ////To add controls for river depth
+          function loadStationView() {  
+              $("#controls_div").show();
+              $("#river_depth_control_div").hide();
+              getChannelCoordnates();
+          }
 
 
 
@@ -601,14 +610,16 @@ var monthlyData = []
           ////select display mode
           function selMode(modevalue) {            
             station_type = modevalue.value
-
-            //$("#controls_div").remove();
-            if (station_type != 'weather_station') {
-              alert("No data at the moment");
-              //addDepthcontrols()
+            coordinates = []
+            coordinate_names = []
+            coordinate_ids =[]
+            
+            if (station_type == 'WEATHER_STATION') {
+              loadStationView();
+              //alert("No data at the moment");
             }
-            else{
-                //create_channel_items(); //Not sure what this does. Best disable for now
+            else if (station_type == 'RIVER_DEPTH'){              
+              loadRiverDepthView();              
             }
           }
 
@@ -882,7 +893,7 @@ var monthlyData = []
 
                 type: 'GET',
 
-                url: "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype,
+                url: "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type,
                 dataType: "json",
                 success: function(data) {
 
@@ -937,7 +948,6 @@ var monthlyData = []
                             }
 
                       ////Disable non-existing weather Variables
-                      //loadMap(Lon,Lat)
                       populateWeathervariables(myarry)
                       defineNewdata(myarry)
                       drawGraph(newdata)
@@ -955,14 +965,20 @@ var monthlyData = []
               //Load data for the first weather station
 
               $.ajax({
-
                 type: 'GET',
-
                 url: "/mamase/channel/?type="+ station_type,
                 dataType: "json",
                 success: function(data) {
-                  var stationselect = document.getElementById('selectstation');
+                  var rivers = []
+                  var riverelement = document.getElementById('river'); 
+                  if (station_type == 'RIVER_DEPTH'){
+                    var stationselect = document.getElementById('selectriverpoint');                    
+                  }
+                  else{
+                    var stationselect = document.getElementById('selectstation');
+                  }                   
                   option = '';
+                  riverlist = '';
 
               //Load data for the first item in the list
               id = data[data.length-1]['id']
@@ -976,9 +992,17 @@ var monthlyData = []
               
               for (var i = data.length - 1; i >= 0; i--) {
                 option += '<option label="'+data[i]['name']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
+                rivers.push(data[i]['river'])//Each channel has river. So by default null is pushed
               }
+              var riverset = new Set(rivers);
+
+              riverset.forEach(function (value) {
+                              riverlist += '<option label="'+value+'" value="'+value+'">'+value+'</option>'
+                            });
 
               stationselect.innerHTML = option;
+              riverelement.innerHTML = riverlist
+
               pullData(id,month,year);
             }
 
@@ -1022,7 +1046,6 @@ var monthlyData = []
 
           var asInitVals = new Array();
 
-          //loadMap(Lon, Lat)
           getChannelCoordnates()
 
           $('#year option').filter(function() {
@@ -1069,14 +1092,6 @@ var monthlyData = []
                     return $(this).val() == datatype;
                   }).prop('selected', true);
 
-
-          //load data
-          loadMap(Lon,Lat);          
-          //Load the channels dropdown before calling the data. 
-          //This should only be loaded during initialization or when display mode changes          
-          create_channel_items();//Also runs pull data
-
-          //pullData(id,year,month);
 
         }
       });
