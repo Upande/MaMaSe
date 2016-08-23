@@ -58,11 +58,11 @@
 	<div id="pagination" class="pagination">
 	  <span class="all-pages">Page {{ news.number }} of {{ news.paginator.num_pages }}</span>
 	  {% if news.has_previous %}
-	  <a class="next-page" href="#">Previous</a>
+	  <a class="next-page" href="?page={{ news.previous_page_number }}">Previous</a>
 	  {% endif %}
 	  <span class="current page-num">{{news.number}}</span>
 	  {% if news.has_next %}
-	  <a class="next-page" href="#">Next</a>
+	  <a class="next-page" href="?page={{ news.next_page_number }}">Next</a>
 	  {% endif %}
 	</div>
 	<!-- End Pagination -->

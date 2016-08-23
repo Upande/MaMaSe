@@ -56,11 +56,11 @@
 				<div id="pagination" class="pagination">
 					<span class="all-pages">Page {{ events.number }} of {{ events.paginator.num_pages }}</span>
 					{% if events.has_previous %}
-					<a class="next-page" href="#">Previous</a>
+					<a class="next-page" href="?page={{ events.previous_page_number }}">Previous</a>
 					{% endif %}
 					<span class="current page-num">{{events.number}}</span>
 					{% if events.has_next %}
-					<a class="next-page" href="#">Next</a>
+					<a class="next-page" href="?page={{ events.previous_page_number }}">Next</a>
 					{% endif %}
 				</div>
 				<!-- End Pagination -->

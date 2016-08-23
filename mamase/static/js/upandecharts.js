@@ -645,7 +645,7 @@ var monthlyData = []
                         type: 'timeseries',
                         tick: {
                           count: 5,
-                          format: '%Y-%m-%d',
+                          format: '%Y-%m-%d %H:%M:%S',
                           fit: true
 
                         }
