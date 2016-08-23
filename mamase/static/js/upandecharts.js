@@ -674,7 +674,7 @@ var monthlyData = []
               $.ajax({
 
                 type: 'GET',
-                url: "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype,
+                url: "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type,
                 dataType: "json",
 
                 success: function(data) {

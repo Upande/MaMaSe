@@ -174,7 +174,7 @@ def aggregateRawData(station_type, kwargs):
     entryid together.
     '''
     if station_type == "RIVER_DEPTH":
-        reading = 'sreading'
+        reading = 'reading'
     else:
         reading = 'reading'
 
@@ -231,7 +231,7 @@ def aggregateRawData(station_type, kwargs):
 
 def aggregateDailyFeedData(station_type, kwargs):
     if station_type == "RIVER_DEPTH":
-        reading = 'sreading'
+        reading = 'reading'
     else:
         reading = 'reading'
 
@@ -276,7 +276,7 @@ def aggregateDailyFeedData(station_type, kwargs):
 
 def aggregateMonthlyFeedData(station_type, kwargs):
     if station_type == "RIVER_DEPTH":
-        reading = 'sreading'
+        reading = 'reading'
     else:
         reading = 'reading'
 

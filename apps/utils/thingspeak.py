@@ -117,7 +117,7 @@ def getFeedData(data_id, start=None, results=None):
                         entry_id=item['entry_id'],
                         channelfield=i,
                         defaults={'sreading': item.get(i.name, None),
-                                  'reading': None,
+                                  'reading': checkIfFloat(i.name),    # If float, save,
                                   'timestamp': item.get('created_at', None),
                                   }
                     )
@@ -222,3 +222,11 @@ def clean(text):
             except ValueError:
                 pass
     return text
+
+
+def checkIfFloat(reading):
+    try:
+        reading = float(reading)
+        return reading
+    except Exception, e:
+        return None
