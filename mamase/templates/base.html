@@ -381,20 +381,13 @@ field = "";
           <ul class="dropdown">
           </ul>
         </li> 
-
-        {% if request.user.is_authenticated %}
         <li>
           <a>Live Data Stream</a>
           <ul class="dropdown" style="list-style: none; padding:0px">
-              <li> <a href="{% url 'visual' %}">Old View</a> </li>
-              <li> <a href="{% url 'chart' %}">New View</a> </li>
+              <li> <a href="{% url 'visual' %}">Simple View</a> </li>
+              <li> <a href="{% url 'chart' %}">Advanced View</a> </li>
           </ul>
         </li> 
-        {% else %}
-        <li>
-          <a href="{% url 'visual' %}">Live Data Stream</a>
-        </li>
-        {% endif %}
         <li>
           <a target="_blank" href="http://maps.mamase.org/">Mara Geoportal</a>
           <ul class="dropdown">
