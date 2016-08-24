@@ -126,7 +126,7 @@ class TestURLs(TestCase):
         self.assertEqual(response.status_code, 200)
 
         response = self.client.get(reverse('email'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
 
 #Test pulling data
 #Test aggregation
