@@ -239,7 +239,7 @@ var monthlyData = []
             weather_variable = selweather.value;
             weather_variable_id = selweather[selweather.selectedIndex].id;
 
-            populateDatatables(weather_variable_id)
+            //populateDatatables(weather_variable_id)
 
             if (datatype == 'raw') {
               defineNewdata(myarry)
@@ -775,7 +775,7 @@ var monthlyData = []
 
                           define_monthly_daily_data(newdata)
                           plotMonthly_daily(mydata)
-                          populateDatatables(weather_variable_id)
+                          //populateDatatables(weather_variable_id)
 
                         }
                       })
@@ -962,7 +962,7 @@ var monthlyData = []
                       defineNewdata(myarry)
                       drawGraph(newdata)
                       refreshmap(Lon, Lat)
-                      populateDatatables(weather_variable_id)
+                      //populateDatatables(weather_variable_id)
 
                     },
 
