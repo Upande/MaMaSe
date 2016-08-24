@@ -22,6 +22,7 @@ from taggit.models import Tag, TaggedItemBase
 class NewsPageTag(TaggedItemBase):
     content_object = ParentalKey('news.NewsPage', related_name='tagged_items')
 
+
 class CategoryPage(Page):
     name = models.CharField(max_length=200)
     description = RichTextField(blank=True)
@@ -36,6 +37,7 @@ class CategoryPage(Page):
         FieldPanel('description', classname="full"),
     ]
 
+
 class NewsPage(Page):
     main_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -48,8 +50,8 @@ class NewsPage(Page):
     intro = RichTextField(blank=True)
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=NewsPageTag, blank=True)
-    
-    category = models.ForeignKey('news.CategoryPage', null=True, blank=True ,related_name='+',on_delete=models.SET_NULL )
+
+    category = models.ForeignKey('news.CategoryPage', null=True, blank=True, related_name='+',on_delete=models.SET_NULL )
 
     link_document = models.ForeignKey(
         'wagtaildocs.Document',
@@ -59,17 +61,16 @@ class NewsPage(Page):
         on_delete=models.SET_NULL,
     )
 
-    @property
-    def categories(self):
-        # Get list of live news pages that are descendants of this page
-        categories = CategoryPage.objects.live()
-        
-        return categories        
-    
+    #@property
+    #def categories(self):
+    #    # Get list of live news pages that are descendants of this page
+    #    categories = CategoryPage.objects.live()
+    #    return categories
+
     @property
     def news_items(self):
         # Get list of live news pages that are descendants of this page
-        news_items = NewsPage.objects.live().descendant_of(self.get_parent()) 
+        news_items = NewsPage.objects.live().descendant_of(self.get_parent())
         # Order by most recent date first. Limit to 5 for the sidebar
         news_items = news_items.order_by('-date')[:5]
 
@@ -80,7 +81,7 @@ class NewsPage(Page):
         #Get all unique tags that belong to the children
         news_tags = NewsPage.objects.live().descendant_of(self.get_parent()).order_by('tags__name').distinct('tags__name').values_list('tags__name',flat=True)
         return news_tags
-        
+
     search_fields = Page.search_fields + (
         index.SearchField('intro'),
         index.SearchField('body'),
@@ -92,7 +93,7 @@ class NewsPage(Page):
         context['news'] = self.news_items
         context['tags'] = self.news_tags
         return context
-        
+
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         ImageChooserPanel('main_image'),
@@ -100,11 +101,12 @@ class NewsPage(Page):
         FieldPanel('intro'),
         FieldPanel('body', classname="full"),
         DocumentChooserPanel('link_document'),
-    ]    
+    ]
 
-NewsPage.promote_panels = Page.promote_panels +[
+NewsPage.promote_panels = Page.promote_panels + [
     FieldPanel('tags'),
 ]
+
 
 class LinkFields(models.Model):
     link_external = models.URLField("External link", blank=True)
@@ -150,7 +152,6 @@ class NewsIndexRelatedLink(Orderable, RelatedLink):
 
 class NewsIndexPage(Page):
     intro = RichTextField(blank=True)
-    
     content_panels = Page.content_panels + [
         FieldPanel('intro', classname="full"),
         InlinePanel('related_links', label="Related links"),
@@ -159,11 +160,10 @@ class NewsIndexPage(Page):
     @property
     def categories(self):
         # Get list of live news pages that are descendants of this page
-        categories = CategoryPage.objects.live() 
-        
+        categories = CategoryPage.objects.live()
+
         return categories
-        
-    
+
     @property
     def news_item(self):
         '''Due to a late change of requirements, this page is used for more than news item. As such it works
@@ -171,7 +171,7 @@ class NewsIndexPage(Page):
         reworked to be clear'''
 
         # Get list of live news pages that are descendants of this page
-        news_item = self.get_children().live() #NewsPage.objects.live().descendant_of(self) 
+        news_item = self.get_children().live()
         # Order by most recent date first
         news_item = news_item.order_by('-id')
 
@@ -183,7 +183,7 @@ class NewsIndexPage(Page):
         tags = NewsPage.objects.live().descendant_of(self).order_by('tags__name').distinct('tags__name').values_list('tags__name',flat=True)
 
         return tags
-        
+
     def get_context(self, request):
         # Get news_item
         news_item = self.news_item
@@ -198,7 +198,7 @@ class NewsIndexPage(Page):
 
         if category:
             news_item = news_item.filter(categorypage__name=category)
-            
+
         # Pagination
         page = request.GET.get('page')
         paginator = Paginator(news_item, 10)  # Show 10 newss per page
@@ -214,6 +214,7 @@ class NewsIndexPage(Page):
         context['news'] = news_item
         context['tags'] = tags
         return context
+
 
 class NoCommentPage(Page):
     date = models.DateField("Post date")
@@ -232,13 +233,13 @@ class NoCommentPage(Page):
     @property
     def categories(self):
         # Get list of live news pages that are descendants of this page
-        categories = CategoryPage.objects.live()        
-        return categories        
-            
+        categories = CategoryPage.objects.live()
+        return categories
+
     @property
     def news_item(self):
         # Get list of live news pages that are descendants of this page
-        news_item = NoCommentPage.objects.live().descendant_of(self.get_parent()) 
+        news_item = NoCommentPage.objects.live().descendant_of(self.get_parent())
         # Order by most recent date first
         news_item = news_item.order_by('-date')[:5]
 
@@ -253,16 +254,16 @@ class NoCommentPage(Page):
         index.SearchField('intro'),
         index.SearchField('body'),
     )
-        
+
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         PageChooserPanel('category'),
-        FieldPanel('intro',classname="full" ),
+        FieldPanel('intro', classname="full"),
         FieldPanel('body', classname="full"),
         DocumentChooserPanel('link_document'),
     ]
-    
-    
+
+
 class InformationPage(Page):
     date = models.DateField("Post date")
     body = RichTextField(blank=True)
@@ -270,9 +271,8 @@ class InformationPage(Page):
     search_fields = Page.search_fields + (
         index.SearchField('body'),
     )
-        
+
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         FieldPanel('body', classname="full"),
     ]
-    

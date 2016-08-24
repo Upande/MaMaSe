@@ -296,17 +296,20 @@ var monthlyData = []
           ////change time interval  
           function timeInterval(interval) {
             datatype = interval.value;
+            time_interval = datatype
             $("#selectaggregation").prop("disabled", false).css('opacity', 1);
 
             if (datatype == 'monthly') {
                   ////Disable month selection if monthly data is selected
                   $("#month").prop("disabled", true).css('opacity', 0.5);
+                  $("#rivermonth").prop("disabled", true).css('opacity', 0.5);
 
                   ////redefine start and end dates to beging n end of year
                   ////to do
 
                 } else {
                   $("#month").prop("disabled", false).css('opacity', 1);
+                  $("#rivermonth").prop("disabled", false).css('opacity', 1);
                 }
 
 
@@ -642,13 +645,16 @@ var monthlyData = []
                     },
                     axis: {
                       x: {
-                        type: 'timeseries',
+                        type: 'timeseries',  
+                        label: time_interval + ' data on ' + weather_station_name,                
                         tick: {
                           count: 5,
                           format: '%Y-%m-%d %H:%M:%S',
                           fit: true
-
                         }
+                      },
+                      y: {
+                        label: weather_variable,
                       }
                     }
                   });
@@ -812,9 +818,13 @@ var monthlyData = []
                     axis: {
                       x: {
                         type: 'timeseries',
+                        label: time_interval + ' data on ' + weather_station_name,
                         tick: {
                           format: '%Y-%m-%d %H'
                         }
+                      },
+                      y: {
+                        label: weather_variable,
                       }
                     }
 

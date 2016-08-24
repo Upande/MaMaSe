@@ -3,16 +3,18 @@ from django.contrib import admin
 from .models import (Channel, Feed, LoggerData,
                      EmailRecipient, Email, AggregateMonthlyFeed,
                      AggregateDailyFeed, Field, ChannelField,
+                     River
                      )
 
 
 class ChannelAdmin(admin.ModelAdmin):
     fields = ['name', 'description', 'latitude', 'longitude', 'elevation',
               'created_at', 'data_id', 'type', 'river']
+
     list_display = ['name', 'description', 'latitude', 'longitude',
                     'elevation', 'created_at', 'data_id', 'type',
                     'river']
-    search_fields = ['name', 'type', 'river']
+    search_fields = ['name', 'type', 'river__name']
 
 
 class FeedAdmin(admin.ModelAdmin):
@@ -23,6 +25,12 @@ class FeedAdmin(admin.ModelAdmin):
 
 
 class FieldAdmin(admin.ModelAdmin):
+    fields = ['name']
+    list_display = ['name', 'added']
+    search_fields = ['name']
+
+
+class RiverAdmin(admin.ModelAdmin):
     fields = ['name']
     list_display = ['name', 'added']
     search_fields = ['name']
@@ -64,6 +72,7 @@ class AggregateDailyFeedAdmin(admin.ModelAdmin):
 
 admin.site.register(Channel, ChannelAdmin)
 admin.site.register(Feed, FeedAdmin)
+admin.site.register(River, RiverAdmin)
 admin.site.register(LoggerData, LoggerDataAdmin)
 admin.site.register(EmailRecipient, EmailRecipientAdmin)
 admin.site.register(Email, EmailAdmin)

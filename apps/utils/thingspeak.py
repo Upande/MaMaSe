@@ -43,6 +43,13 @@ def getChannel():
         return
     channels = data['channels']
     for item in channels:
+        river = checkIfRiver(item['name'])
+        if river:
+            r, created = River.objects.get_or_create(name=river)
+            river_id = r.id
+        else:
+            river_id = None
+
         c, created = (Channel.objects
                       .get_or_create(data_id=item['id'],
                                      defaults={'elevation': item['elevation'],
@@ -52,6 +59,7 @@ def getChannel():
                                                'latitude': item['latitude'],
                                                'created_at': item['created_at'],
                                                'last_entry_id': item['last_entry_id'],
+                                               'river_id': river_id,
                                                }
                                      )
                       )
@@ -230,3 +238,11 @@ def checkIfFloat(reading):
         return reading
     except Exception, e:
         return None
+
+
+def checkIfRiver(name):
+    namelist = name.split('@')
+    if len(namelist) != 2:
+        return None
+    else:
+        return namelist[0].strip()

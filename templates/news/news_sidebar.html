@@ -1,6 +1,7 @@
 <!--Sidebar-->
 <div class="col-md-3 sidebar right-sidebar" style=" border-left: 1px solid #eee;">	
 	<!-- Categories Widget -->
+	{% if self.categories %}
 	<div class="widget widget-categories">
 		<h4>Categories <span class="head-line"></span></h4>
 		<ul>
@@ -11,6 +12,7 @@
 			{% endfor %}
 		</ul>
 	</div>
+	{% endif %}
 
 	<!-- Popular Posts widget -->
 	<div class="widget widget-popular-posts">

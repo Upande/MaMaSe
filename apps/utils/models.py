@@ -10,6 +10,14 @@ class LoggerData(models.Model):
     active = models.BooleanField(default=True)
 
 
+class River(models.Model):
+    name = models.TextField(unique=True)
+    added = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Channel(models.Model):
     CHANNEL_TYPES = (
         ('WEATHER_STATION', 'Weather Station'),
@@ -38,8 +46,7 @@ class Channel(models.Model):
     #To differentiate between depth sensors and other sensors
     type = models.CharField(max_length=50, choices=CHANNEL_TYPES,
                             default="WEATHER_STATION")
-    river = models.CharField(max_length=50, choices=RIVERS,
-                             default=None, blank=True, null=True)
+    river = models.ForeignKey(River, related_name="rivers", null=True, blank=True)
 
     def __unicode__(self):
         return self.name

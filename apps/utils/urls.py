@@ -29,7 +29,6 @@ urlpatterns = [
     url(r'^project$', ProjectManView.as_view(), name='projectman'),
     url(r'^contact/$', ContactView.as_view(), name='contact-us'),
     url(r'^email/$', email, name='email'),
-    url(r'^knowledge/$', knowledge, name='knowledge'),
     url(r'^channel/$', returnChannelData, name='channel_data'),
     url(r'^feed/$', returnFeedData, name='feed_data'),
     url(r'^classic/$', addClassicData, name='classic'),

@@ -7,7 +7,7 @@ from django.http import JsonResponse
 from django.db import connection
 from django.db.models import Q
 
-from apps.utils.models import (Channel,
+from apps.utils.models import (Channel, River,
                                Feed, AggregateMonthlyFeed,
                                AggregateDailyFeed, ChannelField)
 
@@ -35,6 +35,7 @@ def getFeeds(request):
     data = request.GET.get('data', 'raw')  # Raw,Daily or Monthly. Default(raw)
     field = request.GET.get('field', None)  # A specific field e.g temp
     station_type = request.GET.get('stationtype', "WEATHER_STATION")  # Is it a w.station etc
+    river = request.GET.get('river', None)  # Get all data points on a river
 
     kwargs = {}
     args = {}
@@ -58,6 +59,9 @@ def getFeeds(request):
     if station_type == "rain_temp":
         #kwargs['channelfield__field__name'] = "Temperature" + "Rain"
         pass
+    if river:
+        kwargs['channelfield__channel__river_id'] = river
+        args['river_id'] = river
 
     feed = {}
     feed_without_null = []
@@ -97,6 +101,11 @@ def getFeeds(request):
         valuesdict['fields'] = list(values)
         channels.append(valuesdict)
 
+    rivers = River.objects.all()
+    riverdata = []
+    for i in rivers:
+        riverdata.append({'name': i.name, 'id': i.id})
+
     if limit:
         try:
             limit = int(limit)
@@ -107,7 +116,8 @@ def getFeeds(request):
     channel_without_null = channels  # removeEmptyString(ch)
 
     return JsonResponse(dict(channel=channel_without_null,
-                             feed=feed_without_null))
+                             feed=feed_without_null,
+                             river=riverdata))
 
 
 @time_usage
