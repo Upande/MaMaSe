@@ -12,11 +12,11 @@ from django.core import serializers
 
 from rest_framework.renderers import JSONRenderer
 
-from apps.utils.models import (Channel,
-                               Feed,
+from apps.utils.models import (Channel, River,
+                               Feed, Field,
                                AggregateMonthlyFeed,
                                AggregateDailyFeed,
-                               Field, ChannelField)
+                               ChannelField)
 
 from apps.utils.api import (aggregateMonthlyFeedData,
                             aggregateDailyFeedData,
@@ -43,6 +43,13 @@ def getChannel():
         return
     channels = data['channels']
     for item in channels:
+        river = checkIfRiver(item['name'])
+        if river:
+            r, created = River.objects.get_or_create(name=river)
+            river_id = r.id
+        else:
+            river_id = None
+
         c, created = (Channel.objects
                       .get_or_create(data_id=item['id'],
                                      defaults={'elevation': item['elevation'],
@@ -52,6 +59,7 @@ def getChannel():
                                                'latitude': item['latitude'],
                                                'created_at': item['created_at'],
                                                'last_entry_id': item['last_entry_id'],
+                                               'river_id': river_id,
                                                }
                                      )
                       )
@@ -117,7 +125,7 @@ def getFeedData(data_id, start=None, results=None):
                         entry_id=item['entry_id'],
                         channelfield=i,
                         defaults={'sreading': item.get(i.name, None),
-                                  'reading': None,
+                                  'reading': checkIfFloat(i.name),    # If float, save,
                                   'timestamp': item.get('created_at', None),
                                   }
                     )
@@ -222,3 +230,19 @@ def clean(text):
             except ValueError:
                 pass
     return text
+
+
+def checkIfFloat(reading):
+    try:
+        reading = float(reading)
+        return reading
+    except Exception, e:
+        return None
+
+
+def checkIfRiver(name):
+    namelist = name.split('@')
+    if len(namelist) != 2:
+        return None
+    else:
+        return namelist[0].strip()

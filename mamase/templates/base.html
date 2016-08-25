@@ -125,8 +125,7 @@
 
       $.ajax({
         type: 'GET',
-        url : "http://api.thingspeak.com/channels/"+15792+"/feed.json?start="+dt+"&callback=",
-//url:"/mamase/api/feed/?channel=18",
+        url : "http://api.thingspeak.com/channels/"+16144+"/feed.json?start="+dt+"&callback=",
 dataType: "jsonp",
 success: function(data) {
 
@@ -381,20 +380,13 @@ field = "";
           <ul class="dropdown">
           </ul>
         </li> 
-
-        {% if request.user.is_authenticated %}
         <li>
           <a>Live Data Stream</a>
           <ul class="dropdown" style="list-style: none; padding:0px">
-              <li> <a href="{% url 'visual' %}">Old View</a> </li>
-              <li> <a href="{% url 'chart' %}">New View</a> </li>
+              <li> <a href="{% url 'visual' %}">Simple View</a> </li>
+              <li> <a href="{% url 'chart' %}">Advanced View</a> </li>
           </ul>
         </li> 
-        {% else %}
-        <li>
-          <a href="{% url 'visual' %}">Live Data Stream</a>
-        </li>
-        {% endif %}
         <li>
           <a target="_blank" href="http://maps.mamase.org/">Mara Geoportal</a>
           <ul class="dropdown">

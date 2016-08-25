@@ -59,11 +59,11 @@
 	<div id="pagination" class="pagination">
 	  <span class="all-pages">Page {{ videos.number }} of {{ videos.paginator.num_pages }}</span>
 	  {% if videos.has_previous %}
-	      <a class="next-page" href="#">Previous</a>
+	      <a class="next-page" href="?page={{ videos.previous_page_number }}">Previous</a>
 	      {% endif %}
 	      <span class="current page-num">{{videos.number}}</span>
 	      {% if videos.has_next %}
-	      <a class="next-page" href="#">Next</a>
+	      <a class="next-page" href="?page={{ videos.next_page_number }}">Next</a>
 	      {% endif %}
 	</div>
 	<!-- End Pagination -->

@@ -89,10 +89,10 @@
                     <div class="dropdown">
                         <p> Select Display Mode:
                             <select id="displaymode" onchange="selMode(this)">
-                                <option value="weather_station">Weather Station</option>
-                                <option value="river_depth">River Depth</option>
-                                <option value="rain_temp">Rainfall and Temperature</option>
-                                <option value="depth_rain">River Depth and rainfall</option>
+                                <option value="WEATHER_STATION">Weather Station</option>
+                                <option value="RIVER_DEPTH">River Depth</option>
+                                <option value="RAIN_TEMP">Rainfall and Temperature</option>
+                                <!--<option value="depth_rain">River Depth and rainfall</option>-->
                             </select>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" id="channel-lis">
                                 <li><a href="#">Action</a></li>
@@ -145,23 +145,13 @@
                                             <td>
                                                 <div class="dropdown_station">
                                                     <select id="selectstation" onchange="selectStation(this)">
-                                                        <option value="1">Mulot Weather</option>
-                                                        <option value="5">Nairotia Weather</option>
-                                                        <option value="7">Bomet Weather</option>
-                                                        <option value="6">Governor's Camp Weather</option>
-                                                        <option value="4">Rekero Camp Weather</option>
-                                                        <option value="3">Keekorok Weather</option>
-                                                        <option value="2">Mara Conservancy Weather</option>
-                                                        <option value="8">Mara River @ Serena</option>
-                                                        <option value="9">Talek River @ Fig Tree</option>
-                                                    </select>
-                                                    </ul>
+                                                    </select>                   
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="dropdown_weather">
                                                     <select id="weathervariables" onchange="weatherVariable(this)">
-                                                    <option value="all">All</option>
+                                                    <!--<option value="all">All</option>-->
                                                 </div>
                                             </td>
                                             <td>
@@ -202,20 +192,90 @@
                                             </td>
                                             <td>
                                                 <div class="dropdown_station">
-                                                    <!--<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">-->
-                                                    <select id="selectaggregation" onchange="selectAggregation(this)">
+                                                   <select id="selectaggregation" onchange="selectAggregation(this)">
                                                         <option value="avg">Average</option>
                                                         <option value="sum">Sum</option>
                                                         <option value="min">Min</option>
                                                         <option value="max">Max</option>
                                                     </select>
-                                                    </ul>
                                                 </div>
                                             </td>
                                         </tr>
                                     </tbody>
+                                </table>
+                            </div>
+                            <div id="river_depth_control_div" style="display:none">
+                                <table class='table borderless'>
+                                    <thead id="tableheader">
+                                        <tr>
+                                            <td>
+                                                River
+                                            </td>
+                                            <td>
+                                                River Point
+                                            </td>
+                                            <td>
+                                                Time Interval
+                                            </td>
+                                            <td>
+                                                Month
+                                            </td>
+                                            <td>
+                                                Year
+                                            </td>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr>
+                                            <td>
+                                                <div class="dropdown_station">
+                                                    <select id="river" onchange="selectRiver(this)"> 
+                                                    </select>                   
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown_weather">
+                                                    <select id="selectriverpoint" onchange="selectStation(this)">
+                                                    <option value='all'>All</option>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown_interval">
+                                                    <select id="timeinterval" onchange="timeInterval(this)">
+                                                        <option value="daily">Daily</option>
+                                                        <option value="monthly">Monthly</option>
+                                                        <option value="raw">Raw Data</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown_month">
+                                                    <select id="rivermonth" onchange="selectedMonth(this)">
+                                                        <option value="1">Jan</option>
+                                                        <option value="2">Feb</option>
+                                                        <option value="3">Mar</option>
+                                                        <option value="4">Apr</option>
+                                                        <option value="5">May</option>
+                                                        <option value="6">Jun</option>
+                                                        <option value="7">Jul</option>
+                                                        <option value="8">Aug</option>
+                                                        <option value="9">Sep</option>
+                                                        <option value="10">Oct</option>
+                                                        <option value="11">Nov</option>
+                                                        <option value="12">Dec</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown_year">
+                                                    <select id="year" onchange="selectedYear(this)">
+                                                        <option value="2014">2014</option>
+                                                        <option value="2015">2015</option>
+                                                        <option value="2016">2016</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
