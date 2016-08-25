@@ -669,7 +669,7 @@ def createAggregateDailyData(ddata, item):
         #x.save()
 
 
-def updateAggregateDailyData(data):
+def updateAggregateDailyData(data, item):
     '''Update an exisiting daily record'''
     dc = (AggregateDailyFeed.objects.filter(aggregation="COUNT",
                                             channel=item.channel,
@@ -719,7 +719,7 @@ def updateAggregateDailyData(data):
     dmi.save()
 
 
-def newAggregateDailyData(data):
+def newAggregateDailyData(data, item):
     '''Create data for a new month. Called when we spill over to a new day.'''
     daily_avg = list(data[0])
     daily_sum = list(data[1])
