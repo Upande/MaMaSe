@@ -12,11 +12,11 @@ from django.core import serializers
 
 from rest_framework.renderers import JSONRenderer
 
-from apps.utils.models import (Channel,
-                               Feed,
+from apps.utils.models import (Channel, River,
+                               Feed, Field,
                                AggregateMonthlyFeed,
                                AggregateDailyFeed,
-                               Field, ChannelField)
+                               ChannelField)
 
 from apps.utils.api import (aggregateMonthlyFeedData,
                             aggregateDailyFeedData,

@@ -59,6 +59,7 @@ def getFeeds(request):
     if station_type == "rain_temp":
         #kwargs['channelfield__field__name'] = "Temperature" + "Rain"
         pass
+
     if river:
         kwargs['channelfield__channel__river_id'] = river
         args['river_id'] = river
@@ -96,8 +97,9 @@ def getFeeds(request):
         valuesdict = {'id': i.id, 'name': i.name,
                       'desciption': i.description,
                       'latitude': i.latitude,
-                      'longitude': i.longitude,
-                      'river': i.river}
+                      'longitude': i.longitude}
+        if i.river:
+            valuesdict['river'] = i.river.id
         valuesdict['fields'] = list(values)
         channels.append(valuesdict)
 

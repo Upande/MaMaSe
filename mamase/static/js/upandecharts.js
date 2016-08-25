@@ -239,7 +239,7 @@ var monthlyData = []
             weather_variable = selweather.value;
             weather_variable_id = selweather[selweather.selectedIndex].id;
 
-            //populateDatatables(weather_variable_id)
+            populateDatatables(weather_variable_id)
 
             if (datatype == 'raw') {
               defineNewdata(myarry)
@@ -392,7 +392,12 @@ var monthlyData = []
                   monthlyData = data.feed[0].monthly
                   channels = data.channel
                   for (var x = 0; x < channels.length; x++) {
-                    eval('dataset.push(["' + channels[x].name + '",null,null,null,null,null,null,null,null,null,null,null,null])');
+                    //Check if the channel has this field
+                    for (var y = 0; y < channels[x].fields.length; y++){
+                      if (channels[x].fields[y].field__id == weather_variable_id){
+                        eval('dataset.push(["' + channels[x].name + '",null,null,null,null,null,null,null,null,null,null,null,null])');
+                      }
+                    }                    
                   }
 
                   eval('tabledata = monthlyData.' + aggr_variable)
@@ -775,7 +780,7 @@ var monthlyData = []
 
                           define_monthly_daily_data(newdata)
                           plotMonthly_daily(mydata)
-                          //populateDatatables(weather_variable_id)
+                          populateDatatables(weather_variable_id)
 
                         }
                       })
@@ -962,7 +967,7 @@ var monthlyData = []
                       defineNewdata(myarry)
                       drawGraph(newdata)
                       refreshmap(Lon, Lat)
-                      //populateDatatables(weather_variable_id)
+                      populateDatatables(weather_variable_id)
 
                     },
 
