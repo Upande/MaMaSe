@@ -430,11 +430,6 @@ var monthlyData = []
           ////load existing weather variables
           function populateWeathervariables(myarry) {
               $('#weathervariables').empty() //empty weather variable list
-               $('#weathervariables').append($('<option>', {
-                      value: 'all',
-                      text: 'All',
-                      id: 'all'
-                    }));
                   
                   ////create a list of existing fields, e.g rain, temp, humidity etc
                   mylist = []
