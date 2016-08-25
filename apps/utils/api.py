@@ -608,19 +608,19 @@ def aggregateLatestDailyData(channelfields):
                 print "Updating todays records for channel " + item.name
                 data = aggregateDailyFeedData(item.channel.type, {'channelfield': item,
                                               'timestamp__gte': today})
-                updateAggregateDailyData(data, item)
+                updateAggregateDailyData(data, item, today)
 
             else:
                 data = aggregateDailyFeedData(item.channel.type, {'channelfield': item,
                                               'timestamp__gte': today})
-                newAggregateDailyData(data, item)
+                newAggregateDailyData(data, item, today)
 
         else:
             ddata = aggregateDailyFeedData(item.channel.type, {'channelfield': item})
-            createAggregateDailyData(ddata, item)
+            createAggregateDailyData(ddata, item, today)
 
 
-def createAggregateDailyData(ddata, item):
+def createAggregateDailyData(ddata, item, today):
     '''Called the first time we create a database. Initial setup only'''
     daily_avg = list(ddata[0])
     daily_sum = list(ddata[1])
@@ -669,7 +669,7 @@ def createAggregateDailyData(ddata, item):
         #x.save()
 
 
-def updateAggregateDailyData(data, item):
+def updateAggregateDailyData(data, item, today):
     '''Update an exisiting daily record'''
     dc = (AggregateDailyFeed.objects.filter(aggregation="COUNT",
                                             channel=item.channel,
@@ -719,7 +719,7 @@ def updateAggregateDailyData(data, item):
     dmi.save()
 
 
-def newAggregateDailyData(data, item):
+def newAggregateDailyData(data, item, today):
     '''Create data for a new month. Called when we spill over to a new day.'''
     daily_avg = list(data[0])
     daily_sum = list(data[1])
