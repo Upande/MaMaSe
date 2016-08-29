@@ -7,7 +7,7 @@ var raw = []
 var weather_station_name = ""
 var weather_station = ""
 var weather_variable = "Rain"
-var weather_variable_id = 'all'
+var weather_variable_id = '1'
 var time_interval = "raw"
 var month = 0
 var month_text = "Jan"
@@ -239,7 +239,7 @@ var monthlyData = []
             weather_variable = selweather.value;
             weather_variable_id = selweather[selweather.selectedIndex].id;
 
-            populateDatatables(weather_variable_id)
+            //populateDatatables(weather_variable_id)
 
             if (datatype == 'raw') {
               defineNewdata(myarry)
@@ -430,11 +430,6 @@ var monthlyData = []
           ////load existing weather variables
           function populateWeathervariables(myarry) {
               $('#weathervariables').empty() //empty weather variable list
-               $('#weathervariables').append($('<option>', {
-                      value: 'all',
-                      text: 'All',
-                      id: 'all'
-                    }));
                   
                   ////create a list of existing fields, e.g rain, temp, humidity etc
                   mylist = []
@@ -780,7 +775,7 @@ var monthlyData = []
 
                           define_monthly_daily_data(newdata)
                           plotMonthly_daily(mydata)
-                          populateDatatables(weather_variable_id)
+                          //populateDatatables(weather_variable_id)
 
                         }
                       })
@@ -967,7 +962,7 @@ var monthlyData = []
                       defineNewdata(myarry)
                       drawGraph(newdata)
                       refreshmap(Lon, Lat)
-                      populateDatatables(weather_variable_id)
+                      //populateDatatables(weather_variable_id)
 
                     },
 

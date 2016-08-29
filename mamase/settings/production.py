@@ -15,7 +15,7 @@ except ImportError:
 # Parse database configuration from $DATABASE_URL
 import dj_database_url
 
-DATABASES = {'default': dj_database_url.config()} 
+DATABASES = {'default': dj_database_url.config()}
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -52,15 +52,15 @@ AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
 WAGTAILSEARCH_BACKENDS = {
     'default': {
-        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',#'wagtail.wagtailsearch.backends.elasticsearch',                                                              
-        'URLS': [os.environ.get('SEARCHBOX_URL')], #,                                                                        
+        'BACKEND': 'wagtail.wagtailsearch.backends.elasticsearch.ElasticSearch',
+        'URLS': [os.environ.get('SEARCHBOX_URL')],
         'INDEX': 'mamase',
         'TIMEOUT': 5,
     }
 }
 
 
-SEND_BROKEN_LINK_EMAILS=True
+SEND_BROKEN_LINK_EMAILS = True
 ADMINS = [
     ('Samuel', 'samuel@upande.com'),
     ('Paul', 'paul@upande.com'),
@@ -71,10 +71,10 @@ MANAGERS = ADMINS
 
 #Let us try redis. Killing two birds with one stone. For result backend and also as the broker
 #BROKER_URL = os.environ.get('CLOUDAMQP_URL')
-CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
-BROKER_URL=os.environ['REDIS_URL']
+CELERY_RESULT_BACKEND = os.environ['REDIS_URL']
+BROKER_URL = os.environ['REDIS_URL']
 
 STATICFILES_LOCATION = 'static'
 STATICFILES_STORAGE = 'custom_storages.StaticStorage'
 STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-COMPRESS_STORAGE = STATICFILES_STORAGE 
+COMPRESS_STORAGE = STATICFILES_STORAGE
