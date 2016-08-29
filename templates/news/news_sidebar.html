@@ -1,3 +1,4 @@
+{% load static %}
 <!--Sidebar-->
 <div class="col-md-3 sidebar right-sidebar" style=" border-left: 1px solid #eee;">	
 	<!-- Categories Widget -->
@@ -21,7 +22,13 @@
 			{% for n in news|slice:":4" %}
 			<li style="list-style: none;">
 				<div class="widget-thumb">
-					<a href="{{n.url}}"><img src="{{n.main_image.file.url}}" alt="{{n.main_image.title}}" /></a>
+					<a href="{{n.url}}">
+					{% if n.main_image %}
+						<img src="{{n.main_image.file.url}}" alt="{{n.main_image.title}}"/>
+					{% else %}
+						<img src="{% static 'margo/images/mamase_icon.png' %}" alt="mamase icon" />
+					{% endif %}
+					</a>
 				</div>
 				<div class="widget-content">
 					<h5><a href="{{n.url}}">{{n.title}}</a></h5>
