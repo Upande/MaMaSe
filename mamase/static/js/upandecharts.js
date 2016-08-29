@@ -1002,7 +1002,9 @@ var monthlyData = []
               
               for (var i = data.length - 1; i >= 0; i--) {
                 option += '<option label="'+data[i]['name']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
-                rivers.push(data[i]['river'])//Each channel has river. So by default null is pushed
+                if (data[i]['river'] != null){
+                    rivers.push(data[i]['river']['name'])//Each channel has river. So by default null is pushed                  
+                }
               }
               var riverset = new Set(rivers);
 
