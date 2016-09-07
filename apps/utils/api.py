@@ -448,12 +448,12 @@ def aggregateLatestMonthData(channelfields):
                                                 'timestamp__gte': thismonth,
                                                 'timestamp__lte': nextmonth})
 
-                updateAggregateMonthlyData(data, item, midmonth)
+                updateAggregateMonthlyData(data, item)
             else:
                 data = aggregateMonthlyFeedData(item.channel.type, {'channelfield': item,
                                                 'timestamp__gte': thismonth,
                                                 'timestamp__lte': nextmonth})
-                newAggregateMonthlyData(data, item)
+                newAggregateMonthlyData(data, item, midmonth)
 
         else:
             '''No record exisits. Probably a new database'''

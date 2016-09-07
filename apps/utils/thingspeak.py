@@ -92,7 +92,7 @@ def getFeedData(data_id, start=None, results=None):
     #No solution from thingspeak. Gotta do a try and error.
     #At least do this when populating the channel data and just use the stored
     #data to pull feeds
-    print "Now pulling data for channel " +  str(channel.name)
+    print "Now pulling data for channel " + str(channel.name)
     i = 1
     fields = []
     while i <= 8:
