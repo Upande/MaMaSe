@@ -5,6 +5,7 @@ from django.shortcuts import (render,
                               RequestContext,
                               redirect)
 from django.http import JsonResponse, HttpResponseRedirect, HttpResponse
+from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.base import TemplateView
 from django.core.validators import validate_email
@@ -68,10 +69,12 @@ def logThingspeakData(request):
     return JsonResponse(results)
 
 
+#@cache_page(60 * 10)
 class IndexView(TemplateView):
     template_name = "visual.html"
 
 
+#@cache_page(60 * 10)
 class ChartView(TemplateView):
     template_name = "chart.html"
 
