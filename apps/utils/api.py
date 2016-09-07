@@ -448,7 +448,7 @@ def aggregateLatestMonthData(channelfields):
                                                 'timestamp__gte': thismonth,
                                                 'timestamp__lte': nextmonth})
 
-                updateAggregateMonthlyData(data, item)
+                updateAggregateMonthlyData(data, item, midmonth)
             else:
                 data = aggregateMonthlyFeedData(item.channel.type, {'channelfield': item,
                                                 'timestamp__gte': thismonth,
@@ -558,7 +558,7 @@ def updateAggregateMonthlyData(data, item):
     mmi.save()
 
 
-def newAggregateMonthlyData(data, item):
+def newAggregateMonthlyData(data, item, midmonth):
     '''Create data for a new month. Called when we spill over to a new month.'''
     month_avg = list(data[0])
     month_sum = list(data[1])

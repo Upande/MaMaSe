@@ -622,7 +622,8 @@ var monthlyData = []
               //alert("No data at the moment");
             }
             else if (station_type == 'RIVER_DEPTH'){              
-              loadRiverDepthView();              
+              //loadRiverDepthView();  
+              alert("No data at the moment");            
             }
           }
 
