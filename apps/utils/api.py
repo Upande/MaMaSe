@@ -47,7 +47,6 @@ def getFeeds(request):
     result = cache.get(cache_key)
 
     if result:
-        print ":-) Found cached result"
         return result
 
     kwargs = {}
@@ -635,10 +634,7 @@ def aggregateLatestDailyData(channelfields):
 
             timestampday = currentdaily.timestamp.day
 
-            print "In channel loop. Now checking " + item.name
-
             if timestampday == d:
-                print "Updating todays records for channel " + item.name
                 data = aggregateDailyFeedData(item.channel.type, {'channelfield': item,
                                               'timestamp__gte': today})
                 updateAggregateDailyData(data, item, today)

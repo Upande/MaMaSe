@@ -156,7 +156,6 @@ def returnChannelData(request):
         result = cache.get(cache_key)
 
         if result:
-            print ":-) Found cached result in channel"
             return result
 
         type_ = request.GET.get('type', None)
