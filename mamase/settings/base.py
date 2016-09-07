@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     'taggit',
     'compressor',
     'modelcluster',
-    
+
     'wagtail.contrib.wagtailsearchpromotions',
     'wagtail.wagtailcore',
     'wagtail.wagtailadmin',
@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     'storages',
     'boto',
     'djcelery',
-    
+
     'apps.knowledgeplatform',
     'apps.mamasemedia',
     'apps.partners',
@@ -159,8 +159,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 WAGTAIL_SITE_NAME = "mamase"
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,                                                                                                    
-    # or allow read-only access for unauthenticated users.                                                                                                                                     
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
@@ -183,15 +183,18 @@ EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
 EMAIL_PORT = 587
 
+ADMINS = [
+    ('Samuel', 'samuel@upande.com'),
+]
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 
 FIXTURE_DIRS = [
-   'apps/news/fixures/',
-   'apps/videos/fixures/',
-   'apps/utils/fixures/',
-   'apps/testapp/fixures/',
+    'apps/news/fixures/',
+    'apps/videos/fixures/',
+    'apps/utils/fixures/',
+    'apps/testapp/fixures/',
 ]
 
 LOGGING = {
@@ -205,7 +208,7 @@ LOGGING = {
             'format': '%(levelname)s %(message)s'
             },
         },
-    
+
     'filters': {
         'require_debug_false': {
             '()': 'django.utils.log.RequireDebugFalse'
@@ -241,25 +244,25 @@ LOGGING = {
 
     'loggers': {
         'django': {
-            'handlers': ['file', 'console','mail_admins','celery'],
+            'handlers': ['file', 'console', 'mail_admins', 'celery'],
             'propagate': True,
             'level': 'WARNING',
             },
 
         'django.db.backends': {
-            'handlers': ['file', 'console','mail_admins','celery'],
+            'handlers': ['file', 'console', 'mail_admins', 'celery'],
             'propagate': False,
             'level': 'WARNING',
             },
 
         'scheduling': {
-            'handlers': ['file', 'console','mail_admins','celery'],
+            'handlers': ['file', 'console', 'mail_admins', 'celery'],
             'propagate': True,
             'level': 'WARNING',
             },
 
         'django.request': {
-            'handlers': ['file','console','mail_admins','celery'],
+            'handlers': ['file', 'console', 'mail_admins', 'celery'],
             'level': 'WARNING',
             'propagate': True,
             },
@@ -275,7 +278,7 @@ COMPRESS_JS_FILTERS = [
     'compressor.filters.template.TemplateFilter',
 ]
 
-ATOMIC_REBUILD=True
+ATOMIC_REBUILD = True
 
 PASSWORD_HASHERS = [
     'django.contrib.auth.hashers.MD5PasswordHasher',
