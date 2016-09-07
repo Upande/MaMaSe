@@ -4,6 +4,7 @@ import json
 
 from django.db.models import Avg, Max, Min, Sum, Count
 from django.http import JsonResponse
+from django.core.cache import cache
 from django.db import connection
 from django.db.models import Q
 
@@ -36,6 +37,18 @@ def getFeeds(request):
     field = request.GET.get('field', None)  # A specific field e.g temp
     station_type = request.GET.get('stationtype', "WEATHER_STATION")  # Is it a w.station etc
     river = request.GET.get('river', None)  # Get all data points on a river
+
+    '''
+    These requests need to be cached. Check if the exact requests is in cache.
+    If in cache, return the cached data. If not, compile and send.
+    Cache should time out after 10 mins.
+    '''
+    cache_key = request.get_full_path()  # Use the full path as the cache key
+    result = cache.get(cache_key)
+
+    if result:
+        print ":-) Found cached result"
+        return result
 
     kwargs = {}
     args = {}
@@ -134,9 +147,12 @@ def getFeeds(request):
 
     channel_without_null = channels  # removeEmptyString(ch)
 
-    return JsonResponse(dict(channel=channel_without_null,
+    result = JsonResponse(dict(channel=channel_without_null,
                              feed=feed_without_null,
                              river=riverdata))
+
+    cache.set(cache_key, result)
+    return result
 
 
 @time_usage

@@ -9,6 +9,7 @@ import time
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
+from django.core.cache import cache
 
 from rest_framework.renderers import JSONRenderer
 
@@ -151,6 +152,13 @@ class JSONResponse(HttpResponse):
 @csrf_exempt
 def returnChannelData(request):
     if request.method == 'GET':
+        cache_key = request.get_full_path()  # Use the full path as the cache key
+        result = cache.get(cache_key)
+
+        if result:
+            print ":-) Found cached result in channel"
+            return result
+
         type_ = request.GET.get('type', None)
 
         if type_ == 'WEATHER_STATION' or type_ == 'RIVER_DEPTH':
@@ -161,7 +169,10 @@ def returnChannelData(request):
         else:
             channels = Channel.objects.all()
         cserializer = ChannelSerializer(channels, many=True)
-        return JSONResponse(cserializer.data)
+        result = JSONResponse(cserializer.data)
+
+        cache.set(cache_key, result)
+        return result
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)
