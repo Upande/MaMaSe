@@ -92,14 +92,13 @@ def getFeedData(data_id, start=None, results=None):
     #No solution from thingspeak. Gotta do a try and error.
     #At least do this when populating the channel data and just use the stored
     #data to pull feeds
-
+    print "Now pulling data for channel " +  str(channel.name)
     i = 1
     fields = []
     while i <= 8:
         field = "field" + str(i)
         f = ch.get(field)
         if f:
-            print channel
             f, created = Field.objects.get_or_create(name=f)
             c, created = ChannelField.objects.get_or_create(channel=channel,
                                                             field=f,
@@ -115,8 +114,8 @@ def getFeedData(data_id, start=None, results=None):
                     f, created = Feed.objects.get_or_create(
                         entry_id=item['entry_id'],
                         channelfield=i,
-                        defaults={'reading': item.get(i.name, None),
-                                  'sreading': None,
+                        defaults={'reading': checkIfFloat(item.get(i.name, None)),
+                                  'sreading': item.get(i.name, None),
                                   'timestamp': item.get('created_at', None),
                                   }
                     )
@@ -125,7 +124,7 @@ def getFeedData(data_id, start=None, results=None):
                         entry_id=item['entry_id'],
                         channelfield=i,
                         defaults={'sreading': item.get(i.name, None),
-                                  'reading': checkIfFloat(i.name),    # If float, save,
+                                  'reading': checkIfFloat(item.get(i.name, None)),  # If float, save,
                                   'timestamp': item.get('created_at', None),
                                   }
                     )
