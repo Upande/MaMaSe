@@ -1085,6 +1085,11 @@ var monthlyData = []
 
                     return $(this).val() == month + 1;
                   }).prop('selected', true);
+                  
+                  $('#rivermonth option').filter(function() {
+
+                    return $(this).val() == month + 1;
+                  }).prop('selected', true);
 
                   ////select the appropriate timeinterval in the timeinterval dropdown    
                   $('#timeinterval option').filter(function() {
