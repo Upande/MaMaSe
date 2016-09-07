@@ -47,8 +47,10 @@ def getChannel():
         if river:
             r, created = River.objects.get_or_create(name=river)
             river_id = r.id
+            type_ = 'RIVER_DEPTH'
         else:
             river_id = None
+            type_ = 'WEATHER_STATION'
 
         c, created = (Channel.objects
                       .get_or_create(data_id=item['id'],
@@ -60,6 +62,7 @@ def getChannel():
                                                'created_at': item['created_at'],
                                                'last_entry_id': item['last_entry_id'],
                                                'river_id': river_id,
+                                               'type': type_,
                                                }
                                      )
                       )
