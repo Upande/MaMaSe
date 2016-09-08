@@ -220,8 +220,24 @@ var monthlyData = []
             }
           }
 
+          ////change river 
+          function selectRiver(selriver) {
+            weather_station = selriver.value;
+            var selectedstationchoice = selriver.selectedOptions[0];
+            weather_station_name = selectedstationchoice['label']
+            id = weather_station
 
-        ////change station
+            var tslink = document.getElementById("thingspeaklink");
+            tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
+
+            if (datatype == 'raw') {
+              refreshAndloadData(id, month, year)
+            } else {
+              drawGraph_monthly_daily(id, month, year, datatype)
+            }
+          }
+
+        ////change station from the map
         function selectStationFromMap(station_id,station_name, data_id) {
             //Set Id and Name of current station to the selected station
             weather_station = station_id;
@@ -376,6 +392,7 @@ var monthlyData = []
                     url: "/mamase/channel/?type="+ station_type,
                     dataType: "json",
                     success: function(data) {
+                      data = data.channels;
                       for (var x = 0; x < data.length; x++) {
                         coordinate_names.push(data[x].name)
                         station_ids.push(data[x].data_id)
@@ -998,7 +1015,6 @@ var monthlyData = []
                 url: "/mamase/channel/?type="+ station_type,
                 dataType: "json",
                 success: function(data) {
-                  var rivers = []
                   var riverelement = document.getElementById('river'); 
                   if (station_type == 'RIVER_DEPTH'){
                     var stationselect = document.getElementById('selectriverpoint');                    
@@ -1008,6 +1024,9 @@ var monthlyData = []
                   }                   
                   option = '';
                   riverlist = '';
+
+                  rivers = data.rivers
+                  data = data.channels
 
               //Load data for the first item in the list
               id = data[data.length-1]['id']
@@ -1025,15 +1044,11 @@ var monthlyData = []
               
               for (var i = data.length - 1; i >= 0; i--) {
                 option += '<option label="'+data[i]['name']+'" id="'+data[i]['data_id']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
-                if (data[i]['river'] != null){
-                    rivers.push(data[i]['river']['name'])//Each channel has river. So by default null is pushed                  
-                }
               }
-              var riverset = new Set(rivers);
-
-              riverset.forEach(function (value) {
-                              riverlist += '<option label="'+value+'" value="'+value+'">'+value+'</option>'
-                            });
+              
+              for (var i = rivers.length - 1; i >= 0; i--) {
+                riverlist += '<option label="'+rivers[i].name+'" value="'+rivers[i].id+'">'+rivers[i].name+'</option>'
+              }
 
               stationselect.innerHTML = option;
               riverelement.innerHTML = riverlist
@@ -1128,7 +1143,7 @@ var monthlyData = []
 
                     return $(this).val() == aggr_variable;
                   }).prop('selected', true);
-                  
+
                   $("#selectaggregation").prop("disabled", true).css('opacity', 0.5);
                   $("#selectriveraggregation").prop("disabled", true).css('opacity', 0.5);
 

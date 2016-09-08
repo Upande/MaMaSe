@@ -23,7 +23,9 @@ from apps.utils.api import (aggregateMonthlyFeedData,
                             aggregateDailyFeedData,
                             storeAggregatedData)
 
-from apps.utils.serializers import ChannelSerializer, FeedSerializer
+from apps.utils.serializers import (ChannelSerializer,
+                                    FeedSerializer,
+                                    RiverSerializer)
 
 
 def getAPIData(url):
@@ -164,11 +166,16 @@ def returnChannelData(request):
             channels = Channel.objects.filter(type=type_.upper())
         elif type_ == 'rain_temp':
             channels = Channel.objects.filter(type='WEATHER_STATION')
-
         else:
             channels = Channel.objects.all()
+
+        rivers = River.objects.all()
+
         cserializer = ChannelSerializer(channels, many=True)
-        result = JSONResponse(cserializer.data)
+        rserializer = RiverSerializer(rivers, many=True)
+
+        result = JSONResponse({'channels': cserializer.data,
+                              'rivers': rserializer.data})
 
         cache.set(cache_key, result)
         return result
