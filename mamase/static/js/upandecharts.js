@@ -6,6 +6,7 @@ var monthly = []
 var raw = []
 var weather_station_name = ""
 var weather_station = ""
+var station_id = ""
 var weather_variable = "Rain"
 var weather_variable_id = '1'
 var time_interval = "raw"
@@ -59,6 +60,7 @@ var monthlyData = []
           var table
           var coordinates = []
           var coordinate_names = []
+          var station_ids = []
           var coordinate_ids = []
 
 
@@ -203,8 +205,13 @@ var monthlyData = []
           ////change station
           function selectStation(selstation) {
             weather_station = selstation.value;
-            weather_station_name = selstation.selectedOptions[0]['label'];
+            var selectedstationchoice = selstation.selectedOptions[0];
+            weather_station_name = selectedstationchoice['label']
+            station_id = selectedstationchoice['id'];
             id = weather_station
+
+            var tslink = document.getElementById("thingspeaklink");
+            tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
 
             if (datatype == 'raw') {
               refreshAndloadData(id, month, year)
@@ -215,11 +222,15 @@ var monthlyData = []
 
 
         ////change station
-        function selectStationFromMap(station_id,station_name) {
+        function selectStationFromMap(station_id,station_name, data_id) {
             //Set Id and Name of current station to the selected station
             weather_station = station_id;
             weather_station_name = station_name;
+            station_id = data_id;
             id = weather_station
+            
+            var tslink = document.getElementById("thingspeaklink");
+            tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
 
             //Change the selected item to the selected on
             $('#selectstation').val(station_id);
@@ -365,6 +376,7 @@ var monthlyData = []
                     success: function(data) {
                       for (var x = 0; x < data.length; x++) {
                         coordinate_names.push(data[x].name)
+                        station_ids.push(data[x].data_id)
                         coordinates.push([data[x].longitude,data[x].latitude])
                         coordinate_ids.push(data[x].id)                        
                       }
@@ -491,11 +503,12 @@ var monthlyData = []
               var feature_id
               var name = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
                 feature_id = feature.get('id')
+                data_id = feature.get('data_id')
                 return feature.get('name');
               });
               if (name){
                 var coordinate = evt.coordinate;
-                content.innerHTML = '<p>You are viewing:</p><code><a href="javascript.void(0);" onclick="selectStationFromMap(\''+feature_id+'\',\''+name+'\');return false;">' + name +'</a></code>';
+                content.innerHTML = '<p>You are viewing:</p><code><a href="javascript.void(0);" onclick="selectStationFromMap(\''+feature_id+'\',\''+name+'\',\''+data_id+'\');return false;">' + name +'</a></code>';
                 overlay.setPosition(coordinate);
               }              
             });
@@ -520,6 +533,7 @@ var monthlyData = []
                 geometry: new
                 ol.geom.Point(ol.proj.transform([Lon, Lat], 'EPSG:4326', 'EPSG:3857')),
                 name: weather_station_name,
+                data_id: station_id,
                 id: weather_station,         
               });
 
@@ -564,6 +578,7 @@ var monthlyData = []
                   geometry: new
                   ol.geom.Point(ol.proj.transform(coordinates[x], 'EPSG:4326', 'EPSG:3857')),
                   name: coordinate_names[x],
+                  data_id: station_ids[x],
                   id: coordinate_ids[x],
                 });
                 coordinatesource.addFeature(coordinateicon);
@@ -615,6 +630,7 @@ var monthlyData = []
             station_type = modevalue.value
             coordinates = []
             coordinate_names = []
+            station_ids = []
             coordinate_ids =[]
             
             if (station_type == 'WEATHER_STATION') {
@@ -622,7 +638,8 @@ var monthlyData = []
               //alert("No data at the moment");
             }
             else if (station_type == 'RIVER_DEPTH'){              
-              loadRiverDepthView();              
+              loadRiverDepthView();  
+              //alert("No data at the moment");            
             }
           }
 
@@ -996,13 +1013,19 @@ var monthlyData = []
 
               ///set the weather_station as the first variables
               weather_station_name = data[data.length-1]['name']
+              station_id = data[data.length-1]['data_id']
+
+              var tslink = document.getElementById("thingspeaklink");
+              tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
 
               //For some weird reason, seems the ID does not change when calling pull data.
               //Call it after this function
               
               for (var i = data.length - 1; i >= 0; i--) {
-                option += '<option label="'+data[i]['name']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
-                rivers.push(data[i]['river'])//Each channel has river. So by default null is pushed
+                option += '<option label="'+data[i]['name']+'" id="'+data[i]['data_id']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
+                if (data[i]['river'] != null){
+                    rivers.push(data[i]['river']['name'])//Each channel has river. So by default null is pushed                  
+                }
               }
               var riverset = new Set(rivers);
 
@@ -1079,6 +1102,11 @@ var monthlyData = []
 
                   ////select the appropriate month in the month dropdown
                   $('#month option').filter(function() {
+
+                    return $(this).val() == month + 1;
+                  }).prop('selected', true);
+                  
+                  $('#rivermonth option').filter(function() {
 
                     return $(this).val() == month + 1;
                   }).prop('selected', true);

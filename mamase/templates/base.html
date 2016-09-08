@@ -183,20 +183,12 @@ field = "";
 
                }
 
-               // console.log( 'field date '+myarry[0])
-
-
-            //console.log(myarry)
             var chart = c3.generate({
               bindto: '#chart',
               data: {
                 x: 'created',                         
                 xFormat: '%Y-%m-%d %H:%M:%S',
-                columns: [myarry[0],myarry[3],myarry[2]
-                ],
-                axes: {
-                  'Barometric Pressure': 'y2'
-                }                   
+                columns: [myarry[0],myarry[1]],                  
               },
               axis: {
                 x: {
@@ -215,7 +207,7 @@ field = "";
           y: {
             show: true,
         label: { // ADD
-          text:'Temperature',
+          text:'Depth',
           position: 'outer-middle'
         },
         tick:{
@@ -224,19 +216,6 @@ field = "";
             max:3}
           }
         },
-
-        y2: {
-          show: true,
-        label: { // ADD
-          text:'Barometric Pressure',
-          position: 'outer-middle'
-        },
-        tick:{
-          format: d3.format(".0f"),
-          culling:{
-            max:3}
-          }
-        }
       }        
 
 

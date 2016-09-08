@@ -9,6 +9,7 @@ import time
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse, HttpResponse
 from django.core import serializers
+from django.core.cache import cache
 
 from rest_framework.renderers import JSONRenderer
 
@@ -47,8 +48,10 @@ def getChannel():
         if river:
             r, created = River.objects.get_or_create(name=river)
             river_id = r.id
+            type_ = 'RIVER_DEPTH'
         else:
             river_id = None
+            type_ = 'WEATHER_STATION'
 
         c, created = (Channel.objects
                       .get_or_create(data_id=item['id'],
@@ -60,6 +63,7 @@ def getChannel():
                                                'created_at': item['created_at'],
                                                'last_entry_id': item['last_entry_id'],
                                                'river_id': river_id,
+                                               'type': type_,
                                                }
                                      )
                       )
@@ -92,14 +96,13 @@ def getFeedData(data_id, start=None, results=None):
     #No solution from thingspeak. Gotta do a try and error.
     #At least do this when populating the channel data and just use the stored
     #data to pull feeds
-
+    print "Now pulling data for channel " + str(channel.name)
     i = 1
     fields = []
     while i <= 8:
         field = "field" + str(i)
         f = ch.get(field)
         if f:
-            print channel
             f, created = Field.objects.get_or_create(name=f)
             c, created = ChannelField.objects.get_or_create(channel=channel,
                                                             field=f,
@@ -115,8 +118,8 @@ def getFeedData(data_id, start=None, results=None):
                     f, created = Feed.objects.get_or_create(
                         entry_id=item['entry_id'],
                         channelfield=i,
-                        defaults={'reading': item.get(i.name, None),
-                                  'sreading': None,
+                        defaults={'reading': checkIfFloat(item.get(i.name, None)),
+                                  'sreading': item.get(i.name, None),
                                   'timestamp': item.get('created_at', None),
                                   }
                     )
@@ -125,7 +128,7 @@ def getFeedData(data_id, start=None, results=None):
                         entry_id=item['entry_id'],
                         channelfield=i,
                         defaults={'sreading': item.get(i.name, None),
-                                  'reading': checkIfFloat(i.name),    # If float, save,
+                                  'reading': checkIfFloat(item.get(i.name, None)),  # If float, save,
                                   'timestamp': item.get('created_at', None),
                                   }
                     )
@@ -149,6 +152,12 @@ class JSONResponse(HttpResponse):
 @csrf_exempt
 def returnChannelData(request):
     if request.method == 'GET':
+        cache_key = request.get_full_path()  # Use the full path as the cache key
+        result = cache.get(cache_key)
+
+        if result:
+            return result
+
         type_ = request.GET.get('type', None)
 
         if type_ == 'WEATHER_STATION' or type_ == 'RIVER_DEPTH':
@@ -159,7 +168,10 @@ def returnChannelData(request):
         else:
             channels = Channel.objects.all()
         cserializer = ChannelSerializer(channels, many=True)
-        return JSONResponse(cserializer.data)
+        result = JSONResponse(cserializer.data)
+
+        cache.set(cache_key, result)
+        return result
 
     elif request.method == 'POST':
         data = JSONParser().parse(request)

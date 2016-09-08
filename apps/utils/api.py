@@ -4,6 +4,7 @@ import json
 
 from django.db.models import Avg, Max, Min, Sum, Count
 from django.http import JsonResponse
+from django.core.cache import cache
 from django.db import connection
 from django.db.models import Q
 
@@ -37,6 +38,17 @@ def getFeeds(request):
     station_type = request.GET.get('stationtype', "WEATHER_STATION")  # Is it a w.station etc
     river = request.GET.get('river', None)  # Get all data points on a river
 
+    '''
+    These requests need to be cached. Check if the exact requests is in cache.
+    If in cache, return the cached data. If not, compile and send.
+    Cache should time out after 10 mins.
+    '''
+    cache_key = request.get_full_path()  # Use the full path as the cache key
+    result = cache.get(cache_key)
+
+    if result:
+        return result
+
     kwargs = {}
     args = {}
 
@@ -54,11 +66,28 @@ def getFeeds(request):
         kwargs['timestamp__lte'] = end
 
     if station_type:
-        args['type'] = station_type.upper()
+        station_type = station_type.upper()
+        if station_type == "RAIN_TEMP":
+            channelfields = (ChannelField.objects
+                             .filter(Q(field__name__icontains='temp') |
+                                     Q(field__name__icontains='rain'))
+                             .exclude(field__name__icontains='soil temperature'))
+            channel_ids = channelfields.values_list('channel_id', flat=True)
 
-    if station_type == "rain_temp":
-        #kwargs['channelfield__field__name'] = "Temperature" + "Rain"
-        pass
+            channels = Channel.objects.filter(id__in=channel_ids)
+            channel_with_temp_rain = []
+            channel_fields_with_rain_temp = []
+            for item in channels:
+                cf = channelfield.filter(channel_id=item.id).values_list(field__name, flat=True)  # Get the channels in channel field
+                searchlist = ''.join(cf)  # Join the results. Makes it easier to search
+                if 'Rain' in searchlist and 'Temp' in searchlist:
+                    channel_fields_with_rain_temp.append(channelfield.filter(channel_id=item.id).values_list('id', flat=True))
+                    channel_with_temp_rain.append(item.id)
+
+            kwargs['channelfield__field_id__in'] = channel_fields_with_rain_temp
+            args['id__in'] = channel_with_temp_rain
+        else:
+            args['type'] = station_type
 
     if river:
         kwargs['channelfield__channel__river_id'] = river
@@ -117,9 +146,12 @@ def getFeeds(request):
 
     channel_without_null = channels  # removeEmptyString(ch)
 
-    return JsonResponse(dict(channel=channel_without_null,
+    result = JsonResponse(dict(channel=channel_without_null,
                              feed=feed_without_null,
                              river=riverdata))
+
+    cache.set(cache_key, result)
+    return result
 
 
 @time_usage
@@ -436,7 +468,7 @@ def aggregateLatestMonthData(channelfields):
                 data = aggregateMonthlyFeedData(item.channel.type, {'channelfield': item,
                                                 'timestamp__gte': thismonth,
                                                 'timestamp__lte': nextmonth})
-                newAggregateMonthlyData(data, item)
+                newAggregateMonthlyData(data, item, midmonth)
 
         else:
             '''No record exisits. Probably a new database'''
@@ -541,7 +573,7 @@ def updateAggregateMonthlyData(data, item):
     mmi.save()
 
 
-def newAggregateMonthlyData(data, item):
+def newAggregateMonthlyData(data, item, midmonth):
     '''Create data for a new month. Called when we spill over to a new month.'''
     month_avg = list(data[0])
     month_sum = list(data[1])
@@ -602,10 +634,7 @@ def aggregateLatestDailyData(channelfields):
 
             timestampday = currentdaily.timestamp.day
 
-            print "In channel loop. Now checking " + item.name
-
             if timestampday == d:
-                print "Updating todays records for channel " + item.name
                 data = aggregateDailyFeedData(item.channel.type, {'channelfield': item,
                                               'timestamp__gte': today})
                 updateAggregateDailyData(data, item, today)
