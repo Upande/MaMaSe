@@ -228,7 +228,7 @@ var monthlyData = []
             weather_station_name = station_name;
             station_id = data_id;
             id = weather_station
-            
+
             var tslink = document.getElementById("thingspeaklink");
             tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
 
@@ -309,6 +309,7 @@ var monthlyData = []
             datatype = interval.value;
             time_interval = datatype
             $("#selectaggregation").prop("disabled", false).css('opacity', 1);
+            $("#selectriveraggregation").prop("disabled", false).css('opacity', 1);
 
             if (datatype == 'monthly') {
                   ////Disable month selection if monthly data is selected
@@ -326,6 +327,7 @@ var monthlyData = []
 
                 if (datatype == 'raw') {
                   $("#selectaggregation").prop("disabled", true).css('opacity', 0.5);
+                  $("#selectriveraggregation").prop("disabled", true).css('opacity', 0.5);
 
                   pullData(id,month,year)
                 } else {
@@ -1122,7 +1124,13 @@ var monthlyData = []
 
                     return $(this).val() == aggr_variable;
                   }).prop('selected', true);
+                  $('#selectriveraggregation option').filter(function() {
+
+                    return $(this).val() == aggr_variable;
+                  }).prop('selected', true);
+                  
                   $("#selectaggregation").prop("disabled", true).css('opacity', 0.5);
+                  $("#selectriveraggregation").prop("disabled", true).css('opacity', 0.5);
 
                   ////select the appropriate time interval in the timeinterval dropdown   
                   $('#timeinterval option').filter(function() {

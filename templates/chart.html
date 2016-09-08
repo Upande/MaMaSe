@@ -223,6 +223,9 @@
                                             <td>
                                                 Year
                                             </td>
+                                            <td>
+                                                Aggregation
+                                            </td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -272,6 +275,16 @@
                                                         <option value="2014">2014</option>
                                                         <option value="2015">2015</option>
                                                         <option value="2016">2016</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="dropdown_station">
+                                                   <select id="selectriveraggregation" onchange="selectAggregation(this)">
+                                                        <option value="avg">Average</option>
+                                                        <option value="sum">Sum</option>
+                                                        <option value="min">Min</option>
+                                                        <option value="max">Max</option>
                                                     </select>
                                                 </div>
                                             </td>
