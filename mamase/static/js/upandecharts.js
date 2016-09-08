@@ -22,6 +22,7 @@ var datatype = 'raw'
 var mylist = []
 var variable_ids = []
 var monthlyData = []
+var is_river = false //Used to check if we need to pull river data
 
 
           var station_type = 'WEATHER_STATION' //Define either a WEATHER_STATION or RIVER_DEPTH
@@ -210,6 +211,8 @@ var monthlyData = []
             station_id = selectedstationchoice['id'];
             id = weather_station
 
+            is_river = true
+
             var tslink = document.getElementById("thingspeaklink");
             tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
 
@@ -227,9 +230,12 @@ var monthlyData = []
             weather_station_name = selectedstationchoice['label']
             id = weather_station
 
+            is_river = true //To tell pull data to pull data by river id
+
             var tslink = document.getElementById("thingspeaklink");
             tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
 
+            //How do I tell the function to pull river data
             if (datatype == 'raw') {
               refreshAndloadData(id, month, year)
             } else {
@@ -934,12 +940,20 @@ var monthlyData = []
               ////for testing
               ////datatype="monthly"
 
+              //Define url here
+              if (is_river == false){
+                 url = "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
+              }
+              else{
+                 url = "/mamase/api/feed/?river=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
+              }           
+
               ////pull data from api and (create myarry) 
               $.ajax({
 
                 type: 'GET',
 
-                url: "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type,
+                url: url,
                 dataType: "json",
                 success: function(data) {
 
