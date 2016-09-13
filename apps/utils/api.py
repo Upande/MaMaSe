@@ -86,6 +86,13 @@ def getFeeds(request):
 
             kwargs['channelfield__field_id__in'] = channel_fields_with_rain_temp
             args['id__in'] = channel_with_temp_rain
+
+        elif station_type == "RIVER_DEPTH":
+            if not channel and river:
+                r = River.objects.filter(id=river)
+                if r:
+                    river = r[0]
+                    kwargs['channelfield__channel_id'] = river.rivers.last().id  # Get data for just this station
         else:
             args['type'] = station_type
 
@@ -117,7 +124,7 @@ def getFeeds(request):
                             'sum': list(data[1])})
         feed_without_null.append(feed)
 
-    ch = Channel.objects.filter(**args)
+    ch = Channel.objects.filter(**args).order_by('-id')
 
     channels = []
     for i in ch:
@@ -147,8 +154,8 @@ def getFeeds(request):
     channel_without_null = channels  # removeEmptyString(ch)
 
     result = JsonResponse(dict(channel=channel_without_null,
-                             feed=feed_without_null,
-                             river=riverdata))
+                               feed=feed_without_null,
+                               river=riverdata))
 
     cache.set(cache_key, result)
     return result

@@ -23,6 +23,11 @@ var mylist = []
 var variable_ids = []
 var monthlyData = []
 var is_river = false //Used to check if we need to pull river data
+var river_id 
+var river_point_names = []
+var river_point_ids = []
+var river_point_dataids = []
+var river_channels = []
 
 
           var station_type = 'WEATHER_STATION' //Define either a WEATHER_STATION or RIVER_DEPTH
@@ -209,9 +214,9 @@ var is_river = false //Used to check if we need to pull river data
             var selectedstationchoice = selstation.selectedOptions[0];
             weather_station_name = selectedstationchoice['label']
             station_id = selectedstationchoice['id'];
-            id = weather_station
+            id = station_id
 
-            is_river = true
+            is_river = false
 
             var tslink = document.getElementById("thingspeaklink");
             tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
@@ -228,7 +233,7 @@ var is_river = false //Used to check if we need to pull river data
             weather_station = selriver.value;
             var selectedstationchoice = selriver.selectedOptions[0];
             weather_station_name = selectedstationchoice['label']
-            id = weather_station
+            river_id = weather_station
 
             is_river = true //To tell pull data to pull data by river id
 
@@ -461,6 +466,45 @@ var is_river = false //Used to check if we need to pull river data
           }
 
 
+          ////load existing weather variables
+          function populateRiverPoints() {
+              $('#selectriverpoint').empty(); 
+            
+                  ////create a list of existing fields, e.g rain, temp, humidity etc
+                  mylist = []
+                  for (var i = 0; i < river_channels.length; i++) {
+                    myoption = river_channels[i]['name']
+                    myid = river_channels[i]['id']
+
+                    mylist.push(myoption)
+
+                    $('#selectriverpoint').append($('<option>', {
+                      value: myoption,
+                      text: myoption,
+                      id: myid
+                    }));
+
+                  }
+
+              ////check whether current weather_variable in present in mylist
+              ////if it does not, change weather_variable value to that of the first item in mylist
+              var check = $.inArray(weather_variable, mylist)
+              if (check == -1) {
+
+                var e = document.getElementById("weathervariables");
+
+                var strUser = e.options[e.selectedIndex].value;
+                weather_variable = strUser
+
+              }
+              ////select the appropriate text in the weather dropdown 
+              var weather_text = weather_variable;
+              $('#weathervariables option').filter(function() {
+
+                return $(this).text() == weather_text;
+              }).prop('selected', true);
+
+            }
 
 
 
@@ -659,10 +703,12 @@ var is_river = false //Used to check if we need to pull river data
             coordinate_ids =[]
             
             if (station_type == 'WEATHER_STATION') {
+              is_river = false
               loadStationView();
               //alert("No data at the moment");
             }
-            else if (station_type == 'RIVER_DEPTH'){              
+            else if (station_type == 'RIVER_DEPTH'){    
+              is_river = true          
               loadRiverDepthView();  
               //alert("No data at the moment");            
             }
@@ -945,7 +991,7 @@ var is_river = false //Used to check if we need to pull river data
                  url = "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
               }
               else{
-                 url = "/mamase/api/feed/?river=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
+                 url = "/mamase/api/feed/?river=" + river_id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
               }           
 
               ////pull data from api and (create myarry) 
@@ -959,6 +1005,8 @@ var is_river = false //Used to check if we need to pull river data
 
                   var channel = data.channel[0]
 
+                  river_channels = data.channel
+
                   try {
                     Lon = channel.longitude
                     Lat = channel.latitude
@@ -970,7 +1018,6 @@ var is_river = false //Used to check if we need to pull river data
                   var feeds = data.feed
 
                       //channel_obj = Object.keys(channel); //// convert to an object
-
                       var len = channel.fields.length
                       var created = ['created']
                           ///
@@ -1009,6 +1056,9 @@ var is_river = false //Used to check if we need to pull river data
 
                       ////Disable non-existing weather Variables
                       populateWeathervariables(myarry)
+                      if (is_river){
+                        populateRiverPoints()
+                      }
                       defineNewdata(myarry)
                       drawGraph(newdata)
                       refreshmap(Lon, Lat)
@@ -1041,33 +1091,65 @@ var is_river = false //Used to check if we need to pull river data
 
                   rivers = data.rivers
                   data = data.channels
+                  river_point_ids = []
+                  river_point_names = []
+                  river_point_dataids = []
+
 
               //Load data for the first item in the list
-              id = data[data.length-1]['id']
-              weather_station = data[data.length-1]['id']
+              if (is_river == true){
+                river_id = rivers[rivers.length-1]['id']
+                id = river_point_ids[0]
+                weather_station = i
 
-              ///set the weather_station as the first variables
-              weather_station_name = data[data.length-1]['name']
-              station_id = data[data.length-1]['data_id']
+                ///set the weather_station as the first variables
+                weather_station_name = rivers[rivers.length-1]['name']
+                station_id = data[data.length-1]['data_id']              
+              }
+              else{
+                id = data[data.length-1]['id']
+                weather_station = data[data.length-1]['id']
+
+                ///set the weather_station as the first variables
+                weather_station_name = data[data.length-1]['name']
+                station_id = data[data.length-1]['data_id']
+              }
 
               var tslink = document.getElementById("thingspeaklink");
               tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
 
               //For some weird reason, seems the ID does not change when calling pull data.
-              //Call it after this function
-              
+              //Call it after this function              
               for (var i = data.length - 1; i >= 0; i--) {
-                option += '<option label="'+data[i]['name']+'" id="'+data[i]['data_id']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
-              }
+                if (is_river == true) {
+                  if (data[i]['name'].indexOf(weather_station_name) > -1){
+                  option += '<option label="'+data[i]['name']+'" id="'+data[i]['data_id']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
+                  river_point_names.push(data[i]['name']);
+                  river_point_ids.push(data[i]['id']);
+                  river_point_dataids.push(data[i]['data_id']);
+                  }
+                }
+                else{
+                  option += '<option label="'+data[i]['name']+'" id="'+data[i]['data_id']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'                  
+                } 
+                }
+              
               
               for (var i = rivers.length - 1; i >= 0; i--) {
                 riverlist += '<option label="'+rivers[i].name+'" value="'+rivers[i].id+'">'+rivers[i].name+'</option>'
-              }
+              }              
 
               stationselect.innerHTML = option;
               riverelement.innerHTML = riverlist
 
-              pullData(id,month,year);
+              if (is_river == true){                
+                id = river_point_ids[0]
+                weather_station = id
+                weather_station_name = river_point_names[0]
+                station_id = river_point_dataids[0]            
+              }
+
+              pullData(id,month,year,river_id);
             }
 
           });              
