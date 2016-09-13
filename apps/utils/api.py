@@ -133,7 +133,8 @@ def getFeeds(request):
         valuesdict = {'id': i.id, 'name': i.name,
                       'desciption': i.description,
                       'latitude': i.latitude,
-                      'longitude': i.longitude}
+                      'longitude': i.longitude,
+                      'data_id': i.data_id}
         if i.river:
             valuesdict['river'] = i.river.id
         valuesdict['fields'] = list(values)

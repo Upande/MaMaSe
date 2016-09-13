@@ -214,7 +214,7 @@ var river_channels = []
             var selectedstationchoice = selstation.selectedOptions[0];
             weather_station_name = selectedstationchoice['label']
             station_id = selectedstationchoice['id'];
-            id = station_id
+            id = weather_station
 
             is_river = false
 
@@ -233,12 +233,14 @@ var river_channels = []
             weather_station = selriver.value;
             var selectedstationchoice = selriver.selectedOptions[0];
             weather_station_name = selectedstationchoice['label']
+            station_id = selectedstationchoice['id'];
             river_id = weather_station
 
             is_river = true //To tell pull data to pull data by river id
 
             var tslink = document.getElementById("thingspeaklink");
-            tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
+            //tslink.innerHTML = 'Data source: <a href="https://thingspeak.com/channels/'+station_id+'/">https://thingspeak.com/channels/'+station_id+'/</a>'
+            tslink.innerHTML = ''
 
             //How do I tell the function to pull river data
             if (datatype == 'raw') {
@@ -475,13 +477,15 @@ var river_channels = []
                   for (var i = 0; i < river_channels.length; i++) {
                     myoption = river_channels[i]['name']
                     myid = river_channels[i]['id']
+                    mydataid = river_channels[i]['data_id']
 
                     mylist.push(myoption)
 
                     $('#selectriverpoint').append($('<option>', {
-                      value: myoption,
+                      label: myoption,
+                      value: myid,
                       text: myoption,
-                      id: myid
+                      id: mydataid
                     }));
 
                   }
