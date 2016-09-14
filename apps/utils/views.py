@@ -69,12 +69,10 @@ def logThingspeakData(request):
     return JsonResponse(results)
 
 
-#@cache_page(60 * 10)
 class IndexView(TemplateView):
     template_name = "visual.html"
 
 
-#@cache_page(60 * 10)
 class ChartView(TemplateView):
     template_name = "chart.html"
 

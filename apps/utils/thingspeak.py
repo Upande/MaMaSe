@@ -23,7 +23,9 @@ from apps.utils.api import (aggregateMonthlyFeedData,
                             aggregateDailyFeedData,
                             storeAggregatedData)
 
-from apps.utils.serializers import ChannelSerializer, FeedSerializer
+from apps.utils.serializers import (ChannelSerializer,
+                                    FeedSerializer,
+                                    RiverSerializer)
 
 
 def getAPIData(url):
@@ -113,6 +115,8 @@ def getFeedData(data_id, start=None, results=None):
 
     for item in feeds:
         for i in fields:
+            if not checkIfWithinBound(item, i):
+                continue
             try:
                 if channel.type == "WEATHER_STATION":
                     f, created = Feed.objects.get_or_create(
@@ -164,11 +168,16 @@ def returnChannelData(request):
             channels = Channel.objects.filter(type=type_.upper())
         elif type_ == 'rain_temp':
             channels = Channel.objects.filter(type='WEATHER_STATION')
-
         else:
             channels = Channel.objects.all()
+
+        rivers = River.objects.all()
+
         cserializer = ChannelSerializer(channels, many=True)
-        result = JSONResponse(cserializer.data)
+        rserializer = RiverSerializer(rivers, many=True)
+
+        result = JSONResponse({'channels': cserializer.data,
+                              'rivers': rserializer.data})
 
         cache.set(cache_key, result)
         return result
@@ -242,6 +251,21 @@ def clean(text):
             except ValueError:
                 pass
     return text
+
+
+def checkIfWithinBound(item, channelfield):
+    reading = checkIfFloat(item.get(channelfield.name, None))
+    if reading:
+        lower = channelfield.field.lower_bound
+        upper = channelfield.field.upper_bound
+
+        if lower is None or upper is None:
+            return True
+
+        if reading <= upper and reading >= lower:
+            return True
+        else:
+            return False
 
 
 def checkIfFloat(reading):
