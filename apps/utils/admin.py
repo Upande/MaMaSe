@@ -25,8 +25,8 @@ class FeedAdmin(admin.ModelAdmin):
 
 
 class FieldAdmin(admin.ModelAdmin):
-    fields = ['name']
-    list_display = ['name', 'added']
+    fields = ['name', 'lower_bound', 'upper_bound']
+    list_display = ['name', 'lower_bound', 'upper_bound', 'added']
     search_fields = ['name']
 
 

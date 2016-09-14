@@ -115,6 +115,8 @@ def getFeedData(data_id, start=None, results=None):
 
     for item in feeds:
         for i in fields:
+            if not checkIfWithinBound(item, i):
+                continue
             try:
                 if channel.type == "WEATHER_STATION":
                     f, created = Feed.objects.get_or_create(
@@ -249,6 +251,21 @@ def clean(text):
             except ValueError:
                 pass
     return text
+
+
+def checkIfWithinBound(item, channelfield):
+    reading = checkIfFloat(item.get(channelfield.name, None))
+    if reading:
+        lower = channelfield.field.lower_bound
+        upper = channelfield.field.upper_bound
+
+        if lower is None or upper is None:
+            return True
+
+        if reading <= upper and reading >= lower:
+            return True
+        else:
+            return False
 
 
 def checkIfFloat(reading):
