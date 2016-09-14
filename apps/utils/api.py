@@ -68,6 +68,10 @@ def getFeeds(request):
     if station_type:
         station_type = station_type.upper()
         if station_type == "RAIN_TEMP":
+            #Just get rain and temp values. Then get other values.
+            #So filter with other variables.
+            #Get all rain and temp values
+
             channelfields = (ChannelField.objects
                              .filter(Q(field__name__icontains='temp') |
                                      Q(field__name__icontains='rain'))
@@ -78,11 +82,13 @@ def getFeeds(request):
             channel_with_temp_rain = []
             channel_fields_with_rain_temp = []
             for item in channels:
-                cf = channelfield.filter(channel_id=item.id).values_list(field__name, flat=True)  # Get the channels in channel field
+                cf = channelfields.filter(channel_id=item.id).values_list('field__name', flat=True)  # Get the channels in channel field
                 searchlist = ''.join(cf)  # Join the results. Makes it easier to search
                 if 'Rain' in searchlist and 'Temp' in searchlist:
-                    channel_fields_with_rain_temp.append(channelfield.filter(channel_id=item.id).values_list('id', flat=True))
+                    cfs = channelfields.filter(channel_id=item.id).values_list('id', flat=True)
+                    channel_fields_with_rain_temp.append(cfs[0])
                     channel_with_temp_rain.append(item.id)
+
 
             kwargs['channelfield__field_id__in'] = channel_fields_with_rain_temp
             args['id__in'] = channel_with_temp_rain
