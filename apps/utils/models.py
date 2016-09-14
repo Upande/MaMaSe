@@ -1,7 +1,6 @@
 from django.db import models
 from jsonfield import JSONField
 import datetime
-# Create your models here.
 
 
 class LoggerData(models.Model):
@@ -55,6 +54,8 @@ class Channel(models.Model):
 class Field(models.Model):
     name = models.TextField(unique=True)
     added = models.DateTimeField(auto_now_add=True)
+    lower_bound = models.FloatField(blank=True, null=True)
+    upper_bound = models.FloatField(blank=True, null=True)
 
     def __unicode__(self):
         return self.name
