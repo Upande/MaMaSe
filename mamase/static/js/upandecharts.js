@@ -688,7 +688,7 @@ var river_channels = []
 
 
 
-          ////To add controls for river depth
+          ////To add controls for weather station depth
           function loadStationView() {  
               $("#controls_div").show();
               $("#river_depth_control_div").hide();
@@ -696,7 +696,14 @@ var river_channels = []
           }
 
 
-
+          ////To add controls for rain temp view
+          function loadRainTempView() {  
+              $("#controls_div").show();
+              $('#weathervariables').hide();
+              $("#river_depth_control_div").hide();
+              weather_variable == 'all'
+              getChannelCoordnates();
+          }
 
           ////select display mode
           function selMode(modevalue) {            
