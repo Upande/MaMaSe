@@ -76,19 +76,7 @@ def getFeeds(request):
             complexargs = (Q(channelfield__field__name__icontains='temp') |
                            Q(channelfield__field__name__icontains='rain'),)
             excludeargs['channelfield__field__name__icontains'] = 'soil temperature'
-            #channel_ids = channelfields.values_list('channel_id', flat=True)
 
-            #channels = Channel.objects.filter(id__in=channel_ids)
-            #channel_with_temp_rain = []
-            #channel_fields_with_rain_temp = []
-            #for item in channels:
-            #    cf = channelfields.filter(channel_id=item.id).values_list('field__name', flat=True)  # Get the channels in channel field
-            #    searchlist = ''.join(cf)  # Join the results. Makes it easier to search
-            #    if 'Rain' in searchlist and 'Temp' in searchlist:kwargs['channelfield__field_id__in'] =
-            #        cfs = channelfields.filter(channel_id=item.id).values_list('id', flat=True)
-            #        channel_fields_with_rain_temp.append(cfs[0])
-            #        channel_with_temp_rain.append(item.id)
-            #kwargs['channelfield__field_id__in'] = channel_fields_with_rain_temp
             #args['id__in'] = channel_with_temp_rain
 
         elif station_type == "RIVER_DEPTH":
@@ -97,6 +85,7 @@ def getFeeds(request):
                 if r:
                     river = r[0]
                     kwargs['channelfield__channel_id'] = river.rivers.last().id  # Get data for just this station
+                    args['type'] = station_type
         else:
             args['type'] = station_type
 
@@ -198,10 +187,12 @@ def getAllData(request):
     month_cnt = []
     month_min = []
     month_max = []
+    excludeargs = {}
+    complexargs = {}
 
     for item in ch:
-        chd_data = aggregateDailyFeedData(item.channel.type, {"channelfield__channel": item})
-        chm_data = aggregateMonthlyFeedData(item.channel.type, {"channelfield__channel": item})
+        chd_data = aggregateDailyFeedData(item.channel.type, {"channelfield__channel": item}, complexargs, excludeargs)
+        chm_data = aggregateMonthlyFeedData(item.channel.type, {"channelfield__channel": item}, complexargs, excludeargs)
 
         daily_avg.append({item.id: list(chd_data[0])})
         daily_sum.append({item.id: list(chd_data[1])})
@@ -425,7 +416,7 @@ def storeAggregatedData(channel=None, start=None, end=None):
     chf = ChannelField.objects.filter(**kwargs)
 
     if not start:
-        aggregateLatestMonthData(chf)
+        aggregateLatestMonthData(chf,)
         aggregateLatestDailyData(chf)
     else:
         aggregateMultipleMonthlyData(chf, start, end)
@@ -433,28 +424,38 @@ def storeAggregatedData(channel=None, start=None, end=None):
 
 
 def aggregateMultipleMonthlyData(channelfields, start, end):
+    excludeargs = {}
+    complexargs = {}
     if not end:
         end = datetime.datetime.now()
 
     for item in channelfields:
         data = aggregateMonthlyFeedData(item.channel.type, {'channelfield': item,
                                         'timestamp__gte': start,
-                                        'timestamp__lte': end})
+                                        'timestamp__lte': end}, complexargs,
+                                        excludeargs)
+
         createAggregateMonthlyData(data, item)
 
 
 def aggregateMultipleDailyData(channelfields, start, end):
+    excludeargs = {}
+    complexargs = {}
     if not end:
         end = datetime.datetime.now()
 
     for item in channelfields:
         data = aggregateDailyFeedData(item.channel.type, {'channelfield': item,
                                       'timestamp__gte': start,
-                                      'timestamp__lte': end})
+                                      'timestamp__lte': end},
+                                      complexargs, excludeargs)
         createAggregateDailyData(data, item)
 
 
 def aggregateLatestMonthData(channelfields):
+    excludeargs = {}
+    complexargs = {}
+
     for item in channelfields:
         currentmonthly = (AggregateMonthlyFeed.objects.filter(channelfield=item)
                           .order_by('-timestamp').first())
@@ -477,18 +478,21 @@ def aggregateLatestMonthData(channelfields):
             if timestampmonth == m:
                 data = aggregateMonthlyFeedData(item.channel.type, {'channelfield': item,
                                                 'timestamp__gte': thismonth,
-                                                'timestamp__lte': nextmonth})
+                                                'timestamp__lte': nextmonth},
+                                                complexargs, excludeargs)
 
                 updateAggregateMonthlyData(data, item)
             else:
                 data = aggregateMonthlyFeedData(item.channel.type, {'channelfield': item,
                                                 'timestamp__gte': thismonth,
-                                                'timestamp__lte': nextmonth})
+                                                'timestamp__lte': nextmonth}
+                                                complexargs, excludeargs)
                 newAggregateMonthlyData(data, item, midmonth)
 
         else:
             '''No record exisits. Probably a new database'''
-            mdata = aggregateMonthlyFeedData(item.channel.type, {'channelfield': item})
+            mdata = aggregateMonthlyFeedData(item.channel.type, {'channelfield': item},
+                                             complexargs, excludeargs)
             createAggregateMonthlyData(mdata, item)
 
 
@@ -639,6 +643,9 @@ def newAggregateMonthlyData(data, item, midmonth):
 
 
 def aggregateLatestDailyData(channelfields):
+    excludeargs = {}
+    complexargs = {}
+
     for item in channelfields:
         currentdaily = (AggregateDailyFeed.objects.filter(channelfield=item)
                         .order_by('-timestamp').first())
@@ -652,16 +659,20 @@ def aggregateLatestDailyData(channelfields):
 
             if timestampday == d:
                 data = aggregateDailyFeedData(item.channel.type, {'channelfield': item,
-                                              'timestamp__gte': today})
+                                              'timestamp__gte': today},
+                                              complexargs, excludeargs
+                                              )
                 updateAggregateDailyData(data, item, today)
 
             else:
                 data = aggregateDailyFeedData(item.channel.type, {'channelfield': item,
-                                              'timestamp__gte': today})
+                                              'timestamp__gte': today},
+                                              complexargs, excludeargs)
                 newAggregateDailyData(data, item, today)
 
         else:
-            ddata = aggregateDailyFeedData(item.channel.type, {'channelfield': item})
+            ddata = aggregateDailyFeedData(item.channel.type, {'channelfield': item},
+                                           complexargs, excludeargs)
             createAggregateDailyData(ddata, item, today)
 
 
