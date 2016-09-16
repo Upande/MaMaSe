@@ -485,7 +485,7 @@ def aggregateLatestMonthData(channelfields):
             else:
                 data = aggregateMonthlyFeedData(item.channel.type, {'channelfield': item,
                                                 'timestamp__gte': thismonth,
-                                                'timestamp__lte': nextmonth}
+                                                'timestamp__lte': nextmonth},
                                                 complexargs, excludeargs)
                 newAggregateMonthlyData(data, item, midmonth)
 
