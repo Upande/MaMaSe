@@ -723,10 +723,10 @@ var river_channels = []
               loadRiverDepthView();  
               //alert("No data at the moment");            
             }
-            else if (station_type == 'RAIN_TEMP') {
-              is_river = false
-              loadRainTempView();
-            }
+            //else if (station_type == 'RAIN_TEMP') {
+            //  is_river = false
+            //  loadRainTempView();
+            //}
           }
 
 
