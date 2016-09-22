@@ -535,12 +535,16 @@ var river_channels = []
               ////check whether current weather_variable in present in mylist
               ////if it does not, change weather_variable value to that of the first item in mylist
               var check = $.inArray(weather_variable, mylist)
-              if (check == -1) {
-
-                var e = document.getElementById("weathervariables");
-
-                var strUser = e.options[e.selectedIndex].value;
-                weather_variable = strUser
+              if (check == -1) {              
+                //for rain_temp show all variables on the chart. This is dirty but works
+                if (station_type == 'RAIN_TEMP'){
+                  weather_variable = 'all'
+                }
+                else{                
+                  var e = document.getElementById("weathervariables");
+                  var strUser = e.options[e.selectedIndex].value;
+                  weather_variable = strUser
+                }
 
               }
               ////select the appropriate text in the weather dropdown 
