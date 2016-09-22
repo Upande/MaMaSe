@@ -692,6 +692,8 @@ var river_channels = []
           function loadStationView() {  
               $("#controls_div").show();
               $("#river_depth_control_div").hide();
+              $('#weathervariablecolumn').show();
+              $('#weathervariableheader').show();
               getChannelCoordnates();
           }
 
@@ -699,7 +701,8 @@ var river_channels = []
           ////To add controls for rain temp view
           function loadRainTempView() {  
               $("#controls_div").show();
-              $('#weathervariables').hide();
+              $('#weathervariablecolumn').hide();
+              $('#weathervariableheader').hide();
               $("#river_depth_control_div").hide();
               weather_variable == 'all'
               getChannelCoordnates();
@@ -723,10 +726,10 @@ var river_channels = []
               loadRiverDepthView();  
               //alert("No data at the moment");            
             }
-            //else if (station_type == 'RAIN_TEMP') {
-            //  is_river = false
-            //  loadRainTempView();
-            //}
+            else if (station_type == 'RAIN_TEMP') {
+              is_river = false
+              loadRainTempView();
+            }
           }
 
 
