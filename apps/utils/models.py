@@ -62,7 +62,7 @@ class Field(models.Model):
 
 
 class ChannelField(models.Model):
-    channel = models.ForeignKey(Channel, related_name="channels")
+    channel = models.ForeignKey(Channel, related_name="channelfields")
     field = models.ForeignKey(Field, related_name="field")
     name = models.TextField()
     added = models.DateTimeField(auto_now_add=True)

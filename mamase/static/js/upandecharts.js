@@ -704,7 +704,8 @@ var river_channels = []
               $('#weathervariablecolumn').hide();
               $('#weathervariableheader').hide();
               $("#river_depth_control_div").hide();
-              weather_variable == 'all'
+              weather_variable = 'all'
+              weather_variable_id = 'all'
               getChannelCoordnates();
           }
 

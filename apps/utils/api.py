@@ -53,6 +53,8 @@ def getFeeds(request):
     args = {}
     excludeargs = {}
     complexargs = {}
+    fieldargs = {}
+    fieldexcludeargs = {}
 
     if channel:
         kwargs['channelfield__channel_id'] = channel
@@ -77,7 +79,8 @@ def getFeeds(request):
                            Q(channelfield__field__name__icontains='rain'),)
             excludeargs['channelfield__field__name__icontains'] = 'soil temperature'
 
-            #args['id__in'] = channel_with_temp_rain
+            fieldargs = (Q(field__name__icontains='Temperature (C)') |
+                         Q(field__name__icontains='Rain (mm'),)
 
         elif station_type == "RIVER_DEPTH":
             if not channel and river:
@@ -121,8 +124,10 @@ def getFeeds(request):
 
     channels = []
     for i in ch:
-        values = i.channels.values('field__name', 'name',
-                                   'id', 'field__id').distinct()
+        values = (i.channelfields.filter(*fieldargs)
+                   .values('field__name', 'name',
+                           'id', 'field__id').distinct()
+                  )
         valuesdict = {'id': i.id, 'name': i.name,
                       'desciption': i.description,
                       'latitude': i.latitude,
