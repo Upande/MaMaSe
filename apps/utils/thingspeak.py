@@ -166,7 +166,7 @@ def returnChannelData(request):
 
         if type_ == 'WEATHER_STATION' or type_ == 'RIVER_DEPTH':
             channels = Channel.objects.filter(type=type_.upper())
-        elif type_ == 'rain_temp':
+        elif type_ == 'RAIN_TEMP':
             channels = Channel.objects.filter(type='WEATHER_STATION')
         else:
             channels = Channel.objects.all()
