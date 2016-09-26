@@ -899,16 +899,27 @@ var river_channels = []
 
           //Extracts data with the appropriate aggr
           function define_monthly_daily_data(newdata) {
-            for (i = 0; i < 5; i++) {
-
-              if (newdata[1][1][i][0] == aggr_variable) {
-                mydata = [myarry[0], newdata[1][1][i]]
-                return mydata
+            mydata = [myarry[0]];
+            for (i = 0; i < 5; i++) {//why 5? Because of there are 5 agggregation variables
+              if (station_type == 'RAIN_TEMP'){
+                     for (var x = 1; x < newdata.length; x++) {//Ignore the first collumn of newdata                        
+                         if (newdata[x][1][i][0] == aggr_variable) {
+                         temp_list = newdata[x][1][i]  //To replate the aggregation label with the weather variable  
+                         temp_list[0] = newdata[x][0]                      
+                         mydata.push(temp_list)
+                        }
+                      }
+                  }  
+                  else{
+                      if (newdata[1][1][i][0] == aggr_variable) {
+                          temp_list = newdata[1][1][i]
+                          temp_list[0] = newdata[1][0] 
+                          mydata.push(temp_list)
+                       }
+                  }              
               }
-            }
-
-
-          }
+              return mydata
+              }
 
 
 
