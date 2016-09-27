@@ -742,8 +742,6 @@ var river_channels = []
 
           ////draw graph for monthly data
           function drawGraph() {
-              ////if (newdata[1][1]){
-
                 chart = c3.generate({
                   bindto: '#charter',
                   data: {
@@ -1050,6 +1048,7 @@ var river_channels = []
                   }
 
                   var feeds = data.feed
+
 
                       //channel_obj = Object.keys(channel); //// convert to an object
                       var len = channel.fields.length
