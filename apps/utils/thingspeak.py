@@ -47,6 +47,11 @@ def getChannel():
     channels = data['channels']
     for item in channels:
         river = checkIfRiver(item['name'])
+
+        #Check age of channel. If more than a day create. If not, skip
+        if not checkOlderThanADay(item):
+            continue
+
         if river:
             r, created = River.objects.get_or_create(name=river)
             river_id = r.id
@@ -282,3 +287,18 @@ def checkIfRiver(name):
         return None
     else:
         return namelist[0].strip()
+
+
+def checkOlderThanADay(channel):
+    created = channel['created_at']
+    now = datetime.datetime.now()
+    created_ts = datetime.datetime.strptime(created, '%Y-%m-%dT%H:%M:%SZ')
+
+    diff = now - created_ts
+    ts = diff.total_seconds()
+    #How many days are these seconds? How many seconds are a day
+    days_seconds = 86400
+    if ts > days_seconds:  # If the time passed is more than a day
+        return True
+    else:
+        return False
