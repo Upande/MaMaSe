@@ -515,7 +515,6 @@ def createAggregateMonthlyData(mdata, item):
                                                        channelfield=item,
                                                        aggregation='AVG',
                                                        timestamp=ma['timestamp'])
-        #x.save()
 
     for ms in month_sum:
         x = AggregateMonthlyFeed.objects.get_or_create(data=ms,
@@ -523,7 +522,6 @@ def createAggregateMonthlyData(mdata, item):
                                                        channelfield=item,
                                                        aggregation='SUM',
                                                        timestamp=ms['timestamp'])
-        #x.save()
 
     for mc in month_cnt:
         x = AggregateMonthlyFeed.objects.get_or_create(data=mc,
@@ -531,7 +529,6 @@ def createAggregateMonthlyData(mdata, item):
                                                        channelfield=item,
                                                        aggregation='COUNT',
                                                        timestamp=mc['timestamp'])
-        #x.save()
 
     for mmi in month_min:
         x = AggregateMonthlyFeed.objects.get_or_create(data=mmi,
@@ -539,14 +536,12 @@ def createAggregateMonthlyData(mdata, item):
                                                        channelfield=item,
                                                        aggregation='MIN',
                                                        timestamp=mmi['timestamp'])
-        #x.save()
 
     for mma in month_max:
         x = AggregateMonthlyFeed.objects.get_or_create(data=mma,
                                                        channel=item.channel,
                                                        channelfield=item, aggregation='MAX',
                                                        timestamp=mma['timestamp'])
-        #x.save()
 
 
 def updateAggregateMonthlyData(data, item):
@@ -654,11 +649,10 @@ def aggregateLatestDailyData(channelfields):
     for item in channelfields:
         currentdaily = (AggregateDailyFeed.objects.filter(channelfield=item)
                         .order_by('-timestamp').first())
-
+        today = datetime.datetime.now().replace(hour=0, minute=0, second=0,
+                                                microsecond=0)
         if currentdaily:
             d = datetime.datetime.now().day
-            today = datetime.datetime.now().replace(hour=0, minute=0, second=0,
-                                                    microsecond=0)
 
             timestampday = currentdaily.timestamp.day
 
@@ -678,10 +672,10 @@ def aggregateLatestDailyData(channelfields):
         else:
             ddata = aggregateDailyFeedData(item.channel.type, {'channelfield': item},
                                            complexargs, excludeargs)
-            createAggregateDailyData(ddata, item, today)
+            createAggregateDailyData(ddata, item)
 
 
-def createAggregateDailyData(ddata, item, today):
+def createAggregateDailyData(ddata, item):
     '''Called the first time we create a database. Initial setup only'''
     daily_avg = list(ddata[0])
     daily_sum = list(ddata[1])
@@ -695,7 +689,6 @@ def createAggregateDailyData(ddata, item, today):
                                                      channelfield=item,
                                                      aggregation='AVG',
                                                      timestamp=da['timestamp'])
-        #x.save()
 
     for ds in daily_sum:
         x = AggregateDailyFeed.objects.get_or_create(data=ds,
@@ -703,7 +696,6 @@ def createAggregateDailyData(ddata, item, today):
                                                      channelfield=item,
                                                      aggregation='SUM',
                                                      timestamp=ds['timestamp'])
-        #x.save()
 
     for dc in daily_cnt:
         x = AggregateDailyFeed.objects.get_or_create(data=dc,
@@ -711,7 +703,6 @@ def createAggregateDailyData(ddata, item, today):
                                                      channelfield=item,
                                                      aggregation='COUNT',
                                                      timestamp=dc['timestamp'])
-        #x.save()
 
     for dmi in daily_min:
         x = AggregateDailyFeed.objects.get_or_create(data=dmi,
@@ -719,7 +710,6 @@ def createAggregateDailyData(ddata, item, today):
                                                      channelfield=item,
                                                      aggregation='MIN',
                                                      timestamp=dmi['timestamp'])
-        #x.save()
 
     for dma in daily_max:
         x = AggregateDailyFeed.objects.get_or_create(data=dma,
@@ -727,7 +717,6 @@ def createAggregateDailyData(ddata, item, today):
                                                      channelfield=item,
                                                      aggregation='MAX',
                                                      timestamp=dma['timestamp'])
-        #x.save()
 
 
 def updateAggregateDailyData(data, item, today):
