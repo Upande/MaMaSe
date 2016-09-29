@@ -1,6 +1,8 @@
+{% load static %}
 <!--Sidebar-->
 <div class="col-md-3 sidebar right-sidebar" style=" border-left: 1px solid #eee;">	
 	<!-- Categories Widget -->
+	{% if self.categories %}
 	<div class="widget widget-categories">
 		<h4>Categories <span class="head-line"></span></h4>
 		<ul>
@@ -11,15 +13,22 @@
 			{% endfor %}
 		</ul>
 	</div>
+	{% endif %}
 
 	<!-- Popular Posts widget -->
 	<div class="widget widget-popular-posts">
 		<h4>Popular Videos <span class="head-line"></span></h4>
 		<ul>
 			{% for v in videos|slice:":4" %}
-			<li>
+			<li style="list-style: none;">
 				<div class="widget-thumb">
-					<a href="{{v.url}}"><img src="{{v.main_image.file.url}}" alt="{{v.main_image.title}}" /></a>
+					<a href="{{v.url}}">
+					{% if v.video_image %}
+						<img src="{{v.video_image.file.url}}" alt="{{v.video_image.title}}"/>
+					{% else %}
+						<img src="{% static 'margo/images/mamase_icon.png' %}" alt="mamase icon" />
+					{% endif %}
+					</a>
 				</div>
 				<div class="widget-content">
 					<h5><a href="{{v.url}}">{{v.title}}</a></h5>
