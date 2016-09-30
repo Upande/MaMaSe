@@ -51,7 +51,7 @@ var river_channels = []
           /**
            * Create an overlay to anchor the popup to the map.
            */
-          var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */ ({
+           var overlay = new ol.Overlay(/** @type {olx.OverlayOptions} */ ({
             element: container,
             autoPan: true,
             autoPanAnimation: {
@@ -59,44 +59,44 @@ var river_channels = []
             }
           }));
 
-          var startdate = ""
-          var enddate = ""
-          var dataset = []
-          var chart
-          var table
-          var coordinates = []
-          var coordinate_names = []
-          var station_ids = []
-          var coordinate_ids = []
+           var startdate = ""
+           var enddate = ""
+           var dataset = []
+           var chart
+           var table
+           var coordinates = []
+           var coordinate_names = []
+           var station_ids = []
+           var coordinate_ids = []
 
 
-          var monthly_data = [
-          ["Mulot", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
-          ["Kerook", 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, ],
-          ["Govener's Camp", 21, 31, 22, 26, 25, 37, 23, 33, 34, 23, 32, 37, ],
-          ["Mara Conservancy", 21, 22, 23, 33, 34, 23, 26, 25, 37, 32, 31, 37, ],
-          ["Bomet", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
-          ["Narotia", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
-          ["Rekaro", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
-          ["Talek", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
-          ["Mara River", 21, 23, 33, 34, 37, 32, 31, 37, 21, 22, 23, 26, ],
-          ];
-          var daily_data = [
-          ["Mulot", 2, 7, 12, 3, 7, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37, 21, 22, 23, 33, 7, 6],
-          ["Kerook", 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37, 21, 22, 23, 33, 7, 6],
-          ["Govener's Camp", 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37],
-          ["Mara Conservancy", 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 34, 23, 26, 25],
-          ["Bomet", 25, 37, 32, 31, 37, 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 21, 22, 23, 33, 34, 23, 26],
-          ["Narotia", 25, 37, 32, 31, 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 34, 23, 26],
-          ["Rekaro", 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 21, 22, 23, 33, 34, 23, 26],
-          ["Talek", 25, 37, 32, 31, 37, 21, 2, 7, 12, 3, 7, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37, 21, 26],
-          ["Mara River", 21, 2, 7, 12, 3, 7, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37, 21, 0, 37, 21, 22, 23, 26],
-          ];
-          var raw_data = [
-          ["Mara Conservancy", 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 34, 23, 26, 25],
-          ];
-          var time1 = ['station', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
-          var xaxis = ['station', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+           var monthly_data = [
+           ["Mulot", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
+           ["Kerook", 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, ],
+           ["Govener's Camp", 21, 31, 22, 26, 25, 37, 23, 33, 34, 23, 32, 37, ],
+           ["Mara Conservancy", 21, 22, 23, 33, 34, 23, 26, 25, 37, 32, 31, 37, ],
+           ["Bomet", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
+           ["Narotia", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
+           ["Rekaro", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
+           ["Talek", 25, 37, 32, 31, 37, 21, 22, 23, 33, 34, 23, 26, ],
+           ["Mara River", 21, 23, 33, 34, 37, 32, 31, 37, 21, 22, 23, 26, ],
+           ];
+           var daily_data = [
+           ["Mulot", 2, 7, 12, 3, 7, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37, 21, 22, 23, 33, 7, 6],
+           ["Kerook", 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37, 21, 22, 23, 33, 7, 6],
+           ["Govener's Camp", 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37],
+           ["Mara Conservancy", 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 34, 23, 26, 25],
+           ["Bomet", 25, 37, 32, 31, 37, 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 21, 22, 23, 33, 34, 23, 26],
+           ["Narotia", 25, 37, 32, 31, 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 34, 23, 26],
+           ["Rekaro", 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 21, 22, 23, 33, 34, 23, 26],
+           ["Talek", 25, 37, 32, 31, 37, 21, 2, 7, 12, 3, 7, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37, 21, 26],
+           ["Mara River", 21, 2, 7, 12, 3, 7, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 3, 6, 31, 37, 21, 0, 37, 21, 22, 23, 26],
+           ];
+           var raw_data = [
+           ["Mara Conservancy", 21, 22, 23, 33, 21, 31, 22, 26, 25, 37, 33, 34, 23, 26, 21, 11, 20, 2, 33, 34, 23, 26, 21, 22, 23, 25, 37, 32, 31, 37, 34, 23, 26, 25],
+           ];
+           var time1 = ['station', 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30]
+           var xaxis = ['station', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 
           //// ----- Selet Aggregation Type
@@ -122,16 +122,16 @@ var river_channels = []
           function refreshmap(Lon, Lat) {
             $('#map').empty()
             loadMap(Lon,Lat)
-            }
+          }
 
 
 
 
 
-            function table2csv(oTable, exportmode, tableElm) {
-              var csv = '';
-              var headers = [];
-              var rows = [];
+          function table2csv(oTable, exportmode, tableElm) {
+            var csv = '';
+            var headers = [];
+            var rows = [];
 
               //// Get header names
               $(tableElm + ' thead').find('th').each(function() {
@@ -386,7 +386,7 @@ var river_channels = []
             }
             else {
               for (var i = 0; i < myarry.length; i++) {
-                  if (myarry[i][0] == weather_variable) {
+                if (myarry[i][0] == weather_variable) {
                       ////select particular weather variable data 
                       newdata = []
                       newdata = [myarry[0], myarry[i]]
@@ -394,24 +394,24 @@ var river_channels = []
                       return newdata
                     }
                   }
-                 }
                 }
+              }
 
 
 
-                function getChannelCoordnates() {
-                  $.ajax({
-                    type: 'GET',
-                    url: "/mamase/channel/?type="+ station_type,
-                    dataType: "json",
-                    success: function(data) {
-                      data = data.channels;
-                      for (var x = 0; x < data.length; x++) {
-                        coordinate_names.push(data[x].name)
-                        station_ids.push(data[x].data_id)
-                        coordinates.push([data[x].longitude,data[x].latitude])
-                        coordinate_ids.push(data[x].id)                        
-                      }
+              function getChannelCoordnates() {
+                $.ajax({
+                  type: 'GET',
+                  url: "/mamase/channel/?type="+ station_type,
+                  dataType: "json",
+                  success: function(data) {
+                    data = data.channels;
+                    for (var x = 0; x < data.length; x++) {
+                      coordinate_names.push(data[x].name)
+                      station_ids.push(data[x].data_id)
+                      coordinates.push([data[x].longitude,data[x].latitude])
+                      coordinate_ids.push(data[x].id)                        
+                    }
                       //load data
                       loadMap(Lon,Lat);          
                       //Load the channels dropdown before calling the data. 
@@ -419,7 +419,7 @@ var river_channels = []
                       create_channel_items();//Also runs pull data
                     }
                   });
-                }
+              }
 
 
           ////Get monthly data for chosen field and populate it on datatables
@@ -441,15 +441,14 @@ var river_channels = []
                       if (channels[x].fields[y].field__id == weather_variable_id){
                         //Push the number of months this year.
                         temp_list = Array(13).fill('-')
-                        temp_list[0] = channels[x].name
+                        temp_list[0] = channels[x].name                        
                         dataset.push(temp_list)
                         //eval('dataset.push(["' + channels[x].name + '",null,null,null,null,null,null,null,null,null,null,null,null])');
                       }
                     }                    
-                  }
+                  }            
 
                   eval('tabledata = monthlyData.' + aggr_variable)
-
                   for (var i = 0; i < tabledata.length; i++) {
                     for (var j = 0; j < dataset.length; j++) {
                       if (dataset[j][0] == tabledata[i].channelfield__channel__name) {
@@ -480,7 +479,7 @@ var river_channels = []
 
           ////load existing weather variables
           function populateRiverPoints() {
-              $('#selectriverpoint').empty(); 
+            $('#selectriverpoint').empty(); 
             
                   ////create a list of existing fields, e.g rain, temp, humidity etc
                   mylist = []
@@ -508,7 +507,10 @@ var river_channels = []
                 var e = document.getElementById("weathervariables");
 
                 var strUser = e.options[e.selectedIndex].value;
+                var strID = e.options[e.selectedIndex].id;
                 weather_variable = strUser
+                weather_variable_id = strID
+
 
               }
               ////select the appropriate text in the weather dropdown 
@@ -525,7 +527,7 @@ var river_channels = []
           ////load existing weather variables
           function populateWeathervariables(myarry) {
               $('#weathervariables').empty() //empty weather variable list
-                  
+
                   ////create a list of existing fields, e.g rain, temp, humidity etc
                   mylist = []
                   for (var i = 1; i < myarry.length; i++) {
@@ -553,7 +555,9 @@ var river_channels = []
                 else{                
                   var e = document.getElementById("weathervariables");
                   var strUser = e.options[e.selectedIndex].value;
+                  var strID = e.options[e.selectedIndex].id;
                   weather_variable = strUser
+                  weather_variable_id = strID
                 }
 
               }
@@ -586,7 +590,7 @@ var river_channels = []
             /**
              * Add a click handler to the map to render the popup.
              */
-            map.on('singleclick', function(evt) {
+             map.on('singleclick', function(evt) {
               var feature_id
               var name = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
                 feature_id = feature.get('id')
@@ -600,23 +604,23 @@ var river_channels = []
               }              
             });
 
-            var source2 = new ol.source.TileWMS({
-                url: 'http://maps.mamase.org/geoserver/geonode/wms',
-                params: {'LAYERS': 'geonode:river_utm36s'},
-                serverType: 'geoserver',
+             var source2 = new ol.source.TileWMS({
+              url: 'http://maps.mamase.org/geoserver/geonode/wms',
+              params: {'LAYERS': 'geonode:river_utm36s'},
+              serverType: 'geoserver',
             });
 
-            var mamase_river = new ol.layer.Tile({
+             var mamase_river = new ol.layer.Tile({
                 //extent: ol.proj.transformExtent ([33.520563492664415,-2.1410073709074036,36.21835384204506,-0.1176646088719224],'EPSG:32736', 'EPSG:3857'),
                 source: source2
-            });
+              });
 
-            var osmlayer = new ol.layer.Tile({
+             var osmlayer = new ol.layer.Tile({
               source: new ol.source.OSM()
             });
 
-            map.addLayer(osmlayer);
-            if (station_type == 'RIVER_DEPTH'){
+             map.addLayer(osmlayer);
+             if (station_type == 'RIVER_DEPTH'){
               map.addLayer(mamase_river)
             }
             createMarker(Lon, Lat)
@@ -670,41 +674,41 @@ var river_channels = []
 
 
 
-          function addMarkersToMap(){
-            var coordinatesource = new ol.source.Vector({});
+            function addMarkersToMap(){
+              var coordinatesource = new ol.source.Vector({});
               ////This function will load other points to the vector
-            for (var x = 0; x < coordinates.length; x++) {  
+              for (var x = 0; x < coordinates.length; x++) {  
                 if ( coordinates[x][0] != Lon && coordinates[x][1] != Lat ) {
                   var coordinateicon = new ol.Feature({
-                  geometry: new
-                  ol.geom.Point(ol.proj.transform(coordinates[x], 'EPSG:4326', 'EPSG:3857')),
-                  name: coordinate_names[x],
-                  data_id: station_ids[x],
-                  id: coordinate_ids[x],
-                });
-                coordinatesource.addFeature(coordinateicon);
+                    geometry: new
+                    ol.geom.Point(ol.proj.transform(coordinates[x], 'EPSG:4326', 'EPSG:3857')),
+                    name: coordinate_names[x],
+                    data_id: station_ids[x],
+                    id: coordinate_ids[x],
+                  });
+                  coordinatesource.addFeature(coordinateicon);
                 //vectorSource.addFeature(coordinateicon);
                 //features.push(coordinatesource)
-                }                
-              }
+              }                
+            }
 
                             ////create the icon style
-              var coordinateStyle = new ol.style.Style({
-                image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
-                  anchor: [0.5, 4],
-                  anchorXUnits: 'fraction',
-                  anchorYUnits: 'pixels',
-                  opacity: 0.8,
-                  src: icon
-                }))
-              });
+                            var coordinateStyle = new ol.style.Style({
+                              image: new ol.style.Icon( /** @type {olx.style.IconOptions} */ ({
+                                anchor: [0.5, 4],
+                                anchorXUnits: 'fraction',
+                                anchorYUnits: 'pixels',
+                                opacity: 0.8,
+                                src: icon
+                              }))
+                            });
 
-              var coordinatesLayer = new ol.layer.Vector({
-               source: coordinatesource,
-               style: coordinateStyle,
-             });
-              return coordinatesLayer;
-          }
+                            var coordinatesLayer = new ol.layer.Vector({
+                             source: coordinatesource,
+                             style: coordinateStyle,
+                           });
+                            return coordinatesLayer;
+                          }
 
           ////To add controls for river depth
           function loadRiverDepthView() {            
@@ -718,23 +722,23 @@ var river_channels = []
 
           ////To add controls for weather station depth
           function loadStationView() {  
-              $("#controls_div").show();
-              $("#river_depth_control_div").hide();
-              $('#weathervariablecolumn').show();
-              $('#weathervariableheader').show();
-              getChannelCoordnates();
+            $("#controls_div").show();
+            $("#river_depth_control_div").hide();
+            $('#weathervariablecolumn').show();
+            $('#weathervariableheader').show();
+            getChannelCoordnates();
           }
 
 
           ////To add controls for rain temp view
           function loadRainTempView() {  
-              $("#controls_div").show();
-              $('#weathervariablecolumn').hide();
-              $('#weathervariableheader').hide();
-              $("#river_depth_control_div").hide();
-              weather_variable = 'all'
-              weather_variable_id = 'all'
-              getChannelCoordnates();
+            $("#controls_div").show();
+            $('#weathervariablecolumn').hide();
+            $('#weathervariableheader').hide();
+            $("#river_depth_control_div").hide();
+            weather_variable = 'all'
+            weather_variable_id = 'all'
+            getChannelCoordnates();
           }
 
           ////select display mode
@@ -766,14 +770,14 @@ var river_channels = []
 
           ////draw graph for monthly data
           function drawGraph() {
-                chart = c3.generate({
-                  bindto: '#charter',
-                  data: {
-                    x: 'created',
-                    xFormat: '%Y-%m-%d %H:%M:%S',
-                    columns: newdata,
-                  },
-                  tooltip: {
+            chart = c3.generate({
+              bindto: '#charter',
+              data: {
+                x: 'created',
+                xFormat: '%Y-%m-%d %H:%M:%S',
+                columns: newdata,
+              },
+              tooltip: {
                       grouped: false //tooltip for one graph at a time
                     },
                     axis: {
@@ -791,13 +795,13 @@ var river_channels = []
                       }
                     }
                   });
-              }
+          }
 
 
 
 
 
-              function drawGraph_monthly_daily(id, month, year, datatype) {
+          function drawGraph_monthly_daily(id, month, year, datatype) {
 
               ////Fxn to display loading image on load
               $("#spinner").bind("ajaxSend", function() {
@@ -925,22 +929,22 @@ var river_channels = []
             for (i = 0; i < 5; i++) {//why 5? Because of there are 5 agggregation variables
               if (station_type == 'RAIN_TEMP'){
                      for (var x = 1; x < newdata.length; x++) {//Ignore the first collumn of newdata                        
-                         if (newdata[x][1][i][0] == aggr_variable) {
+                       if (newdata[x][1][i][0] == aggr_variable) {
                          temp_list = newdata[x][1][i]  //To replate the aggregation label with the weather variable  
                          temp_list[0] = newdata[x][0]                      
                          mydata.push(temp_list)
-                        }
-                      }
-                  }  
-                  else{
-                      if (newdata[1][1][i][0] == aggr_variable) {
-                          temp_list = newdata[1][1][i]
-                          temp_list[0] = newdata[1][0] 
-                          mydata.push(temp_list)
                        }
+                     }
+                   }  
+                   else{
+                    if (newdata[1][1][i][0] == aggr_variable) {
+                      temp_list = newdata[1][1][i]
+                      temp_list[0] = newdata[1][0] 
+                      mydata.push(temp_list)
+                    }
                   }              
-              }
-              return mydata
+                }
+                return mydata
               }
 
 
@@ -1044,11 +1048,11 @@ var river_channels = []
 
               //Define url here
               if (is_river == false){
-                 url = "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
-              }
-              else{
-                 url = "/mamase/api/feed/?river=" + river_id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
-              }           
+               url = "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
+             }
+             else{
+               url = "/mamase/api/feed/?river=" + river_id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
+             }           
 
               ////pull data from api and (create myarry) 
               $.ajax({
@@ -1180,16 +1184,16 @@ var river_channels = []
               for (var i = data.length - 1; i >= 0; i--) {
                 if (is_river == true) {
                   if (data[i]['name'].indexOf(weather_station_name) > -1){
-                  option += '<option label="'+data[i]['name']+'" id="'+data[i]['data_id']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
-                  river_point_names.push(data[i]['name']);
-                  river_point_ids.push(data[i]['id']);
-                  river_point_dataids.push(data[i]['data_id']);
+                    option += '<option label="'+data[i]['name']+'" id="'+data[i]['data_id']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'
+                    river_point_names.push(data[i]['name']);
+                    river_point_ids.push(data[i]['id']);
+                    river_point_dataids.push(data[i]['data_id']);
                   }
                 }
                 else{
                   option += '<option label="'+data[i]['name']+'" id="'+data[i]['data_id']+'" value="'+data[i]['id']+'">'+data[i]['name']+'</option>'                  
                 } 
-                }
+              }
               
               
               for (var i = rivers.length - 1; i >= 0; i--) {
@@ -1307,5 +1311,5 @@ var river_channels = []
                   }).prop('selected', true);
 
 
-        }
-      });
+                }
+              });
