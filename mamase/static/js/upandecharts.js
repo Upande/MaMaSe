@@ -457,9 +457,11 @@ var river_channels = []
                                     m = moment(tabledata[i].timestamp, 'YYYY-MM-DD').month() + 1
                                     //if there is no reading, add a dash.
                                     //Do a check for null values. Also do a check for missing data
-
-                                    Array(5).fill(2)
-                                    eval('dataset[j][m] = roundoff(tabledata[i].reading__' + aggr_variable+')')                                  
+                                    eval('tempreading = roundoff(tabledata[i].reading__' + aggr_variable+')')
+                                    if (isNaN(tempreading)){
+                                      tempreading = '-';
+                                    }
+                                    dataset[j][m] = tempreading                                  
                                   }
                                 }
                               }
