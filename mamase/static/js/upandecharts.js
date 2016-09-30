@@ -576,7 +576,7 @@ var river_channels = []
               target: 'map',
               overlays: [overlay],  
               view: new ol.View({
-                projection: 'EPSG:900913',
+                projection: 'EPSG:3857',
                 center: ol.proj.fromLonLat([Lon, Lat]),
                 zoom: Zoom
               })
@@ -598,11 +598,25 @@ var river_channels = []
               }              
             });
 
+            var source2 = new ol.source.TileWMS({
+                url: 'http://maps.mamase.org/geoserver/geonode/wms',
+                params: {'LAYERS': 'geonode:river_utm36s'},
+                serverType: 'geoserver',
+            });
+
+            var mamase_river = new ol.layer.Tile({
+                //extent: ol.proj.transformExtent ([33.520563492664415,-2.1410073709074036,36.21835384204506,-0.1176646088719224],'EPSG:32736', 'EPSG:3857'),
+                source: source2
+            });
+
             var osmlayer = new ol.layer.Tile({
               source: new ol.source.OSM()
             });
 
             map.addLayer(osmlayer);
+            if (station_type == 'RIVER_DEPTH'){
+              map.addLayer(mamase_river)
+            }
             createMarker(Lon, Lat)
           }
 
