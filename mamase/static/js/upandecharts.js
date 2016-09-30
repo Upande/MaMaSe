@@ -439,7 +439,11 @@ var river_channels = []
                     //Check if the channel has this field
                     for (var y = 0; y < channels[x].fields.length; y++){
                       if (channels[x].fields[y].field__id == weather_variable_id){
-                        eval('dataset.push(["' + channels[x].name + '",null,null,null,null,null,null,null,null,null,null,null,null])');
+                        //Push the number of months this year.
+                        temp_list = Array(13).fill('-')
+                        temp_list[0] = channels[x].name
+                        dataset.push(temp_list)
+                        //eval('dataset.push(["' + channels[x].name + '",null,null,null,null,null,null,null,null,null,null,null,null])');
                       }
                     }                    
                   }
@@ -451,6 +455,10 @@ var river_channels = []
                       if (dataset[j][0] == tabledata[i].channelfield__channel__name) {
                                     //Get the value of the month and add one since it jan is represented as 0
                                     m = moment(tabledata[i].timestamp, 'YYYY-MM-DD').month() + 1
+                                    //if there is no reading, add a dash.
+                                    //Do a check for null values. Also do a check for missing data
+
+                                    Array(5).fill(2)
                                     eval('dataset[j][m] = roundoff(tabledata[i].reading__' + aggr_variable+')')                                  
                                   }
                                 }
