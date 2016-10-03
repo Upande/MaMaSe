@@ -279,7 +279,15 @@ var river_channels = []
             weather_variable = selweather.value;
             weather_variable_id = selweather[selweather.selectedIndex].id;
 
-            populateDatatables(weather_variable_id)
+
+            if (station_type == 'RAIN_TEMP'){
+              populateRainTempTable(weather_station)
+            }
+            else{
+              populateDatatables(weather_variable_id)                            
+            }
+
+            //populateDatatables(weather_variable_id)
 
             if (datatype == 'raw') {
               defineNewdata(myarry)
@@ -476,6 +484,53 @@ var river_channels = []
             }
           }
 
+          ////Get monthly data for chosen field and populate it on datatables
+          function populateRainTempTable(weather_station) {
+              styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
+              enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
+              $.ajax({
+                type: 'GET',
+                url: "/mamase/api/feed/?channel=" + weather_station + "&start=" + styear + "&end=" + enyear + "&stationtype="+ station_type + "&data=monthly",
+                dataType: "json",
+                success: function(data) {
+                  dataset = []
+                  monthlyData = data.feed[0].monthly
+                  channels = data.channel
+                    //Check if the channel has this field
+                    for (var y = 0; y < channels[0].fields.length; y++){
+                        //Push the number of months this year.
+                        temp_list = Array(13).fill('-')
+                        temp_list[0] = channels[0].fields[y].name                        
+                        dataset.push(temp_list)                       
+                    }                    
+                  console.log(dataset)
+                  eval('tabledata = monthlyData.' + aggr_variable)
+                  for (var i = 0; i < tabledata.length; i++) {
+                    for (var j = 0; j < dataset.length; j++) {
+                      if (dataset[j][0] == tabledata[i].channelfield__name) {
+                                    //Get the value of the month and add one since it jan is represented as 0
+                                    m = moment(tabledata[i].timestamp, 'YYYY-MM-DD').month() + 1
+                                    //if there is no reading, add a dash.
+                                    //Do a check for null values. Also do a check for missing data
+                                    eval('tempreading = roundoff(tabledata[i].reading__' + aggr_variable+')')
+                                    if (isNaN(tempreading)){
+                                      tempreading = '-';
+                                    }
+                                    dataset[j][m] = tempreading
+                                  }
+                                }
+                              }
+                     for (var j = 0; j < dataset.length; j++) { //Just two loops in rain temp view
+                          //Rename the first item in the list from fieldX to variable name
+                          dataset[j][0] = channels[0].fields[j].field__name 
+                      }
+
+                          datatset = dataset.join(", ")
+                          table.clear().rows.add(dataset).draw();
+
+                            }
+                          });            
+          }          
 
           ////load existing weather variables
           function populateRiverPoints() {
@@ -912,7 +967,13 @@ var river_channels = []
 
                           define_monthly_daily_data(newdata)
                           plotMonthly_daily(mydata)
-                          populateDatatables(weather_variable_id)
+
+                          if (station_type == 'RAIN_TEMP'){
+                            populateRainTempTable(weather_station)
+                          }
+                          else{
+                            populateDatatables(weather_variable_id)                            
+                          }
 
                         }
                       })
@@ -1123,7 +1184,15 @@ var river_channels = []
                       defineNewdata(myarry)
                       drawGraph(newdata)
                       refreshmap(Lon, Lat)
-                      populateDatatables(weather_variable_id)
+
+                      if (station_type == 'RAIN_TEMP'){
+                            populateRainTempTable(weather_station)
+                          }
+                          else{
+                            populateDatatables(weather_variable_id)                            
+                      }
+
+                      //populateDatatables(weather_variable_id)
 
                     },
 
