@@ -503,7 +503,7 @@ var river_channels = []
                         temp_list[0] = channels[0].fields[y].name                        
                         dataset.push(temp_list)                       
                     }                    
-                  console.log(dataset)
+
                   eval('tabledata = monthlyData.' + aggr_variable)
                   for (var i = 0; i < tabledata.length; i++) {
                     for (var j = 0; j < dataset.length; j++) {
