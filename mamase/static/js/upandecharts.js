@@ -105,6 +105,7 @@ var river_channels = []
 
             define_monthly_daily_data(newdata)
             plotMonthly_daily(mydata)
+            changeDatatablesData();
           }
 
 
@@ -376,7 +377,6 @@ var river_channels = []
                       ////define plot data based on aggr and time step
                       ////define_monthly_daily_data()
                     }
-
                   }
 
 
@@ -483,6 +483,44 @@ var river_channels = []
               table.clear().draw();
             }
           }
+
+          ////Get monthly data for chosen field and populate it on datatables
+          function changeDatatablesData() {
+              dataset = []
+              for (var x = 0; x < channels.length; x++) {
+                //Check if the channel has this field
+                for (var y = 0; y < channels[x].fields.length; y++){
+                  if (channels[x].fields[y].field__id == weather_variable_id){
+                    //Push the number of months this year.
+                    temp_list = Array(13).fill('-')
+                    temp_list[0] = channels[x].name                        
+                    dataset.push(temp_list)
+                    //eval('dataset.push(["' + channels[x].name + '",null,null,null,null,null,null,null,null,null,null,null,null])');
+                  }
+                }                    
+              }            
+
+              eval('tabledata = monthlyData.' + aggr_variable)
+              for (var i = 0; i < tabledata.length; i++) {
+                for (var j = 0; j < dataset.length; j++) {
+                  if (dataset[j][0] == tabledata[i].channelfield__channel__name) {
+                                //Get the value of the month and add one since it jan is represented as 0
+                                m = moment(tabledata[i].timestamp, 'YYYY-MM-DD').month() + 1
+                                //if there is no reading, add a dash.
+                                //Do a check for null values. Also do a check for missing data
+                                eval('tempreading = roundoff(tabledata[i].reading__' + aggr_variable+')')
+                                if (isNaN(tempreading)){
+                                  tempreading = '-';
+                                }
+                                dataset[j][m] = tempreading                                  
+                              }
+                            }
+                          }
+                          datatset = dataset.join(", ")
+
+                          table.clear().rows.add(dataset).draw();
+
+      }
 
           ////Get monthly data for chosen field and populate it on datatables
           function populateRainTempTable(weather_station) {
@@ -796,14 +834,28 @@ var river_channels = []
             getChannelCoordnates();
           }
 
-          ////select display mode
-          function selMode(modevalue) {            
+          function reinitialize(modevalue) {
             station_type = modevalue.value
             coordinates = []
             coordinate_names = []
             station_ids = []
             coordinate_ids =[]
-            
+            aggr_variable = 'avg'
+            time_interval = 'raw'
+            datatype = 'raw'
+
+            $('#timeinterval option').filter(function() {
+                 return $(this).val() == time_interval;
+            }).prop('selected', true);
+
+            $("#selectaggregation").prop("disabled", true).css('opacity', 0.5);
+            $("#selectriveraggregation").prop("disabled", true).css('opacity', 0.5)
+          }
+
+          ////select display mode
+          function selMode(modevalue) {            
+            reinitialize(modevalue)
+          
             if (station_type == 'WEATHER_STATION') {
               is_river = false
               loadStationView();
