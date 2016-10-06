@@ -35,6 +35,7 @@ var river_channels = []
           var Lat = -0.943496;
           var Lon = 35.424305;
           var Zoom = 8;
+          var prevLatLong = [-0.943496,35.424305]
           var graph_description = 'Raw Data'
           var map
           var vectorLayer
@@ -120,7 +121,7 @@ var river_channels = []
 
 
           function refreshmap(Lon, Lat) {
-            $('#map').empty()
+            //$('#map').empty()
             loadMap(Lon,Lat)
           }
 
@@ -823,6 +824,9 @@ var river_channels = []
                 success: function(data) {
                   channel = data.channel[0]
 
+                  prevLatLong[0] = Lat
+                  prevLatLong[1] = Lon
+
                   Lon = channel.longitude
                   Lat = channel.latitude
 
@@ -1068,6 +1072,9 @@ var river_channels = []
                   river_channels = data.channel
 
                   try {
+                    prevLatLong[0] = Lat
+                    prevLatLong[1] = Lon
+
                     Lon = channel.longitude
                     Lat = channel.latitude
                   } catch (err) {       
