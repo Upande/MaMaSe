@@ -168,15 +168,24 @@ var river_channels = []
 
             }
 
-
+            if (is_loggedin == 'False'){
+              isenabled = false;
+            }
+            else{
+              isenabled = true;
+            }
 
             table = $('#charttable').DataTable({
-              //dom: 'Bfrtip',
-              //buttons: [
+              dom: 'Bfrtip',
+              buttons: [
+                {
+                    extend: 'csvHtml5',
+                    enabled: isenabled,
+                }
               //'csvHtml5',
               //'copyHtml5',
               //'excelHtml5',
-              //],
+              ],
               data: dataset,
               columns: [{
                 title: "Station Name"
@@ -1235,7 +1244,7 @@ var river_channels = []
                       }
                       defineNewdata(myarry)
                       drawGraph(newdata)
-                      refreshmap(Lon, Lat)
+                      //refreshmap(Lon, Lat)
 
                       if (station_type == 'RAIN_TEMP'){
                             populateRainTempTable(weather_station)
