@@ -502,9 +502,8 @@ var river_channels = []
                               datatset = dataset.join(", ")
 
                               table.clear().rows.add(dataset).draw();
-
+                            console.log('done pulling data');
                             }
-                            console.log('done pulling data')
                           });
               console.log('leaving datatables')
             }
