@@ -22,6 +22,8 @@ var datatype = 'raw'
 var mylist = []
 var variable_ids = []
 var monthlyData = []
+var batchMonthlyData 
+var allchannels
 var is_river = false //Used to check if we need to pull river data
 var river_id 
 var river_point_names = []
@@ -459,17 +461,16 @@ var river_channels = []
           ////Get monthly data for chosen field and populate it on datatables
           function populateDatatables(selID) {
             if (selID != 'all'){
-              styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
-              enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
-              console.log('in datatables')
-              $.ajax({
-                type: 'GET',
-                url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&stationtype="+ station_type + "&data=monthly",
-                dataType: "json",
-                success: function(data) {
+              //styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
+              //enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
+              //$.ajax({
+              //  type: 'GET',
+              //  url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&stationtype="+ station_type + "&data=monthly",
+              //  dataType: "json",
+              //  success: function(data) {
                   dataset = []
-                  monthlyData = data.feed[0].monthly
-                  channels = data.channel
+                  monthlyData = batchMonthlyData[weather_variable_id] //data.feed[0].monthly
+                  channels = allchannels //data.channel
                   for (var x = 0; x < channels.length; x++) {
                     //Check if the channel has this field
                     for (var y = 0; y < channels[x].fields.length; y++){
@@ -502,10 +503,10 @@ var river_channels = []
                               datatset = dataset.join(", ")
 
                               table.clear().rows.add(dataset).draw();
-                            console.log('done pulling data');
-                            }
-                          });
-              console.log('leaving datatables')
+
+
+                         //   }
+                         // });
             }
             else{
               table.clear().draw();
@@ -960,7 +961,7 @@ var river_channels = []
               $.ajax({
 
                 type: 'GET',
-                url: "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type,
+                url: "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type + '&tabledata=true',
                 dataType: "json",
 
                 success: function(data) {
@@ -1200,10 +1201,10 @@ var river_channels = []
 
               //Define url here
               if (is_river == false){
-               url = "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
+               url = "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type + '&tabledata=true'
              }
              else{
-               url = "/mamase/api/feed/?river=" + river_id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type
+               url = "/mamase/api/feed/?river=" + river_id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type + '&tabledata=true'
              }           
 
               ////pull data from api and (create myarry) 
@@ -1231,6 +1232,8 @@ var river_channels = []
                   }
 
                   var feeds = data.feed
+                  batchMonthlyData = data.monthlydata
+                  allchannels = data.allchannels
 
 
                       //channel_obj = Object.keys(channel); //// convert to an object
@@ -1270,30 +1273,21 @@ var river_channels = []
                               ////weather_variable="Temperature"
                             }
 
-                      console.log('starting.....')
                       ////Disable non-existing weather Variables
-                      console.log('in populate weather')                  
                       populateWeathervariables(myarry)
                       if (is_river){
-                        console.log('in populate riverpoints')
                         populateRiverPoints()
                       }
-                      console.log('in definenewdata')
                       defineNewdata(myarry)
-                      console.log('in drawgraph')
                       drawGraph(newdata)
-                      console.log('in refreshmap')
                       refreshmap(Lon, Lat)
 
-                      console.log('in popuatedatatables')
                       if (station_type == 'RAIN_TEMP'){
                             populateRainTempTable(weather_station)
                           }
                           else{
                             populateDatatables(weather_variable_id)                            
                       }
-                      console.log('done.....')
-                      //populateDatatables(weather_variable_id)
 
                     },
 

@@ -29,6 +29,9 @@ def getFeeds(request):
     levels namely Top Leval, Time Leval, Aggregation leval, Location leval then
     the data points
     """
+
+    #Better validation is needed for the pararms below. e.g start and end
+
     channel = request.GET.get('channel', None)  # Select among list of channels
     start = request.GET.get('start', None)  # Data should be after this data
     end = request.GET.get('end', None)  # Data should be before this date
@@ -37,6 +40,7 @@ def getFeeds(request):
     field = request.GET.get('field', None)  # A specific field e.g temp
     station_type = request.GET.get('stationtype', "WEATHER_STATION")  # Is it a w.station etc
     river = request.GET.get('river', None)  # Get all data points on a river
+    tabledata = request.GET.get('tabledata', None)  # include monthlytabledata in request. Only when station is specified
 
     '''
     These requests need to be cached. Check if the exact requests is in cache.
@@ -55,6 +59,7 @@ def getFeeds(request):
     complexargs = {}
     fieldargs = {}
     fieldexcludeargs = {}
+    monthlyData = {}
 
     if channel:
         kwargs['channelfield__channel_id'] = channel
@@ -120,8 +125,31 @@ def getFeeds(request):
                             'sum': list(data[1])})
         feed_without_null.append(feed)
 
-    ch = Channel.objects.filter(**args).order_by('-id')
+    if tabledata:
+        #Meaning that we should include the table data in the request
+        startOfYear = getStartOfYear(start)
+        endOfYear = getEndOfYear(end)
 
+        if channel:
+            channelfields = ChannelField.objects.filter(channel_id=channel)
+            for item in channelfields:
+                monthly_data_args = {}
+                monthly_data_args['channelfield__field_id'] = item.field.id
+                monthly_data_args['timestamp__gte'] = startOfYear
+                monthly_data_args['timestamp__lte'] = endOfYear
+                data = aggregateMonthlyFeedData(station_type, monthly_data_args, complexargs, excludeargs)
+
+                monthlyData[item.field.id] = ({'avg': list(data[0]),
+                                               'min': list(data[3]),
+                                               'max': list(data[4]),
+                                               'count': list(data[2]),
+                                               'sum': list(data[1])})
+
+        else:
+            pass
+
+
+    ch = Channel.objects.filter(**args).order_by('-id')
     channels = []
     for i in ch:
         values = (i.channelfields.filter(*fieldargs)
@@ -137,6 +165,27 @@ def getFeeds(request):
             valuesdict['river'] = i.river.id
         valuesdict['fields'] = list(values)
         channels.append(valuesdict)
+
+    allchannels = []
+    if channel:
+        args.pop('id')
+        allch = Channel.objects.filter(**args).order_by('-id')
+        for i in allch:
+            values = (i.channelfields.filter(*fieldargs)
+                       .values('field__name', 'name',
+                               'id', 'field__id').distinct()
+                      )
+            valuesdict = {'id': i.id, 'name': i.name,
+                          'desciption': i.description,
+                          'latitude': i.latitude,
+                          'longitude': i.longitude,
+                          'data_id': i.data_id}
+            if i.river:
+                valuesdict['river'] = i.river.id
+            valuesdict['fields'] = list(values)
+            allchannels.append(valuesdict)
+    else:
+        allchannels = channels
 
     rivers = River.objects.all()
     riverdata = []
@@ -154,7 +203,9 @@ def getFeeds(request):
 
     result = JsonResponse(dict(channel=channel_without_null,
                                feed=feed_without_null,
-                               river=riverdata))
+                               river=riverdata,
+                               monthlydata=monthlyData,
+                               allchannels=allchannels))
 
     cache.set(cache_key, result)
     return result
@@ -842,3 +893,15 @@ def removeEmptyString(data):
         data_without_empty.append(dict((k, v) for (k, v) in item.items() if v != ""))
 
     return data_without_empty
+
+
+def getStartOfYear(start):
+    #Sort of a hack. But works. Fix later
+    year = start[:4]
+    return year + '-01-01'
+
+
+def getEndOfYear(end):
+    #Sort of a hack. But works. Fix later
+    year = end[:4]
+    return year + '-12-31'
