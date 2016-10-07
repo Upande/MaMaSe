@@ -123,7 +123,23 @@ var river_channels = []
 
           function refreshmap(Lon, Lat) {
             //$('#map').empty()
-            loadMap(Lon,Lat)
+            //loadMap(Lon,Lat)
+            var coordinates 
+            var selectedStation
+
+            map.getLayers().forEach(function(layer, i) {
+              //console.log(layer); 
+              name = layer.get('name');
+              if (name == 'coordinatesLayer'){//Map with all other coordinates
+                coordinates = layer
+              }
+              if (name == 'selectedStationLayer'){//Map with all other coordinates
+                selectedStation = layer
+              }
+            })
+            map.removeLayer(coordinates);
+            map.removeLayer(selectedStation);
+            createMarker(Lon, Lat);
           }
 
 
@@ -715,11 +731,15 @@ var river_channels = []
 
              var mamase_river = new ol.layer.Tile({
                 //extent: ol.proj.transformExtent ([33.520563492664415,-2.1410073709074036,36.21835384204506,-0.1176646088719224],'EPSG:32736', 'EPSG:3857'),
-                source: source2
+                source: source2,
+                name: 'mamaseriver',
+                id: 4,
               });
 
              var osmlayer = new ol.layer.Tile({
-              source: new ol.source.OSM()
+              source: new ol.source.OSM(),
+              name: 'osmlayer',
+              id: 1,
             });
 
              map.addLayer(osmlayer);
@@ -765,13 +785,15 @@ var river_channels = []
 
 
               ////add the feature vector to the layer vector, and apply a style to whole layer
-              var vectorLayer = new ol.layer.Vector({
+              var selectedStationLayer = new ol.layer.Vector({
                source: vectorSource,
                style: iconStyle,
+               name: 'selectedStationLayer',
+               id: 2,
              });
 
               coordinatesLayer = addMarkersToMap();
-              map.addLayer(vectorLayer);
+              map.addLayer(selectedStationLayer);
               map.addLayer(coordinatesLayer);
             }
 
@@ -809,6 +831,8 @@ var river_channels = []
                             var coordinatesLayer = new ol.layer.Vector({
                              source: coordinatesource,
                              style: coordinateStyle,
+                             name: 'coordinatesLayer',
+                             id: 3,
                            });
                             return coordinatesLayer;
                           }
@@ -1251,7 +1275,7 @@ var river_channels = []
                       }
                       defineNewdata(myarry)
                       drawGraph(newdata)
-                      //refreshmap(Lon, Lat)
+                      refreshmap(Lon, Lat)
 
                       if (station_type == 'RAIN_TEMP'){
                             populateRainTempTable(weather_station)
