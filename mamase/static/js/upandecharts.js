@@ -1268,14 +1268,21 @@ var river_channels = []
                               ////weather_variable="Temperature"
                             }
 
+                      console.log('starting.....')
                       ////Disable non-existing weather Variables
+                      console.log('in populate weather')                  
                       populateWeathervariables(myarry)
                       if (is_river){
+                        console.log('in populate riverpoints')
                         populateRiverPoints()
                       }
+                      console.log('in definenewdata')
                       defineNewdata(myarry)
+                      console.log('in drawgraph')
                       drawGraph(newdata)
+                      console.log('in refreshmap')
                       refreshmap(Lon, Lat)
+                      console.log('done.....')
 
                       if (station_type == 'RAIN_TEMP'){
                             populateRainTempTable(weather_station)
