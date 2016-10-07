@@ -461,6 +461,7 @@ var river_channels = []
             if (selID != 'all'){
               styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
               enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
+              console.log('in datatables')
               $.ajax({
                 type: 'GET',
                 url: "/mamase/api/feed/?field=" + selID + "&start=" + styear + "&end=" + enyear + "&stationtype="+ station_type + "&data=monthly",
@@ -503,7 +504,9 @@ var river_channels = []
                               table.clear().rows.add(dataset).draw();
 
                             }
+                            console.log('done pulling data')
                           });
+              console.log('leaving datatables')
             }
             else{
               table.clear().draw();
@@ -1282,15 +1285,15 @@ var river_channels = []
                       drawGraph(newdata)
                       console.log('in refreshmap')
                       refreshmap(Lon, Lat)
-                      console.log('done.....')
 
+                      console.log('in popuatedatatables')
                       if (station_type == 'RAIN_TEMP'){
                             populateRainTempTable(weather_station)
                           }
                           else{
                             populateDatatables(weather_variable_id)                            
                       }
-
+                      console.log('done.....')
                       //populateDatatables(weather_variable_id)
 
                     },
