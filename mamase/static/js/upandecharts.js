@@ -1273,6 +1273,7 @@ var river_channels = []
                               ////weather_variable="Temperature"
                             }
 
+                      console.log('starting........')
                       ////Disable non-existing weather Variables
                       populateWeathervariables(myarry)
                       if (is_river){
@@ -1288,7 +1289,7 @@ var river_channels = []
                           else{
                             populateDatatables(weather_variable_id)                            
                       }
-
+                      console.log('ending.......')
                     },
 
                   });

@@ -12,7 +12,7 @@
     height:     100%;
     width:      100%;
     background: rgba( 255, 255, 255, .8 ) 
-                url('/static/assets/images/loading2.gif') 
+                url('/static/images/loading2.gif') 
                 50% 50% 
                 no-repeat;
 opacity: 0.80;
