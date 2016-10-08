@@ -15,6 +15,7 @@ from apps.utils.models import (Channel, River,
 from util.scripts.timing_decorator import time_usage
 
 
+@time_usage
 def getFeeds(request):
     """
     To use this API, you can filter based on four parameters. You can filter by
@@ -131,7 +132,7 @@ def getFeeds(request):
         endOfYear = getEndOfYear(end)
 
         if channel:
-            channelfields = ChannelField.objects.filter(channel_id=channel)
+            channelfields = ChannelField.objects.filter(channel_id=channel, field=field)
             for item in channelfields:
                 monthly_data_args = {}
                 monthly_data_args['channelfield__field_id'] = item.field.id
@@ -147,7 +148,6 @@ def getFeeds(request):
 
         else:
             pass
-
 
     ch = Channel.objects.filter(**args).order_by('-id')
     channels = []
@@ -166,27 +166,6 @@ def getFeeds(request):
         valuesdict['fields'] = list(values)
         channels.append(valuesdict)
 
-    allchannels = []
-    if channel:
-        args.pop('id')
-        allch = Channel.objects.filter(**args).order_by('-id')
-        for i in allch:
-            values = (i.channelfields.filter(*fieldargs)
-                       .values('field__name', 'name',
-                               'id', 'field__id').distinct()
-                      )
-            valuesdict = {'id': i.id, 'name': i.name,
-                          'desciption': i.description,
-                          'latitude': i.latitude,
-                          'longitude': i.longitude,
-                          'data_id': i.data_id}
-            if i.river:
-                valuesdict['river'] = i.river.id
-            valuesdict['fields'] = list(values)
-            allchannels.append(valuesdict)
-    else:
-        allchannels = channels
-
     rivers = River.objects.all()
     riverdata = []
     for i in rivers:
@@ -204,9 +183,7 @@ def getFeeds(request):
     result = JsonResponse(dict(channel=channel_without_null,
                                feed=feed_without_null,
                                river=riverdata,
-                               monthlydata=monthlyData,
-                               allchannels=allchannels))
-
+                               monthlydata=monthlyData))
     cache.set(cache_key, result)
     return result
 

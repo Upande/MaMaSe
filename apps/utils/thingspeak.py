@@ -161,30 +161,55 @@ class JSONResponse(HttpResponse):
 @csrf_exempt
 def returnChannelData(request):
     if request.method == 'GET':
-        cache_key = request.get_full_path()  # Use the full path as the cache key
-        result = cache.get(cache_key)
+        #cache_key = request.get_full_path()  # Use the full path as the cache key
+        #result = cache.get(cache_key)
+        fieldargs = {}
 
-        if result:
-            return result
+        #if result:
+        #    return result
 
         type_ = request.GET.get('type', None)
 
         if type_ == 'WEATHER_STATION' or type_ == 'RIVER_DEPTH':
             channels = Channel.objects.filter(type=type_.upper())
         elif type_ == 'RAIN_TEMP':
+            fieldargs = (Q(field__name__icontains='Temperature (C)') |
+                         Q(field__name__icontains='Rain (mm'),)
             channels = Channel.objects.filter(type='WEATHER_STATION')
         else:
             channels = Channel.objects.all()
 
         rivers = River.objects.all()
+        channelfields = []
+
+        for i in channels:
+            values = (i.channelfields.filter(*fieldargs)
+                       .values('field__name', 'name',
+                               'id', 'field__id').distinct()
+                      )
+            valuesdict = {'id': i.id, 'name': i.name,
+                          'description': i.description,
+                          'latitude': i.latitude,
+                          'longitude': i.longitude,
+                          'data_id': i.data_id,
+                          'created_at': i.created_at,
+                          'updated_at': i.updated_at,
+                          'type': i.type,
+                          'elevation': i.elevation,
+                          'last_entry_id': i.last_entry_id}
+            if i.river:
+                valuesdict['river'] = i.river.id
+            valuesdict['fields'] = list(values)
+            channelfields.append(valuesdict)
+
 
         cserializer = ChannelSerializer(channels, many=True)
         rserializer = RiverSerializer(rivers, many=True)
 
-        result = JSONResponse({'channels': cserializer.data,
+        result = JSONResponse({'channels': channelfields,
                               'rivers': rserializer.data})
 
-        cache.set(cache_key, result)
+        #cache.set(cache_key, result)
         return result
 
     elif request.method == 'POST':

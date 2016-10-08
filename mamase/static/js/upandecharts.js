@@ -8,7 +8,7 @@ var weather_station_name = ""
 var weather_station = ""
 var station_id = ""
 var weather_variable = "Rain"
-var weather_variable_id = '1'
+var weather_variable_id = '5'
 var time_interval = "raw"
 var month = 0
 var month_text = "Jan"
@@ -1201,10 +1201,10 @@ var river_channels = []
 
               //Define url here
               if (is_river == false){
-               url = "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type + '&tabledata=true'
+               url = "/mamase/api/feed/?channel=" + id + "&field=" + weather_variable_id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type + '&tabledata=true'
              }
              else{
-               url = "/mamase/api/feed/?river=" + river_id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type + '&tabledata=true'
+               url = "/mamase/api/feed/?river=" + river_id +"&field=" + weather_variable_id +  "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type + '&tabledata=true'
              }           
 
               ////pull data from api and (create myarry) 
