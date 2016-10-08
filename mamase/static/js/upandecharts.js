@@ -24,6 +24,7 @@ var variable_ids = []
 var monthlyData = []
 var batchMonthlyData 
 var allchannels
+var allrivers
 var is_river = false //Used to check if we need to pull river data
 var river_id 
 var river_point_names = []
@@ -441,7 +442,13 @@ var river_channels = []
                   url: "/mamase/channel/?type="+ station_type,
                   dataType: "json",
                   success: function(data) {
+                    
+                    allchannels = data.channels
+                    allrivers = data.rivers
                     data = data.channels;
+
+                    console.log(allchannels)
+
                     for (var x = 0; x < data.length; x++) {
                       coordinate_names.push(data[x].name)
                       station_ids.push(data[x].data_id)
@@ -1233,7 +1240,7 @@ var river_channels = []
 
                   var feeds = data.feed
                   batchMonthlyData = data.monthlydata
-                  allchannels = data.allchannels
+                  //allchannels = data.allchannels
 
 
                       //channel_obj = Object.keys(channel); //// convert to an object
@@ -1300,11 +1307,12 @@ var river_channels = []
               //By default start with weather stations
               //Load data for the first weather station
 
-              $.ajax({
-                type: 'GET',
-                url: "/mamase/channel/?type="+ station_type,
-                dataType: "json",
-                success: function(data) {
+              //$.ajax({
+              //  type: 'GET',
+              //  url: "/mamase/channel/?type="+ station_type,
+              //  dataType: "json",
+              //  success: function(data) {
+                console.log(allchannels)
                   var riverelement = document.getElementById('river'); 
                   if (station_type == 'RIVER_DEPTH'){
                     var stationselect = document.getElementById('selectriverpoint');                    
@@ -1315,8 +1323,8 @@ var river_channels = []
                   option = '';
                   riverlist = '';
 
-                  rivers = data.rivers
-                  data = data.channels
+                  rivers = allrivers
+                  data = allchannels
                   river_point_ids = []
                   river_point_names = []
                   river_point_dataids = []
@@ -1330,7 +1338,8 @@ var river_channels = []
 
                 ///set the weather_station as the first variables
                 weather_station_name = rivers[rivers.length-1]['name']
-                station_id = data[data.length-1]['data_id']              
+                station_id = data[data.length-1]['data_id'] 
+                weather_variable_id = data[data.length-1]['fields'][0]['field__id']             
               }
               else{
                 id = data[data.length-1]['id']
@@ -1339,6 +1348,7 @@ var river_channels = []
                 ///set the weather_station as the first variables
                 weather_station_name = data[data.length-1]['name']
                 station_id = data[data.length-1]['data_id']
+                weather_variable_id = data[data.length-1]['fields'][0]['field__id']
               }
 
               var tslink = document.getElementById("thingspeaklink");
@@ -1376,10 +1386,12 @@ var river_channels = []
               }
 
               pullData(id,month,year,river_id);
+              //}
+
+              //});              
             }
 
-          });              
-            }
+
             function strip_tags(html) {
               var tmp = document.createElement("div");
               tmp.innerHTML = html;
