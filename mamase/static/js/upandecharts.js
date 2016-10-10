@@ -131,7 +131,6 @@ var river_channels = []
             var selectedStation
 
             map.getLayers().forEach(function(layer, i) {
-              //console.log(layer); 
               name = layer.get('name');
               if (name == 'coordinatesLayer'){//Map with all other coordinates
                 coordinates = layer
@@ -308,31 +307,31 @@ var river_channels = []
           function weatherVariable(selweather) {
             weather_variable = selweather.value;
             weather_variable_id = selweather[selweather.selectedIndex].id;
+            pullData(id,month,year)
 
+            // if (station_type == 'RAIN_TEMP'){
+            //   populateRainTempTable(weather_station)
+            // }
+            // else{
+            //   populateDatatables(weather_variable_id)                            
+            // }
 
-            if (station_type == 'RAIN_TEMP'){
-              populateRainTempTable(weather_station)
-            }
-            else{
-              populateDatatables(weather_variable_id)                            
-            }
+            // //populateDatatables(weather_variable_id)
 
-            //populateDatatables(weather_variable_id)
+            // if (datatype == 'raw') {
+            //   defineNewdata(myarry)
+            //   drawGraph(newdata)
+            // } else {
+            //       ////pull appropriate weather variable data
+            //       defineNewdata(myarry)
 
-            if (datatype == 'raw') {
-              defineNewdata(myarry)
-              drawGraph(newdata)
-            } else {
-                  ////pull appropriate weather variable data
-                  defineNewdata(myarry)
+            //       ////pull the appropriate aggregation from the array
+            //       define_monthly_daily_data(newdata)
 
-                  ////pull the appropriate aggregation from the array
-                  define_monthly_daily_data(newdata)
+            //       ////plot the data
 
-                  ////plot the data
-
-                  plotMonthly_daily(mydata)
-                }
+            //       plotMonthly_daily(mydata)
+            //     }
               }
 
 
@@ -446,8 +445,6 @@ var river_channels = []
                     allchannels = data.channels
                     allrivers = data.rivers
                     data = data.channels;
-
-                    console.log(allchannels)
 
                     for (var x = 0; x < data.length; x++) {
                       coordinate_names.push(data[x].name)
@@ -1280,7 +1277,6 @@ var river_channels = []
                               ////weather_variable="Temperature"
                             }
 
-                      console.log('starting........')
                       ////Disable non-existing weather Variables
                       populateWeathervariables(myarry)
                       if (is_river){
@@ -1296,7 +1292,6 @@ var river_channels = []
                           else{
                             populateDatatables(weather_variable_id)                            
                       }
-                      console.log('ending.......')
                     },
 
                   });
@@ -1312,7 +1307,6 @@ var river_channels = []
               //  url: "/mamase/channel/?type="+ station_type,
               //  dataType: "json",
               //  success: function(data) {
-                console.log(allchannels)
                   var riverelement = document.getElementById('river'); 
                   if (station_type == 'RIVER_DEPTH'){
                     var stationselect = document.getElementById('selectriverpoint');                    

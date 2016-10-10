@@ -4,7 +4,7 @@ os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mamase.settings.dev")
 import django
 django.setup()
 
-from apps.utils.models import Field
+from apps.utils.models import Field, Channel, ChannelField
 from apps.utils.api import (aggregateDailyFeedData, aggregateMonthlyFeedData,
                             createAggregateDailyData, createAggregateMonthlyData)
 
@@ -22,15 +22,24 @@ def fix(field):
     fields = Field.objects.filter(name__icontains=field)
     print "Found all similar fields for " + field
 
+    channels = Channel.objects.all()
+
     for item in fields:
-        kwargs['channelfield__field_id'] = fields.values_list('id', flat=True)
-        print kwargs
-        mdata = aggregateMonthlyFeedData(station_type, kwargs, complexargs, excludeargs)
-        ddata = aggregateDailyFeedData(station_type, kwargs, complexargs, excludeargs)
+        #Do a loop for each channel
+        for channel in channels:
+            #Get all channel fields for this channel
+            cfs = ChannelField.objects.filter(channel=channel, field=item)
+            print cfs
+            for channelfield in cfs:
+                #Too many nested loops
+                kwargs['channelfield__in'] = cfs
+                ddata = aggregateDailyFeedData(station_type, kwargs, complexargs, excludeargs)
+                mdata = aggregateMonthlyFeedData(station_type, kwargs, complexargs, excludeargs)
 
-        createAggregateDailyData(ddata, item)
-        createAggregateMonthlyData(mdata, item)
+                createAggregateDailyData(ddata, channelfield)
+                createAggregateMonthlyData(mdata, channelfield)
 
+        print "done with channel " + channel.name
     print "all done"
 
 if __name__ == "__main__":

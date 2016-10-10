@@ -628,19 +628,19 @@ def updateAggregateMonthlyData(data, item):
                                                channelfield=item)
            .order_by('-timestamp').first()
            )
-    ma.data = list(data[0])
+    ma.data = list(data[0])[0]
     ma.lastupdate = datetime.datetime.now()
 
-    ms.data = list(data[1])
+    ms.data = list(data[1])[0]
     ms.lastupdate = datetime.datetime.now()
 
-    mc.data = list(data[2])
+    mc.data = list(data[2])[0]
     mc.lastupdate = datetime.datetime.now()
 
-    mmi.data = list(data[3])
+    mmi.data = list(data[3])[0]
     mmi.lastupdate = datetime.datetime.now()
 
-    mma.data = list(data[4])
+    mma.data = list(data[4])[0]
     mma.lastupdate = datetime.datetime.now()
 
     ma.save()
@@ -804,19 +804,19 @@ def updateAggregateDailyData(data, item, today):
            .order_by('-timestamp').first()
            )
 
-    da.data = list(data[0])
+    da.data = list(data[0])[0]
     da.lastupdate = datetime.datetime.now()
 
-    ds.data = list(data[1])
+    ds.data = list(data[1])[0]
     ds.lastupdate = datetime.datetime.now()
 
-    dc.data = list(data[2])
+    dc.data = list(data[2])[0]
     dc.lastupdate = datetime.datetime.now()
 
-    dma.data = list(data[3])
+    dma.data = list(data[3])[0]
     dma.lastupdate = datetime.datetime.now()
 
-    dmi.data = list(data[4])
+    dmi.data = list(data[4])[0]
     dmi.lastupdate = datetime.datetime.now()
 
     da.save()
