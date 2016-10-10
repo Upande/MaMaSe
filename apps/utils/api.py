@@ -108,7 +108,7 @@ def getFeeds(request):
         feed_without_null = aggregateRawData(station_type, kwargs, complexargs, excludeargs)
 
     elif data.lower() == "daily":
-        data = aggregateDailyFeedData(station_type, kwargs, complexargs, excludeargs)
+        data = getAggregateDailyFeedData(station_type, kwargs, complexargs, excludeargs)
         feed['daily'] = ({'avg': list(data[0]),
                           'min': list(data[3]),
                           'max': list(data[4]),
@@ -118,7 +118,7 @@ def getFeeds(request):
         feed_without_null.append(feed)
 
     elif data.lower() == "monthly":
-        data = aggregateMonthlyFeedData(station_type, kwargs, complexargs, excludeargs)
+        data = getAggregateMonthlyFeedData(station_type, kwargs, complexargs, excludeargs)
         feed['monthly'] = ({'avg': list(data[0]),
                             'min': list(data[3]),
                             'max': list(data[4]),
@@ -424,7 +424,6 @@ def aggregateMonthlyFeedData(station_type, kwargs, complexargs, excludeargs):
 
 
 def getAggregateMonthlyFeedData(station_type, kwargs, complexargs, excludeargs):
-    print kwargs
     m_avg = AggregateMonthlyFeed.objects.filter(aggregation='AVG').filter(**kwargs).values_list('data', flat=True)
     m_count = AggregateMonthlyFeed.objects.filter(aggregation='COUNT').filter(**kwargs).values_list('data', flat=True)
     m_sum = AggregateMonthlyFeed.objects.filter(aggregation='SUM').filter(**kwargs).values_list('data', flat=True)
@@ -454,6 +453,36 @@ def getAggregateMonthlyFeedData(station_type, kwargs, complexargs, excludeargs):
 
     return average, sumation, count, minimum, maximum
 
+
+def getAggregateDailyFeedData(station_type, kwargs, complexargs, excludeargs):
+    d_avg = AggregateDailyFeed.objects.filter(aggregation='AVG').filter(**kwargs).values_list('data', flat=True)
+    d_count = AggregateDailyFeed.objects.filter(aggregation='COUNT').filter(**kwargs).values_list('data', flat=True)
+    d_sum = AggregateDailyFeed.objects.filter(aggregation='SUM').filter(**kwargs).values_list('data', flat=True)
+    d_max = AggregateDailyFeed.objects.filter(aggregation='MAX').filter(**kwargs).values_list('data', flat=True)
+    d_min = AggregateDailyFeed.objects.filter(aggregation='MIN').filter(**kwargs).values_list('data', flat=True)
+
+    average = []
+    count = []
+    minimum = []
+    maximum = []
+    sumation = []
+
+    for item in d_avg:
+        average.append(json.loads(item))
+
+    for item in d_count:
+        count.append(json.loads(item))
+
+    for item in d_min:
+        minimum.append(json.loads(item))
+
+    for item in d_max:
+        maximum.append(json.loads(item))
+
+    for item in d_sum:
+        sumation.append(json.loads(item))
+
+    return average, sumation, count, minimum, maximum
 
 def storeAggregatedData(channel=None, start=None, end=None):
     '''

@@ -307,7 +307,13 @@ var river_channels = []
           function weatherVariable(selweather) {
             weather_variable = selweather.value;
             weather_variable_id = selweather[selweather.selectedIndex].id;
-            pullData(id,month,year)
+            //pullData(id,month,year)
+
+                if (datatype == 'raw') {
+                  pullData(id,month,year)
+                } else {
+                  drawGraph_monthly_daily(id, month, year, datatype)
+                    }
 
             // if (station_type == 'RAIN_TEMP'){
             //   populateRainTempTable(weather_station)
@@ -374,6 +380,7 @@ var river_channels = []
           function timeInterval(interval) {
             datatype = interval.value;
             time_interval = datatype
+
             $("#selectaggregation").prop("disabled", false).css('opacity', 1);
             $("#selectriveraggregation").prop("disabled", false).css('opacity', 1);
 
@@ -557,16 +564,20 @@ var river_channels = []
 
           ////Get monthly data for chosen field and populate it on datatables
           function populateRainTempTable(weather_station) {
-              styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
-              enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
-              $.ajax({
-                type: 'GET',
-                url: "/mamase/api/feed/?channel=" + weather_station + "&start=" + styear + "&end=" + enyear + "&stationtype="+ station_type + "&data=monthly",
-                dataType: "json",
-                success: function(data) {
+              //styear = moment(startdate).startOf('year').format('YYYY-MM-DD')
+              //enyear = moment(startdate).endOf('year').format('YYYY-MM-DD')
+              //$.ajax({
+              //  type: 'GET',
+              //  url: "/mamase/api/feed/?channel=" + weather_station + "&start=" + styear + "&end=" + enyear + "&stationtype="+ station_type + "&data=monthly",
+              //  dataType: "json",
+              //  success: function(data) {
                   dataset = []
-                  monthlyData = data.feed[0].monthly
-                  channels = data.channel
+                  monthlyData = batchMonthlyData[weather_variable_id] //data.feed[0].monthly
+                  channels = allchannels
+
+                  //dataset = []
+                  //monthlyData = data.feed[0].monthly
+                  //channels = data.channel
                     //Check if the channel has this field
                     for (var y = 0; y < channels[0].fields.length; y++){
                         //Push the number of months this year.
@@ -599,8 +610,8 @@ var river_channels = []
                           datatset = dataset.join(", ")
                           table.clear().rows.add(dataset).draw();
 
-                            }
-                          });            
+                            //}
+                          //});            
           }          
 
           ////load existing weather variables
@@ -965,7 +976,7 @@ var river_channels = []
               $.ajax({
 
                 type: 'GET',
-                url: "/mamase/api/feed/?channel=" + id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type + '&tabledata=true',
+                url: "/mamase/api/feed/?channel=" + id + "&field=" + weather_variable_id + "&start=" + startdate + "&end=" + enddate + "&data=" + datatype + "&stationtype=" + station_type + '&tabledata=true',
                 dataType: "json",
 
                 success: function(data) {
@@ -984,6 +995,8 @@ var river_channels = []
                   min = feeds.min
                   max = feeds.max
                   count_len = count.length
+                  
+                  batchMonthlyData = data.monthlydata
 
                       //channel_obj = Object.keys(channel); //// convert to an object
                       len = channel.fields.length; //get length of obj
