@@ -15,9 +15,12 @@ def fix():
     for item in amf:
         print item.data
         if type(item.data) == list:
-            if item.data[0]:
+            try:
+                item.data[0]
                 item.data = item.data[0]
                 item.save()
+            except:
+                pass
 
     print "Done cleaning monthly data"
 
