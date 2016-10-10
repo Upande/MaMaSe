@@ -48,11 +48,11 @@ def getFeeds(request):
     If in cache, return the cached data. If not, compile and send.
     Cache should time out after 10 mins.
     '''
-    cache_key = request.get_full_path()  # Use the full path as the cache key
-    result = cache.get(cache_key)
+    #cache_key = request.get_full_path()  # Use the full path as the cache key
+    #result = cache.get(cache_key)
 
-    if result:
-        return result
+    #if result:
+    #    return result
 
     kwargs = {}
     args = {}
@@ -138,7 +138,7 @@ def getFeeds(request):
                 monthly_data_args['channelfield__field_id'] = item.field.id
                 monthly_data_args['timestamp__gte'] = startOfYear
                 monthly_data_args['timestamp__lte'] = endOfYear
-                data = aggregateMonthlyFeedData(station_type, monthly_data_args, complexargs, excludeargs)
+                data = getAggregateMonthlyFeedData(station_type, monthly_data_args, complexargs, excludeargs)
 
                 monthlyData[item.field.id] = ({'avg': list(data[0]),
                                                'min': list(data[3]),
@@ -184,7 +184,7 @@ def getFeeds(request):
                                feed=feed_without_null,
                                river=riverdata,
                                monthlydata=monthlyData))
-    cache.set(cache_key, result)
+    #cache.set(cache_key, result)
     return result
 
 
@@ -355,10 +355,7 @@ def aggregateDailyFeedData(station_type, kwargs, complexargs, excludeargs):
 
 
 def aggregateMonthlyFeedData(station_type, kwargs, complexargs, excludeargs):
-    if station_type == "RIVER_DEPTH":
-        reading = 'reading'
-    else:
-        reading = 'reading'
+    reading = 'reading'
 
     month_filter = connection.ops.date_trunc_sql('month', 'timestamp')
     #Let aggregate Monthly data
@@ -424,6 +421,38 @@ def aggregateMonthlyFeedData(station_type, kwargs, complexargs, excludeargs):
     Have this as two processes. Calculate and store result as JSON string. Do
     a query and get latest json string
     '''
+
+
+def getAggregateMonthlyFeedData(station_type, kwargs, complexargs, excludeargs):
+    print kwargs
+    m_avg = AggregateMonthlyFeed.objects.filter(aggregation='AVG').filter(**kwargs).values_list('data', flat=True)
+    m_count = AggregateMonthlyFeed.objects.filter(aggregation='COUNT').filter(**kwargs).values_list('data', flat=True)
+    m_sum = AggregateMonthlyFeed.objects.filter(aggregation='SUM').filter(**kwargs).values_list('data', flat=True)
+    m_max = AggregateMonthlyFeed.objects.filter(aggregation='MAX').filter(**kwargs).values_list('data', flat=True)
+    m_min = AggregateMonthlyFeed.objects.filter(aggregation='MIN').filter(**kwargs).values_list('data', flat=True)
+
+    average = []
+    count = []
+    minimum = []
+    maximum = []
+    sumation = []
+
+    for item in m_avg:
+        average.append(json.loads(item))
+
+    for item in m_count:
+        count.append(json.loads(item))
+
+    for item in m_min:
+        minimum.append(json.loads(item))
+
+    for item in m_max:
+        maximum.append(json.loads(item))
+
+    for item in m_sum:
+        sumation.append(json.loads(item))
+
+    return average, sumation, count, minimum, maximum
 
 
 def storeAggregatedData(channel=None, start=None, end=None):
