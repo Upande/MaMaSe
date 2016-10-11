@@ -487,6 +487,7 @@ def getAggregateDailyFeedData(station_type, kwargs, complexargs, excludeargs):
 
     return average, sumation, count, minimum, maximum
 
+
 def storeAggregatedData(channel=None, start=None, end=None):
     '''
     - Get most recent data(Monthly and repeat for daily)
@@ -660,26 +661,40 @@ def updateAggregateMonthlyData(data, item):
                                                channelfield=item)
            .order_by('-timestamp').first()
            )
-    ma.data = list(data[0])[0]
-    ma.lastupdate = datetime.datetime.now()
+    try:
+        ma.data = list(data[0])[0]
+        ma.lastupdate = datetime.datetime.now()
+        ma.save()
+    except:
+        pass
 
-    ms.data = list(data[1])[0]
-    ms.lastupdate = datetime.datetime.now()
+    try:
+        ms.data = list(data[1])[0]
+        ms.lastupdate = datetime.datetime.now()
+        ms.save()
+    except:
+        pass
 
-    mc.data = list(data[2])[0]
-    mc.lastupdate = datetime.datetime.now()
+    try:
+        mc.data = list(data[2])[0]
+        mc.lastupdate = datetime.datetime.now()
+        mc.save()
+    except:
+        pass
 
-    mmi.data = list(data[3])[0]
-    mmi.lastupdate = datetime.datetime.now()
+    try:
+        mmi.data = list(data[3])[0]
+        mmi.lastupdate = datetime.datetime.now()
+        mmi.save()
+    except:
+        pass
 
-    mma.data = list(data[4])[0]
-    mma.lastupdate = datetime.datetime.now()
-
-    ma.save()
-    ms.save()
-    mc.save()
-    mma.save()
-    mmi.save()
+    try:
+        mma.data = list(data[4])[0]
+        mma.lastupdate = datetime.datetime.now()
+        mma.save()
+    except:
+        pass
 
 
 def newAggregateMonthlyData(data, item, midmonth):
@@ -835,27 +850,40 @@ def updateAggregateDailyData(data, item, today):
                                              channelfield=item)
            .order_by('-timestamp').first()
            )
+    try:
+        da.data = list(data[0])[0]
+        da.lastupdate = datetime.datetime.now()
+        da.save()
+    except:
+        pass
 
-    da.data = list(data[0])[0]
-    da.lastupdate = datetime.datetime.now()
+    try:
+        ds.data = list(data[1])[0]
+        ds.lastupdate = datetime.datetime.now()
+        ds.save()
+    except:
+        pass
 
-    ds.data = list(data[1])[0]
-    ds.lastupdate = datetime.datetime.now()
+    try:
+        dc.data = list(data[2])[0]
+        dc.lastupdate = datetime.datetime.now()
+        dc.save()
+    except:
+        pass
 
-    dc.data = list(data[2])[0]
-    dc.lastupdate = datetime.datetime.now()
+    try:
+        dma.data = list(data[3])[0]
+        dma.lastupdate = datetime.datetime.now()
+        dma.save()
+    except:
+        pass
 
-    dma.data = list(data[3])[0]
-    dma.lastupdate = datetime.datetime.now()
-
-    dmi.data = list(data[4])[0]
-    dmi.lastupdate = datetime.datetime.now()
-
-    da.save()
-    ds.save()
-    dc.save()
-    dma.save()
-    dmi.save()
+    try:
+        dmi.data = list(data[4])[0]
+        dmi.lastupdate = datetime.datetime.now()
+        dmi.save()
+    except:
+        pass
 
 
 def newAggregateDailyData(data, item, today):
