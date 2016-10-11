@@ -133,21 +133,24 @@ def getFeeds(request):
 
         if channel:
             channelfields = ChannelField.objects.filter(channel_id=channel, field=field)
-            for item in channelfields:
-                monthly_data_args = {}
-                monthly_data_args['channelfield__field_id'] = item.field.id
-                monthly_data_args['timestamp__gte'] = startOfYear
-                monthly_data_args['timestamp__lte'] = endOfYear
-                data = getAggregateMonthlyFeedData(station_type, monthly_data_args, complexargs, excludeargs)
-
-                monthlyData[item.field.id] = ({'avg': list(data[0]),
-                                               'min': list(data[3]),
-                                               'max': list(data[4]),
-                                               'count': list(data[2]),
-                                               'sum': list(data[1])})
-
+        elif river:
+            channelfields = ChannelField.objects.filter(channel__river_id=river, field=field)
         else:
-            pass
+            channelfields = []
+
+        for item in channelfields:
+            monthly_data_args = {}
+            monthly_data_args['channelfield__field_id'] = item.field.id
+            monthly_data_args['timestamp__gte'] = startOfYear
+            monthly_data_args['timestamp__lte'] = endOfYear
+            data = getAggregateMonthlyFeedData(station_type, monthly_data_args, complexargs, excludeargs)
+
+            monthlyData[item.field.id] = ({'avg': list(data[0]),
+                                          'min': list(data[3]),
+                                          'max': list(data[4]),
+                                          'count': list(data[2]),
+                                          'sum': list(data[1])})
+
 
     ch = Channel.objects.filter(**args).order_by('-id')
     channels = []
