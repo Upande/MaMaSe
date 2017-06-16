@@ -70,3 +70,5 @@ target/
 #Ignore manage.py. For celery
 ./manage.py
 ./celerybeat.pid
+utils.json
+
