@@ -23,7 +23,7 @@ except ImportError:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'mamaseback',
+        'NAME': 'mamase',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
