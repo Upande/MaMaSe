@@ -159,6 +159,27 @@ def get_courses_by_category(category, courses, page):
         return filtered_courses
 
 
+class CIWABIndexPage(Page):
+    intro = RichTextField(blank=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('intro', classname="full"),
+    ]
+
+    @property
+    def pages(self):
+        # Get list of live news pages that are descendants of this page
+        pages = CIWABPage.objects.live().descendant_of(self.get_parent())
+        # Order by most recent date first. Limit to 5 for the sidebar
+        pages = pages.order_by('-date')
+        return pages
+
+    def get_context(self, request):
+        context = super(CIWABIndexPage, self).get_context(request)
+        context['ciwab_pages'] = self.pages
+        return context
+
+
 class CIWABPage(Page):
     course_image = models.ForeignKey(
         'wagtailimages.Image',
