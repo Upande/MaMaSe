@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'storages',
     'boto',
     'djcelery',
+    'corsheaders',
 
     'apps.knowledgeplatform',
     'apps.mamasemedia',
@@ -94,6 +95,8 @@ MIDDLEWARE_CLASSES = [
 
     'wagtail.wagtailcore.middleware.SiteMiddleware',
     'wagtail.wagtailredirects.middleware.RedirectMiddleware',
+
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'mamase.urls'
@@ -290,3 +293,6 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
     }
 }
+
+#CORS
+CORS_ORIGIN_ALLOW_ALL = True
