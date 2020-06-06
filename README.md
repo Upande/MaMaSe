@@ -1,12 +1,12 @@
 # MaMaSe
 
-##Installation for Dev. For production we are using third party paid apps
+## Installation for Dev. For production we are using third party paid apps
 Run the following commands
  - `sudo bash util/elastic.sh`
  - `sudo bash util/rabbit.sh`
  - `pip install -r requirements.txt`
 
-##For use of the API
+## For use of the API
      To pull the data via the API, you can use the following url and it shall return a json string
 
      {{DOMAIN_NAME e.g mamase.org,localhost}}/mamase/api/feed/
