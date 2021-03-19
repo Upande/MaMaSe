@@ -37,7 +37,7 @@ funcsigs==0.4
 future==0.15.2
 gunicorn==19.4.5
 html5lib==0.9999999
-Jinja2==2.8
+Jinja2==2.11.3
 jmespath==0.9.0
 jsonfield==1.0.3
 kombu==3.0.35
