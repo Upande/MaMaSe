@@ -29,7 +29,7 @@ django-supervisor==0.3.4
 django-taggit==0.18.3
 django-toolbelt==0.0.1
 django-treebeard==4.0.1
-djangorestframework==3.3.3
+djangorestframework==3.11.2
 docutils==0.12
 easy-thumbnails==2.3
 elasticsearch==2.2.0
