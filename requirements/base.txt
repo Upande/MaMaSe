@@ -71,7 +71,7 @@ sphinx-rtd-theme==0.1.9
 static3==0.6.1
 supervisor==3.2.0
 Unidecode==0.4.19
-urllib3==1.14
+urllib3==1.26.5
 visualcaptcha==0.0.6
 wagtail==1.5
 watchdog==0.8.3
