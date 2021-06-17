@@ -73,7 +73,7 @@ supervisor==3.2.0
 Unidecode==0.4.19
 urllib3==1.14
 visualcaptcha==0.0.6
-wagtail==1.5
+wagtail==2.11.8
 watchdog==0.8.3
 whitenoise==2.0.6
 Willow==0.3.1
